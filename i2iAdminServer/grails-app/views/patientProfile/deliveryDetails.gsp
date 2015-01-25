@@ -12,10 +12,6 @@
 		<div data-role="header" data-position="fixed">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<div data-role="navbar">
-				<ul>
-					<li><a data-icon="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-					<li><g:link data-icon="grid" data-ajax="false" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				</ul>
 			</div>
 		</div>
 		<div data-role="content">
@@ -42,7 +38,10 @@
 			
 			</dl>
 			
-			<g:form action="save" >
+			<g:form action="saveOrder" >
+			
+			<g:hiddenField name="brandId" value="${orderDetails?.brandId }"/>
+			<g:hiddenField name="storeId" value="${orderDetails?.storeId }"/>
 			
 				<div data-role="fieldcontain">
 					<label for="name"><g:message code="patientProfile.name.label" default="Name" /></label>

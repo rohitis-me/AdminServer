@@ -6,6 +6,8 @@ import grails.transaction.Transactional
 
 @Transactional
 class StoreService {
+	
+	private final String debugStr = "StoreService "
 
     def serviceMethod() {
 
@@ -24,15 +26,16 @@ class StoreService {
 			if(store)
 			storeList.add(store)
 			else
-			println "store not found: "+storeId
+			println debugStr+"getStoreListFromStoreIdList store not found: "+storeId
 			
 		}
-		//return storeList
+		println "storeservice getStoreListFromStoreIdList: "+storeList.count
+		return storeList
 		//FIXME
-		List tmpList = new ArrayList<Store>()
-		tmpList.add(Store.first())
-		tmpList.add(Store.last())
-		return tmpList
+//		List tmpList = new ArrayList<Store>()
+//		tmpList.add(Store.first())
+//		tmpList.add(Store.last())
+//		return tmpList
 	}
 	
 }

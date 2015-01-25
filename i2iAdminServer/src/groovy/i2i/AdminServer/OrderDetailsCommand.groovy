@@ -20,6 +20,7 @@ class OrderDetailsCommand {
 	String addressLine1
 	String addressLine2
 	String circle
+	String city
 	String state
 	String country
 	

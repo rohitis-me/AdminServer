@@ -9,6 +9,8 @@
 	</head>
 	<body>
 		
+		
+		<g:set var="brandId" value="${brandId}"></g:set>
 		<div id="show-billing" class="content scaffold-show" role="main">
 			<h1><g:message message="Medicine availability" /></h1>
 			
@@ -31,11 +33,12 @@
 				</thead>
 				<tbody>
 				<g:each in="${storesList}" status="i" var="storeInstance">
+				<g:set var="storeId" value="${storeInstance?.storeId}"></g:set>
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						
 						<td>
-				<g:link controller="patientProfile" action="deliveryDetails" params="[storeId: '${storeInstance?.storeId }',brandId: '${brandId }']" >
+				<g:link controller="patientProfile" action="deliveryDetails" params="[storeId: storeId, brandId: brandId]" >
 						${fieldValue(bean: storeInstance, field: "storeName")}
 					</g:link>
 						</td>

@@ -17,4 +17,12 @@ class OrdersService {
 		orderDetails.storeName = storeData.storeName
 		return orderDetails
 	}
+	
+	def saveOrder(OrderDetailsCommand order) {
+		return 1
+	}
+	
+	def getOrderStatusFromOrderId(def orderId) {
+		return 2
+	}
 }

@@ -11,9 +11,8 @@ class AvailabilityService {
 	
 	def getStoreIdsFromBrandId(String brandId) {
 		
-//		Availability availability = Availability.first()
-		List storeIdList = Availability.findAllByBrandIdAndAvailabilityIndexGreaterThan(brandId, 0)*.storeId
-		println "availability service: "+storeIdList.count//+"\n* availability: "+availability.properties
+		def storeIdList = Availability.findAllByBrandIdAndAvailabilityIndexGreaterThan(brandId, 0)*.storeId
+		println "availability service getStoreIdsFromBrandId: "+storeIdList.size()//+"\n* availability: "+availability.properties
 		for(int i=0;i<storeIdList.size();i++)
 		{
 			for(int j=i+1;j<storeIdList.size();j++)

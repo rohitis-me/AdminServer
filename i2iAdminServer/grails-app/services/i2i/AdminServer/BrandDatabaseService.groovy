@@ -13,11 +13,15 @@ class BrandDatabaseService {
 		println "in getBrandIdFromBrandName"
 		String brandId = BrandDatabase.findByBrandName(brandName)*.brandId
 		println "Bid: "+brandId+" bn: "+brandName
+		
+		//FIXME
+		brandId = Availability.first().brandId
 		return brandId
 	}
 	
 	def getBrandDataFromBrandId(String brandId) {
 		BrandDatabase brand = BrandDatabase.findByBrandId(brandId)
+		println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
 		return brand
 	}
 	

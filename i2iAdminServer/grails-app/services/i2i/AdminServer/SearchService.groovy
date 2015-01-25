@@ -14,7 +14,6 @@ class SearchService {
 	
 	def getListOfStoresWhereBrandIsAvailable(String brandId) {
 		List storeIdList = availabilityService.getStoreIdsFromBrandId(brandId)
-		println "bid: "+brandId+" storeidlist: "+storeIdList.count
 		List storeList = storeService.getStoreListFromStoreIdList(storeIdList)
 		println "bid: "+brandId+" storelist: "+storeList.count
 		return storeList
