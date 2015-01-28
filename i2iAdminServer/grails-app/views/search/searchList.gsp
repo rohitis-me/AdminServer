@@ -3,26 +3,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="searchLayout">
 
-		<title><g:message message="Search" /></title>
+		<title><g:message message="i2i-Search List" /></title>
 	</head>
 	<body>
-		
-		
 		<g:set var="brandId" value="${brandId}"></g:set>
-		<div id="show-billing" class="content scaffold-show" role="main">
-			<h1><g:message message="Medicine availability" /></h1>
-			
-			<g:form controller="search" action="search" method="get">
-				<g:textField name="brandName" required="" />
-				<input type="submit" value="Search">
-			</g:form>
-			
-			<table>
+		<g:form controller="search" action="search" method="get">
+			<g:textField name="brandName" value="${brandName}" required="" class="textbox-control" id="TextBox1" style="width: 50%; position: relative; left: 15%;" />
+			<input type="submit" name="Button1" value="Search" id="Button1" class="btn btn-default" style="height: 44px; width: 20%; left:15%" />
+		</g:form>
+			<br/><br/>
+			<table align="center">
 			<thead>
 					<tr>
-					
 						<g:sortableColumn property="Store Name" title="Store Name" />
 					
 						<g:sortableColumn property="Address" title="Address" />

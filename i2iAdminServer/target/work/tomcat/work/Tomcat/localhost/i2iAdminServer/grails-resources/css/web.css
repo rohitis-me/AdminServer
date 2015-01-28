@@ -1,0 +1,200 @@
+#headerdiv {
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times,
+		"Times New Roman", serif;
+	background-color: #253272;
+	position: relative;
+	visibility: visible;
+	color: #F8F7F2;
+	font-size: 50px;
+	clip: rect(0px, auto, auto, auto);
+	text-align: left;
+	font-style: normal;
+	font-weight: bold;
+	text-decoration: blink;
+	text-indent: 10%;
+	height: 20%;
+	width: 100%;
+	float: left;
+	line-height: normal;
+	font-variant: normal;
+}
+
+.label-control {
+	font-size: large;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana,
+		sans-serif;
+	position: relative;
+	text-align: center;
+}
+
+.dropdown-control {
+	font-size: large;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana,
+		sans-serif;
+	text-align: left;
+	height: 40px;
+	width: 100%;
+	position: relative;
+	padding-right: 0%;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	text-indent: 0.01px; /*In Firefox*/
+	text-overflow: ''; /*In Firefox*/
+}
+
+.textbox-control {
+	font-size: large;
+	font-style: normal;
+	width: 100%;
+	height: 30px;
+	padding: 6px 12px;
+	line-height: 1.428571429;
+	color: #555555;
+	vertical-align: middle;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out 0.15s, box-shadow
+		ease-in-out 0.15s;
+	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.textbox-control:focus {
+	border-color: #66afe9;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+		rgba(102, 175, 233, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+		rgba(102, 175, 233, 0.6);
+}
+
+.btn {
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: large;
+	font-weight: normal;
+	line-height: 1.428571429;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	position: relative;
+}
+
+.btn-default {
+	color: #333333;
+	background-color: #ffffff;
+	border-color: #cccccc;
+}
+
+.btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default
+	{
+	color: #333333;
+	background-color: #ebebeb;
+	border-color: #adadad;
+}
+
+/* TABLES */
+table {
+	border-top: 1px solid #DFDFDF;
+	border-collapse: collapse;
+	width: 60%;
+	margin-bottom: 1em;
+	font-size: large;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans",
+		"DejaVu Sans", Verdana, sans-serif;
+}
+
+tr {
+	border: 0;
+}
+
+tr>td:first-child,tr>th:first-child {
+	padding-left: 1.25em;
+}
+
+tr>td:last-child,tr>th:last-child {
+	padding-right: 1.25em;
+}
+
+td,th {
+	line-height: 1.5em;
+	padding: 0.5em 0.6em;
+	text-align: left;
+	vertical-align: top;
+}
+
+th {
+	background-color: #efefef;
+	background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff),
+		color-stop(1, #eaeaea));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr= '#ffffff',
+		EndColorStr= '#eaeaea');
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
+	color: #666666;
+	font-weight: bold;
+	line-height: 1.7em;
+	padding: 0.2em 0.6em;
+}
+
+thead th {
+	white-space: nowrap;
+}
+
+th a {
+	display: block;
+	text-decoration: none;
+}
+
+th a:link,th a:visited {
+	color: #666666;
+}
+
+th a:hover,th a:focus {
+	color: #333333;
+}
+
+th.sortable a {
+	background-position: right;
+	background-repeat: no-repeat;
+	padding-right: 1.1em;
+}
+
+th.asc a {
+	background-image: url(../images/skin/sorted_asc.gif);
+}
+
+th.desc a {
+	background-image: url(../images/skin/sorted_desc.gif);
+}
+
+.odd {
+	background: #f7f7f7;
+}
+
+.even {
+	background: #ffffff;
+}
+
+.odd:hover, .even:hover {
+	background: #E1F2B6;
+}
+
+/* th:hover,tr:hover { */
+/* 	background: #E1F2B6; */
+/* } */
+
+tablepositioning {
+	border-collapse: collapse;
+	border: 0;
+	height: 30px;
+	font-size: 14px;
+	background-color: #ffffff;
+}
