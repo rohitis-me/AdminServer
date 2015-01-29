@@ -10,7 +10,7 @@
 		<title><g:layoutTitle default="i2i"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'web.css')}" type="text/css">
-		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css" media="only screen and (max-width:800px)">
 		<g:layoutHead/>
 		<g:javascript library="application"/>		
 		<r:layoutResources />
