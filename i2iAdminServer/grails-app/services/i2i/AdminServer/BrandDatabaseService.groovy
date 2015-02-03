@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class BrandDatabaseService {
 
+	private static final tag='BrandDatabaseService'
     def serviceMethod() {
 
     }
@@ -23,6 +24,12 @@ class BrandDatabaseService {
 		BrandDatabase brand = BrandDatabase.findByBrandId(brandId)
 		println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
 		return brand
+	}
+	
+	def getBrandNameFromBrandId(String brandId) {
+		String brandName = BrandDatabase.findByBrandId(brandId)*.brandName
+		println "brandname: "+brandName
+		return brandName
 	}
 	
 	//FIXME

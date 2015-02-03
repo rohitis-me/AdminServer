@@ -1,6 +1,6 @@
 
 
-<%@ page import="i2i.AdminServer.User.PatientProfile"%>
+<%@ page import="i2i.AdminServer.User.PatientProfile" %>
 <!doctype html>
 <html>
 <head>
@@ -36,10 +36,11 @@
 			Delivery address</h2>
 		<br />
 
-		<g:form action="saveOrder">
-			<g:hiddenField name="brandId" value="${orderDetails?.brandId }" />
-			<g:hiddenField name="storeId" value="${orderDetails?.storeId }" />
-
+		<g:form controller="orders" action="saveOrder" >
+			
+			<g:hiddenField name="brandId" value="${orderDetails?.brandId }"/>
+			<g:hiddenField name="storeId" value="${orderDetails?.storeId }"/>
+			
 			<table align="center" style="border-top: 0">
 				<tbody>
 					<tr>
@@ -74,23 +75,52 @@
 					<tr>
 						<td style="width: 15%"><label class="label-control"
 							for="address">Address </label></td>
-						<td><g:textArea class="textbox-control" name="address"
+						<td><g:textArea class="textbox-control" name="addressLine1"
 								cols="1" rows="1" maxlength="1000" required="required"
 								style="height: 80px;" value="${orderDetails?.addressLine1}" /></td>
 					</tr>
 					<tr>
 						<td style="width: 15%"><label class="label-control"
 							for="landmark">Landmark </label></td>
-						<td><g:textField class="textbox-control" name="landmark"
+						<td><g:textField class="textbox-control" name="addressLine2"
+								maxlength="100" required="required"
+								value="${orderDetails?.addressLine2}" /></td>
+					</tr>
+					<tr>
+						<td style="width: 15%"><label class="label-control"
+							for="landmark">Circle </label></td>
+						<td><g:textField class="textbox-control" name="circle"
 								maxlength="100" required="required"
 								value="${orderDetails?.circle}" /></td>
 					</tr>
 					<tr>
-						<td style="width: 15%"><label class="label-control" for="pin">Pin
-								code </label></td>
-						<td><input name="pin" type="text" required
-							class="textbox-control" id="textfield"></td>
+						<td style="width: 15%"><label class="label-control"
+							for="city">City </label></td>
+						<td><g:textField class="textbox-control" name="city"
+								maxlength="100" required="required"
+								value="${orderDetails?.city}" /></td>
 					</tr>
+					<tr>
+						<td style="width: 15%"><label class="label-control"
+							for="state">State </label></td>
+						<td><g:textField class="textbox-control" name="state"
+								maxlength="100" required="required"
+								value="${orderDetails?.state}" /></td>
+					</tr>
+					<tr>
+						<td style="width: 15%"><label class="label-control"
+							for="country">Country </label></td>
+						<td><g:textField class="textbox-control" name="country"
+								maxlength="100" required="required"
+								value="${orderDetails?.country}" /></td>
+					</tr>
+					
+<%--					<tr>--%>
+<%--						<td style="width: 15%"><label class="label-control" for="pin">Pin--%>
+<%--								code </label></td>--%>
+<%--						<td><input name="pin" type="text" required--%>
+<%--							class="textbox-control" id="textfield"></td>--%>
+<%--					</tr>--%>
 				</tbody>
 			</table>
 

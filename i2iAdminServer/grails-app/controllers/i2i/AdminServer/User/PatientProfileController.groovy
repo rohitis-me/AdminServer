@@ -23,25 +23,11 @@ class PatientProfileController {
 		def brandData = brandDatabaseService.getBrandDataFromBrandId(params.brandId)
 		def storeData = storeService.getStoreDataFromStoreId(params.storeId)
 		println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
-		def orderDetails = ordersService.populateOrderDetailsCommand(storeData, brandData)
+		def orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
         render(view:'deliveryDetails', model: [orderDetails : orderDetails])
 	}
 	
-	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
-//		def orderDetailsCommand = new OrderDetailsCommand(params)
-		
-		def orderId = ordersService.saveOrder(orderDetailsCommand)
-		
-		if(orderId)
-		redirect(controller: 'orders', action: 'showOrderStatus', params:[orderId: orderId])
-//		if (patientProfileInstance.save(flush: true)) {
-//			flash.message = "${message(code: 'default.created.message', args: [message(code: 'patientProfile.label', default: 'PatientProfile'), patientProfileInstance.id])}"
-//			redirect(action: "show", id: patientProfileInstance.id)
-//		}
-//		else {
-//			render(view: "create", model: [patientProfileInstance: patientProfileInstance])
-//		}
-	}
+	
 	
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)

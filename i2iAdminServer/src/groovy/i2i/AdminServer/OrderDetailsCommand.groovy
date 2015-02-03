@@ -3,10 +3,15 @@
  */
 package i2i.AdminServer
 
+import grails.validation.Validateable
+
+
 /**
  * @author Rohit
  *
  */
+
+@Validateable
 class OrderDetailsCommand {
 
 	String brandName
@@ -23,5 +28,7 @@ class OrderDetailsCommand {
 	String city
 	String state
 	String country
-	
+	byte orderStatus
+	Date estimatedDeliveryTime
+	long orderId
 }
