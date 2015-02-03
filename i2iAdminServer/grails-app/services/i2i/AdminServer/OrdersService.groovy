@@ -131,7 +131,7 @@ class OrdersService {
 	def acceptOrderAndSave(def orderId) {
 		Orders order = getOrderFromOrderId(orderId)
 		//FIXME: use enum
-		order.orderStatus = 2
+		order.orderStatus = Constants.ORDER_ACCEPTED
 		
 		def status = saveOrder(order)
 		
@@ -141,8 +141,8 @@ class OrdersService {
 	def rejectOrderAndSave(def orderId) {
 		println "orderid: "+orderId
 		Orders order = getOrderFromOrderId(orderId)
-		//FIXME: use enum
-		order.orderStatus = -1
+		//FIXME: use constants
+		order.orderStatus = Constants.ORDER_REJECTED
 		
 		def status = saveOrder(order)
 		

@@ -35,21 +35,41 @@
 		<tbody>
 			<tr class="${orderStatus == 1 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.one" default="Order Placed" /></td>
+				<g:if test="${orderStatus >= 1 }">
 				<td>Completed</td>
+				</g:if>
+				<g:else>
+				<td>Pending</td>
+				</g:else>
 			</tr>
 			<tr class="${orderStatus == 2 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.two" default="Order Accepted" /></td>
+				<g:if test="${orderStatus >= 2 }">
+				<td>Completed</td>
+				</g:if>
+				<g:else>
 				<td>Pending</td>
+				</g:else>
 			</tr>
 			<tr class="${orderStatus == 3 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.three"
 						default="Order in transit" /></td>
+				<g:if test="${orderStatus >= 3 }">
+				<td>Completed</td>
+				</g:if>
+				<g:else>
 				<td>Pending</td>
+				</g:else>
 			</tr>
 			<tr class="${orderStatus == 4 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.four"
 						default="Order delivered" /></td>
+				<g:if test="${orderStatus >= 4 }">
+				<td>Completed</td>
+				</g:if>
+				<g:else>
 				<td>Pending</td>
+				</g:else>
 			</tr>
 		</tbody>
 	</table>
