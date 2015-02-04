@@ -15,5 +15,5 @@ public final class Constants {
 	public static final byte ORDER_DELIVERED = 4;
 	public static final byte ORDER_REJECTED = 0;
 	
-	public static final String[] = {"Order Placed", "Order Accepted", "Order Intransit", "Order Delivered", "Order Rejected"};
+	//public static final String[] orderStatus = {"Order Placed", "Order Accepted", "Order Intransit", "Order Delivered", "Order Rejected"};
 }

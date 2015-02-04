@@ -1,64 +1,64 @@
 
-<%@ page import="i2i.AdminServer.OrderDetailsCommand" %>
+<%@ page import="i2i.AdminServer.OrderDetailsCommand"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'orders.label', default: 'Orders')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#show-orders" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="show-orders" class="content scaffold-show" role="main">
-			<ol class="property-list orders">
-			
-				<g:if test="${orderDetailsCommand?.name}">
-				<li class="fieldcontain">
-					<span id="personId-label" class="property-label"><g:message code="orders.personId.label" default="Person Name" /></span>
-					
-						<span class="property-value" aria-labelledby="personId-label"><g:fieldValue bean="${orderDetailsCommand}" field="name"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${orderDetailsCommand?.brandName}">
-				<li class="fieldcontain">
-					<span id="brandId-label" class="property-label"><g:message code="orders.brandId.label" default="Brand Name" /></span>
-					
-						<span class="property-value" aria-labelledby="brandId-label"><g:fieldValue bean="${orderDetailsCommand}" field="brandName"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${orderDetailsCommand?.storeName}">
-				<li class="fieldcontain">
-					<span id="storeId-label" class="property-label"><g:message code="orders.storeId.label" default="Store Name" /></span>
-					
-						<span class="property-value" aria-labelledby="storeId-label"><g:fieldValue bean="${orderDetailsCommand}" field="storeName"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${orderDetailsCommand?.orderStatus}">
-				<li class="fieldcontain">
-					<span id="orderStatus-label" class="property-label"><g:message code="orders.orderStatus.label" default="Order Status" /></span>
-					
-						<span class="property-value" aria-labelledby="orderStatus-label"><g:fieldValue bean="${orderDetailsCommand}" field="orderStatus"/></span>
-					
-				</li>
-				</g:if>
-				
-			</ol>
-			<g:form >
-			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }"/>
-				<fieldset class="buttons">
-					<g:link class="accept" action="acceptOrder" params="[orderId: orderDetailsCommand.orderId]"><g:message code="order.status.accept.button" default="Accept Order" /></g:link>
-					<g:actionSubmit class="reject" action="rejectOrder" value="${message(code: 'order.status.reject.button', default: 'Reject Order')}" onclick="return confirm('${message(code: 'order.status.reject.message')}');" />
-				</fieldset>
-			</g:form>
-		</div>
-		
-		
+<head>
+<meta name="layout" content="searchLayout">
+<g:set var="entityName"
+	value="${message(code: 'orders.label', default: 'Orders')}" />
+<title><g:message code="default.show.label" args="[entityName]" /></title>
+</head>
+<body>
+	<table align="center" style="border-top: 0">
+		<tr>
+			<td style="width: 30%"><span id="personId-label"
+				class="label-control"><g:message code="orders.personId.label"
+						default="Person Name" /></span></td>
+			<g:if test="${orderDetailsCommand?.name}">
+				<td><span class="label-control"
+					aria-labelledby="personId-label"><g:fieldValue
+							bean="${orderDetailsCommand}" field="name" /></span></td>
+			</g:if>
+		</tr>
+		<tr>
+			<td><span id="brandId-label" class="label-control"><g:message
+						code="orders.brandId.label" default="Brand Name" /></span></td>
+			<g:if test="${orderDetailsCommand?.brandName}">
+				<td><span class="label-control" aria-labelledby="brandId-label"><g:fieldValue
+							bean="${orderDetailsCommand}" field="brandName" /></span></td>
+			</g:if>
+		</tr>
+		<tr>
+			<td><span id="storeId-label" class="label-control"><g:message
+						code="orders.storeId.label" default="Store Name" /></span></td>
+			<g:if test="${orderDetailsCommand?.storeName}">
+				<td><span class="label-control" aria-labelledby="storeId-label"><g:fieldValue
+							bean="${orderDetailsCommand}" field="storeName" /></span></td>
+			</g:if>
+		</tr>
+		<tr>
+			<td><span id="orderStatus-label" class="label-control"><g:message
+						code="orders.orderStatus.label" default="Order Status" /></span></td>
+			<g:if test="${orderDetailsCommand?.orderStatus}">
+				<td><span class="label-control"
+					aria-labelledby="orderStatus-label"><g:fieldValue
+							bean="${orderDetailsCommand}" field="orderStatus" /></span></td>
+			</g:if>
+		</tr>
+	</table>
+	<div align="center">
+		<g:form>
+			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }" />
 
-	</body>
+			<g:link class="btn btn-default" style="height:44px; width:20%"
+				action="acceptOrder" params="[orderId: orderDetailsCommand.orderId]">
+				<g:message code="order.status.accept.button" default="Accept Order" />
+			</g:link>
+			<g:actionSubmit class="btn btn-default"
+				style="height:36px; width:10%" action="rejectOrder"
+				value="${message(code: 'order.status.reject.button', default: 'Reject Order')}"
+				onclick="return confirm('${message(code: 'order.status.reject.message')}');" />
+		</g:form>
+	</div>
+</body>
 </html>
