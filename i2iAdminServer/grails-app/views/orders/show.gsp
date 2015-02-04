@@ -62,8 +62,8 @@
 			</ol>
 			<g:form url="[resource:ordersInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${ordersInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+					<g:link class="accept" action="acceptOrder" resource="${ordersInstance}"><g:message code="order.status.accept.button" default="Accept Order" /></g:link>
+					<g:actionSubmit class="reject" action="rejectOrder" value="${message(code: 'order.status.reject.button', default: 'Reject Order')}" onclick="return confirm('${message(code: 'order.status.reject.message')}');" />
 				</fieldset>
 			</g:form>
 		</div>

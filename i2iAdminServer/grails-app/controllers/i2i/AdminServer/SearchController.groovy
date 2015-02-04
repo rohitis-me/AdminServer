@@ -20,7 +20,7 @@ class SearchController {
 		}
 		
 		if(stores)
-		render (view:"searchList", model: [storesList:stores, brandId: brandId])
+		render (view:"searchList", model: [storesList:stores, brandId: brandId, brandName: searchTerm])
 		else
 		render "error"
 	}

@@ -53,3 +53,12 @@ typeMismatch.java.lang.Long=Property {0} must be a valid number
 typeMismatch.java.lang.Short=Property {0} must be a valid number
 typeMismatch.java.math.BigDecimal=Property {0} must be a valid number
 typeMismatch.java.math.BigInteger=Property {0} must be a valid number
+
+# Drug messages
+drug.save.pendingApproval=Your changes have been successfully sent for review.
+drug.save.failed=Your changes could not be saved. The technical team is intimated about this. Please try again later
+drug.save.success=Drug {0} saved successfully!
+
+#Order messages
+patientProfile.deliveryDetails.title=Delivery Details
+

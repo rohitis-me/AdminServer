@@ -1,82 +1,184 @@
 /* Styles for mobile devices */
-
 @media screen and (max-width: 480px) {
-	.nav {
-		padding: 0.5em;
-	}
-
-	.nav li {
-		margin: 0 0.5em 0 0;
-		padding: 0.25em;
-	}
-
-	/* Hide individual steps in pagination, just have next & previous */
-	.pagination .step, .pagination .currentStep {
-		display: none;
-	}
-
-	.pagination .prevLink {
-		float: left;
-	}
-
-	.pagination .nextLink {
-		float: right;
-	}
-
-	/* pagination needs to wrap around floated buttons */
-	.pagination {
-		overflow: hidden;
-	}
-
-	/* slightly smaller margin around content body */
-	fieldset,
-	.property-list {
-		padding: 0.3em 1em 1em;
-	}
-
-	input, textarea {
-		width: 100%;
-		   -moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		    -ms-box-sizing: border-box;
-		        box-sizing: border-box;
-	}
-
-	select, input[type=checkbox], input[type=radio], input[type=submit], input[type=button], input[type=reset] {
-		width: auto;
-	}
-
-	/* hide all but the first column of list tables */
-	.scaffold-list td:not(:first-child),
-	.scaffold-list th:not(:first-child) {
-		display: none;
-	}
-
-	.scaffold-list thead th {
-		text-align: center;
-	}
-
-	/* stack form elements */
-	.fieldcontain {
-		margin-top: 0.6em;
-	}
-
-	.fieldcontain label,
-	.fieldcontain .property-label,
-	.fieldcontain .property-value {
-		display: block;
-		float: none;
-		margin: 0 0 0.25em 0;
+	#headerdiv {
+		font-size: 30px;
+		clip: rect(0px, auto, auto, auto);
 		text-align: left;
-		width: auto;
+		font-style: normal;
+		font-weight: bold;
+		text-decoration: blink;
+		text-indent: 10%;
+		height: 20%;
+		width: 100%;
+		float: left;
+		line-height: normal;
+		font-variant: normal;
+	}
+	.label-control {
+		font-size: large;
+		font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana,
+			sans-serif;
+		position: relative;
+		text-align: left;
+	}
+	.dropdown-control {
+		font-size: large;
+		font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana,
+			sans-serif;
+		text-align: left;
+		height: 40px;
+		width: 100%;
+		position: relative;
+		padding-right: 0%;
+		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border-radius: 4px;
+		text-indent: 0.01px; /*In Firefox*/
+		text-overflow: ''; /*In Firefox*/
+	}
+	.textbox-control {
+		font-size: large;
+		font-style: normal;
+		width: 100%;
+		height: 40px;
+		padding: 6px 12px;
+		line-height: 1.428571429;
+		color: #555555;
+		vertical-align: middle;
+		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		-webkit-transition: border-color ease-in-out 0.15s, box-shadow
+			ease-in-out 0.15s;
+		transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	}
+	.textbox-control:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+			rgba(102, 175, 233, 0.6);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+			rgba(102, 175, 233, 0.6);
+	}
+	.btn {
+		padding: 6px 12px;
+		margin-bottom: 0;
+		font-size: large;
+		font-weight: normal;
+		line-height: 1.428571429;
+		text-align: center;
+		white-space: nowrap;
+		vertical-align: middle;
+		cursor: pointer;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		position: relative;
+		width: 40%;
+	}
+	.btn-default {
+		color: #333333;
+		background-color: #ffffff;
+		border-color: #cccccc;
+	}
+	.btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default
+		{
+		color: #333333;
+		background-color: #ebebeb;
+		border-color: #adadad;
 	}
 
-	.errors ul,
-	.message p {
-		margin: 0.5em;
+	/* TABLES */
+	table {
+		border-top: 1px solid #DFDFDF;
+		border-collapse: collapse;
+		width: 90%;
+		margin-bottom: 1em;
+		font-size: large;
+		font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans",
+			"DejaVu Sans", Verdana, sans-serif;
+	}
+	tr {
+		border: 0;
+	}
+	tr>td:first-child,tr>th:first-child {
+		padding-left: 1.25em;
+	}
+	tr>td:last-child,tr>th:last-child {
+		padding-right: 1.25em;
+	}
+	td,th {
+		line-height: 1.5em;
+		padding: 0.5em 0.6em;
+		text-align: left;
+		vertical-align: top;
+	}
+	th {
+		background-color: #efefef;
+		background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff),
+			color-stop(1, #eaeaea));
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorStr= '#ffffff',
+			EndColorStr= '#eaeaea');
+		-ms-filter:
+			"progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
+		color: #666666;
+		font-weight: bold;
+		line-height: 1.7em;
+		padding: 0.2em 0.6em;
+	}
+	thead th {
+		white-space: nowrap;
+	}
+	th a {
+		display: block;
+		text-decoration: none;
+	}
+	th a:link,th a:visited {
+		color: #666666;
+	}
+	th a:hover,th a:focus {
+		color: #333333;
+	}
+	th.sortable a {
+		background-position: right;
+		background-repeat: no-repeat;
+		padding-right: 1.1em;
+	}
+	th.asc a {
+		background-image: url(../images/skin/sorted_asc.gif);
+	}
+	th.desc a {
+		background-image: url(../images/skin/sorted_desc.gif);
+	}
+	.odd {
+		background: #f7f7f7;
+	}
+	.even {
+		background: #ffffff;
+	}
+	.odd:hover,.even:hover {
+		background: #E1F2B6;
 	}
 
-	.error ul {
-		margin-left: 0;
+	/* th:hover,tr:hover { */
+	/* 	background: #E1F2B6; */
+	/* } */
+	.error textbox-control,.error select,.error textarea {
+		background: #fff3f3;
+		border-color: #ffaaaa;
+		color: #cc0000;
+	}
+	.error textbox-control:focus,.error select:focus,.error textarea:focus {
+		-moz-box-shadow: 0 0 0.5em #ffaaaa;
+		-webkit-box-shadow: 0 0 0.5em #ffaaaa;
+		box-shadow: 0 0 0.5em #ffaaaa;
+	}
+	inactive {
+		background-color: #FBFBEF;
+	}
+	active {
+		background-color: #48802C;
 	}
 }

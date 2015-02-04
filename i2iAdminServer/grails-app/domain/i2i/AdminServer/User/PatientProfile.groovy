@@ -2,6 +2,7 @@ package i2i.AdminServer.User
 
 class PatientProfile {
 
+	Long patientId
 	String name
 	String phoneNumber
 	String emailID
@@ -23,4 +24,9 @@ class PatientProfile {
 		circle nullable:false, blank:false,size:3..100
 		state nullable:false, blank:false,size:3..100
     }
+	
+	static mapping = {
+		table "patientprofile_tbl"
+		id name: 'patientId', column: 'patient_id'
+	}
 }

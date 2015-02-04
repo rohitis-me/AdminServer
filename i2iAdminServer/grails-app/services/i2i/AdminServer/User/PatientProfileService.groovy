@@ -10,6 +10,10 @@ class PatientProfileService {
 
     }
 	
+	def getPatientProfileDataFromPatientProfileId(String patientId) {
+		PatientProfile patientProfile = PatientProfile.findByPatientId(patientId)
+	}
+	
 	def populatePatientProfileFromOrderDetailsCommand(OrderDetailsCommand order) {
 		def patientProfile = new PatientProfile()
 		patientProfile.name = order.name
@@ -22,8 +26,34 @@ class PatientProfileService {
 		patientProfile.city = order.city
 		patientProfile.state = order.state
 		patientProfile.country = order.country
+		return patientProfile
 	}
 	
+	def savePatientProfile(PatientProfile patientProfile) {
+
+//		try {		
+		
+			println "patientProfile: "+patientProfile.properties
+			if(patientProfile.save()) {
+			
+				println "PP save success"
+				return 1
+		}
+		else {
+			patientProfile.errors.each {
+				println "Error saving patientProfile: "+it
+			}
+			return 0
+		}
+//		}
+//		catch(exp) {
+//			println "exception in savePatient: "+exp.getRootCause().getMessage()+" \n"
+//			throw exp
+//			//exp.printStackTrace()
+//		}
+	}
+	
+	//FIXME: THis should not be here
 	def saveOrder(OrderDetailsCommand order) {
 		return 1
 	}

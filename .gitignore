@@ -28,3 +28,4 @@ i2iAdminServer/web-app/plugins
 
 # "temporary" build files
 i2iAdminServer/target
+i2iAdminServer/target-eclipse

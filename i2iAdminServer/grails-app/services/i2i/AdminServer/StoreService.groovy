@@ -18,6 +18,11 @@ class StoreService {
 		return store
 	}
 	
+	def getStoreNameFromStoreId(String storeId) {
+		String storeName = Store.findByStoreId(storeId)*.storeName
+		return storeName
+	}
+	
 	def getStoreListFromStoreIdList(List storeIds) {
 		List storeList = new ArrayList<Store>();
 		storeIds.each { storeId->
@@ -36,6 +41,16 @@ class StoreService {
 //		tmpList.add(Store.first())
 //		tmpList.add(Store.last())
 //		return tmpList
+	}
+	
+	def getLoggedInStoreId() {
+		//FIXME: getstoreId from current logged in user
+		Orders order = Orders.first()
+		if (order)
+		return order.storeId
+		
+		else
+		return '0'
 	}
 	
 }
