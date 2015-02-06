@@ -7,8 +7,8 @@ i2iAdminServer/web-app/WEB-INF/classes
 i2iAdminServer/prodDb.*
 
 # general HSQL database files
-*Db.properties
-*Db.script
+i2iAdminServer/*Db.properties
+i2iAdminServer/*Db.script
 
 # logs
 i2iAdminServer/stacktrace.log
