@@ -1,5 +1,7 @@
 package i2i.AdminServer
 
+import grails.converters.JSON
+
 class SearchController {
 
 	SearchService searchService
@@ -28,10 +30,15 @@ class SearchController {
 	def listOfBrandNameStartingWith() {
 		println "received params: "+params
 		
-		String searchTerm = params.brandName
+		String searchTerm = params.term
 		
-		List drugList = brandDatabaseService.getListOfBrandNamesStartingWith(brandName)
+		List drugList = brandDatabaseService.getListOfBrandNamesStartingWith(searchTerm)
 		
+		def brandMap = []
+		drugList.each {
+			brandMap << "${it.brandName}"
+		}
+		render brandMap as JSON
 	}
 	
 }

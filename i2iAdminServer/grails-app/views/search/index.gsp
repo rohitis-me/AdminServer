@@ -3,6 +3,22 @@
 <head>
 <meta name="layout" content="searchLayout">
 <title><g:message message="i2i-Home page" /></title>
+
+<g:javascript>
+                              
+            $(document).ready(function() {
+          
+                $('#search_textField').autocomplete({
+
+                      source: '<g:createLink controller="search"
+		action="listOfBrandNameStartingWith" />'
+                  
+                });
+
+            });
+          
+</g:javascript>
+
 </head>
 
 <body>
@@ -37,8 +53,9 @@
 	<br />
 	<g:form controller="search" action="search" method="get">
 		<div class="searchbox" align="center">
-			<g:textField name="brandName" required="" class="textbox-control"
+			<input name="brandName" required="" class="textbox-control" id="search_textField"
 				placeholder="Enter medicine brand" style="width: 60%;" />
+				<g:hiddenField name="brandId" id="brandId"/>
 			<br /> <br /> <input type="submit" name="Button1" value="Search"
 				id="Button1" class="btn btn-default"
 				style="height: 44px; width: 20%;" />

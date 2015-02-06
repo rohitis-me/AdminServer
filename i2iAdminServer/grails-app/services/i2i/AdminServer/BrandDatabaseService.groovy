@@ -34,7 +34,11 @@ class BrandDatabaseService {
 	
 	//FIXME
 	def getListOfBrandNamesStartingWith(String brandName) {
-		List brandNameList = BrandDatabase.findAllWhereBrandNameLike(brandName+'%')*.brandName
+		List brandNameList = BrandDatabase.findAllByBrandNameIlike(brandName+"%") // ignore case
+		//findAllWhere(brandName: brandName+"%")//WhereBrandNameLike(brandName+'%')*.brandName
+//		List brandNameList = new ArrayList<BrandDatabase>()
+//		brandNameList.add(BrandDatabase.first())
+//		brandNameList..add(BrandDatabase.last())
 		return brandNameList
 	}
 	
