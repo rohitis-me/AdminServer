@@ -13,7 +13,8 @@ class SearchController {
 		println "received params: "+params+ " Brand Name: "+params.brandName;
  
 		String searchTerm = params.brandName
-		String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
+		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
+		String brandId = params.brandId
 				
 		List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
 		
@@ -31,14 +32,28 @@ class SearchController {
 		println "received params: "+params
 		
 		String searchTerm = params.term
+		String suggestion
 		
 		List drugList = brandDatabaseService.getListOfBrandNamesStartingWith(searchTerm)
 		
-		def brandMap = []
+		List brandMapList = []
 		drugList.each {
-			brandMap << "${it.brandName}"
+			Map brandMap = [:]
+			suggestion = "${it.brandName}"+" "+"${it.strength}"+" ${it.form}"
+//			brandMap << suggestion
+			brandMap.put("id", "${it.brandId}")
+			brandMap.put("name", "${it.brandName}")
+			brandMap.put("label", suggestion)
+			brandMapList.add(brandMap)
 		}
-		render brandMap as JSON
+		render brandMapList as JSON
+		
+//		def brandMap = []
+//		drugList.each {
+//			suggestion = "${it.brandName}"+" "+"${it.strength}"+" ${it.form}"
+//			brandMap << suggestion
+//		}
+//		render brandMap as JSON
 	}
 	
 }

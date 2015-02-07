@@ -13,8 +13,8 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css" media="only screen and (max-width:800px)">
 		<g:layoutHead/>
 		<g:javascript library="application"/>
-		<r:require module="jquery-ui" />		
-		<r:layoutResources />
+<%--		<r:require module="jquery-ui" />		--%>
+<%--		<r:layoutResources />--%>
 	</head>
 	<body>
 		<div class="headerBanner" id="headerdiv" role="banner">i2i Tech</div>
