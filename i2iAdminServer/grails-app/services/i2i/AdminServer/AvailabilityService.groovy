@@ -27,4 +27,10 @@ class AvailabilityService {
 		return storeIdList
 	}
 	
+	def getBrandIdListFromStoreId(String storeId)
+	{
+		def brandIdList = Availability.findAllByStoreId(storeId)*.brandId
+		println "brandid count: "+brandIdList.size()
+		return brandIdList
+	}
 }

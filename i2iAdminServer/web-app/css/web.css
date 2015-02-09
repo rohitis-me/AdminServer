@@ -19,6 +19,134 @@
 	font-variant: normal;
 }
 
+header,section,footer,aside,nav,article,figure,figcaption {
+	display: block;
+}
+
+body {
+	color: #666666;
+	background-color: #848383;
+	background-position: center;
+	font-family: Georgia, Times, serif;
+	line-height: 1.4em;
+	margin: 0px;
+}
+
+.wrapper {
+	width: 940px;
+	margin: 20px auto 20px auto;
+	background-color: #ffffff;
+}
+
+header {
+	height: 100px;
+	background-color: #DDCFBD;
+}
+
+h1 {
+	text-align: left;
+	width: 940px;
+	height: 100px;
+	margin: 0px;
+	color: #F5EBEC;
+	padding-left: 20px;
+}
+
+nav,footer {
+	clear: both;
+	color: #ffffff;
+	background-color: #aeaca8;
+	height: 30px;
+}
+
+nav ul {
+	margin: 0px;
+	padding: 5px 0px 5px 30px;
+}
+
+nav li {
+	display: inline;
+	margin-right: 40px;
+}
+
+nav li a {
+	color: #ffffff;
+}
+
+nav li a:hover,nav li a.current {
+	color: #000000;
+}
+
+section.Register {
+	float: left;
+	width: 550px;
+	border-right: 1px solid #eeeeee;
+}
+
+aside {
+	width: 350px;
+	float: left;
+}
+
+aside section a {
+	display: block;
+	padding: 10px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+aside section a:hover {
+	color: #985d6a;
+	background-color: #efefef;
+}
+
+a {
+	color: #de6581;
+	text-decoration: none;
+}
+
+h1,h2,h3 {
+	font-weight: normal;
+	top: auto;
+	text-align: center;
+	text-indent: 0px;
+	vertical-align: top;
+	list-style-position: inside;
+}
+
+h2 {
+	padding: 0px;
+	color: #de6581;
+	text-align: center;
+}
+
+h3 {
+	margin: 0px 0px 10px 0px;
+	color: #de6581;
+}
+
+footer {
+	font-size: 80%;
+	padding: 0px 0px 0px 0px;
+	margin-bottom: 0px;
+}
+
+div {
+	margin: 10px;
+	padding-bottom: 10px;
+	width: 260px;
+}
+
+.submit {
+	text-align: right;
+}
+
+.title {
+	float: left;
+	width: 100px;
+	text-align: left;
+	padding-right: 10px;
+}
+
 .label-control {
 	font-size: large;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana,
@@ -183,23 +311,23 @@ th.desc a {
 	background: #ffffff;
 }
 
-.odd:hover, .even:hover {
+.odd:hover,.even:hover {
 	background: #E1F2B6;
 }
 
 /* th:hover,tr:hover { */
 /* 	background: #E1F2B6; */
 /* } */
-.error textbox-control, .error select, .error textarea {
+.error textbox-control,.error select,.error textarea {
 	background: #fff3f3;
 	border-color: #ffaaaa;
 	color: #cc0000;
 }
 
-.error textbox-control:focus, .error select:focus, .error textarea:focus {
-	   -moz-box-shadow: 0 0 0.5em #ffaaaa;
+.error textbox-control:focus,.error select:focus,.error textarea:focus {
+	-moz-box-shadow: 0 0 0.5em #ffaaaa;
 	-webkit-box-shadow: 0 0 0.5em #ffaaaa;
-	        box-shadow: 0 0 0.5em #ffaaaa;
+	box-shadow: 0 0 0.5em #ffaaaa;
 }
 
 inactive {
@@ -210,15 +338,13 @@ active {
 	background-color: #48802C;
 }
 
-
 /* NAVIGATION MENU */
-
 .nav {
 	background-color: #efefef;
 	padding: 0.5em 0.75em;
-	   -moz-box-shadow: 0 0 3px 1px #aaaaaa;
+	-moz-box-shadow: 0 0 3px 1px #aaaaaa;
 	-webkit-box-shadow: 0 0 3px 1px #aaaaaa;
-	        box-shadow: 0 0 3px 1px #aaaaaa;
+	box-shadow: 0 0 3px 1px #aaaaaa;
 	zoom: 1;
 }
 
@@ -241,29 +367,29 @@ active {
 	display: block;
 	padding: 0.25em 0.7em;
 	text-decoration: none;
-	   -moz-border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
 	-webkit-border-radius: 0.3em;
-	        border-radius: 0.3em;
+	border-radius: 0.3em;
 }
 
-.nav a:active, .nav a:visited {
+.nav a:active,.nav a:visited {
 	color: #666666;
 }
 
-.nav a:focus, .nav a:hover {
+.nav a:focus,.nav a:hover {
 	background-color: #999999;
 	color: #ffffff;
 	outline: none;
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
-.no-borderradius .nav a:focus, .no-borderradius .nav a:hover {
+.no-borderradius .nav a:focus,.no-borderradius .nav a:hover {
 	background-color: transparent;
 	color: #444444;
 	text-decoration: underline;
 }
 
-.nav a.home, .nav a.list, .nav a.create {
+.nav a.home,.nav a.list,.nav a.create {
 	background-position: 0.7em center;
 	background-repeat: no-repeat;
 	text-indent: 25px;
