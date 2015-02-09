@@ -3,6 +3,7 @@ package i2i.AdminServer
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 //@Transactional(readOnly = true)
@@ -22,6 +23,7 @@ class OrdersController {
         respond ordersInstance
     }
 	
+	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showOrderDetailsList() {
 		String storeId = storeService.getLoggedInStoreId()
 		
@@ -34,6 +36,7 @@ class OrdersController {
 		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList])
 	}
 	
+	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showOrderDetails(OrderDetailsCommand orderDetailsCommand) {
 		println "showOrderDetails params: "+params
 		def orderId = orderDetailsCommand.orderId
@@ -48,6 +51,7 @@ class OrdersController {
 		render(view: "orderStatus", model: [orderStatus: orderStatus])
 	}
 
+	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def acceptOrder(OrderDetailsCommand orderDetailsCommand) {
 		println "in accept order: "+params
 		def orderId = orderDetailsCommand.orderId
@@ -60,6 +64,7 @@ class OrdersController {
 		render "success"
 	}
 
+	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def rejectOrder(OrderDetailsCommand orderDetailsCommand) {
 		println "params: "+params
 		def orderId = orderDetailsCommand.orderId
