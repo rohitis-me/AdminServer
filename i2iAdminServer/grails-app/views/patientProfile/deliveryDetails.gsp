@@ -70,7 +70,7 @@
 							for="emailID"><g:message
 									code="patientProfile.emailID.label" default="Email ID" /></label></td>
 						<td><g:textField class="textbox-control" name="emailID"
-								maxlength="100" value="${orderDetails?.emailID}" /></td>
+								type="email" maxlength="100" value="${orderDetails?.emailID}" /></td>
 					</tr>
 					<tr>
 						<td style="width: 15%"><label class="label-control"
