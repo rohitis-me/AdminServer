@@ -1,10 +1,23 @@
-import i2i.AdminServer.Availability
-import i2i.AdminServer.Store
+import grails.plugin.springsecurity.SpringSecurityService
+import i2i.AdminServer.User.Sec.SecRole
+import i2i.AdminServer.User.Sec.SecUser
+import i2i.AdminServer.User.Sec.SecUserSecRole
 
 class BootStrap {
+	SpringSecurityService springSecurityService
 
     def init = { servletContext ->
 		println "in bs"
+		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
+		
+		def adminUser = SecUser.findByUsername('admin') ?: new SecUser(
+				username: 'admin',
+				password: 'admin').save(flush: true)
+
+		if (!adminUser.authorities.contains(adminRole)) {
+			SecUserSecRole.create adminUser, adminRole
+		}
+		
 //		Random random = new Random();
 //		
 //		for(int i=0; i<10; i++) {

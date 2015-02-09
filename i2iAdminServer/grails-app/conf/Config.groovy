@@ -122,17 +122,21 @@ log4j = {
 
 
 // Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.successHandler.defaultTargetUrl = 'orders/showOrderDetailsList/'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'i2i.AdminServer.User.Sec.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'i2i.AdminServer.User.Sec.SecUserSecRole'
 grails.plugin.springsecurity.authority.className = 'i2i.AdminServer.User.Sec.SecRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/**':                              ['permitAll'],
-	'/index':                         ['permitAll'],
-	'/index.gsp':                     ['permitAll'],
-	'/assets/**':                     ['permitAll'],
-	'/**/js/**':                      ['permitAll'],
-	'/**/css/**':                     ['permitAll'],
-	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll']
+	'/**':                              ['permitAll']
 ]
+//grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+//	'/**':                              ['permitAll'],
+//	'/index':                         ['permitAll'],
+//	'/index.gsp':                     ['permitAll'],
+//	'/assets/**':                     ['permitAll'],
+//	'/**/js/**':                      ['permitAll'],
+//	'/**/css/**':                     ['permitAll'],
+//	'/**/images/**':                  ['permitAll'],
+//	'/**/favicon.ico':                ['permitAll']
+//]
 
