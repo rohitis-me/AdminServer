@@ -31,6 +31,7 @@
 
 	<br />
 
+${orderStatus}
 	<table align="center" style="border-top: 0">
 		<tbody>
 			<tr class="${orderStatus == 1 ? 'even' : 'odd'}">

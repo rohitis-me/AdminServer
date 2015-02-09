@@ -22,10 +22,10 @@ class SearchController {
 			println store.storeName
 		}
 		
-		if(stores)
+//		if(stores)
 		render (view:"searchList", model: [storesList:stores, brandId: brandId, brandName: searchTerm])
-		else
-		render "error"
+//		else
+//		render "error"
 	}
 	
 	def listOfBrandNameStartingWith() {

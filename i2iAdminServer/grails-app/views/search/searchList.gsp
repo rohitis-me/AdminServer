@@ -6,16 +6,11 @@
 <meta name="layout" content="searchLayout">
 
 <title><g:message message="i2i-Search List" /></title>
+<%--<r:require module="jquery-ui" />--%>
 </head>
 <body>
 	<g:set var="brandId" value="${brandId}"></g:set>
-	<g:form controller="search" action="search" method="get">
-		<g:textField name="brandName" value="${brandName}" required=""
-			class="textbox-control" placeholder="Enter medicine brand"
-			style="width: 50%; position: relative; left: 15%;" />
-		<input type="submit" name="Button1" value="Search" id="Button1"
-			class="btn btn-default" style="height: 44px; width: 20%; left: 15%" />
-	</g:form>
+	<g:render template="searchBox"></g:render>
 	<br />
 	<table align="center">
 		<thead>
@@ -29,6 +24,7 @@
 			</tr>
 		</thead>
 		<tbody>
+		<g:if test="${storesList }">
 			<g:each in="${storesList}" status="i" var="storeInstance">
 				<g:set var="storeId" value="${storeInstance?.storeId}"></g:set>
 				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
@@ -52,8 +48,11 @@
 
 				</tr>
 			</g:each>
+			</g:if>
+			<g:else>
+			<g:message code="search.result.unavailable" default="Unavailable"/>
+			</g:else>
 		</tbody>
 	</table>
-	</div>
 </body>
 </html>

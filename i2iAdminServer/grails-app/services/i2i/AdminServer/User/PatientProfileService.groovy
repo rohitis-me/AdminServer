@@ -29,6 +29,7 @@ class PatientProfileService {
 		return patientProfile
 	}
 	
+	//FIXME
 	def savePatientProfile(PatientProfile patientProfile) {
 
 //		try {		
@@ -37,7 +38,7 @@ class PatientProfileService {
 			if(patientProfile.save()) {
 			
 				println "PP save success"
-				return 1
+				return patientProfile.patientId
 		}
 		else {
 			patientProfile.errors.each {

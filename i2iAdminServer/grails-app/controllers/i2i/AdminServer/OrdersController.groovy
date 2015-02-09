@@ -84,8 +84,10 @@ class OrdersController {
 		if(orderId)
 			redirect(controller: 'orders', action: 'showOrderStatus', params:[orderId: orderId])
 
-		else
+		else {
+			flash.message = message(code: 'default.error.message', args: [message(code: 'save.error.label', default: 'Error saving')])
 			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:[orderDetails: orderDetailsCommand])
+		}
 	}
 
     @Transactional

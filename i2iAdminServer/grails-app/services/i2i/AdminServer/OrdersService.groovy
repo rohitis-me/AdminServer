@@ -95,10 +95,18 @@ class OrdersService {
 	def saveOrderFromOrderDetails(OrderDetailsCommand orderDetails) {
 		PatientProfile patient = patientProfileService.populatePatientProfileFromOrderDetailsCommand(orderDetails)
 		def patientId = patientProfileService.savePatientProfile(patient)
-		Orders order = populateOrderFromOrderDetailsCommand(orderDetails)
-		order.personId = patientId
+		if(patientId!= 0) {
+			Orders order = populateOrderFromOrderDetailsCommand(orderDetails)
+			order.personId = patientId
+			
+			def orderId = saveOrder(order)
+			if(orderId != 0) {
+				return orderId
+			}
+		}
 		
-		saveOrder(order)
+		//if patient or order is not saved
+		return 0
 		
 	}
 	
@@ -118,9 +126,9 @@ class OrdersService {
 	
 	//FIXME
 	def getOrderStatusFromOrderId(def orderId) {
-		return 2
-//		Orders order = Orders.findByOrderId(orderId)
-//		return order.orderStatus
+//		return 2
+		Orders order = Orders.findByOrderId(orderId)
+		return order.orderStatus
 	}
 	
 	def getOrderFromOrderId(def orderId) {
