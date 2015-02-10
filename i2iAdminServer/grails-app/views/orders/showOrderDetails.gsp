@@ -3,12 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="layout" content="searchLayout">
+<meta name="layout" content="adminLayout">
 <g:set var="entityName"
 	value="${message(code: 'orders.label', default: 'Orders')}" />
 <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
+<g:render template="/template/navigation" />
+
 	<table align="center" style="border-top: 0">
 		<tr>
 			<td style="width: 30%"><span id="personId-label"

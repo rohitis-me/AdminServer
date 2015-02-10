@@ -3,20 +3,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="searchLayout">
+		<meta name="layout" content="adminLayout">
 		<g:set var="entityName" value="${message(code: 'availability.label', default: 'Availability')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
-				<nav>
-					<ul>
-						<li><a href="">Home</a></li>
-						<li><g:link controller="orders" action="showOrderDetailsList">Orders</g:link></li>
-						<li><g:link class="current" controller="availability" action="showInventoryDetails">Inventory</g:link></li>
-					</ul>
-				</nav>
+<g:render template="/template/navigation" />	
+<%--				<nav>--%>
+<%--					<ul>--%>
+<%--						<li><g:link controller="store" action="showStoreProfile">Profile</g:link></li>--%>
+<%--						<li><g:link controller="orders" action="showOrderDetailsList">Orders</g:link></li>--%>
+<%--						<li><g:link class="current" controller="availability" action="showInventoryDetails">Inventory</g:link></li>--%>
+<%--					</ul>--%>
+<%--				</nav>--%>
 		<div id="list-availability" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
+			<h2><g:message code="default.list.label" args="[entityName]" /></h2>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>

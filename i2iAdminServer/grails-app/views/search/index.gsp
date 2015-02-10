@@ -7,15 +7,15 @@
 </head>
 
 <body>
-	<h2
-		style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
-		Could not find your medicine? Search here!</h2>
-			<p
-		style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
-		online portal to locate pharmacy selling your medicine.</p>
-	<br />
-	<br />
-	<br />
+<%--	<h2--%>
+<%--		style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">--%>
+<%--		Could not find your medicine? Search here!</h2>--%>
+<%--			<p--%>
+<%--		style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">--%>
+<%--		online portal to locate pharmacy selling your medicine.</p>--%>
+<%--	<br />--%>
+<%--	<br />--%>
+<%--	<br />--%>
 	<table align="center" style="border-top: 0">
 		<tr>
 			<td style="width: 15%"><span id="Label1" class="label-control">State

@@ -3,16 +3,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="layout" content="searchLayout">
+<meta name="layout" content="adminLayout">
 <g:set var="entityName"
 	value="${message(code: 'orders.label', default: 'Orders')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
-		<h2
-			style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
-			Orders list</h2>
-		<br />
+<g:render template="/template/navigation" />
+
+<%--	<nav>--%>
+<%--		<ul>--%>
+<%--			<li><g:link controller="store" action="showStoreProfile">Profile</g:link></li>--%>
+<%--			<li><g:link class="current" controller="orders"--%>
+<%--					action="showOrderDetailsList">Orders</g:link></li>--%>
+<%--			<li><g:link controller="availability"--%>
+<%--					action="showInventoryDetails">Inventory</g:link></li>--%>
+<%--		</ul>--%>
+<%--	</nav>--%>
+	<h2>Orders list</h2>
+	<br />
 	<table align="center">
 		<thead>
 			<tr>
@@ -36,7 +45,7 @@
 				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
 					<td><g:link action="showOrderDetails"
-							params="[ orderId: ordersInstance.orderId]">
+							params="[orderId: ordersInstance.orderId]">
 							${fieldValue(bean: ordersInstance, field: "brandName")}
 						</g:link></td>
 

@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="layout" content="searchLayout">
 <g:set var="entityName"
-	value="${message(code: 'store.label', default: 'Store')}" />
+	value="${message(code: 'storeProfile.label', default: 'StoreProfile')}" />
+<meta name="layout" content="adminLayout">
 <title><g:message code="default.create.label"
 		args="[entityName]" /></title>
 </head>
 <body>
-				<nav>
-					<ul>
-						<li><a href="" class="current">Home</a></li>
-						<li><g:link controller="orders" action="showOrderDetailsList">Orders</g:link></li>
-						<li><g:link controller="availability" action="showInventoryDetails">Inventory</g:link></li>
-					</ul>
-				</nav>
+<g:render template="/template/navigation" />
+<%--				<nav>--%>
+<%--					<ul>--%>
+<%--						<li><g:link class="current" controller="orders" action="showOrderDetailsList">Profile</g:link></li>--%>
+<%--						<li><g:link controller="orders" action="showOrderDetailsList">Orders</g:link></li>--%>
+<%--						<li><g:link controller="availability" action="showInventoryDetails">Inventory</g:link></li>--%>
+<%--					</ul>--%>
+<%--				</nav>--%>
 	<div id="create-store" class="content scaffold-create" role="main">
-		<h1>
+		<h2>
 			My account details
-		</h1>
+		</h2>
 		<g:if test="${flash.message}">
 			<div class="message" role="status">
 				${flash.message}

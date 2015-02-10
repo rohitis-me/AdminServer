@@ -25,7 +25,7 @@ class StoreController {
         respond new Store(params)
     }
 	
-	def storeProfile() {
+	def showStoreProfile() {
 		def storeId = storeService.getLoggedInStoreId()
 		Store store = storeService.getStoreDataFromStoreId(storeId)
 		

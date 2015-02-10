@@ -23,16 +23,16 @@
 			</div>
 		</g:hasErrors>
 
-		<div class="ordername" align="center">
-			<g:fieldValue class="label-control" bean="${orderDetails}"
-				field="brandName" />
-			<span class="label-control"> from </span>
-			<g:fieldValue class="label-control" bean="${orderDetails}"
-				field="storeName" />
-		</div>
-		<br />
+<%--		<div class="ordername" align="center">--%>
+<%--			<g:fieldValue class="label-control" bean="${orderDetails}"--%>
+<%--				field="brandName" />--%>
+<%--			<span class="label-control"> from </span>--%>
+<%--			<g:fieldValue class="label-control" bean="${orderDetails}"--%>
+<%--				field="storeName" />--%>
+<%--		</div>--%>
+<%--		<br />--%>
 		<h2
-			style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
+			style="text-align: center; color: white;">
 			Delivery address</h2>
 		<br />
 
