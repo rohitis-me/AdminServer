@@ -12,7 +12,7 @@
 					<ul>
 						<li><a href="" class="current">Home</a></li>
 						<li><g:link controller="orders" action="showOrderDetailsList">Orders</g:link></li>
-						<li><a href="">Inventory</a></li>
+						<li><g:link controller="availability" action="showInventoryDetails">Inventory</g:link></li>
 					</ul>
 				</nav>
 	<div id="create-store" class="content scaffold-create" role="main">

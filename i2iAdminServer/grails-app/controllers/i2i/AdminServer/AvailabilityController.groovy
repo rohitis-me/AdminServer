@@ -33,14 +33,11 @@ class AvailabilityController {
 			
 		println "showInventoryAvailability params: "+params
 		
-		List brandId = availabilityService.getBrandIdListFromStoreId(storeId)
-		brandId.each {
-			println "bid: "+brandId
-		}
+		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromStoreId(storeId)
 		//BrandDatabase brand = brandDatabaseService.getBrandDataFromBrandId(brandId)
 		//inventoryAvailabilityCommand = ordersService.populateBrandToBeApproved(brand)
-		render "success"
-		//render(view:"showInventoryAvailability", model: [inventoryAvailabilityInstance: inventoryAvailabilityCommand])
+		//render "success"
+		render(view:"showInventoryDetails", model: [inventoryAvailabilityList: inventoryAvailabilityList])
 	}
 
     def create() {
