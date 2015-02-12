@@ -22,10 +22,13 @@
 <r:layoutResources />
 </head>
 <body>
-	<div class="headerBanner" id="headerdiv" role="banner">i2i Tech</div>
-	<br /><br /><br /><br /><br />
-	<g:layoutBody/>
-	<div class="footer" role="contentinfo"></div>
-	<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+	<div class="wrapper">
+		<header>
+			<h1>i2i Tech</h1>
+		</header>
+		<g:layoutBody />
+		<footer> &copy; 2015 i2i Tech </footer>
+	</div>
 	<r:layoutResources />
-</body></html>
+</body>
+</html>
