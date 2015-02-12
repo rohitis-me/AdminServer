@@ -16,10 +16,10 @@
 <g:form controller="search" action="search" method="get">
 		<div class="searchbox" align="center">
 			<input name="brandName" required="" class="textbox-control" id="search_textField"
-				placeholder="Enter medicine brand" style="width: 60%;" />
-				<g:hiddenField name="brandId" id="brand_id" value=""/>
+				placeholder="Enter medicine brand" style="width: 55%;" value="${brandName}" />
+				<g:hiddenField name="brandId" id="brand_id" value="${brandId}"/>
 			 <input type="submit" name="Button1" value="Search"
 				id="Button1" class="btn btn-default"
-				style="height: 44px; width: 20%;" />
+				style="height: 44px; width: 25%;" />
 		</div>
 </g:form>

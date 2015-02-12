@@ -27,14 +27,14 @@
 		<g:if test="${storesList }">
 			<g:each in="${storesList}" status="i" var="storeInstance">
 				<g:set var="storeId" value="${storeInstance?.storeId}"></g:set>
-				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="patientProfile"
+					action="deliveryDetails"
+					params="[storeId: storeId, brandId: brandId]"/>" '>
 
 
-					<td><g:link controller="patientProfile"
-							action="deliveryDetails"
-							params="[storeId: storeId, brandId: brandId]">
+					<td>
 							${fieldValue(bean: storeInstance, field: "storeName")}
-						</g:link></td>
+						</td>
 
 					<td>
 						${fieldValue(bean: storeInstance, field: "addressLine1")} <br>

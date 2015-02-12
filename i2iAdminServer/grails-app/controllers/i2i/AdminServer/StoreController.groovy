@@ -3,6 +3,7 @@ package i2i.AdminServer
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -25,6 +26,7 @@ class StoreController {
         respond new Store(params)
     }
 	
+	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showStoreProfile() {
 		def storeId = storeService.getLoggedInStoreId()
 		Store store = storeService.getStoreDataFromStoreId(storeId)

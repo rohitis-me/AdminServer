@@ -37,7 +37,7 @@ class OrdersService {
 		orderDetailsCommand.circle = patient.circle
 		orderDetailsCommand.city = patient.city
 		orderDetailsCommand.state = patient.state
-		orderDetailsCommand.state = patient.state
+		orderDetailsCommand.country = patient.country
 		return orderDetailsCommand
 	}
 	
@@ -52,6 +52,7 @@ class OrdersService {
 		orderDetails.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
 		orderDetails.storeName = storeService.getStoreNameFromStoreId(order.storeId)
 		orderDetails.orderId = order.orderId
+		orderDetails.orderStatus = order.orderStatus
 		return orderDetails
 	}
 	

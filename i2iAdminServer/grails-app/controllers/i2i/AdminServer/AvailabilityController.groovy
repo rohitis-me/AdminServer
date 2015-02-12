@@ -3,6 +3,7 @@ package i2i.AdminServer
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -23,20 +24,17 @@ class AvailabilityController {
     }
 	
 	
-	
+	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showInventoryDetails(InventoryAvailabilityCommand inventoryAvailabilityCommand) {
 		String storeId = storeService.getLoggedInStoreId()
 		
-		//TODO
+		//FIXME
 		if(storeId == '0')
 			render "error. Not logged in "
 			
 		println "showInventoryAvailability params: "+params
 		
 		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromStoreId(storeId)
-		//BrandDatabase brand = brandDatabaseService.getBrandDataFromBrandId(brandId)
-		//inventoryAvailabilityCommand = ordersService.populateBrandToBeApproved(brand)
-		//render "success"
 		render(view:"showInventoryDetails", model: [inventoryAvailabilityList: inventoryAvailabilityList])
 	}
 

@@ -48,12 +48,6 @@ class SearchController {
 		}
 		render brandMapList as JSON
 		
-//		def brandMap = []
-//		drugList.each {
-//			suggestion = "${it.brandName}"+" "+"${it.strength}"+" ${it.form}"
-//			brandMap << suggestion
-//		}
-//		render brandMap as JSON
 	}
 	
 }

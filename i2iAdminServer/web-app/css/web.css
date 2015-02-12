@@ -1,10 +1,10 @@
 body {
-	color: #666666;
+	color:white;
 	background-color: #848383;
 	background-position: center;
 	font-family: Georgia, Times, serif;
-	font-weight:normal;
-	font-size:large;
+	font-weight: normal;
+	font-size: large;
 	line-height: 1.4em;
 	margin: 0px;
 }
@@ -12,7 +12,7 @@ body {
 #headerdiv {
 	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times,
 		"Times New Roman", serif;
-	background-color: #253272;
+	background-color: #5F5C5C;
 	position: relative;
 	visibility: visible;
 	color: #F8F7F2;
@@ -38,6 +38,8 @@ body {
 
 .dropdown-control {
 	text-align: left;
+	font-family: inherit; font-weight : inherit; font-size : inherit;
+	color: #555555;
 	height: 40px;
 	width: 60%;
 	position: relative;
@@ -46,7 +48,9 @@ body {
 	border: 1px solid #cccccc;
 	border-radius: 4px;
 	text-indent: 0.01px; /*In Firefox*/
-	text-overflow: ''; /*In Firefox*/
+	text-overflow: '';
+	font-weight: inherit;
+	font-size: inherit; /*In Firefox*/
 }
 
 .btn {
@@ -66,6 +70,11 @@ body {
 	color: #333333;
 	background-color: #ffffff;
 	border-color: #cccccc;
+	font-family: inherit;
+	font-weight: inherit;
+	font-size: inherit;
+	height:44px; 
+	width:20%;
 }
 
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default
@@ -79,7 +88,9 @@ body {
 	width: 100%;
 	height: 30px;
 	padding: 6px 12px;
-	line-height: 1.428571429;
+	font-family: inherit;
+	font-weight: inherit;
+	font-size: inherit; line-height : 1.428571429;
 	color: #555555;
 	vertical-align: middle;
 	background-color: #ffffff;
@@ -90,6 +101,7 @@ body {
 	-webkit-transition: border-color ease-in-out 0.15s, box-shadow
 		ease-in-out 0.15s;
 	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	line-height: 1.428571429;
 }
 
 .textbox-control:focus {
@@ -175,15 +187,15 @@ th.desc a {
 }
 
 .odd {
-	background: #f7f7f7;
+	background:  #777373;
 }
 
 .even {
-	background: #ffffff;
+	background:  #777373;
 }
 
 .odd:hover,.even:hover {
-	background: #E1F2B6;
+	background: #9C9898;
 }
 
 /* th:hover,tr:hover { */

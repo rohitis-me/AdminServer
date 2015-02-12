@@ -27,7 +27,7 @@ class OrdersController {
 	def showOrderDetailsList() {
 		String storeId = storeService.getLoggedInStoreId()
 		
-		//TODO
+		//FIXME: has to be logged in to come here
 		if(storeId == '0')
 			render "error. Not logged in "
 		
@@ -47,8 +47,13 @@ class OrdersController {
 	
 	def showOrderStatus() {
 		def orderId = params.orderId
-		def orderStatus = ordersService.getOrderStatusFromOrderId(orderId)
-		render(view: "orderStatus", model: [orderStatus: orderStatus])
+//		def orderStatus = ordersService.getOrderStatusFromOrderId(orderId)
+		
+		Orders order = ordersService.getOrderFromOrderId(orderId)
+		OrderDetailsCommand orderDetailsCommand = ordersService.populateOrderDetailsFromOrder(order)
+
+		println "OC: "+orderDetailsCommand.brandName
+		render(view: "orderStatus", model: [orderDetailsCommand: orderDetailsCommand])
 	}
 
 	@Secured(['ROLE_CHEMIST_ADMIN'])
@@ -61,7 +66,7 @@ class OrdersController {
 		render "error"
 		
 		else
-		render "success"
+		redirect (controller: 'orders', action: 'showOrderDetailsList')
 	}
 
 	@Secured(['ROLE_CHEMIST_ADMIN'])

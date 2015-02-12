@@ -16,25 +16,24 @@
 <%--	<br />--%>
 <%--	<br />--%>
 <%--	<br />--%>
-	<table align="center" style="border-top: 0">
-		<tr>
-			<td style="width: 15%"><span id="Label1" class="label-control">State
-			</span></td>
-			<td><select name="DropDownList1" required
-				class="dropdown-control" id="DropDownList1">
-					<option selected="selected" value="TamilNadu">TamilNadu</option>
-			</select></td>
-		</tr>
-		<tr>
-			<td style="width: 15%"><span id="Label2" class="label-control">City
-			</span></td>
-			<td><select name="DropDownList3" required
-				class="dropdown-control" id="DropDownList3">
-					<option selected="selected" value="Chennai">Chennai</option>
-			</select></td>
-		</tr>
-	</table>
-	<br />
+<%--	<table align="center" style="border-top: 0">--%>
+<%--		<tr>--%>
+<%--			<td style="width: 15%"><span id="Label1" class="label-control">State--%>
+<%--			</span></td>--%>
+<%--			<td><select name="DropDownList1" required--%>
+<%--				class="dropdown-control" id="DropDownList1">--%>
+<%--					<option selected="selected" value="TamilNadu">TamilNadu</option>--%>
+<%--			</select></td>--%>
+<%--		</tr>--%>
+<%--		<tr>--%>
+<%--			<td style="width: 15%"><span id="Label2" class="label-control">City--%>
+<%--			</span></td>--%>
+<%--			<td><select name="DropDownList3" required--%>
+<%--				class="dropdown-control" id="DropDownList3">--%>
+<%--					<option selected="selected" value="Chennai">Chennai</option>--%>
+<%--			</select></td>--%>
+<%--		</tr>--%>
+<%--	</table>--%>
 	<br />
 	<g:render template="searchBox"></g:render>
 </body>

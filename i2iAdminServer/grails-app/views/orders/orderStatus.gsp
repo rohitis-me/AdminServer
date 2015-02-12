@@ -16,22 +16,25 @@
 		</div>
 	</g:if>
 
-	<div class="ordername" align="center">
-		<span id="orderName" class="label-control">Paracetamal</span> <span
-			id="Label6" class="label-control"> from </span> <span id="storeName"
-			class="label-control">Apollo pharmacy, Adyar, Chennai</span> <span
-			id="Label7" class="label-control"> to </span> <span id="userName"
-			class="label-control">Chandrashekhar G, Taramani</span>
-
-	</div>
+		<div class="ordername" align="center">
+			<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+				field="brandName" />
+			<span class="label-control"> from </span>
+			<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+				field="storeName" />
+							<span class="label-control"> to </span>
+										<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+				field="name" />
+				
+		</div>
 	<br />
 	<h2
-		style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
+		style="text-align: center;">
 		Order Status</h2>
-
 	<br />
+	<g:set var="orderStatus"
+	value="${orderDetailsCommand?.orderStatus}" />
 
-${orderStatus}
 	<table align="center" style="border-top: 0">
 		<tbody>
 			<tr class="${orderStatus == 1 ? 'even' : 'odd'}">
