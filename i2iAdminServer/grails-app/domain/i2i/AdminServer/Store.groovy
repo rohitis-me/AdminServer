@@ -26,6 +26,6 @@ class Store {
 	
 	static mapping = {
 		table "store_tbl"
-		id name: 'storeId', column: 'store_id'
+		id name: 'storeId', column: 'store_id', generator: 'assigned'
 	}
 }
