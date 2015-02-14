@@ -30,7 +30,7 @@
 			<g:fieldValue class="label-control" bean="${orderDetails}"
 				field="storeName" />
 		</div>
-		<h2 style="text-align: center; color: white;">Delivery address</h2>
+		<h2 style="text-align: center; color: white;">Delivery details</h2>
 		<br />
 
 		<g:form controller="orders" action="saveOrder">
@@ -126,10 +126,11 @@
 				</label> <label class="label-control" for="textfield">Cash on
 					delivery</label> <br /> <br />
 				<g:submitButton name="create" data-icon="check"
-					value="${message(code: 'default.button.create.label', default: 'Confirm order')}"
+					value="${message(code: 'default.button.create.label', default: 'Proceed')}"
 					class="btn btn-default" />
 			</div>
 		</g:form>
 	</div>
+	<br/>
 </body>
 </html>

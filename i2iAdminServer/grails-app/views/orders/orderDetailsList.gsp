@@ -3,24 +3,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="layout" content="adminLayout">
+<meta name="layout" content="searchLayout">
 <g:set var="entityName"
 	value="${message(code: 'orders.label', default: 'Orders')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
-<g:render template="/template/navigation" />
+	<g:render template="/template/navigation" />
 
-<%--	<nav>--%>
-<%--		<ul>--%>
-<%--			<li><g:link controller="store" action="showStoreProfile">Profile</g:link></li>--%>
-<%--			<li><g:link class="current" controller="orders"--%>
-<%--					action="showOrderDetailsList">Orders</g:link></li>--%>
-<%--			<li><g:link controller="availability"--%>
-<%--					action="showInventoryDetails">Inventory</g:link></li>--%>
-<%--		</ul>--%>
-<%--	</nav>--%>
-	<h2>Orders list</h2>
+	<%--	<nav>--%>
+	<%--		<ul>--%>
+	<%--			<li><g:link controller="store" action="showStoreProfile">Profile</g:link></li>--%>
+	<%--			<li><g:link class="current" controller="orders"--%>
+	<%--					action="showOrderDetailsList">Orders</g:link></li>--%>
+	<%--			<li><g:link controller="availability"--%>
+	<%--					action="showInventoryDetails">Inventory</g:link></li>--%>
+	<%--		</ul>--%>
+	<%--	</nav>--%>
 	<br />
 	<table align="center">
 		<thead>
@@ -59,9 +58,18 @@
 						${fieldValue(bean: ordersInstance, field: "circle")} <br> ${fieldValue(bean: ordersInstance, field: "city")}
 					</td>
 
-					<td>
-						${fieldValue(bean: ordersInstance, field: "orderStatus")}
-					</td>
+					<td><g:set var="orderStatus"
+							value="${ordersInstance?.orderStatus}" /> <%--						${fieldValue(bean: ordersInstance, field: "orderStatus")}--%>
+
+						<g:if test="${orderStatus == 4 }">
+				Order delivered
+				</g:if> <g:elseif test="${orderStatus == 3 }">
+				Order in transit
+				</g:elseif>
+						<g:elseif test="${orderStatus == 2 }">
+				Order Accepted</g:elseif>
+						<g:elseif test="${orderStatus == 1 }">
+				Order Placed</g:elseif></td>
 
 				</tr>
 			</g:each>
