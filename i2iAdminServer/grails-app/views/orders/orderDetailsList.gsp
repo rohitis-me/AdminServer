@@ -10,16 +10,6 @@
 </head>
 <body>
 	<g:render template="/template/navigation" />
-
-	<%--	<nav>--%>
-	<%--		<ul>--%>
-	<%--			<li><g:link controller="store" action="showStoreProfile">Profile</g:link></li>--%>
-	<%--			<li><g:link class="current" controller="orders"--%>
-	<%--					action="showOrderDetailsList">Orders</g:link></li>--%>
-	<%--			<li><g:link controller="availability"--%>
-	<%--					action="showInventoryDetails">Inventory</g:link></li>--%>
-	<%--		</ul>--%>
-	<%--	</nav>--%>
 	<br />
 	<table align="center">
 		<thead>
@@ -41,12 +31,15 @@
 		</thead>
 		<tbody>
 			<g:each in="${orderDetailsList}" status="i" var="ordersInstance">
-				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+				<g:set var="orderId" value="${ordersInstance?.orderId}"></g:set>
+				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}"
+					onclick='document.location = "<g:createLink controller="orders"
+					action="showOrderDetails"
+					params="[orderId: orderId, brandName: brandName]"/>" '>
 
-					<td><g:link action="showOrderDetails"
-							params="[orderId: ordersInstance.orderId]">
-							${fieldValue(bean: ordersInstance, field: "brandName")}
-						</g:link></td>
+					<td>
+						${fieldValue(bean: ordersInstance,  field: "brandName")}
+					</td>
 
 					<td>
 						${fieldValue(bean: ordersInstance, field: "name")}
@@ -65,10 +58,8 @@
 				Order delivered
 				</g:if> <g:elseif test="${orderStatus == 3 }">
 				Order in transit
-				</g:elseif>
-						<g:elseif test="${orderStatus == 2 }">
-				Order Accepted</g:elseif>
-						<g:elseif test="${orderStatus == 1 }">
+				</g:elseif> <g:elseif test="${orderStatus == 2 }">
+				Order Accepted</g:elseif> <g:elseif test="${orderStatus == 1 }">
 				Order Placed</g:elseif></td>
 
 				</tr>

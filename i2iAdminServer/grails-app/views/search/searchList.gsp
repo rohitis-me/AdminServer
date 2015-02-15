@@ -10,7 +10,7 @@
 </head>
 <body>
 	<g:set var="brandId" value="${brandId}"></g:set>
-	<g:render template="searchBox"></g:render>
+	<g:render template="/template/searchBox"></g:render>
 	<br />
 	<table align="center">
 		<thead>

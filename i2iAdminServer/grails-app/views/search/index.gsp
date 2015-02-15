@@ -34,7 +34,10 @@
 <%--			</select></td>--%>
 <%--		</tr>--%>
 <%--	</table>--%>
+	<br/>
+	<div style="padding-left: 10%"><p>Find medicines near you</p></div> 
 	<br />
-	<g:render template="searchBox"></g:render>
+	<g:render template="/template/searchBox"></g:render>
+	<br/>
 </body>
 </html>

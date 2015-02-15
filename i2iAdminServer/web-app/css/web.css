@@ -242,8 +242,36 @@ nav li {
 
 nav li a {
 	color: #ffffff;
+		cursor:pointer;
 }
 
 nav li a:hover,nav li a.current {
-	color: #0B05FF;
+	color: #A8A6F6;
+}
+
+/*Login page*/
+#login .inner {
+	width: 60%;
+	padding: 12px;
+	margin: 60px auto;
+	text-align: left;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	background-color: #777373;
+}
+
+#login #remember_me_holder {
+	text-align: right;
+}
+
+#login #remember_me_holder label {
+	float: none;
+	margin-left: 0;
+	text-align: left;
+	width: 200px
+}
+
+#login .inner .login_message {
+	padding: 6px 25px 20px 25px;
+	color: #c33;
 }

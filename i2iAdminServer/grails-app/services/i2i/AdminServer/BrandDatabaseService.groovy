@@ -27,7 +27,8 @@ class BrandDatabaseService {
 	}
 	
 	def getBrandNameFromBrandId(String brandId) {
-		String brandName = BrandDatabase.findByBrandId(brandId)*.brandName
+		BrandDatabase brand = BrandDatabase.findByBrandId(brandId) //if we call with *.brandName it is giving [brandname] ??
+		String brandName = brand.brandName
 		println "brandname: "+brandName
 		return brandName
 	}
