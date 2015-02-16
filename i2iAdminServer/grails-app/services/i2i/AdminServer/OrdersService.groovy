@@ -49,9 +49,9 @@ class OrdersService {
 		println "ORDERDETAILS: "+order.properties
 		orderDetails.brandId = order.brandId
 		orderDetails.storeId = order.storeId
-		brandDatabaseService.getBrandDataFromBrandId(order.brandId)
 		orderDetails.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
 		orderDetails.storeName = storeService.getStoreNameFromStoreId(order.storeId)
+		println "storename: "+orderDetails.storeName
 		orderDetails.orderId = order.orderId
 		orderDetails.orderStatus = order.orderStatus
 		return orderDetails

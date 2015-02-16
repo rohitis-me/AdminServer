@@ -9,6 +9,7 @@
 <%--<r:require module="jquery-ui" />--%>
 </head>
 <body>
+<br/>
 	<g:set var="brandId" value="${brandId}"></g:set>
 	<g:render template="/template/searchBox"></g:render>
 	<br />

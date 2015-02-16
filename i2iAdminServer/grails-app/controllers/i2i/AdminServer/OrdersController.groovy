@@ -52,7 +52,7 @@ class OrdersController {
 		Orders order = ordersService.getOrderFromOrderId(orderId)
 		OrderDetailsCommand orderDetailsCommand = ordersService.populateOrderDetailsFromOrder(order)
 
-		println "OC: "+orderDetailsCommand.brandName
+		println "OC: "+orderDetailsCommand.storeName
 		render(view: "orderStatus", model: [orderDetailsCommand: orderDetailsCommand])
 	}
 

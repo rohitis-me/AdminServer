@@ -51,17 +51,15 @@
 						${fieldValue(bean: ordersInstance, field: "circle")} <br> ${fieldValue(bean: ordersInstance, field: "city")}
 					</td>
 
-					<td><g:set var="orderStatus"
-							value="${ordersInstance?.orderStatus}" /> <%--						${fieldValue(bean: ordersInstance, field: "orderStatus")}--%>
+					<td><g:set var="orderStatus" value="${ordersInstance?.orderStatus}" />
+					 <%--						${fieldValue(bean: ordersInstance, field: "orderStatus")}--%>
 
-						<g:if test="${orderStatus == 4 }">
-				Order delivered
-				</g:if> <g:elseif test="${orderStatus == 3 }">
-				Order in transit
-				</g:elseif> <g:elseif test="${orderStatus == 2 }">
-				Order Accepted</g:elseif> <g:elseif test="${orderStatus == 1 }">
-				Order Placed</g:elseif></td>
-
+						<g:if test="${orderStatus == 4 }">Order delivered</g:if> 
+						<g:elseif test="${orderStatus == 3 }">Order in transit</g:elseif> 
+						<g:elseif test="${orderStatus == 2 }">Order Accepted</g:elseif> 
+						<g:elseif test="${orderStatus == 1 }">Order Placed</g:elseif>
+						<g:elseif test="${orderStatus < 1 }">Order rejected</g:elseif>
+					</td>
 				</tr>
 			</g:each>
 		</tbody>

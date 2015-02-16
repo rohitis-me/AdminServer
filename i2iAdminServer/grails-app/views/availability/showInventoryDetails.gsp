@@ -16,22 +16,26 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<table align="center">
+	<div style="padding-left: 20%">
+		<g:submitButton name="Available" class="btn btn-default" action="changeStockStatus"
+				value="${message(code: 'availability.availabilityIndex.accept.button', default: 'Available')}" />
+	</div>
+	<br>
+
+	<table align="center" class="scroll">
 		<thead>
 			<tr>
-
-				<g:sortableColumn property="brandName"
+				<g:sortableColumn property="brandName" style="width: 30%"
 					title="${message(code: 'availability.storeId.label', default: 'Brand Name')}" />
 
-				<g:sortableColumn property="strength"
+				<g:sortableColumn property="strength" style="width: 30%"
 					title="${message(code: 'availability.brandId.label', default: 'Strength')}" />
 
-				<g:sortableColumn property="form"
-					title="${message(code: 'availability.availabilityIndex.label', default: 'Form')}" />
+				<g:sortableColumn property="form" style="width: 20%"
+					title="${message(code: 'availability.form.label', default: 'Form')}" />
 
-				<g:sortableColumn property="availabilityIndex"
-					title="${message(code: 'availability.availabilityIndex.label', default: 'Stock out')}" />
-
+				<g:sortableColumn property="availabilityIndex" style="width: 20%"
+					title="${message(code: 'availability.availabilityIndex.label', default: 'Stock status')}" />
 			</tr>
 		</thead>
 		<tbody>
@@ -40,7 +44,7 @@
 				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
 					<td>
-						${fieldValue(bean: availabilityInstance, field: "brandName")}
+						<input type='checkbox' class='chk'/> ${fieldValue(bean: availabilityInstance, field: "brandName")}
 					</td>
 
 					<td>

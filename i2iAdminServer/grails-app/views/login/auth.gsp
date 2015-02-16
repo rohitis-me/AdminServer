@@ -2,37 +2,6 @@
 <head>
 <meta name='layout' content='searchLayout' />
 <title><g:message code="springSecurity.login.title" /></title>
-<style type='text/css' media='screen'>
-#login {
-	
-}
-
-#login .inner {
-	width: 60%;
-	padding: 12px;
-	margin: 60px auto;
-	text-align: left;
-	border: 1px solid #cccccc;
-	border-radius: 4px;
-	background-color: #777373;
-}
-
-#login #remember_me_holder {
-	text-align: right;
-}
-
-#login #remember_me_holder label {
-	float: none;
-	margin-left: 0;
-	text-align: left;
-	width: 200px
-}
-
-#login .inner .login_message {
-	padding: 6px 25px 20px 25px;
-	color: #c33;
-}
-</style>
 </head>
 
 <body>

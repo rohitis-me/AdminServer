@@ -16,63 +16,60 @@
 		</div>
 	</g:if>
 
-		<div class="ordername" align="center">
-			<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
-				field="brandName" />
-			<span class="label-control"> from </span>
-			<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
-				field="storeName" />
-							<span class="label-control"> to </span>
-										<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
-				field="name" />
-				
-		</div>
+	<div class="ordername" align="center">
+		<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="brandName" />
+		<span class="label-control"> from </span>
+		<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="storeName" />
+		<span class="label-control"> to </span>
+		<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="name" />
+
+	</div>
 	<br />
-	<h2
-		style="text-align: center;">
-		Order Status</h2>
+	<h2 style="text-align: center;">Order Status</h2>
 	<br />
-	<g:set var="orderStatus"
-	value="${orderDetailsCommand?.orderStatus}" />
+	<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
 
 	<table align="center" style="border-top: 0">
 		<tbody>
 			<tr class="${orderStatus == 1 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.one" default="Order Placed" /></td>
 				<g:if test="${orderStatus >= 1 }">
-				<td>Completed</td>
+					<td>Completed</td>
 				</g:if>
 				<g:else>
-				<td>Pending</td>
+					<td>Pending</td>
 				</g:else>
 			</tr>
 			<tr class="${orderStatus == 2 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.two" default="Order Accepted" /></td>
 				<g:if test="${orderStatus >= 2 }">
-				<td>Completed</td>
+					<td>Completed</td>
 				</g:if>
 				<g:else>
-				<td>Pending</td>
+					<td>Pending</td>
 				</g:else>
 			</tr>
 			<tr class="${orderStatus == 3 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.three"
 						default="Order in transit" /></td>
 				<g:if test="${orderStatus >= 3 }">
-				<td>Completed</td>
+					<td>Completed</td>
 				</g:if>
 				<g:else>
-				<td>Pending</td>
+					<td>Pending</td>
 				</g:else>
 			</tr>
 			<tr class="${orderStatus == 4 ? 'even' : 'odd'}">
 				<td><g:message code="order.status.four"
 						default="Order delivered" /></td>
 				<g:if test="${orderStatus >= 4 }">
-				<td>Completed</td>
+					<td>Completed</td>
 				</g:if>
 				<g:else>
-				<td>Pending</td>
+					<td>Pending</td>
 				</g:else>
 			</tr>
 		</tbody>
