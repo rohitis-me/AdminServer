@@ -30,9 +30,11 @@ class OrdersController {
 		//FIXME: has to be logged in to come here
 		if(storeId == '0')
 			render "error. Not logged in "
-		
+		println "Storeid: "+storeId
 		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
+		println "done orderlist"
 		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
+		println "done orderdetailslist"
 		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList])
 	}
 	

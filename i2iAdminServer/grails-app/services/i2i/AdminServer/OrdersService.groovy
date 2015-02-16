@@ -160,6 +160,7 @@ class OrdersService {
 	}
 	
 	def getListOfOrdersFromStoreId(String storeId) {
+		println "getListOfOrdersFromStoreId: "+storeId
 		List orderList = Orders.findAllByStoreId(storeId)
 		return orderList
 	}
