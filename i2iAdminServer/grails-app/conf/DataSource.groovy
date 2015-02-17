@@ -1,7 +1,7 @@
 dataSource {
 	pooled = true
-//	driverClassName = "com.mysql.jdbc.Driver"
-	driverClassName = "org.h2.Driver"
+	driverClassName = "com.mysql.jdbc.Driver"
+//	driverClassName = "org.h2.Driver"
 	username = "root"
 //	password = "PASSWORD"
 }
@@ -18,22 +18,22 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-			url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-//            url = "jdbc:mysql://localhost:3306/i2idb"
+//			url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            url = "jdbc:mysql://localhost:3306/i2idb"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-			url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-//            url = "jdbc:mysql://localhost:3306/i2idb"
+//			url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            url = "jdbc:mysql://localhost:3306/i2idb"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-			url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-//            url = "jdbc:mysql://localhost:3306/i2idb"
+//			url = "jdbc:h2:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            url = "jdbc:mysql://localhost:3306/i2idb"
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true

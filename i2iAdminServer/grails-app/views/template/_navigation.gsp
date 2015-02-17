@@ -22,6 +22,6 @@
 				<li><g:link controller="availability"
 				action="showInventoryDetails">Inventory</g:link></li>
 		</g:else>		
-		<li><g:link controller="store" action="logout">Logout</g:link></li>
+		<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 	</ul>
 </nav>
