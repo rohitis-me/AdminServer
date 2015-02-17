@@ -1,5 +1,5 @@
 body {
-	color:white;
+	color: white;
 	background-color: #848383;
 	background-position: center;
 	font-family: Georgia, Times, serif;
@@ -38,7 +38,9 @@ body {
 
 .dropdown-control {
 	text-align: left;
-	font-family: inherit; font-weight : inherit; font-size : inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	font-size: inherit;
 	color: #555555;
 	height: 40px;
 	width: 60%;
@@ -73,8 +75,8 @@ body {
 	font-family: inherit;
 	font-weight: inherit;
 	font-size: inherit;
-	height:44px; 
-	width:20%;
+	height: 44px;
+	width: 20%;
 }
 
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default
@@ -90,7 +92,8 @@ body {
 	padding: 6px 12px;
 	font-family: inherit;
 	font-weight: inherit;
-	font-size: inherit; line-height : 1.428571429;
+	font-size: inherit;
+	line-height: 1.428571429;
 	color: #555555;
 	vertical-align: middle;
 	background-color: #ffffff;
@@ -187,11 +190,11 @@ th.desc a {
 }
 
 .odd {
-	background:  #777373;
+	background: #777373;
 }
 
 .even {
-	background:  #777373;
+	background: #777373;
 }
 
 .odd:hover,.even:hover {
@@ -221,6 +224,14 @@ active {
 	background-color: #48802C;
 }
 
+table.scroll {
+	display: block;
+	width: 60%;
+	height: 360px; /* each row 40px*/ 
+	overflow-y : auto;
+	overflow-x: hidden;
+}
+
 /* NAVIGATION MENU */
 nav {
 	display: block;
@@ -242,7 +253,7 @@ nav li {
 
 nav li a {
 	color: #ffffff;
-		cursor:pointer;
+	cursor: pointer;
 }
 
 nav li a:hover,nav li a.current {

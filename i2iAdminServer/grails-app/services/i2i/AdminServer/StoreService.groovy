@@ -19,8 +19,13 @@ class StoreService {
 	}
 	
 	def getStoreNameFromStoreId(String storeId) {
-		String storeName = Store.findByStoreId(storeId)*.storeName
+		Store store = Store.findByStoreId(storeId)
+		if(store){
+		String storeName = store.storeName
 		return storeName
+		}
+		else
+		println debugStr+"getStoreNameFromStoreId store not found: "+storeId
 	}
 	
 	def getStoreListFromStoreIdList(List storeIds) {

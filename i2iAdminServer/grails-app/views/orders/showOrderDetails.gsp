@@ -51,8 +51,8 @@
 						<g:elseif test="${orderStatus == 2 }">
 				Order Accepted</g:elseif>
 						<g:elseif test="${orderStatus == 1 }">
-				Order Placed</g:elseif></td>
-
+				Order Placed</g:elseif>
+				<g:elseif test="${orderStatus < 1 }">Order rejected</g:elseif></td>
 			<%--			<g:if test="${orderDetailsCommand?.orderStatus}">--%>
 <%--				<td><span class="label-control"--%>
 <%--					aria-labelledby="orderStatus-label"><g:fieldValue--%>
