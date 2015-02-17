@@ -34,6 +34,33 @@ class StoreController {
 		render(view:'storeProfile', model: [storeInstance : store])
 	}
 
+	@Transactional
+	def saveStoreProfile(StoreCommand store) {
+		Store storeInstance = storeService.populateStoreFromStoreCommand(store)
+		println "STORE: "+storeInstance+" \nPARAMS: "+params
+		if (storeInstance == null) {
+			notFound()
+			return
+		}
+
+		if (storeInstance.hasErrors()) {
+			respond storeInstance.errors, view:'storeProfile'
+			return
+		}
+
+//		Store store = storeService.populateStoreFromStoreCommand(storeInstance)
+		storeInstance.save flush:true
+
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'store.updated.message', default: 'Updated!')
+				//redirect storeInstance
+			}
+		}
+			render(view:'storeProfile', model: [storeInstance : storeInstance])
+		
+	}
+	
     @Transactional
     def save(Store storeInstance) {
         if (storeInstance == null) {

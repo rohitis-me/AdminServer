@@ -48,6 +48,19 @@ class StoreService {
 //		return tmpList
 	}
 	
+	def populateStoreFromStoreCommand(StoreCommand storeCommand) {
+		Store store = Store.findByStoreId(storeCommand.storeId)
+		store.storeName = storeCommand.storeName
+		store.addressLine1 = storeCommand.addressLine1
+		store.addressLine2 = storeCommand.addressLine2
+		store.circle = storeCommand.circle
+		store.city = storeCommand.city
+		store.state = storeCommand.state
+		store.latitude = storeCommand.latitude
+		store.longitude = storeCommand.longitude
+		return store
+	}
+	
 	def getLoggedInStoreId() {
 		//FIXME: getstoreId from current logged in user
 		Orders order = Orders.first()

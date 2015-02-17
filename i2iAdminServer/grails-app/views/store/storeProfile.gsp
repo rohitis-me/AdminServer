@@ -33,7 +33,8 @@
 	</g:hasErrors>
 <br/>
 
-	<g:form url="[resource:storeInstance, action:'save']">
+	<g:form controller="store" action="saveStoreProfile" method="PUT">
+	<g:hiddenField name="version" value="${storeInstance?.version}" />
 		<table align="center" style="border-top: 0">
 			<tbody>
 				<tr>
@@ -118,7 +119,7 @@
 				</tr>
 			</tbody>
 		</table>
-
+		<g:hiddenField name="storeId" value="${storeInstance?.storeId }"/>
 		<div align="center">
 			<g:submitButton name="Update" class="save"
 				value="${message(code: 'default.button.create.label', default: 'Update')}" class="btn btn-default"/>
