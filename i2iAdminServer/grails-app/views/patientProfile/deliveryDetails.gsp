@@ -11,6 +11,7 @@
 		args="[entityName]" /></title>
 </head>
 <body>
+<br/>
 	<div data-role="content">
 		<g:if test="${flash.message}">
 			<div class="message" role="alert">
@@ -125,8 +126,8 @@
 				<label class="label-control" for="textfield">Payment Method:
 				</label> <label class="label-control" for="textfield">Cash on
 					delivery</label> <br /> <br />
-				<g:submitButton name="create" data-icon="check"
-					value="${message(code: 'default.button.create.label', default: 'Proceed')}"
+				<g:submitButton name="create"
+					value="${message(code: 'default.button.submit.label', default: 'Submit')}"
 					class="btn btn-default" />
 			</div>
 		</g:form>

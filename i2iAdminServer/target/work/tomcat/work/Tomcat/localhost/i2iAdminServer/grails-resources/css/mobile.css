@@ -54,10 +54,9 @@ body {
 }
 
 .btn {
-	height: 40px;
+	height: 30px;
 	padding: 5px 10px;
 	margin-bottom: 0;
-	line-height: 1.428571429;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -74,7 +73,6 @@ body {
 	font-family: inherit;
 	font-weight: inherit;
 	font-size: inherit;
-	height:44px; 
 	width:40%;
 }
 
@@ -220,4 +218,8 @@ inactive {
 
 active {
 	background-color: #48802C;
+}
+
+table.hidden {
+display: none;
 }

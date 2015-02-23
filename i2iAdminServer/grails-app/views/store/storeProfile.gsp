@@ -121,8 +121,8 @@
 		</table>
 		<g:hiddenField name="storeId" value="${storeInstance?.storeId }"/>
 		<div align="center">
-			<g:submitButton name="Update" class="save"
-				value="${message(code: 'default.button.create.label', default: 'Update')}" class="btn btn-default"/>
+			<g:submitButton name="Update" 
+				value="${message(code: 'default.button.update.label', default: 'Update')}" class="btn btn-default"/>
 		</div>
 
 	</g:form>

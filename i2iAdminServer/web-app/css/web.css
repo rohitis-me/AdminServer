@@ -42,8 +42,8 @@ body {
 	font-weight: inherit;
 	font-size: inherit;
 	color: #555555;
-	height: 40px;
-	width: 60%;
+	height: 30px;
+	width: 100%;
 	position: relative;
 	padding-right: 0%;
 	background-color: #ffffff;
@@ -51,8 +51,6 @@ body {
 	border-radius: 4px;
 	text-indent: 0.01px; /*In Firefox*/
 	text-overflow: '';
-	font-weight: inherit;
-	font-size: inherit; /*In Firefox*/
 }
 
 .btn {
