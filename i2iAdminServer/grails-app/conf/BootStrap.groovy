@@ -26,6 +26,8 @@ class BootStrap {
 		
 		Random random = new Random();
 		int cnt = alphaArr.length
+		int storeCount = Store.count()
+		int availabilityCount = Availability.count()
 		
 		for(int i=0; i<10; i++) {
 			
@@ -36,7 +38,7 @@ class BootStrap {
 			
 			String name = alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]
 			//Init stores
-			if(Store.count() == 0) {
+			if(storeCount == 0) {
 			Store store = new Store(
 				storeId : "store"+str,
 				storeName : name+" Stores",
@@ -55,7 +57,7 @@ class BootStrap {
 			}
 			}
 			for(int j=0; j<20; j++) {
-			if(Availability.count() == 0) {	
+			if(availabilityCount == 0) {	
 				Availability availability = new Availability(
 					storeId : "store"+str,
 					brandId : 1+random.nextInt(100).toString(),
