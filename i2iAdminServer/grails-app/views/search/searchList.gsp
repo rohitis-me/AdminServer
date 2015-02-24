@@ -16,9 +16,9 @@
 	<table align="center">
 		<thead>
 			<tr>
-				<g:sortableColumn property="Store Name" title="Store Name" />
+				<g:sortableColumn property="Name" title="Name" />
 
-				<g:sortableColumn property="Address" title="Address" />
+				<g:sortableColumn property="Remark" title="Remark" />
 
 				<%--						<g:sortableColumn property="Availability" title="Availability" />--%>
 
@@ -30,19 +30,19 @@
 				<g:set var="storeId" value="${storeInstance?.storeId}"></g:set>
 				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="patientProfile"
 					action="deliveryDetails"
-					params="[storeId: storeId, brandId: brandId]"/>" '>
+					params="[storeId: storeId, brandId: brandId, circle: circle]"/>" '>
 
 
 					<td>
-							${fieldValue(bean: storeInstance, field: "storeName")}
+							${fieldValue(bean: storeInstance, field: "storeName")}<br>
+							${fieldValue(bean: storeInstance, field: "addressLine1")} <br>
+						${fieldValue(bean: storeInstance, field: "addressLine2")} <br>
+						${circle }, ${fieldValue(bean: storeInstance, field: "city")}
 						</td>
 
 					<td>
-						${fieldValue(bean: storeInstance, field: "addressLine1")} <br>
-						${fieldValue(bean: storeInstance, field: "addressLine2")} <br>
-						${fieldValue(bean: storeInstance, field: "circle")} <br>
-						${fieldValue(bean: storeInstance, field: "city")}<br>
-						${fieldValue(bean: storeInstance, field: "state")}
+						<span style="color:#B0CF36"><g:message code="search.list.homedelivery" message="Home Delivery Available"/></span><br>
+						<g:message code="search.list.etd" message="Delivery in: "/>${deliveryTime }
 					</td>
 
 					<%--						<td>${fieldValue(bean: storeInstance, field: "availabilityIndex")}</td>--%>

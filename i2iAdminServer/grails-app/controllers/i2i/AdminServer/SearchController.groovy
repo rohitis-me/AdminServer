@@ -13,6 +13,7 @@ class SearchController {
 		println "received params: "+params+ " Brand Name: "+params.brandName;
  
 		String searchTerm = params.brandName
+		String circle = params.circle
 		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
 		String brandId = params.brandId
 				
@@ -22,8 +23,9 @@ class SearchController {
 			println store.storeName
 		}
 		
+		String deliveryTime = '4 hours'
 //		if(stores)
-		render (view:"searchList", model: [storesList:stores, brandId: brandId, brandName: searchTerm])
+		render (view:"searchList", model: [storesList:stores, brandId: brandId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
 //		else
 //		render "error"
 	}

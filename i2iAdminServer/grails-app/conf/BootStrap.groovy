@@ -9,10 +9,10 @@ class BootStrap {
 
     def init = { servletContext ->
 		println "in bs"
-		String[] alphaArr = ['A','B','C','D','F','W','K','S','R','E','T','Y','B','M','N','Z']
-		String[] circleArr = ['Mekhri Road', 'Kanagam Street', 'Dobbaspet']
-		String[] cityArr = ['Maranagar', 'Kellimandali', 'Sirapur']
-		String[] stateArr = ['Galarpet', 'Dakshanagar', 'Ullaspradesh']
+		String[] alphaArr = ['A','B','C','D','S','R','E','M','N','P','L']
+		String[] circleArr = ['Adyar', 'Perungudi', 'Sholinganallur', 'Alandur', 'Besant Nagar', 'Thiruvanmiyur', 'Saidapet']
+		String[] cityArr = ['Chennai']
+		String[] stateArr = ['Tamil Nadu']
 		
 		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 		
@@ -31,17 +31,18 @@ class BootStrap {
 		
 		for(int i=0; i<10; i++) {
 			
-			def str = i.toString();
+			def str = (i+1).toString();
 			def city = cityArr[random.nextInt(cityArr.length)]
 			def circle = circleArr[random.nextInt(circleArr.length)]
 			def state = stateArr[random.nextInt(stateArr.length)]
 			
 			String name = alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]
+			println "NAME: "+name
 			//Init stores
 			if(storeCount == 0) {
 			Store store = new Store(
 				storeId : "store"+str,
-				storeName : name+" Stores",
+				storeName : name+ ((i%2 == 0)? ' Health':' Pharma'),
 				addressLine1 : "No: "+str+", "+random.nextInt(15)+"th cross",
 				addressLine2 : "Road number: "+str,
 				circle : circle,

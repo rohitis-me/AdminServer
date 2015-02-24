@@ -7,8 +7,8 @@
 <meta name="layout" content="searchLayout">
 <g:set var="entityName"
 	value="${message(code: 'patientProfile.label', default: 'PatientProfile')}" />
-<title><g:message code="default.create.label"
-		args="[entityName]" /></title>
+<title><g:message code="order.delivery.details"
+		default="Delivery Details" /></title>
 </head>
 <body>
 <br/>
@@ -87,30 +87,34 @@
 					<tr>
 						<td><label class="label-control"
 							for="landmark">Circle </label></td>
-						<td><g:textField class="textbox-control" name="circle"
-								maxlength="100" required="required"
-								value="${orderDetails?.circle}" /></td>
+						<td>
+						<g:hiddenField name="circle" value="${orderDetails?.circle }"/>
+						${orderDetails?.circle }
+						</td>
 					</tr>
 					<tr>
 						<td><label class="label-control"
 							for="city">City </label></td>
-						<td><g:textField class="textbox-control" name="city"
-								maxlength="100" required="required"
-								value="${orderDetails?.city}" /></td>
+						<td>
+						<g:hiddenField name="city" value="${orderDetails?.city }"/>
+						${orderDetails?.city }
+						</td>
 					</tr>
 					<tr>
 						<td><label class="label-control"
 							for="state">State </label></td>
-						<td><g:textField class="textbox-control" name="state"
-								maxlength="100" required="required"
-								value="${orderDetails?.state}" /></td>
+						<td>
+						<g:hiddenField name="state" value="${orderDetails?.state }"/>
+						${orderDetails?.state }
+						</td>
 					</tr>
 					<tr>
 						<td><label class="label-control"
 							for="country">Country </label></td>
-						<td><g:textField class="textbox-control" name="country"
-								maxlength="100" required="required"
-								value="${orderDetails?.country}" /></td>
+						<td>
+						<g:hiddenField name="country" value="${orderDetails?.country }"/>
+						${orderDetails?.country }
+						</td>
 					</tr>
 
 					<%--					<tr>--%>

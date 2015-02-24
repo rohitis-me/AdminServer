@@ -49,6 +49,8 @@ class StoreService {
 	}
 	
 	def populateStoreFromStoreCommand(StoreCommand storeCommand) {
+		println "storeId: "+storeCommand.storeId
+		
 		Store store = Store.findByStoreId(storeCommand.storeId)
 		store.storeName = storeCommand.storeName
 		store.addressLine1 = storeCommand.addressLine1
@@ -64,6 +66,8 @@ class StoreService {
 	def getLoggedInStoreId() {
 		//FIXME: getstoreId from current logged in user
 		Orders order = Orders.first()
+		println "loggedstoreId: "+order.storeId
+		
 		if (order)
 		return order.storeId
 		

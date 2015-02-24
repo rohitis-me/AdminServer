@@ -18,12 +18,19 @@ class PatientProfileController {
     }
 
 	def deliveryDetails = {
-		println "BrandID: "+params.brandId+" storeId: "+params.storeId
+		println "BrandID: "+params.brandId+" storeId: "+params.storeId+" circle: "+params.circle
 		
 		def brandData = brandDatabaseService.getBrandDataFromBrandId(params.brandId)
 		def storeData = storeService.getStoreDataFromStoreId(params.storeId)
 		println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
-		def orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+		OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+		
+		//FIXME
+		orderDetails.circle = params.circle
+		orderDetails.city = 'Chennai'
+		orderDetails.state = 'Tamil Nadu'
+		orderDetails.country = 'India'
+		
         render(view:'deliveryDetails', model: [orderDetails : orderDetails])
 	}
 	
