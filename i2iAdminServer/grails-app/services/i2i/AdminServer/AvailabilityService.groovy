@@ -2,6 +2,7 @@ package i2i.AdminServer
 
 import grails.transaction.Transactional
 import i2i.AdminServer.User.PatientProfile
+import java.sql.SQLException
 
 @Transactional
 class AvailabilityService {
@@ -43,7 +44,8 @@ class AvailabilityService {
 		List inventoryAvailabilityList = new ArrayList<InventoryAvailabilityCommand>()
 		availabilityList.each {availability->
 			InventoryAvailabilityCommand inventory = populateInventoryAvailabilityFromBrandId(availability.brandId)
-			inventory.availabilityIndex = inventory.availabilityIndex
+			inventory.availabilityIndex = availability.availabilityIndex
+			inventory.availabilityId = availability.availabilityId
 			inventoryAvailabilityList.add(inventory)
 		}
 		
@@ -63,5 +65,31 @@ class AvailabilityService {
 		inventory.form = brand.form
 		
 		return inventory
+	}
+	
+	@Transactional
+	def saveAvailability(Availability availability) {
+		println "in save availability"
+		if(availability.save(flush:true)) {
+			println "saveavailability success"
+			return availability.availabilityIndex
+		}
+		else {
+			availability.errors.each {
+				println tag+" saveAvailability "+it
+			}
+			return 0
+		}
+	}
+	
+	def changeAndSaveAvailabilityIndex(long availabilityId, Byte availabilityFlag)
+	{
+		Availability availability = Availability.get(availabilityId)
+		availability.availabilityIndex = availabilityFlag
+		println "av Index: "+availability.availabilityIndex
+		
+		def status = saveAvailability(availability)
+		
+		return status
 	}
 }

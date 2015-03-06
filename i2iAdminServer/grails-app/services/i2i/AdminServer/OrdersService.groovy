@@ -3,6 +3,7 @@ package i2i.AdminServer
 import grails.transaction.Transactional
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
+import i2i.AdminServer.Util.Utility
 
 @Transactional
 class OrdersService {
@@ -50,7 +51,16 @@ class OrdersService {
 		orderDetails.brandId = order.brandId
 		orderDetails.storeId = order.storeId
 		orderDetails.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
-		orderDetails.storeName = storeService.getStoreNameFromStoreId(order.storeId)
+		
+		Store store = storeService.getStoreDataFromStoreId(order.storeId)
+		orderDetails.storeName = store.storeName
+		orderDetails.storePhoneNumber = store.phoneNumber
+		orderDetails.storeAddressLine1 = store.addressLine1
+		orderDetails.storeAddressLine2 = store.addressLine2
+		orderDetails.storeCircle = store.circle
+		orderDetails.storeCity = store.city
+		orderDetails.storeState = store.state
+		
 		println "storename: "+orderDetails.storeName
 		orderDetails.orderId = order.orderId
 		orderDetails.orderStatus = order.orderStatus
@@ -84,6 +94,12 @@ class OrdersService {
 		order.storeId = store.storeId
 		order.brandName = brand.brandName
 		order.storeName = store.storeName
+		order.storePhoneNumber = store.phoneNumber
+		order.storeAddressLine1 = store.addressLine1
+		order.storeAddressLine2 = store.addressLine2
+		order.storeCircle = store.circle
+		order.storeCity = store.city
+		order.storeState = store.state
 		
 		return order
 	}
@@ -96,21 +112,39 @@ class OrdersService {
 	
 	//FIXME: ETA
 	def saveOrderFromOrderDetails(OrderDetailsCommand orderDetails) {
+		if(!orderDetails.validate()) {
+			println "VALIDATION ERROR: "+orderDetails.properties
+			orderDetails.errors.each {
+				println it
+			}
+			return 0
+		}
 		PatientProfile patient = patientProfileService.populatePatientProfileFromOrderDetailsCommand(orderDetails)
 		def patientId = patientProfileService.savePatientProfile(patient)
 		if(patientId!= 0) {
 			Orders order = populateOrderFromOrderDetailsCommand(orderDetails)
 			order.personId = patientId
-			
+			order.uId = getUniqueRandomString()
+
 			def orderId = saveOrder(order)
 			if(orderId != 0) {
-				return orderId
+				return order.uId
 			}
 		}
 		
 		//if patient or order is not saved
 		return 0
 		
+	}
+	
+	String getUniqueRandomString()
+	{
+		def uId = Utility.generateRandomString()
+		
+		if(!getOrderFromUId(uId))
+			return uId
+			
+		else return getUniqueRandomString()
 	}
 	
 	def saveOrder(Orders order) {
@@ -127,7 +161,6 @@ class OrdersService {
 		}
 	}
 	
-	//FIXME
 	def getOrderStatusFromOrderId(def orderId) {
 //		return 2
 		Orders order = Orders.findByOrderId(orderId)
@@ -139,9 +172,14 @@ class OrdersService {
 		return order
 	}
 	
+	def getOrderFromUId(def uId)
+	{
+		Orders order = Orders.findByUId(uId)
+		return order
+	}
+	
 	def acceptOrderAndSave(def orderId) {
 		Orders order = getOrderFromOrderId(orderId)
-		//FIXME: use enum
 		order.orderStatus = Constants.ORDER_ACCEPTED
 		
 		def status = saveOrder(order)
@@ -152,7 +190,6 @@ class OrdersService {
 	def rejectOrderAndSave(def orderId) {
 		println "orderid: "+orderId
 		Orders order = getOrderFromOrderId(orderId)
-		//FIXME: use constants
 		order.orderStatus = Constants.ORDER_REJECTED
 		
 		def status = saveOrder(order)

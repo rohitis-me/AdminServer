@@ -17,21 +17,25 @@ class PatientProfileController {
         redirect(action: "list", params: params)
     }
 
-	def deliveryDetails = {
-		println "BrandID: "+params.brandId+" storeId: "+params.storeId+" circle: "+params.circle
+	def deliveryDetails(OrderDetailsCommand orderDetailsCommand) {
+		println "BrandID: "+orderDetailsCommand.brandId+" storeId: "+orderDetailsCommand.storeId+" circle: "+orderDetailsCommand.circle
+		println "PARAMS: "+orderDetailsCommand.properties
 		
-		def brandData = brandDatabaseService.getBrandDataFromBrandId(params.brandId)
-		def storeData = storeService.getStoreDataFromStoreId(params.storeId)
+		def brandData = brandDatabaseService.getBrandDataFromBrandId(orderDetailsCommand.brandId)
+		def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
 		println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
 		OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+		println "success"
 		
 		//FIXME
-		orderDetails.circle = params.circle
+		orderDetails.circle = orderDetailsCommand.circle
 		orderDetails.city = 'Chennai'
 		orderDetails.state = 'Tamil Nadu'
 		orderDetails.country = 'India'
+		orderDetails.age = 20
+		orderDetails.quantity = 1
 		
-        render(view:'deliveryDetails', model: [orderDetails : orderDetails])
+        render(view:'deliveryDetails', model: [orderDetails : orderDetails, form:brandData.form, noOfUnits:brandData.noOfUnits, strength:brandData.strength])
 	}
 	
 	

@@ -55,8 +55,8 @@ class PatientProfileService {
 	}
 	
 	//FIXME: THis should not be here
-	def saveOrder(OrderDetailsCommand order) {
-		return 1
-	}
+//	def saveOrder(OrderDetailsCommand order) {
+//		return 1
+//	}
 	
 }

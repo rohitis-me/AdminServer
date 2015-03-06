@@ -5,10 +5,14 @@
 <head>
 <meta name="layout" content="searchLayout">
 <g:set var="entityName"
-	value="${message(code: 'orders.label', default: 'Orders')}" />
+	value="${message(code: 'order.status.label', default: 'Order Status')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
+
+<%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
+<%--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">--%>
 </head>
 <body>
+	<g:render template="/template/navigationClient" />
 
 	<g:if test="${flash.message}">
 		<div class="message" role="status">
@@ -16,21 +20,47 @@
 		</div>
 	</g:if>
 
-	<div class="ordername" align="center">
-		<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
-			field="brandName" />
-		<span class="label-control"> from </span>
-		<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
-			field="storeName" />
-		<span class="label-control"> to </span>
-		<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
-			field="name" />
+<%--	<h2 style="text-align: center;">Order Details</h2>--%>
+<br/>
 
-	</div>
-	<br />
+<div align="center">
+  <div id="accordion">
+        <div class="item">
+            <h2>Order Details</h2>
+            <table align="center" style="border-top: 0;width: 100%">
+		<tbody>
+			<tr>
+				<td><span class="label-control">Order Name: </span></td>
+				<td><g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="brandName" /></td>
+			</tr>
+			<tr>
+				<td><span class="label-control">Expected Delivery: </span></td>
+				<td><g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="estimatedDeliveryTime" /></td>
+			</tr>
+			<tr>
+				<td><span class="label-control">Seller: </span></td>
+				<td><g:fieldValue class="label-control" bean="${orderDetailsCommand}" field="storeName" />
+				<span class="label-control">,</span>
+			<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="storePhoneNumber" /><span class="label-control">,</span>
+				<g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="storeAddressLine1" /><span class="label-control">,</span><g:fieldValue class="label-control" bean="${orderDetailsCommand}"
+			field="storeAddressLine2" /></td>
+			</tr>
+			</tbody>
+		</table>
+            
+        </div>
+  
+    </div>
+</div>
+
+	
 	<h2 style="text-align: center;">Order Status</h2>
-	<br />
-	<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
+<%--	<br />--%>
+<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
 
 	<table align="center" style="border-top: 0">
 		<tbody>
@@ -75,8 +105,20 @@
 		</tbody>
 	</table>
 
+		<div align="center">
+		<g:form>
+			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }" />
+			<g:actionSubmit class="btn btn-default" action="placeNextOrder"
+				value="${message(code: 'order.place.next.button', default: 'Next Order')}"/>
+			<g:actionSubmit class="btn btn-default" action="cancelOrder"
+				value="${message(code: 'order.cancel.order.button', default: 'Cancel Order')}"
+				onclick="return confirm('${message(code: 'order.status.reject.message')}');" />
+		</g:form>
+	</div>
+
 	<div class="pagination">
 		<g:paginate total="${ordersInstanceCount ?: 0}" />
 	</div>
+	<br/>
 </body>
 </html>

@@ -6,8 +6,9 @@ import grails.validation.Validateable;
 class InventoryAvailabilityCommand {
 	String storeId
 	String brandId
-	byte availabilityIndex
+	Byte availabilityIndex
 	String brandName
 	String strength
 	String form
+	Long availabilityId
 }

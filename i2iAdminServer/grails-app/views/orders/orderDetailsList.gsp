@@ -32,7 +32,7 @@
 		<tbody>
 			<g:each in="${orderDetailsList}" status="i" var="ordersInstance">
 				<g:set var="orderId" value="${ordersInstance?.orderId}"></g:set>
-				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}"
+				<tr style="cursor: pointer;" class="${(i % 2) == 0 ? 'even' : 'odd'}"
 					onclick='document.location = "<g:createLink controller="orders"
 					action="showOrderDetails"
 					params="[orderId: orderId, brandName: brandName]"/>" '>

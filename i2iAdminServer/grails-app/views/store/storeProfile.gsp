@@ -50,7 +50,19 @@
 					<td><g:textField class="textbox-control" name="storeName" maxlength="100" required=""
 							value="${storeInstance?.storeName}" /></td>
 				</tr>
-
+				<tr>
+					<td style="width: 25%">
+						<div
+							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'phoneNumber', 'error')} required">
+							<label class="label-control" for="phoneNumber"> <g:message
+									code="store.phonenumber.label" default="Phone No" /> <span
+								class="required-indicator">*</span>
+							</label>
+						</div>
+					</td>
+					<td><g:textField class="textbox-control" name="phoneNumber" maxlength="100" required=""
+							value="${storeInstance?.phoneNumber}" /></td>
+				</tr>
 				<tr>
 					<td>
 						<div

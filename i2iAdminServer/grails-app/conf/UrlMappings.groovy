@@ -10,7 +10,22 @@ class UrlMappings {
 		"/login/$action?"(controller: "login")
 		"/logout/$action?"(controller: "logout")
 
-        "/"(view:"/index")
-        "500"(view:'/error')
+		"/searchList"(controller: "search", action:"search")
+		
+		"/deliveryDetails"(controller: "patientProfile", action:"deliveryDetails")
+		
+		"/orderStatus"(controller: "orders", action:"showOrderStatus")
+
+		"/ordersList"(controller: "orders", action:"showOrderDetailsList")
+		
+		"/storeProfile"(controller: "store", action:"showStoreProfile")
+		
+		"/inventoryList"(controller: "availability", action:"showInventoryDetails")
+		
+		//Home page
+        "/"(view:"/search/index")
+		
+		//Errors
+        "500"(view:'/errors/serverError')
 	}
 }

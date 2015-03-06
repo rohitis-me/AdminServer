@@ -48,10 +48,11 @@ class OrdersController {
 	}
 	
 	def showOrderStatus() {
-		def orderId = params.orderId
+		def uId = params.uId
 //		def orderStatus = ordersService.getOrderStatusFromOrderId(orderId)
 		
-		Orders order = ordersService.getOrderFromOrderId(orderId)
+		//Orders order = ordersService.getOrderFromOrderId(uId)
+		Orders order = ordersService.getOrderFromUId(uId)
 		OrderDetailsCommand orderDetailsCommand = ordersService.populateOrderDetailsFromOrder(order)
 
 		println "OC: "+orderDetailsCommand.storeName
@@ -81,24 +82,45 @@ class OrdersController {
 		render "error"
 		
 		else
-		render "success"
+		redirect (controller: 'orders', action: 'showOrderDetailsList')
 	}
 
+	def cancelOrder(OrderDetailsCommand orderDetailsCommand) {
+		println "params: "+params
+		def orderId = orderDetailsCommand.orderId
+		def status = ordersService.rejectOrderAndSave(orderId)
+		
+		if(status == 0)
+			render "error"
+		
+		else
+			redirect (controller: 'search', action: 'index')
+	}
+	
+	def placeNextOrder() {
+			redirect (controller: 'search', action: 'index')
+	}
+	
     def create() {
         respond new Orders(params)
     }
 	
 	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
 
-		def orderId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
-		println "orderId: "+orderId
+		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
+		println "orderId: "+uId
 
-		if(orderId)
-			redirect(controller: 'orders', action: 'showOrderStatus', params:[orderId: orderId])
-
+		if(uId)
+			redirect(controller: 'orders', action: 'showOrderStatus', params:[uId: uId])
+		
 		else {
-			flash.message = message(code: 'default.error.message', args: [message(code: 'save.error.label', default: 'Error saving')])
-			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:[orderDetails: orderDetailsCommand])
+//			String errorMsg = ""
+//			orderDetailsCommand.errors.each {
+//				errorMsg+"\n"+it
+//			}
+			flash.message = message(code: 'save.error.label', default: 'Enter valid information')
+			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
+//			respond orderDetailsCommand.properties, view:'/patientProfile/deliveryDetails'
 		}
 	}
 

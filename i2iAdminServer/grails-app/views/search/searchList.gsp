@@ -4,31 +4,34 @@
 <html>
 <head>
 <meta name="layout" content="searchLayout">
-
 <title><g:message message="i2i-Search List" /></title>
+<g:set var="entityName"
+	value="${message(code: 'i2i.search.results.label', default: 'Search Results')}" />
+<title><g:message code="default.list.label" args="[entityName]" /></title>
 <%--<r:require module="jquery-ui" />--%>
 </head>
 <body>
+		<g:render template="/template/navigationClient" />
 <br/>
 	<g:set var="brandId" value="${brandId}"></g:set>
 	<g:render template="/template/searchBox"></g:render>
 	<br />
 	<table align="center">
+		<g:if test="${storesList }">
 		<thead>
 			<tr>
-				<g:sortableColumn property="Name" title="Name" />
+				<th>Name</th>
 
-				<g:sortableColumn property="Remark" title="Remark" />
+				<th>Remark</th>
 
-				<%--						<g:sortableColumn property="Availability" title="Availability" />--%>
+				<%--<g:sortableColumn property="Availability" title="Availability" />--%>
 
 			</tr>
 		</thead>
 		<tbody>
-		<g:if test="${storesList }">
 			<g:each in="${storesList}" status="i" var="storeInstance">
 				<g:set var="storeId" value="${storeInstance?.storeId}"></g:set>
-				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="patientProfile"
+				<tr style="cursor: pointer;" class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="patientProfile"
 					action="deliveryDetails"
 					params="[storeId: storeId, brandId: brandId, circle: circle]"/>" '>
 
@@ -49,11 +52,14 @@
 
 				</tr>
 			</g:each>
+		</tbody>
 			</g:if>
 			<g:else>
-			<g:message code="search.result.unavailable" default="Unavailable"/>
+			<div align="center"><g:message code="search.result.unavailable" default="The brand selected is unavailable"/></div>
+<%--			<g:if test="${brandId == null || brandId == "" }">--%>
+<%--			<br/><div align="center"><g:message code="search.result.inputerror" default="Tip: Select brand from auto suggestion."/></div>--%>
+<%--			</g:if>--%>
 			</g:else>
-		</tbody>
 	</table>
 </body>
 </html>

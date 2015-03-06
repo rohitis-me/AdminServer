@@ -11,7 +11,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title><g:layoutTitle default="i2i" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'adminLayout.css')}"
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'web.css')}"
 	type="text/css">
 <link rel="stylesheet"
 	href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css"
@@ -22,13 +22,10 @@
 <r:layoutResources />
 </head>
 <body>
-	<div class="wrapper">
-		<header>
-			<h1>i2i Tech</h1>
-		</header>
-		<g:layoutBody />
-		<footer> &copy; 2015 i2i Tech </footer>
-	</div>
+	<div class="headerBanner" id="headerdiv" role="banner">i2i Tech</div>
+	<br /><br />
+	<g:layoutBody/>
+	<div class="footer" role="contentinfo"></div>
+	<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	<r:layoutResources />
-</body>
-</html>
+</body></html>

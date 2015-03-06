@@ -3,6 +3,7 @@ package i2i.AdminServer
 class Store {
 	String storeId
 	String storeName
+	String phoneNumber
 	String addressLine1
 	String addressLine2
 	String circle
@@ -15,6 +16,7 @@ class Store {
     static constraints = {
 		storeId nullable:false, blank:false,size:3..100
 		storeName nullable:false, blank:false,size:3..100
+		phoneNumber nullable:false, blank:false,size:3..100
 		addressLine1 nullable:false, blank:false,size:3..100
 		addressLine2 nullable:false, blank:false,size:3..100
 		circle nullable:false, blank:false,size:3..100

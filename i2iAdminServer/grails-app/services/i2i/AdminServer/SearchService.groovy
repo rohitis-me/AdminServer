@@ -19,6 +19,9 @@ class SearchService {
 		println "bid: "+brandId+" storelist: "+storeList.size()
 		println "turnontestcode: "+grailsApplication.config.turnOnTestCode
 		if(grailsApplication.config.turnOnTestCode) {
+			if(brandId== null || brandId == "") {
+				return storeList
+			}
 			if(storeList.size() == 0) {
 				storeList.add(Store.first())
 				storeList.add(Store.last())

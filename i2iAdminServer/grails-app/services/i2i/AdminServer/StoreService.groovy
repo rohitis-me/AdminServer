@@ -41,7 +41,6 @@ class StoreService {
 		}
 		println "storeservice getStoreListFromStoreIdList: "+storeList.count
 		return storeList
-		//FIXME
 //		List tmpList = new ArrayList<Store>()
 //		tmpList.add(Store.first())
 //		tmpList.add(Store.last())
@@ -53,6 +52,7 @@ class StoreService {
 		
 		Store store = Store.findByStoreId(storeCommand.storeId)
 		store.storeName = storeCommand.storeName
+		store.phoneNumber = storeCommand.phoneNumber
 		store.addressLine1 = storeCommand.addressLine1
 		store.addressLine2 = storeCommand.addressLine2
 		store.circle = storeCommand.circle

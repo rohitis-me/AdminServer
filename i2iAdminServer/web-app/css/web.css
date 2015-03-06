@@ -42,19 +42,18 @@ body {
 	font-weight: inherit;
 	font-size: inherit;
 	color: #555555;
-	height: 30px;
+	padding: 3px 3px;
 	width: 100%;
 	position: relative;
-	padding-right: 0%;
 	background-color: #ffffff;
-	border: 1px solid #cccccc;
-	border-radius: 4px;
+	border: 1px solid #847A7A;
+/* 	border-radius: 4px; */
 	text-indent: 0.01px; /*In Firefox*/
-	text-overflow: '';
+/* 	text-overflow: ''; */
 }
 
 .btn {
-	padding: 6px 12px;
+	padding: 3px 3px;
 	margin-bottom: 0;
 	line-height: 1.428571429;
 	text-align: center;
@@ -62,7 +61,7 @@ body {
 	vertical-align: middle;
 	cursor: pointer;
 	border: 1px solid transparent;
-	border-radius: 4px;
+/* 	border-radius: 4px; */
 	position: relative;
 }
 
@@ -73,7 +72,7 @@ body {
 	font-family: inherit;
 	font-weight: inherit;
 	font-size: inherit;
-	height: 44px;
+/* 	height: 44px; */
 	width: 20%;
 }
 
@@ -86,8 +85,8 @@ body {
 
 .textbox-control {
 	width: 100%;
-	height: 30px;
-	padding: 6px 12px;
+/* 	height: 30px; */
+	padding: 3px 3px;
 	font-family: inherit;
 	font-weight: inherit;
 	font-size: inherit;
@@ -95,8 +94,8 @@ body {
 	color: #555555;
 	vertical-align: middle;
 	background-color: #ffffff;
-	border: 1px solid #cccccc;
-	border-radius: 4px;
+	border: 1px solid #847A7A;
+/* 	border-radius: 4px; */
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	-webkit-transition: border-color ease-in-out 0.15s, box-shadow
@@ -230,6 +229,9 @@ table.scroll {
 	overflow-x: hidden;
 }
 
+#hidden {
+}
+
 /* NAVIGATION MENU */
 nav {
 	display: block;
@@ -283,4 +285,63 @@ nav li a:hover,nav li a.current {
 #login .inner .login_message {
 	padding: 6px 25px 20px 25px;
 	color: #c33;
+}
+
+/*link*/
+a:link, a:visited, a:hover {
+text-decoration: none;
+}
+
+a:hover, a:active {
+	outline: none; /* prevents outline in webkit on active links but retains it for tab focus */
+}
+
+
+/* body { */
+/*   font: 13px Arial, Helvetica, sans-serif; */
+/*     color: #1e1e1e; */
+/* } */
+/* #container { */
+/*     width: 600px; */
+/*     margin: 20px auto; */
+/* } */
+#accordion {
+    
+}
+#accordion .item {
+    width: 60%;
+    height: 60px; /* height = total height of A child element */
+    overflow: hidden;
+    
+    transition: height ease-in-out 500ms; /* css3 transition */
+    -o-transition: height ease-in-out 500ms;
+    -moz-transition: height ease-in-out 500ms;
+    -webkit-transition: height ease-in-out 500ms;
+    
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    
+}
+
+#accordion .itemexpanded {
+    height: auto; /* height = total height of A child element */
+}
+
+#accordion p {
+    display: block;
+    
+    background: #e6e6e6;
+    padding: 0px;
+    color: #1e1e1e;
+    text-decoration: none;
+}
+
+#accordion div:hover {
+    height: auto; /* height = total height of A and P elements */
+}
+#accordion div:hover p {
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
 }

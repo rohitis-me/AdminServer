@@ -189,7 +189,6 @@ img {
 .no-borderradius .nav a:focus, .no-borderradius .nav a:hover {
 	background-color: transparent;
 	color: #444444;
-	text-decoration: underline;
 }
 
 .nav a.home, .nav a.list, .nav a.create {
@@ -524,7 +523,6 @@ th:hover, tr:hover {
 .no-borderradius .pagination .currentStep {
 	background-color: transparent;
 	color: #444444;
-	text-decoration: underline;
 }
 
 /* ACTION BUTTONS */
@@ -572,7 +570,6 @@ th:hover, tr:hover {
 .no-borderradius .buttons a:hover, .no-borderradius .buttons a:focus {
 	background-color: transparent;
 	color: #444444;
-	text-decoration: underline;
 }
 
 .buttons .delete, .buttons .edit, .buttons .save {

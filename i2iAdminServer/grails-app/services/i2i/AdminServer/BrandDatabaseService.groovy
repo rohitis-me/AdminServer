@@ -16,7 +16,7 @@ class BrandDatabaseService {
 		println "Bid: "+brandId+" bn: "+brandName
 		
 		//FIXME
-		brandId = Availability.first().brandId
+		//brandId = Availability.first().brandId
 		return brandId
 	}
 	
@@ -33,7 +33,7 @@ class BrandDatabaseService {
 		return brandName
 	}
 	
-	//FIXME
+	
 	def getListOfBrandNamesStartingWith(String brandName) {
 		List brandNameList = BrandDatabase.findAllByBrandNameIlike(brandName+"%") // ignore case
 		//findAllWhere(brandName: brandName+"%")//WhereBrandNameLike(brandName+'%')*.brandName
@@ -61,7 +61,7 @@ class BrandDatabaseService {
 	
 	def populateBrandToBeApproved(BrandDatabase brand) {
 		BrandToBeApproved tmpBrand = new BrandToBeApproved()
-		tmpBrand.brandId = getBrandId()
+		tmpBrand.brandId = generateIdForNewBrandToBeApprovedEntry()
 		tmpBrand.brandName = brand.brandName
 		tmpBrand.manufacturer = brand.manufacturer
 		tmpBrand.generic = brand.generic
@@ -72,9 +72,10 @@ class BrandDatabaseService {
 		return tmpBrand
 	}
 	
-	//FIXME
-	def getBrandId() {
-		return (BrandToBeApproved.count()).toString()
+	//FIXME 
+	/*this is for temperory brand*/
+	def generateIdForNewBrandToBeApprovedEntry() {
+		return (BrandToBeApproved.count()+1).toString()
 	}
 	
 }

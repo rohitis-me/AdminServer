@@ -37,85 +37,31 @@ body {
 }
 
 .dropdown-control {
-	text-align: left;
-	font-family: inherit; font-weight : inherit; font-size : inherit;
-	color: #555555;
-	height: 30px;
 	width: 100%;
-	position: relative;
-	padding-right: 0%;
-	background-color: #ffffff;
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-	text-indent: 0.01px; /*In Firefox*/
-	text-overflow: '';
-	font-weight: inherit;
-	font-size: inherit; /*In Firefox*/
 }
 
 .btn {
-	height: 30px;
-	padding: 5px 10px;
-	margin-bottom: 0;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	cursor: pointer;
-	border: 1px solid transparent;
-	border-radius: 3px;
-	position: relative;
 }
 
 .btn-default {
-	color: #333333;
-	background-color: #ffffff;
-	border-color: #cccccc;
-	font-family: inherit;
-	font-weight: inherit;
-	font-size: inherit;
 	width:40%;
 }
 
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default
 	{
-	color: #333333;
-	background-color: #ebebeb;
-	border-color: #adadad;
 }
 
 .textbox-control {
-	width: 100%;
-	height: 30px;
-	padding: 5px 10px;
-	font-family: inherit;
-	font-weight: inherit;
-	font-size: inherit; line-height : 1.428571429;
-	color: #555555;
-	vertical-align: middle;
-	background-color: #ffffff;
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-webkit-transition: border-color ease-in-out 0.15s, box-shadow
-		ease-in-out 0.15s;
-	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-	line-height: 1.428571429;
+
 }
 
 .textbox-control:focus {
-	border-color: #66afe9;
-	outline: 0;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
-		rgba(102, 175, 233, 0.6);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
-		rgba(102, 175, 233, 0.6);
 }
 /* TABLES */
 table {
 	border-top: 1px solid #DFDFDF;
 	border-collapse: collapse;
-	width: 100%;
+	width: 98%;
 	margin-bottom: 1em;
 }
 
@@ -220,6 +166,23 @@ active {
 	background-color: #48802C;
 }
 
-table.hidden {
+#hidden {
 display: none;
 }
+
+/* NAVIGATION MENU */
+nav {
+	display: block;
+	clear: both;
+	color: #ffffff;
+	background-color: #0C0C0C;
+	height: 30px;
+}
+
+nav ul {
+	margin: 0px;
+	padding: 5px 0px 5px 50px;
+}
+
+#accordion .item {
+    width:98%;

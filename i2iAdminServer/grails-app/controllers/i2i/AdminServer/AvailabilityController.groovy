@@ -6,7 +6,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+@Transactional
 class AvailabilityController {
 
 	StoreService storeService
@@ -33,7 +33,8 @@ class AvailabilityController {
 			render "error. Not logged in "
 			
 		println "showInventoryAvailability params: "+params
-		
+//		int max = params.max ? params.int('max') : 10
+//		int offset = params.offset ? params.int('offset') : 0
 		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromStoreId(storeId)
 		render(view:"showInventoryDetails", model: [inventoryAvailabilityList: inventoryAvailabilityList])
 	}
@@ -120,4 +121,35 @@ class AvailabilityController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def onClickAvailable()
+	{
+		Long availabilityId = params.availabilityId.toLong()
+		println "availabilityId: "+availabilityId
+		Byte availableflag = Constants.AVAILABILITY_MEDIUM 
+		
+		def status = availabilityService.changeAndSaveAvailabilityIndex(availabilityId,availableflag)
+		
+		if(status == 0)
+		render "error"
+		
+		else
+		redirect (controller: 'Availability', action: 'showInventoryDetails')
+	}
+	
+	def onClickUnavailable()
+	{
+		println "params: "+params
+		Long availabilityId = params.availabilityId.toLong()
+		println "availabilityId: "+availabilityId
+		Byte availableflag = Constants.UNAVAILABLE
+		
+		def status = availabilityService.changeAndSaveAvailabilityIndex(availabilityId,availableflag)
+		
+		if(status != 0)
+		render "error"
+		
+		else
+		redirect (controller: 'Availability', action: 'showInventoryDetails')
+	}
 }
