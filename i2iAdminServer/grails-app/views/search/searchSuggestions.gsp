@@ -13,7 +13,7 @@
 <body>
 	<g:render template="/template/navigationClient" />
 
-<br/>
+<%--<br/>--%>
 <%--	<g:set var="brandId" value="${brandId}"></g:set>--%>
 	<g:render template="/template/searchBox"></g:render>
 	<br />

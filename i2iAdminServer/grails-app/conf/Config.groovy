@@ -35,7 +35,7 @@ grails.mime.types = [ // the first one is the default format
 //grails.urlmapping.cache.maxsize = 1000
 
 // set variables
-turnOnTestCode = 1
+turnOnTestCode = 0
 
 // What URL patterns should be processed by the resources plugin
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']

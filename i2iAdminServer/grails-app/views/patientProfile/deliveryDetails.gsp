@@ -12,7 +12,7 @@
 </head>
 <body>
 	<g:render template="/template/navigationClient" />
-	<br />
+<%--	<br />--%>
 	<div data-role="content">
 		<g:if test="${flash.message}">
 			<div class="message" role="alert">
@@ -75,7 +75,7 @@
 					<tr>
 						<td style="width: 25%"><label class="label-control"
 							for="name"><g:message code="patientProfile.name.label"
-									default="Name" />*</label></td>
+									default="Name:" />*</label></td>
 						<td><g:textField name="name" class="textbox-control"
 								title='Minimum 3 characters' pattern=".{3,}" required="required"
 								maxlength="100"
@@ -84,14 +84,14 @@
 					</tr>
 					<tr>
 						<td><label class="label-control" for="age"><g:message
-									code="patientProfile.age.label" default="Age" /></label></td>
+									code="patientProfile.age.label" default="Age:*" /></label></td>
 						<td><g:field class="textbox-control" type="number" size="6"
 								name="age" min="0" max="99" required="required"
 								value="${fieldValue(bean: orderDetails, field: 'age')}" /></td>
 					</tr>
 					<tr>
 						<td><label class="label-control" for="phoneNumber"><g:message
-									code="patientProfile.phoneNumber.label" default="Phone" />*</label></td>
+									code="patientProfile.phoneNumber.label" default="Phone:" />*</label></td>
 						<td><g:field type="tel" name="phoneNumber"
 								class="textbox-control" value="${orderDetails?.phoneNumber}"
 								pattern=".{3,}" required="required" maxlength="100"
@@ -105,14 +105,14 @@
 					</tr>
 					<tr>
 						<td><label class="label-control" for="address">Address
-								Line1*</label></td>
+								Line1:*</label></td>
 						<td><g:textField class="textbox-control" name="addressLine1"
 								value="${orderDetails?.addressLine1}" pattern=".{3,}"
 								required="required" maxlength="100" title='Minimum 3 characters' /></td>
 					</tr>
 					<tr>
 						<td><label class="label-control" for="landmark">Address
-								Line2*</label></td>
+								Line2:*</label></td>
 						<td><g:textField class="textbox-control" name="addressLine2"
 								value="${orderDetails?.addressLine2}" pattern=".{3,}"
 								required="required" maxlength="100" title='Minimum 3 characters' /></td>
