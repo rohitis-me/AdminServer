@@ -142,7 +142,22 @@
 						<td><g:hiddenField name="country"
 								value="${orderDetails?.country }" /> ${orderDetails?.country }</td>
 					</tr>
-
+					<tr>
+						<td><label class="label-control" for="textfield">Payment Method:
+				</label></td>
+						<td><label class="label-control" for="textfield">Cash on
+					delivery</label></td>
+					</tr>
+				<g:if test="${isEmergencyDeliveryAvailable}"> 
+				<tr>
+					<td></td>
+					<td><g:checkBox name="isEmergencyDeliveryNeeded" class='chk' id='emergency_delivery' 
+					value="${orderDetails?.isEmergencyDeliveryNeeded}" /> <label
+						class="label-control" for='emergency_delivery'><g:message
+								code="order.emergency.delivery.label"
+								default="Emergency delivery Required" /></label></td>
+				</tr>
+				</g:if>
 					<%--					<tr>--%>
 					<%--						<td style="width: 15%"><label class="label-control" for="pin">Pin--%>
 					<%--								code </label></td>--%>
@@ -153,9 +168,7 @@
 			</table>
 
 			<div class="end" align="center">
-				<label class="label-control" for="textfield">Payment Method:
-				</label> <label class="label-control" for="textfield">Cash on
-					delivery</label> <br /> <br />
+<%--				<br />--%>
 				<g:submitButton name="create"
 					value="${message(code: 'default.button.submit.label', default: 'Submit')}"
 					class="btn btn-default" />

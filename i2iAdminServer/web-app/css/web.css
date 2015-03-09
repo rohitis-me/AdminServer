@@ -345,3 +345,8 @@ a:hover, a:active {
     border-bottom: 1px solid #ccc;
     font-weight: bold;
 }
+
+fieldset.radiogroup  {
+width: 60%;
+} 
+

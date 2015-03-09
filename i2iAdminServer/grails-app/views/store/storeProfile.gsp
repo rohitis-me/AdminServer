@@ -31,10 +31,10 @@
 			</g:eachError>
 		</ul>
 	</g:hasErrors>
-<br/>
+	<br />
 
 	<g:form controller="store" action="saveStoreProfile" method="PUT">
-	<g:hiddenField name="version" value="${storeInstance?.version}" />
+		<g:hiddenField name="version" value="${storeInstance?.version}" />
 		<table align="center" style="border-top: 0">
 			<tbody>
 				<tr>
@@ -47,8 +47,8 @@
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="storeName" maxlength="100" required=""
-							value="${storeInstance?.storeName}" /></td>
+					<td><g:textField class="textbox-control" name="storeName"
+							maxlength="100" required="" value="${storeInstance?.storeName}" /></td>
 				</tr>
 				<tr>
 					<td style="width: 25%">
@@ -60,8 +60,8 @@
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="phoneNumber" maxlength="100" required=""
-							value="${storeInstance?.phoneNumber}" /></td>
+					<td><g:textField class="textbox-control" name="phoneNumber"
+							maxlength="100" required="" value="${storeInstance?.phoneNumber}" /></td>
 				</tr>
 				<tr>
 					<td>
@@ -73,8 +73,9 @@
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="addressLine1" maxlength="100"
-							required="" value="${storeInstance?.addressLine1}" /></td>
+					<td><g:textField class="textbox-control" name="addressLine1"
+							maxlength="100" required=""
+							value="${storeInstance?.addressLine1}" /></td>
 				</tr>
 
 				<tr>
@@ -87,57 +88,101 @@
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="addressLine2" maxlength="100"
-							required="" value="${storeInstance?.addressLine2}" /></td>
+					<td><g:textField class="textbox-control" name="addressLine2"
+							maxlength="100" required=""
+							value="${storeInstance?.addressLine2}" /></td>
 				</tr>
 
 				<tr>
 					<td>
 						<div
 							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'circle', 'error')} required">
-							<label class="label-control" for="circle"> <g:message code="store.circle.label"
-									default="Circle" /> <span class="required-indicator">*</span>
+							<label class="label-control" for="circle"> <g:message
+									code="store.circle.label" default="Circle" /> <span
+								class="required-indicator">*</span>
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="circle" maxlength="100" required=""
-							value="${storeInstance?.circle}" /></td>
+					<td><g:textField class="textbox-control" name="circle"
+							maxlength="100" required="" value="${storeInstance?.circle}" /></td>
 				</tr>
 
 				<tr>
 					<td>
 						<div
 							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'city', 'error')} required">
-							<label class="label-control" for="city"> <g:message code="store.city.label"
-									default="City" /> <span class="required-indicator">*</span>
+							<label class="label-control" for="city"> <g:message
+									code="store.city.label" default="City" /> <span
+								class="required-indicator">*</span>
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="city" maxlength="100" required=""
-							value="${storeInstance?.city}" /></td>
+					<td><g:textField class="textbox-control" name="city"
+							maxlength="100" required="" value="${storeInstance?.city}" /></td>
 				</tr>
 
 				<tr>
 					<td>
 						<div
 							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'state', 'error')} required">
-							<label class="label-control" for="state"> <g:message code="store.state.label"
-									default="State" /> <span class="required-indicator">*</span>
+							<label class="label-control" for="state"> <g:message
+									code="store.state.label" default="State" /> <span
+								class="required-indicator">*</span>
 							</label>
 						</div>
 					</td>
-					<td><g:textField class="textbox-control" name="state" maxlength="100" required=""
-							value="${storeInstance?.state}" /></td>
+					<td><g:textField class="textbox-control" name="state"
+							maxlength="100" required="" value="${storeInstance?.state}" /></td>
+				</tr>
+
+				<tr>
+					<td>
+						<div
+							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'deliveryHoursIfAvailable', 'error')} required">
+							<label class="label-control"> <g:message
+									code="store.state.label" default="Delivery Time (If Available)" />
+								<span class="required-indicator">*</span>
+							</label>
+						</div>
+					</td>
+					<td><g:field type="number" style="width:50%" class="textbox-control"
+							name="deliveryHoursIfAvailable" maxlength="100" required=""
+							value="${storeInstance?.deliveryHoursIfAvailable}" /><label class="label-control"> Hours</label></td>
+				</tr>
+
+				<tr>
+					<td>
+						<div
+							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'deliveryHoursIfUnavailable', 'error')} required">
+							<label class="label-control"> <g:message
+									code="store.state.label" default="Delivery Time (If Unavailable)" />
+								<span class="required-indicator">*</span>
+							</label>
+						</div>
+					</td>
+					<td><g:field type="number" style="width:50%" class="textbox-control" name="deliveryHoursIfUnavailable"
+							maxlength="100" required=""
+							value="${storeInstance?.deliveryHoursIfUnavailable}" /><label class="label-control"> Hours</label></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><g:checkBox name="isEmergencyDeliveryAvailable" class='chk' id='emergency_delivery' 
+					value="${storeInstance?.isEmergencyDeliveryAvailable}" /> <label
+						class="label-control" for='emergency_delivery'><g:message
+								code="store.emergency.delivery.label"
+								default="Emergency delivery available" /></label></td>
 				</tr>
 			</tbody>
 		</table>
-		<g:hiddenField name="storeId" value="${storeInstance?.storeId }"/>
+		<g:hiddenField name="storeId" value="${storeInstance?.storeId }" />
 		<div align="center">
-			<g:submitButton name="Update" 
-				value="${message(code: 'default.button.update.label', default: 'Update')}" class="btn btn-default"/>
+			<g:submitButton name="Update"
+				value="${message(code: 'default.button.update.label', default: 'Update')}"
+				class="btn btn-default" />
 		</div>
 
 	</g:form>
-<br/>
+	<br />
 </body>
 </html>

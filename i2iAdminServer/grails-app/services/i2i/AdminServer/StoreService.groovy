@@ -60,6 +60,10 @@ class StoreService {
 		store.state = storeCommand.state
 		store.latitude = storeCommand.latitude
 		store.longitude = storeCommand.longitude
+		println "delivery time: "+storeCommand.deliveryHoursIfAvailable
+		store.deliveryHoursIfAvailable = storeCommand.deliveryHoursIfAvailable
+		store.deliveryHoursIfUnavailable = storeCommand.deliveryHoursIfUnavailable
+		store.isEmergencyDeliveryAvailable = storeCommand.isEmergencyDeliveryAvailable
 		return store
 	}
 	

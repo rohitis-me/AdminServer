@@ -51,7 +51,7 @@ class OrdersService {
 		orderDetails.brandId = order.brandId
 		orderDetails.inventoryId = order.inventoryId
 		orderDetails.storeId = order.storeId
-		orderDetails.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
+		orderDetails.brandName = brandDatabaseService.getBrandNameFromId(order.brandId, order.inventoryId)
 		
 //		Store store = storeService.getStoreDataFromStoreId(order.storeId)
 //		orderDetails.storeName = store.storeName
@@ -62,9 +62,12 @@ class OrdersService {
 //		orderDetails.storeCity = store.city
 //		orderDetails.storeState = store.state
 		
-		println "storename: "+orderDetails.storeName
+//		println "storename: "+orderDetails.storeName
+		orderDetails.quantity = order.quantity
+		orderDetails.estimatedDeliveryTime = order.estimatedDeliveryTime
 		orderDetails.orderId = order.orderId
 		orderDetails.orderStatus = order.orderStatus
+		orderDetails.isEmergencyDeliveryNeeded = order.isEmergencyDeliveryNeeded
 		return orderDetails
 	}
 	
@@ -117,6 +120,7 @@ class OrdersService {
 		else
 			order.estimatedDeliveryTime = getEstimatedDeliveryTime()
 		
+		order.isEmergencyDeliveryNeeded = orderDetailsCommand.isEmergencyDeliveryNeeded
 		return order
 	}
 	
@@ -208,6 +212,20 @@ class OrdersService {
 	{
 		Orders order = Orders.findByUId(uId)
 		return order
+	}
+	
+	def changeOrderStatusAndSave(def orderId, String orderstatus) {
+		Orders order = getOrderFromOrderId(orderId)
+		
+		if(orderstatus=="2") order.orderStatus = Constants.ORDER_ACCEPTED
+		else if(orderstatus=="3") order.orderStatus = Constants.ORDER_INTRANSIT
+		else if(orderstatus=="4") order.orderStatus = Constants.ORDER_DELIVERED
+		else if(orderstatus=="0") order.orderStatus = Constants.ORDER_REJECTED
+		else order.orderStatus = Constants.ORDER_PLACED
+		
+		def status = saveOrder(order)
+		
+		return status
 	}
 	
 	def acceptOrderAndSave(def orderId) {

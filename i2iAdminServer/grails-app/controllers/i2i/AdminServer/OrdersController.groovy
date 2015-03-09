@@ -32,7 +32,7 @@ class OrdersController {
 			render "error. Not logged in "
 		println "Storeid: "+storeId
 		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
-		println "done orderlist"
+		println "orderCount "+ ordersList.size()
 		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
 		println "done orderdetailslist"
 		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList])
@@ -57,6 +57,19 @@ class OrdersController {
 
 		println "OrderStatusCommand: "+orderStatusCommand.properties
 		render(view: "orderStatus", model: [orderStatusCommand: orderStatusCommand])
+	}
+	
+	@Secured(['ROLE_CHEMIST_ADMIN'])
+	def saveOrderStatus(OrderDetailsCommand orderDetailsCommand) {
+		println "in save order status: "+params
+		def orderId = orderDetailsCommand.orderId
+		def status = ordersService.changeOrderStatusAndSave(orderId, params.orderstatus)
+		
+		if(status == 0)
+		render "error"
+		
+		else
+		redirect (controller: 'orders', action: 'showOrderDetailsList')
 	}
 
 	@Secured(['ROLE_CHEMIST_ADMIN'])

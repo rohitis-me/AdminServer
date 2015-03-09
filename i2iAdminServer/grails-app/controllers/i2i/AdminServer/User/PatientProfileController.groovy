@@ -38,7 +38,7 @@ class PatientProfileController {
 			orderDetails.age = 20
 			orderDetails.quantity = 1
 			
-	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName])
+	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName, isEmergencyDeliveryAvailable:storeData?.isEmergencyDeliveryAvailable])
 		}
 		else if(orderDetailsCommand.inventoryId){
 			def brandData = inventoryService.getBrandDataFromInventoryId(orderDetailsCommand.inventoryId)
@@ -56,7 +56,7 @@ class PatientProfileController {
 			orderDetails.age = 20
 			orderDetails.quantity = 1
 			
-	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName])
+	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName, isEmergencyDeliveryAvailable:storeData?.isEmergencyDeliveryAvailable])
 		}
 	}
 	
