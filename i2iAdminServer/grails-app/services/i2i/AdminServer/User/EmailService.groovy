@@ -10,14 +10,17 @@ class EmailService {
 	def serviceMethod() {
 	}
 
-	def sendEMail(String from, String to, String msg){
-		println "in email service: "+params
-		
+	def sendEMail(String toAdd, String mailSubject, String msg){
+		try {
 		mailService.sendMail {
-			to to
-			from from
-			subject "Feedback@i2i"
+			to toAdd
+			subject mailSubject
 			body msg
 		}
+		}
+		catch(Exception exp) {
+			println "Exception: "+exp.getRootCause()
+		}
+		println "SENT MAIL"
 	}
 }

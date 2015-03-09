@@ -34,8 +34,8 @@ class FeedbackController {
 		
 		emailService.sendEMail (
 			"gchandu27@gmail.com",
-			params.emailID,
-			params.message)
+			params.message,
+			message(code: 'email.subject.feedback'))
 
 		render "Thanks for your feedback!"
 	}
