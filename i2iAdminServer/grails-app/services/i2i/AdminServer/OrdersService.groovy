@@ -49,17 +49,18 @@ class OrdersService {
 		OrderDetailsCommand orderDetails = populateOrderDetailsFromPatientProfile(patient)
 		println "ORDERDETAILS: "+order.properties
 		orderDetails.brandId = order.brandId
+		orderDetails.inventoryId = order.inventoryId
 		orderDetails.storeId = order.storeId
 		orderDetails.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
 		
-		Store store = storeService.getStoreDataFromStoreId(order.storeId)
-		orderDetails.storeName = store.storeName
-		orderDetails.storePhoneNumber = store.phoneNumber
-		orderDetails.storeAddressLine1 = store.addressLine1
-		orderDetails.storeAddressLine2 = store.addressLine2
-		orderDetails.storeCircle = store.circle
-		orderDetails.storeCity = store.city
-		orderDetails.storeState = store.state
+//		Store store = storeService.getStoreDataFromStoreId(order.storeId)
+//		orderDetails.storeName = store.storeName
+//		orderDetails.storePhoneNumber = store.phoneNumber
+//		orderDetails.storeAddressLine1 = store.addressLine1
+//		orderDetails.storeAddressLine2 = store.addressLine2
+//		orderDetails.storeCircle = store.circle
+//		orderDetails.storeCity = store.city
+//		orderDetails.storeState = store.state
 		
 		println "storename: "+orderDetails.storeName
 		orderDetails.orderId = order.orderId
@@ -67,23 +68,54 @@ class OrdersService {
 		return orderDetails
 	}
 	
+	def populateOrderStatusFromOrder(Orders order) {
+		println "ORDER: "+order.properties
+//		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
+//		println "PATIENT: "+patient.properties
+//		OrderDetailsCommand orderDetails = populateOrderDetailsFromPatientProfile(patient)
+//		println "ORDERDETAILS: "+order.properties
+		def orderStatusCommand = new OrderStatusCommand()
+		orderStatusCommand.brandId = order.brandId
+		orderStatusCommand.inventoryId = order.inventoryId
+		orderStatusCommand.storeId = order.storeId
+		orderStatusCommand.brandName = brandDatabaseService.getBrandNameFromId(order.brandId, order.inventoryId)
+		
+		Store store = storeService.getStoreDataFromStoreId(order.storeId)
+		orderStatusCommand.storeName = store.storeName
+		orderStatusCommand.storePhoneNumber = store.phoneNumber
+		orderStatusCommand.storeAddressLine1 = store.addressLine1
+		orderStatusCommand.storeAddressLine2 = store.addressLine2
+		orderStatusCommand.storeCircle = store.circle
+		orderStatusCommand.storeCity = store.city
+		orderStatusCommand.storeState = store.state
+		
+		println "storename: "+orderStatusCommand.storeName
+		orderStatusCommand.orderId = order.orderId
+		orderStatusCommand.orderStatus = order.orderStatus
+		orderStatusCommand.quantity = order.quantity
+		orderStatusCommand.estimatedDeliveryTime = order.estimatedDeliveryTime
+		return orderStatusCommand
+	}
+	//FIXME
 	def populateOrderFromOrderDetailsCommand(OrderDetailsCommand orderDetailsCommand) {
 		Orders order = new Orders()
 		order.brandId = orderDetailsCommand.brandId
+		order.inventoryId = orderDetailsCommand.inventoryId
 		order.storeId = orderDetailsCommand.storeId
+		order.quantity = orderDetailsCommand.quantity
 		
 		if(orderDetailsCommand.orderId)
-		order.orderId = orderDetailsCommand.orderId
+			order.orderId = orderDetailsCommand.orderId
 		
 		if(orderDetailsCommand.orderStatus == 0)
-		order.orderStatus = 1
+			order.orderStatus = 1
 		else
-		order.orderStatus = orderDetailsCommand.orderStatus
+			order.orderStatus = orderDetailsCommand.orderStatus
 		
 		if(orderDetailsCommand.estimatedDeliveryTime)
-		order.estimatedDeliveryTime = orderDetailsCommand.estimatedDeliveryTime
+			order.estimatedDeliveryTime = orderDetailsCommand.estimatedDeliveryTime
 		else
-		order.estimatedDeliveryTime = getEstimatedDeliveryTime()
+			order.estimatedDeliveryTime = getEstimatedDeliveryTime()
 		
 		return order
 	}
@@ -93,13 +125,13 @@ class OrdersService {
 		order.brandId = brand.brandId
 		order.storeId = store.storeId
 		order.brandName = brand.brandName
-		order.storeName = store.storeName
-		order.storePhoneNumber = store.phoneNumber
-		order.storeAddressLine1 = store.addressLine1
-		order.storeAddressLine2 = store.addressLine2
-		order.storeCircle = store.circle
-		order.storeCity = store.city
-		order.storeState = store.state
+//		order.storeName = store.storeName
+//		order.storePhoneNumber = store.phoneNumber
+//		order.storeAddressLine1 = store.addressLine1
+//		order.storeAddressLine2 = store.addressLine2
+//		order.storeCircle = store.circle
+//		order.storeCity = store.city
+//		order.storeState = store.state
 		
 		return order
 	}

@@ -4,6 +4,7 @@ import i2i.AdminServer.BrandDatabaseService
 import i2i.AdminServer.OrderDetailsCommand
 import i2i.AdminServer.OrdersService
 import i2i.AdminServer.StoreService
+import i2i.AdminServer.ClientSync.InventoryService
 
 class PatientProfileController {
 
@@ -12,30 +13,51 @@ class PatientProfileController {
 	BrandDatabaseService brandDatabaseService
 	StoreService storeService
 	OrdersService ordersService
+	InventoryService inventoryService	
 	
     def index = {
         redirect(action: "list", params: params)
     }
 
 	def deliveryDetails(OrderDetailsCommand orderDetailsCommand) {
-		println "BrandID: "+orderDetailsCommand.brandId+" storeId: "+orderDetailsCommand.storeId+" circle: "+orderDetailsCommand.circle
-		println "PARAMS: "+orderDetailsCommand.properties
+		println "BrandID: "+orderDetailsCommand.brandId+"InventoryID: "+orderDetailsCommand.inventoryId+" storeId: "+orderDetailsCommand.storeId+" circle: "+orderDetailsCommand.circle
+		//println "PARAMS: "+orderDetailsCommand.properties
 		
-		def brandData = brandDatabaseService.getBrandDataFromBrandId(orderDetailsCommand.brandId)
-		def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
-		println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
-		OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
-		println "success"
+		if(orderDetailsCommand.brandId){
+			def brandData = brandDatabaseService.getBrandDataFromBrandId(orderDetailsCommand.brandId)
+			def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
+			println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
+			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+			println "success"
 		
-		//FIXME
-		orderDetails.circle = orderDetailsCommand.circle
-		orderDetails.city = 'Chennai'
-		orderDetails.state = 'Tamil Nadu'
-		orderDetails.country = 'India'
-		orderDetails.age = 20
-		orderDetails.quantity = 1
+			//FIXME
+			orderDetails.circle = orderDetailsCommand.circle
+			orderDetails.city = 'Chennai'
+			orderDetails.state = 'Tamil Nadu'
+			orderDetails.country = 'India'
+			orderDetails.age = 20
+			orderDetails.quantity = 1
+			
+	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName])
+		}
+		else if(orderDetailsCommand.inventoryId){
+			def brandData = inventoryService.getBrandDataFromInventoryId(orderDetailsCommand.inventoryId)
+			def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
+			println "Branddata: "+brandData.brandName+" storedata: "+storeData.storeId
+			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+			orderDetails.inventoryId = orderDetailsCommand.inventoryId
+			println "success"
 		
-        render(view:'deliveryDetails', model: [orderDetails : orderDetails, form:brandData.form, noOfUnits:brandData.noOfUnits, strength:brandData.strength])
+			//FIXME
+			orderDetails.circle = orderDetailsCommand.circle
+			orderDetails.city = 'Chennai'
+			orderDetails.state = 'Tamil Nadu'
+			orderDetails.country = 'India'
+			orderDetails.age = 20
+			orderDetails.quantity = 1
+			
+	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName])
+		}
 	}
 	
 	

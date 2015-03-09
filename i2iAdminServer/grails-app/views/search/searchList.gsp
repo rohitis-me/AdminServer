@@ -13,7 +13,8 @@
 <body>
 		<g:render template="/template/navigationClient" />
 <%--<br/>--%>
-	<g:set var="brandId" value="${brandId}"></g:set>
+<%--	<g:set var="brandId" value="${brandId}"></g:set>--%>
+<%--	<g:set var="inventoryId" value="${inventoryId}"></g:set>--%>
 	<g:render template="/template/searchBox"></g:render>
 	<br />
 	<table align="center">
@@ -33,7 +34,7 @@
 				<g:set var="storeId" value="${storeInstance?.storeId}"></g:set>
 				<tr style="cursor: pointer;" class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="patientProfile"
 					action="deliveryDetails"
-					params="[storeId: storeId, brandId: brandId, circle: circle]"/>" '>
+					params="[storeId: storeId, brandId: brandId, inventoryId:inventoryId, circle: circle]"/>" '>
 
 
 					<td>

@@ -15,14 +15,8 @@ import grails.validation.Validateable
 class OrderDetailsCommand {
 	String brandName
 	String brandId
+	String inventoryId
 	String storeId
-	String storeName
-	String storePhoneNumber
-	String storeAddressLine1
-	String storeAddressLine2
-	String storeCircle
-	String storeCity
-	String storeState
 	String name
 	String phoneNumber
 	String emailID
@@ -47,5 +41,6 @@ class OrderDetailsCommand {
 		city nullable:false, blank:false,size:3..100
 		circle nullable:false, blank:false,size:3..100
 		state nullable:false, blank:false,size:3..100
+		storeId nullable:false, blank:false,size:1..100
 	}
 }

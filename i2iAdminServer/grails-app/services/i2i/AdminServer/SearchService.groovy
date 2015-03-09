@@ -31,5 +31,23 @@ class SearchService {
 		return storeList
 	}
 	
+	def getListOfStoresWhereBrandIsAvailableUsingInventoryId(String inventoryId) {
+		List storeIdList = availabilityService.getStoreIdsFromInventoryId(inventoryId)
+		List storeList = storeService.getStoreListFromStoreIdList(storeIdList)
+		println "iId: "+inventoryId+" storelist: "+storeList.size()
+		println "turnontestcode: "+grailsApplication.config.turnOnTestCode
+		if(grailsApplication.config.turnOnTestCode) {
+			if(inventoryId== null || inventoryId == "") {
+				return storeList
+			}
+			if(storeList.size() == 0) {
+				storeList.add(Store.first())
+				storeList.add(Store.last())
+			}
+		}
+		println "storeList: "+storeList.count
+		return storeList
+	}
+	
 	
 }

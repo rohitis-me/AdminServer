@@ -62,6 +62,7 @@ class BootStrap {
 				Availability availability = new Availability(
 					storeId : "store"+str,
 					brandId : 1+random.nextInt(100).toString(),
+					inventoryId : 1+random.nextInt(1000).toString(),
 					availabilityIndex : random.nextInt(4) as byte)
 				
 				if(! availability.save(flush:true)) {

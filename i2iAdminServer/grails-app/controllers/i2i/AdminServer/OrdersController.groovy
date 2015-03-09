@@ -53,10 +53,10 @@ class OrdersController {
 		
 		//Orders order = ordersService.getOrderFromOrderId(uId)
 		Orders order = ordersService.getOrderFromUId(uId)
-		OrderDetailsCommand orderDetailsCommand = ordersService.populateOrderDetailsFromOrder(order)
+		OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
 
-		println "OC: "+orderDetailsCommand.storeName
-		render(view: "orderStatus", model: [orderDetailsCommand: orderDetailsCommand])
+		println "OrderStatusCommand: "+orderStatusCommand.properties
+		render(view: "orderStatus", model: [orderStatusCommand: orderStatusCommand])
 	}
 
 	@Secured(['ROLE_CHEMIST_ADMIN'])
@@ -106,10 +106,11 @@ class OrdersController {
     }
 	
 	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
-
+		println "ODC: "+orderDetailsCommand.properties
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
 		println "orderId: "+uId
-
+		println "inventoryId: "+orderDetailsCommand.inventoryId
+		
 		if(uId)
 			redirect(controller: 'orders', action: 'showOrderStatus', params:[uId: uId])
 		

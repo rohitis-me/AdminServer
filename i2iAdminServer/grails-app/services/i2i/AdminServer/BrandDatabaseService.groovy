@@ -1,11 +1,16 @@
 package i2i.AdminServer
 
 import grails.transaction.Transactional
+import i2i.AdminServer.ClientSync.BrandDataCommand
+import i2i.AdminServer.ClientSync.InventoryService
 
 @Transactional
 class BrandDatabaseService {
 
 	private static final tag='BrandDatabaseService'
+	
+	InventoryService inventoryService
+	
     def serviceMethod() {
 
     }
@@ -35,12 +40,27 @@ class BrandDatabaseService {
 	
 	
 	def getListOfBrandNamesStartingWith(String brandName) {
-		List brandNameList = BrandDatabase.findAllByBrandNameIlike(brandName+"%") // ignore case
+		List brandDataList = BrandDatabase.findAllByBrandNameIlike(brandName+"%") // ignore case
+		List brandDataCommandList = populateBrandDataCommandListFromBrandDataList(brandDataList)
 		//findAllWhere(brandName: brandName+"%")//WhereBrandNameLike(brandName+'%')*.brandName
 //		List brandNameList = new ArrayList<BrandDatabase>()
 //		brandNameList.add(BrandDatabase.first())
 //		brandNameList..add(BrandDatabase.last())
-		return brandNameList
+		return brandDataCommandList
+	}
+	
+	def populateBrandDataCommandListFromBrandDataList(ArrayList<BrandDatabase> brandDataList) {
+		ArrayList<BrandDataCommand> brandDataCommandList = new ArrayList<BrandDataCommand>()
+		BrandDataCommand brandDataCommand = new BrandDataCommand()
+		brandDataList.each{brandData->
+			brandDataCommand = new BrandDataCommand()
+			brandDataCommand.brandName = brandData.brandName+' '+brandData.strength+' '+brandData.form
+			brandDataCommand.brandId = brandData.brandId
+//			brandDataCommand.form = brandData.form
+//			brandDataCommand.strength = brandData.strength
+			brandDataCommandList.add(brandDataCommand)
+		}
+		return brandDataCommandList
 	}
 	
 	def saveBrandToBrandToBeApprovedTable(BrandDatabase brand) {
@@ -78,4 +98,24 @@ class BrandDatabaseService {
 		return (BrandToBeApproved.count()+1).toString()
 	}
 	
+	//Changes to be made when brand data fetched from brand database
+	def getBrandDataList(String searchTerm) {
+		List drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm)
+
+		if(drugList.size() == 0) {
+			drugList = getListOfBrandNamesStartingWith(searchTerm)
+		}
+		return drugList
+	}
+	
+	def getBrandNameFromId(String brandId, String inventoryId) {
+		String brandName=""
+		if(brandId) {
+			brandName = getBrandNameFromBrandId(brandId)
+		}
+		else if(inventoryId) {
+			brandName = inventoryService.getBrandNameFromInventoryId(inventoryId)
+		}
+		return brandName
+	}
 }

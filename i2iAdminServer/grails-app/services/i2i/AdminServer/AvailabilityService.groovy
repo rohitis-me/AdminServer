@@ -30,6 +30,24 @@ class AvailabilityService {
 		return storeIdList
 	}
 	
+	def getStoreIdsFromInventoryId(String inventoryId) {
+		
+		def storeIdList = Availability.findAllByInventoryIdAndAvailabilityIndexGreaterThan(inventoryId, 0)*.storeId
+		println "availability service getStoreIdsFromInventoryId: "+storeIdList.size()//+"\n* availability: "+availability.properties
+		for(int i=0;i<storeIdList.size();i++)
+		{
+			for(int j=i+1;j<storeIdList.size();j++)
+			{
+				if(storeIdList[i] ==storeIdList[j] )
+				{
+					storeIdList.remove(j);
+					j--;
+				}
+			}
+		}
+		return storeIdList
+	}
+	
 	def getAvailabilityListFromStoreId(String storeId)
 	{
 		def brandIdList = Availability.findAllByStoreId(storeId)

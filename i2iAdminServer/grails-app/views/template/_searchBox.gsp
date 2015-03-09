@@ -8,12 +8,12 @@
                       console.log("selected id:" + ui.item.id);
                       console.log("selected name:" + ui.item.value);
                       $('#search_textField').val(ui.item.name);
-                      $('#brand_id').val(ui.item.id);
+                      $('#inventory_id').val(ui.item.id);
                 } 
                 });
             });
             function onTextEnter() {
-                      $('#brand_id').val("");
+                      $('#inventory_id').val("");
 			}
 </g:javascript>
 <g:form controller="search" action="search" method="get">
@@ -52,6 +52,7 @@
 			<input name="brandName" required class="textbox-control" id="search_textField"
 				placeholder="Enter medicine brand" style="height:36px; width: 55%;" value="${brandName}" onkeydown="onTextEnter()"/>
 				<g:hiddenField name="brandId" id="brand_id" value="${brandId}"/>
+				<g:hiddenField name="inventoryId" id="inventory_id" value="${inventoryId}"/>
 			 <input type="submit" name="searchButton" value="Search"
 				class="btn btn-default"
 				style="height: 44px; width: 25%;" />

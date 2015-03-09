@@ -11,6 +11,9 @@ class Store {
 	String state
 	String latitude
 	String longitude
+	byte deliveryHoursIfAvailable
+	byte deliveryHoursIfUnavailable
+	boolean isEmergencyDeliveryAvailable
 	
 	
     static constraints = {

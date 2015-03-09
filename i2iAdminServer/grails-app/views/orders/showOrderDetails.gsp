@@ -13,8 +13,8 @@
 	<br />
 	<table align="center" style="border-top: 0">
 		<tr>
-			<td style="width: 30%"><span class="label-control"><g:message code="orders.personId.label"
-						default="Person Name" /></span></td>
+			<td style="width: 30%"><span class="label-control"><g:message
+						code="orders.personId.label" default="Person Name" /></span></td>
 			<g:if test="${orderDetailsCommand?.name}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="name" /></span></td>
@@ -78,34 +78,30 @@
 							bean="${orderDetailsCommand}" field="estimatedDeliveryTime" /></span></td>
 			</g:if>
 		</tr>
-<%--		<tr>--%>
-<%--			<td><span id="storeId-label" class="label-control"><g:message--%>
-<%--						code="orders.storeId.label" default="Store Name" /></span></td>--%>
-<%--			<g:if test="${orderDetailsCommand?.storeName}">--%>
-<%--				<td><span class="label-control"><g:fieldValue--%>
-<%--							bean="${orderDetailsCommand}" field="storeName" /></span></td>--%>
-<%--			</g:if>--%>
-<%--		</tr>--%>
+		<%--		<tr>--%>
+		<%--			<td><span id="storeId-label" class="label-control"><g:message--%>
+		<%--						code="orders.storeId.label" default="Store Name" /></span></td>--%>
+		<%--			<g:if test="${orderDetailsCommand?.storeName}">--%>
+		<%--				<td><span class="label-control"><g:fieldValue--%>
+		<%--							bean="${orderDetailsCommand}" field="storeName" /></span></td>--%>
+		<%--			</g:if>--%>
+		<%--		</tr>--%>
 		<tr>
 			<td><span id="orderStatus-label" class="label-control"><g:message
 						code="orders.orderStatus.label" default="Order Status" /></span></td>
-						<g:set var="orderStatus"
-							value="${orderDetailsCommand?.orderStatus}" />
-				<td><g:if test="${orderStatus == 4 }">
+			<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
+			<td><g:if test="${orderStatus == 4 }">
 				Order delivered
 				</g:if> <g:elseif test="${orderStatus == 3 }">
 				Order in transit
-				</g:elseif>
-						<g:elseif test="${orderStatus == 2 }">
-				Order Accepted</g:elseif>
-						<g:elseif test="${orderStatus == 1 }">
-				Order Placed</g:elseif>
-				<g:elseif test="${orderStatus < 1 }">Order rejected</g:elseif></td>
+				</g:elseif> <g:elseif test="${orderStatus == 2 }">
+				Order Accepted</g:elseif> <g:elseif test="${orderStatus == 1 }">
+				Order Placed</g:elseif> <g:elseif test="${orderStatus < 1 }">Order rejected</g:elseif></td>
 			<%--			<g:if test="${orderDetailsCommand?.orderStatus}">--%>
-<%--				<td><span class="label-control"--%>
-<%--					aria-labelledby="orderStatus-label"><g:fieldValue--%>
-<%--							bean="${orderDetailsCommand}" field="orderStatus" /></span></td>--%>
-<%--			</g:if>--%>
+			<%--				<td><span class="label-control"--%>
+			<%--					aria-labelledby="orderStatus-label"><g:fieldValue--%>
+			<%--							bean="${orderDetailsCommand}" field="orderStatus" /></span></td>--%>
+			<%--			</g:if>--%>
 		</tr>
 	</table>
 	<div align="center">
@@ -118,6 +114,12 @@
 				value="${message(code: 'order.status.reject.button', default: 'Reject Order')}"
 				onclick="return confirm('${message(code: 'order.status.reject.message')}');" />
 		</g:form>
+		<form action="">
+			<input type="radio" name="orderstatus" value="AcceptOrder">Accept Order
+			<input type="radio" name="orderstatus" value="RejectOrder">Reject Order
+			<input type="radio" name="orderstatus" value="AcceptOrder">Accept Order
+			<input type="radio" name="orderstatus" value="RejectOrder">Reject Order
+		</form>
 	</div>
 </body>
 </html>

@@ -12,26 +12,26 @@
 
 	<br />
 
-	<g:form controller="feedback" action="sendMessage" method="PUT">
+	<g:form controller="feedback" action="sendFeedback" method="PUT">
 		<table align="center" style="border-top: 0">
 			<tbody>
 				<tr>
 					<td style="width: 25%"><label class="label-control"><g:message
-								code="default.name.label" default="Name:*" /></label></td>
+								code="default.name.label" default="Name *" /></label></td>
 					<td><g:textField name="name" class="textbox-control"
 							required="required" value="${orderDetails?.name}" /></td>
 				</tr>
 				<tr>
 					<td><label class="label-control"><g:message
-								code="patientProfile.emailID.label" default="Email:" /></label></td>
+								code="patientProfile.emailID.label" default="Email Id" /></label></td>
 					<td><g:field class="textbox-control" name="emailID"
 							type="email" maxlength="100" value="${orderDetails?.emailID}" /></td>
 				</tr>
 				<tr>
-					<td><label class="label-control">Comments:*</label></td>
-					<td><g:textField class="textbox-control" name="comment"
+					<td><label class="label-control">Message *</label></td>
+					<td><g:textArea class="textbox-control" name="message"
 							value="${orderDetails?.addressLine1}" required="required"
-							maxlength="200" /></td>
+							maxlength="1000" /></td>
 				</tr>
 			</tbody>
 		</table>

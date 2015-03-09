@@ -17,36 +17,43 @@
 <%--	<g:set var="brandId" value="${brandId}"></g:set>--%>
 	<g:render template="/template/searchBox"></g:render>
 	<br />
-	<table align="center">
+	<table align="center" style="border-top: 0">
 		<g:if test="${drugList}">
 			<div align="center">${drugList.size()}<g:message code="search.result.medicine.found" default=" medicines found!"/></div>
 		<br/>
-		<thead>
-			<tr>
-				<g:sortableColumn property="BrandName" title="BrandName" />
-				<g:sortableColumn property="Strength" title="Strength" />
-				<g:sortableColumn property="Form" title="Form" />
-
-				<%--<g:sortableColumn property="Availability" title="Availability" />--%>
-
-			</tr>
-		</thead>
+<%--		<thead>--%>
+<%--			<tr>--%>
+<%--				<g:sortableColumn property="BrandName" title="BrandName" />--%>
+<%--				<g:sortableColumn property="Strength" title="Strength" />--%>
+<%--				<g:sortableColumn property="Form" title="Form" />--%>
+<%----%>
+<%--				<g:sortableColumn property="Availability" title="Availability" />--%>
+<%----%>
+<%--			</tr>--%>
+<%--		</thead>--%>
 		<tbody>
 			<g:each in="${drugList}" status="i" var="drugInstance">
-				<g:set var="brandName" value="${drugInstance.brandName}${" "}${drugInstance.strength}${drugInstance.form}"></g:set>
+				<g:set var="brandName" value="${drugInstance?.brandName}"></g:set>
+				<g:if test="${drugInstance?.strength}">
+				<g:set var="brandName" value="${brandName+" "+drugInstance.strength}"></g:set>
+				</g:if>
+				<g:if test="${drugInstance?.form}">
+				<g:set var="brandName" value="${brandName+" "+drugInstance.form}"></g:set>
+				</g:if>
+				
 				<tr style="cursor: pointer;" class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="search"
 					action="search"
-					params="[brandName: brandName, brandId: drugInstance.brandId, circle: circle]"/>" '>
+					params="[brandName: brandName, brandId: drugInstance.brandId, inventoryId: drugInstance.inventoryId, circle: circle]"/>" '>
 
 					<td>
 						${fieldValue(bean: drugInstance, field: "brandName")}
 					</td>
-					<td>
-						${fieldValue(bean: drugInstance, field: "strength")} 
-					</td>
-					<td>
-						${fieldValue(bean: drugInstance, field: "form")} <br>
-					</td>
+<%--					<td>--%>
+<%--						${fieldValue(bean: drugInstance, field: "strength")} --%>
+<%--					</td>--%>
+<%--					<td>--%>
+<%--						${fieldValue(bean: drugInstance, field: "form")} <br>--%>
+<%--					</td>--%>
 
 <%--					<td>--%>
 <%--						<span style="color:#B0CF36"><g:message code="search.list.homedelivery" message="Home Delivery Available"/></span><br>--%>
