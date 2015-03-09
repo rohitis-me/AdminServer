@@ -11,6 +11,7 @@ class Orders {
 	Long orderId
 	String uId
 	int quantity
+	boolean isEmergencyDeliveryNeeded
 	
     static constraints = {
 		personId nullable:false, blank:false,size:1..100

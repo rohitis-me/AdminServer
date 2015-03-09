@@ -1,5 +1,7 @@
 
 <%@ page import="i2i.AdminServer.OrderDetailsCommand"%>
+<%@ page import="i2i.AdminServer.Constants"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,56 @@
 <body>
 	<g:render template="/template/navigation" />
 	<br />
+				<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
+	
+		<div align="center">
+		<g:form>
+			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }" />
+
+			<%--			<fieldset class="radiogroup" >			--%>
+			<table style="border: 1px solid #DFDFDF;">
+				<tr>
+					<td style="width: 25%">
+					<g:if test="${orderStatus == 2}">
+						<input type="radio" name="orderstatus" checked="checked" value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if>
+					<g:else>
+						<input type="radio" name="orderstatus"
+						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:else>
+					</td>
+					<td style="width: 25%">
+						<g:if test="${orderStatus == 3}"><input type="radio" name="orderstatus" checked="checked"
+						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:if>
+						<g:else><input type="radio" name="orderstatus"
+						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:else>
+					</td>
+					<td style="width: 25%">
+					<g:if test="${orderStatus == 4}"><input type="radio" name="orderstatus" checked="checked"
+						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:if>
+						<g:else><input type="radio" name="orderstatus"
+						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:else>
+					</td>
+					<td style="width: 25%">
+					<g:if test="${orderStatus == 0}">
+					<input type="radio" name="orderstatus" checked="checked"
+						value=${Constants.ORDER_REJECTED}>Reject Order</g:if>
+					<g:else>
+					<input type="radio" name="orderstatus"
+						value=${Constants.ORDER_REJECTED}>Reject Order</g:else>
+					</td>
+					</tr>
+			</table>
+			<%--			</fieldset>--%>
+			<br />
+			<g:actionSubmit class="btn btn-default" action="saveOrderStatus"
+				value="${message(code: 'order.status.save.button', default: 'Save')}" />
+			<%--			<g:actionSubmit class="btn btn-default" action="acceptOrder"--%>
+			<%--				value="${message(code: 'order.status.accept.button', default: 'Accept Order')}" />--%>
+			<%--			<g:actionSubmit class="btn btn-default" action="rejectOrder"--%>
+			<%--				value="${message(code: 'order.status.reject.button', default: 'Reject Order')}"--%>
+			<%--				onclick="return confirm('${message(code: 'order.status.reject.message')}');" />--%>
+		</g:form>
+	</div>
+	
 	<table align="center" style="border-top: 0">
 		<tr>
 			<td style="width: 30%"><span class="label-control"><g:message
@@ -78,6 +130,13 @@
 							bean="${orderDetailsCommand}" field="estimatedDeliveryTime" /></span></td>
 			</g:if>
 		</tr>
+		<tr>
+			<td><span class="label-control"><g:message
+						code="orders.phone.number.label"
+						default="Emergency delivery Needed: " /></span></td>
+			<td><span class="label-control"><g:fieldValue
+						bean="${orderDetailsCommand}" field="isEmergencyDeliveryNeeded" /></span></td>
+		</tr>
 		<%--		<tr>--%>
 		<%--			<td><span id="storeId-label" class="label-control"><g:message--%>
 		<%--						code="orders.storeId.label" default="Store Name" /></span></td>--%>
@@ -89,7 +148,6 @@
 		<tr>
 			<td><span id="orderStatus-label" class="label-control"><g:message
 						code="orders.orderStatus.label" default="Order Status" /></span></td>
-			<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
 			<td><g:if test="${orderStatus == 4 }">
 				Order delivered
 				</g:if> <g:elseif test="${orderStatus == 3 }">
@@ -104,22 +162,7 @@
 			<%--			</g:if>--%>
 		</tr>
 	</table>
-	<div align="center">
-		<g:form>
-			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }" />
 
-			<g:actionSubmit class="btn btn-default" action="acceptOrder"
-				value="${message(code: 'order.status.accept.button', default: 'Accept Order')}" />
-			<g:actionSubmit class="btn btn-default" action="rejectOrder"
-				value="${message(code: 'order.status.reject.button', default: 'Reject Order')}"
-				onclick="return confirm('${message(code: 'order.status.reject.message')}');" />
-		</g:form>
-		<form action="">
-			<input type="radio" name="orderstatus" value="AcceptOrder">Accept Order
-			<input type="radio" name="orderstatus" value="RejectOrder">Reject Order
-			<input type="radio" name="orderstatus" value="AcceptOrder">Accept Order
-			<input type="radio" name="orderstatus" value="RejectOrder">Reject Order
-		</form>
-	</div>
+	<br />
 </body>
 </html>

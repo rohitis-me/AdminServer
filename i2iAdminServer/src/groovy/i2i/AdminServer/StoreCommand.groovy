@@ -22,7 +22,9 @@ class StoreCommand {
 	String state
 	String latitude
 	String longitude
-	
+	byte deliveryHoursIfAvailable
+	byte deliveryHoursIfUnavailable
+	boolean isEmergencyDeliveryAvailable
 	
 	static constraints = {
 		storeId nullable:false, blank:false,size:3..100
