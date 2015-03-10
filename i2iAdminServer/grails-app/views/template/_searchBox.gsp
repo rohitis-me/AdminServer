@@ -29,20 +29,18 @@
 			<td id="hidden" style="width: 10%"><span class="label-control">Circle*</span></td>
 			<td style="width: 40%"><select name="circle" required
 				class="dropdown-control">
-					<option selected="selected" value="Adyar">Adyar</option>
-					<option value="Perungudi">Perungudi</option>
-					<option value="Sholinganallur">Sholinganallur</option>
-					<option value="Alandur">Alandur</option>
-					<option value="Besant Nagar">Besant Nagar</option>
+				<g:if test="${circle=="Thiruvanmiyur"}">
+					<option value="Thiruvanmiyur" selected="selected">Thiruvanmiyur</option>
+				</g:if>
+				<g:else>
 					<option value="Thiruvanmiyur">Thiruvanmiyur</option>
-					<option value="Saidapet">Saidapet</option>
-					<option value="Guindy">Guindy</option>
-					<option value="Madipakkam">Madipakkam</option>
-					<option value="Nanganallur">Nanganallur</option>
-					<option value="Velachery">Velachery</option>
-					<option value="Pallikaranai">Pallikaranai</option>
-					<option value="Thoraipakkam">Thoraipakkam</option>
-					<option value="Neelankarai">Neelankarai</option>
+				</g:else>
+				<g:if test="${circle=="Kottivakkam"}">
+					<option value="Kottivakkam" selected="selected">Kottivakkam</option>
+				</g:if>
+				<g:else>
+					<option value="Kottivakkam">Kottivakkam</option>
+				</g:else>
 			</select></td>
 
 			<td id="hidden" style="width: 10%"><span class="label-control">City*

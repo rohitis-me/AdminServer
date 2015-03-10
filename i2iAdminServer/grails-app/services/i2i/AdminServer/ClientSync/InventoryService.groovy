@@ -35,7 +35,7 @@ class InventoryService {
 	def getBrandDataFromInventoryId(String inventoryId) {
 		BrandDatabase brand = new BrandDatabase()
 		brand.brandName = getBrandNameFromInventoryId(inventoryId)
-		println "getBrandDataFromInventoryId: "+brand?.properties+" count: "+BrandDatabase.count()
+		//println "getBrandDataFromInventoryId: "+brand?.properties+" count: "+BrandDatabase.count()
 		return brand
 	}
 	

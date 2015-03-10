@@ -18,7 +18,7 @@ class Store {
 	
 	
     static constraints = {
-		storeId nullable:false, blank:false,size:3..100
+		storeId nullable:false, blank:false,size:1..100
 		storeName nullable:false, blank:false,size:3..100
 		phoneNumber nullable:true, blank:true,size:3..100
 		emailId nullable:true, blank:true,size:3..100

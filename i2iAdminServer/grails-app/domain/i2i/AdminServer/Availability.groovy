@@ -8,7 +8,7 @@ class Availability {
 	Long availabilityId
 
     static constraints = {
-		storeId nullable:false, blank:false,size:3..100
+		storeId nullable:false, blank:false,size:1..100
 		brandId nullable:true, blank:true,size:1..100
 		inventoryId nullable:true, blank:true,size:1..100
     }

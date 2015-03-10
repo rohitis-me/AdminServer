@@ -29,7 +29,7 @@ class SearchController {
 		//FIXME filter stores with circle also||get brandId against inventoryId and search for all stores where it is available
 		if(inventoryId){
 			println "inventoryId available: "+inventoryId
-			List stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryId(inventoryId)
+			List stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(inventoryId, circle)
 
 			if(stores)
 			{
@@ -49,7 +49,7 @@ class SearchController {
 				//FIXME: get delivery time from store
 				availabilityFlag = false
 				String deliveryTime = '24 hours'
-				render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+				render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
 			}
 		}
 		else if(brandId) {

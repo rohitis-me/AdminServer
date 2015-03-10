@@ -15,6 +15,7 @@ class StoreCommand {
 	String storeId
 	String storeName
 	String phoneNumber
+	String emailId
 	String addressLine1
 	String addressLine2
 	String circle
@@ -30,6 +31,7 @@ class StoreCommand {
 		storeId nullable:false, blank:false,size:3..100
 		storeName nullable:false, blank:false,size:3..100
 		phoneNumber nullable:false, blank:false,size:3..100
+		emailId nullable:true, blank:true,size:3..100
 		addressLine1 nullable:false, blank:false,size:3..100
 		addressLine2 nullable:false, blank:false,size:3..100
 		circle nullable:false, blank:false,size:3..100

@@ -27,7 +27,8 @@ class EmailService {
 	}
 	
 	def sendOrderMail(String toAdd, String mailSubject, OrderDetailsCommand orderDetails){
-		println "In send order Mail"
+		println "In send order Mail: "+orderDetails.properties
+		
 		try {
 		
 			if(toAdd) {

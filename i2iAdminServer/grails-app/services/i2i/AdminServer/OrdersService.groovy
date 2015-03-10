@@ -266,7 +266,7 @@ class OrdersService {
 	
 	def sendEmail(OrderDetailsCommand orderDetails) {
 //		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
-		String emailId = storeService.getEmailIdFromStoreId(order.storeId)
+		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
 		emailService.sendOrderMail(emailId, "Order@i2i", orderDetails)
 	}
 }

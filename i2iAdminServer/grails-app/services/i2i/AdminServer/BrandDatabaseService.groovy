@@ -127,7 +127,7 @@ class BrandDatabaseService {
 		else if(inventoryId){
 			brand = inventoryService.getBrandDataFromInventoryId(inventoryId)
 		}
-		println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
+		//println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
 		return brand
 	}
 }

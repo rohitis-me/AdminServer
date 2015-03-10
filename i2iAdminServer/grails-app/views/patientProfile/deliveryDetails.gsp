@@ -35,6 +35,7 @@
 				<tr>
 					<td style="width: 25%"><span class="label-control">Item
 							Name:</span></td>
+							<g:hiddenField name="brandName" value="${orderDetails.brandName}"/>
 					<td><g:fieldValue class="label-control" bean="${orderDetails}"
 							field="brandName" />
 							<g:if test="${brandData?.form}">${" "+brandData.form}</g:if> 
@@ -124,7 +125,7 @@
 						<td><label class="label-control" for="landmark">Circle
 						</label></td>
 						<td><g:hiddenField name="circle"
-								value="${orderDetails?.circle }" /> ${orderDetails?.circle }</td>
+								value="${orderDetails?.circle }" /> ${orderDetails?.circle } (Delivery restricted to this area)</td>
 					</tr>
 					<tr>
 						<td><label class="label-control" for="city">City </label></td>

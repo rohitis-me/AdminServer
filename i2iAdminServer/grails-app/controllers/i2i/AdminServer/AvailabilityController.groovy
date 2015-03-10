@@ -32,7 +32,7 @@ class AvailabilityController {
 		if(storeId == '0')
 			render "error. Not logged in "
 			
-		println "showInventoryAvailability params: "+params
+		//println "showInventoryAvailability params: "+params
 //		int max = params.max ? params.int('max') : 10
 //		int offset = params.offset ? params.int('offset') : 0
 		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromStoreId(storeId)

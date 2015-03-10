@@ -36,6 +36,7 @@ grails.mime.types = [ // the first one is the default format
 
 // set variables
 turnOnTestCode = 0
+enableProdConfig = 0
 
 //grails.mail.host = "192.168.2.8"
 

@@ -23,7 +23,7 @@ class UrlMappings {
 		"/inventoryList"(controller: "availability", action:"showInventoryDetails")
 		
 		//Home page
-        "/"(view:"/search/index")
+        "/"(controller: "search", action:"index")
 		
 		//Errors
         "500"(view:'/errors/serverError')
