@@ -5,15 +5,21 @@
                       source: '<g:createLink controller="search" action="listOfBrandNameStartingWith" />',
                                             
                       select: function (event, ui){
-                      console.log("selected id:" + ui.item.id);
-                      console.log("selected name:" + ui.item.value);
-                      $('#search_textField').val(ui.item.name);
+                      $('#search_textField').val(ui.item.label);
                       $('#inventory_id').val(ui.item.id);
+                      $('#brand_id').val(ui.item.name);
                 } 
                 });
             });
             function onTextEnter() {
+            if(event.keyCode != 13) {
+            console.log("in if")
                       $('#inventory_id').val("");
+                      $('#brand_id').val("");
+			}
+			else {
+				console.log("in else")
+			}
 			}
 </g:javascript>
 <g:form controller="search" action="search" method="get">

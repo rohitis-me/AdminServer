@@ -37,7 +37,7 @@ grails.mime.types = [ // the first one is the default format
 // set variables
 turnOnTestCode = 0
 
-grails.mail.host = "192.168.2.8"
+//grails.mail.host = "192.168.2.8"
 
 // What URL patterns should be processed by the resources plugin
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
@@ -149,13 +149,13 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 grails {
 	mail {
-	  host = "smtp.gmail.com"
-	  port = 465
-	  username = ""//FIXME: add username and password
-	  password = ""
-	  props = ["mail.smtp.auth":"true",
-			   "mail.smtp.socketFactory.port":"465",
-			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-			   "mail.smtp.socketFactory.fallback":"false"]
-	}
+		host = "smtp.gmail.com"
+		port = 465
+		username = "i2itechnologypvtltd@gmail.com"
+		password = "support@i2i"
+		props = ["mail.smtp.auth":"true",
+				 "mail.smtp.socketFactory.port":"465",
+				 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+				 "mail.smtp.socketFactory.fallback":"false"]
+	  }
  }

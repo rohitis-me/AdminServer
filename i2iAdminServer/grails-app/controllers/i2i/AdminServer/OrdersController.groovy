@@ -124,9 +124,10 @@ class OrdersController {
 		println "orderId: "+uId
 		println "inventoryId: "+orderDetailsCommand.inventoryId
 		
-		if(uId)
+		if(uId) {
+			ordersService.sendEmail(orderDetailsCommand)
 			redirect(controller: 'orders', action: 'showOrderStatus', params:[uId: uId])
-		
+		}
 		else {
 //			String errorMsg = ""
 //			orderDetailsCommand.errors.each {

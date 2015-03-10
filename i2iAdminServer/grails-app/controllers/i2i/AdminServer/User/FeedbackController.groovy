@@ -33,9 +33,9 @@ class FeedbackController {
 		println "PARAMS: "+params
 		
 		emailService.sendEMail (
-			"gchandu27@gmail.com",
-			params.message,
-			message(code: 'email.subject.feedback'))
+			Constants.supportEmail,
+			message(code: 'email.subject.feedback'),
+			params.message)
 
 		render "Thanks for your feedback!"
 	}

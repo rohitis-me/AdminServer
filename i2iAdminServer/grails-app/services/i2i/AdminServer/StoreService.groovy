@@ -1,13 +1,13 @@
 package i2i.AdminServer
 
-import java.util.List;
-
 import grails.transaction.Transactional
+import i2i.AdminServer.User.Sec.SecUserService
 
 @Transactional
 class StoreService {
 	
 	private final String debugStr = "StoreService "
+	SecUserService secUserService
 
     def serviceMethod() {
 
@@ -16,6 +16,11 @@ class StoreService {
 	def getStoreDataFromStoreId(String storeId) {
 		Store store = Store.findByStoreId(storeId)
 		return store
+	}
+	
+	def getEmailIdFromStoreId(String storeId) {
+		Store store = getStoreDataFromStoreId(storeId)
+		return store.emailId
 	}
 	
 	def getStoreNameFromStoreId(String storeId) {
@@ -47,6 +52,12 @@ class StoreService {
 //		return tmpList
 	}
 	
+	def getStoresFromCircle(String circle) {
+		println "circle"+circle
+		List storeList = Store.list()
+		return storeList
+	}
+	
 	def populateStoreFromStoreCommand(StoreCommand storeCommand) {
 		println "storeId: "+storeCommand.storeId
 		
@@ -69,14 +80,9 @@ class StoreService {
 	
 	def getLoggedInStoreId() {
 		//FIXME: getstoreId from current logged in user
-		Orders order = Orders.first()
-		println "loggedstoreId: "+order.storeId
+		def storeId = secUserService.getLoggedInStoreId()
 		
-		if (order)
-		return order.storeId
-		
-		else
-		return '0'
+		return storeId
 	}
 	
 }

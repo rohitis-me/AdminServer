@@ -31,6 +31,11 @@ class SearchService {
 		return storeList
 	}
 	
+	def getListOfStoresInCircle(String circle) {
+		List storeList = storeService.getStoresFromCircle(circle)
+		return storeList
+	}
+	
 	def getListOfStoresWhereBrandIsAvailableUsingInventoryId(String inventoryId) {
 		List storeIdList = availabilityService.getStoreIdsFromInventoryId(inventoryId)
 		List storeList = storeService.getStoreListFromStoreIdList(storeIdList)

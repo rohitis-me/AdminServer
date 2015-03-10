@@ -19,6 +19,14 @@
 	<br />
 	<table align="center">
 		<g:if test="${storesList }">
+		<g:if test="${!availabilityFlag }">
+	    <div align="center">
+	    <i>
+	    <g:message code="search.result.unavailable" default="Currently unavailable. You could place an order under the following stores."/>
+	    </i>
+	    </div>
+	    
+		</g:if>
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -56,7 +64,7 @@
 		</tbody>
 			</g:if>
 			<g:else>
-			<div align="center"><g:message code="search.result.unavailable" default="The brand selected is unavailable"/></div>
+			<div align="center"><g:message code="search.result.unavailable" default="The stores in this area are currently offline"/></div>
 <%--			<g:if test="${brandId == null || brandId == "" }">--%>
 <%--			<br/><div align="center"><g:message code="search.result.inputerror" default="Tip: Select brand from auto suggestion."/></div>--%>
 <%--			</g:if>--%>

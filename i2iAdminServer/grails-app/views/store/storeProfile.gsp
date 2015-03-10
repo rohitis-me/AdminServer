@@ -18,7 +18,7 @@
 	<%--				</nav>--%>
 
 	<g:if test="${flash.message}">
-		<div class="message" role="status">
+		<div align="center" class="message" role="status">
 			${flash.message}
 		</div>
 	</g:if>
@@ -62,6 +62,19 @@
 					</td>
 					<td><g:textField class="textbox-control" name="phoneNumber"
 							maxlength="100" required="" value="${storeInstance?.phoneNumber}" /></td>
+				</tr>
+				<tr>
+					<td style="width: 25%">
+						<div
+							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'emailId', 'error')} required">
+							<label class="label-control" for="emailId"> <g:message
+									code="store.phonenumber.label" default="Email ID:" /> <span
+								class="required-indicator">*</span>
+							</label>
+						</div>
+					</td>
+					<td><g:field class="textbox-control" name="emailId"
+								type="email" maxlength="100" required="required" value="${storeInstance?.emailId}" /></td>
 				</tr>
 				<tr>
 					<td>

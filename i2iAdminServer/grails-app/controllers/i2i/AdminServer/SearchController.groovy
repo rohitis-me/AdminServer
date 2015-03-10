@@ -8,6 +8,7 @@ class SearchController {
 	SearchService searchService
 	InventoryService inventoryService
 	BrandDatabaseService brandDatabaseService
+	StoreService storeService
 
 	def index() {
 	}
@@ -23,25 +24,45 @@ class SearchController {
 		//TODO: taking inventoryId into consideration for now
 		String inventoryId = params.inventoryId
 		
+		boolean availabilityFlag= false
+		
 		//FIXME filter stores with circle also||get brandId against inventoryId and search for all stores where it is available
 		if(inventoryId){
+			println "inventoryId available: "+inventoryId
 			List stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryId(inventoryId)
 
-			stores.each {store-> println store.storeName }
+			if(stores)
+			{
+			stores.each {store-> println "STORE:"+store.storeName }
 
 			//FIXME: get delivery time from store
+			availabilityFlag= true
 			String deliveryTime = '4 hours'
-			render (view:"searchList", model: [storesList:stores, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+			}
+			else
+			{
+				stores = searchService.getListOfStoresInCircle(circle)
+				
+				stores.each {store-> println store.storeName }
+				
+				//FIXME: get delivery time from store
+				availabilityFlag = false
+				String deliveryTime = '24 hours'
+				render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+			}
 		}
 		else if(brandId) {
 			//FIXME: add code here.
-			List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
+//			List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
+			List stores = searchService.getListOfStoresInCircle(circle)
 			
 			stores.each {store-> println store.storeName }
 			
 			//FIXME: get delivery time from store
-			String deliveryTime = '4 hours'
-			render (view:"searchList", model: [storesList:stores, brandId: brandId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+			availabilityFlag = false
+			String deliveryTime = '24 hours'
+			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
 		}
 		else
 		{
@@ -63,12 +84,13 @@ class SearchController {
 		
 		List brandMapList = []
 		drugList.each {
+			println "druglist: "+it.brandId+"|"+it.inventoryId+"|"
 			Map brandMap = [:]
 			suggestion = "${it.brandName}"//+" "+"${it.strength}"+" ${it.form}"
 			//			brandMap << suggestion
-			brandMap.put("id", "${it.inventoryId}")//brandId}")
-			brandMap.put("name", "${it.brandName}")
-			brandMap.put("label", suggestion)
+			brandMap.put("id", it.inventoryId)//brandId}")
+			brandMap.put("name", it.brandId)
+			brandMap.put("label", it.brandName)
 			brandMapList.add(brandMap)
 		}
 		render brandMapList as JSON

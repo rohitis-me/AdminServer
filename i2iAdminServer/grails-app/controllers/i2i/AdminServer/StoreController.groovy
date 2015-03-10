@@ -29,9 +29,16 @@ class StoreController {
 	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showStoreProfile() {
 		def storeId = storeService.getLoggedInStoreId()
-		Store store = storeService.getStoreDataFromStoreId(storeId)
 		
+		if(storeId) {
+		Store store = storeService.getStoreDataFromStoreId(storeId)
 		render(view:'storeProfile', model: [storeInstance : store])
+		}
+		else{
+		println "storeId not found"
+		render "error"
+		}
+				
 	}
 
 	@Transactional

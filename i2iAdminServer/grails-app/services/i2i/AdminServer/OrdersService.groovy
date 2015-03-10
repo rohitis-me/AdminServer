@@ -4,6 +4,7 @@ import grails.transaction.Transactional
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
+import i2i.AdminServer.User.EmailService
 
 @Transactional
 class OrdersService {
@@ -11,6 +12,7 @@ class OrdersService {
 	BrandDatabaseService brandDatabaseService
 	StoreService storeService
 	PatientProfileService patientProfileService
+	EmailService emailService
 	
 	private final String tag= 'OrderService'
 	
@@ -187,6 +189,7 @@ class OrdersService {
 		println "in save order"
 		if(order.save(flush:true)) {
 			println "saveorder success"
+//			sendEmail(order)
 			return order.orderId
 		}
 		else {
@@ -259,5 +262,11 @@ class OrdersService {
 			orderDetailsList.add(populateOrderDetailsFromOrder(order))
 		}
 		return orderDetailsList
+	}
+	
+	def sendEmail(OrderDetailsCommand orderDetails) {
+//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
+		String emailId = storeService.getEmailIdFromStoreId(order.storeId)
+		emailService.sendOrderMail(emailId, "Order@i2i", orderDetails)
 	}
 }
