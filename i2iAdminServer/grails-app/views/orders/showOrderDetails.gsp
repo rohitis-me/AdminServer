@@ -52,7 +52,7 @@
 					</tr>
 			</table>
 			<%--			</fieldset>--%>
-			<br />
+<%--			<br />--%>
 			<g:actionSubmit class="btn btn-default" action="saveOrderStatus"
 				value="${message(code: 'order.status.save.button', default: 'Save')}" />
 			<%--			<g:actionSubmit class="btn btn-default" action="acceptOrder"--%>

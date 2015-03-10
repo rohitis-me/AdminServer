@@ -118,4 +118,16 @@ class BrandDatabaseService {
 		}
 		return brandName
 	}
+	
+	def getBrandDataFromId(String brandId, String inventoryId) {
+		BrandDatabase brand = null
+		if(brandId){
+			brand = BrandDatabase.findByBrandId(brandId)
+		}
+		else if(inventoryId){
+			brand = inventoryService.getBrandDataFromInventoryId(inventoryId)
+		}
+		println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
+		return brand
+	}
 }
