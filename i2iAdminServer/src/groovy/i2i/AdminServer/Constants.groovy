@@ -15,5 +15,7 @@ class Constants {
 
 	public static final String supportEmail="support@i2itech.org"//for feedback
 	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
+	
+	public static final String dateFormat="dd-MM-yyyy, h:mm a"
 
 }

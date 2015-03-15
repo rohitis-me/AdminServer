@@ -20,7 +20,7 @@ class PatientProfileController {
     }
 
 	def deliveryDetails(OrderDetailsCommand orderDetailsCommand) {
-		println "BrandID: "+orderDetailsCommand.brandId+"InventoryID: "+orderDetailsCommand.inventoryId+" storeId: "+orderDetailsCommand.storeId+" circle: "+orderDetailsCommand.circle
+		println "ODC properties: "+orderDetailsCommand.properties
 		//println "PARAMS: "+orderDetailsCommand.properties
 		
 		if(orderDetailsCommand.brandId){
@@ -28,6 +28,7 @@ class PatientProfileController {
 			def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
 			println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
 			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
 			println "success"
 		
 			//FIXME
@@ -46,6 +47,7 @@ class PatientProfileController {
 			println "Branddata: "+brandData.brandName+" storedata: "+storeData.storeId
 			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
 			orderDetails.inventoryId = orderDetailsCommand.inventoryId
+			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
 			println "success"
 		
 			//FIXME

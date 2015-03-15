@@ -47,16 +47,16 @@ class AvailabilityService {
 		return storeIdList
 	}
 
-	def getAvailabilityListFromStoreId(String storeId)
+	def getAvailabilityListFromStoreId(String storeId, int max, int offset)
 	{
-		def brandIdList = Availability.findAllByStoreId(storeId,[max: 20])
+		def brandIdList = Availability.findAllByStoreId(storeId,[max:max, offset:offset])
 		//println "brandid count: "+brandIdList.size()
 		return brandIdList
 	}
 
-	def populateInventoryAvailabilityListFromStoreId(String storeId) {
+	def populateInventoryAvailabilityListFromStoreId(String storeId, int max, int offset) {
 
-		List availabilityList = getAvailabilityListFromStoreId(storeId)
+		List availabilityList = getAvailabilityListFromStoreId(storeId, max, offset)
 
 		List inventoryAvailabilityList = new ArrayList<InventoryAvailabilityCommand>()
 		availabilityList.each {availability->

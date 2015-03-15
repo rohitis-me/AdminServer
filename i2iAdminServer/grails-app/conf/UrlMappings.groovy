@@ -22,6 +22,8 @@ class UrlMappings {
 		
 		"/inventoryList"(controller: "availability", action:"showInventoryDetails")
 		
+		"/feedback"(controller: "feedback", action:"feedback")
+		
 		//Home page
         "/"(controller: "search", action:"index")
 		

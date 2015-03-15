@@ -1,10 +1,11 @@
 package i2i.AdminServer
 
 import grails.transaction.Transactional
+import groovy.time.TimeCategory
+import i2i.AdminServer.User.EmailService
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
-import i2i.AdminServer.User.EmailService
 
 @Transactional
 class OrdersService {
@@ -117,11 +118,12 @@ class OrdersService {
 		else
 			order.orderStatus = orderDetailsCommand.orderStatus
 		
-		if(orderDetailsCommand.estimatedDeliveryTime)
-			order.estimatedDeliveryTime = orderDetailsCommand.estimatedDeliveryTime
-		else
-			order.estimatedDeliveryTime = getEstimatedDeliveryTime()
-		
+//		if(orderDetailsCommand.estimatedDeliveryTime)
+			order.estimatedDeliveryTime = getEstimatedDeliveryTime(orderDetailsCommand.deliveryHours)
+//		else
+//			order.estimatedDeliveryTime = getEstimatedDeliveryTime()
+		println "estimated Del time :" + orderDetailsCommand.estimatedDeliveryTime
+			
 		order.isEmergencyDeliveryNeeded = orderDetailsCommand.isEmergencyDeliveryNeeded
 		return order
 	}
@@ -131,6 +133,9 @@ class OrdersService {
 		order.brandId = brand.brandId
 		order.storeId = store.storeId
 		order.brandName = brand.brandName
+//		order.deliveryHours = deliveryHours
+//		order.estimatedDeliveryTime = getEstimatedDeliveryTime(deliveryHours)
+//		println "ODC estimated time "+order.estimatedDeliveryTime
 //		order.storeName = store.storeName
 //		order.storePhoneNumber = store.phoneNumber
 //		order.storeAddressLine1 = store.addressLine1
@@ -143,8 +148,14 @@ class OrdersService {
 	}
 	
 	//FIXME
-	def getEstimatedDeliveryTime() {
-		return new Date()
+	def getEstimatedDeliveryTime(byte deliveryHours) {
+		Date est = Utility.getDateTimeInIST().getTime()
+		use( TimeCategory ) {
+			est = est + deliveryHours.toInteger().hours
+		}
+		
+		println "Time: "+est
+		return est
 	}
 	
 	
@@ -160,6 +171,7 @@ class OrdersService {
 		PatientProfile patient = patientProfileService.populatePatientProfileFromOrderDetailsCommand(orderDetails)
 		def patientId = patientProfileService.savePatientProfile(patient)
 		if(patientId!= 0) {
+//			orderDetails.estimatedDeliveryTime = Utility.getDateTimeInIST().addHours
 			Orders order = populateOrderFromOrderDetailsCommand(orderDetails)
 			order.personId = patientId
 			order.uId = getUniqueRandomString()

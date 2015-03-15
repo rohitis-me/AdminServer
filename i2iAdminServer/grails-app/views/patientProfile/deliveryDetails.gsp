@@ -73,13 +73,14 @@
 			<g:hiddenField name="brandId" value="${orderDetails?.brandId }" />
 			<g:hiddenField name="inventoryId" value="${orderDetails?.inventoryId }" />
 			<g:hiddenField name="storeId" value="${orderDetails?.storeId }" />
+			<g:hiddenField name="deliveryHours" value="${orderDetails?.deliveryHours }" />
 
 			<table align="center" style="border-top: 0">
 				<tbody>
 					<tr>
 						<td style="width: 25%"><label class="label-control"
 							for="name"><g:message code="patientProfile.name.label"
-									default="Name:" />*</label></td>
+									default="Name: " />*</label></td>
 						<td><g:textField name="name" class="textbox-control"
 								title='Minimum 3 characters' pattern=".{3,}" required="required"
 								maxlength="100"
@@ -88,14 +89,14 @@
 					</tr>
 					<tr>
 						<td><label class="label-control" for="age"><g:message
-									code="patientProfile.age.label" default="Age:*" /></label></td>
+									code="patientProfile.age.label" default="Age: *" /></label></td>
 						<td><g:field class="textbox-control" type="number" size="6"
 								name="age" min="0" max="99" required="required"
 								value="${fieldValue(bean: orderDetails, field: 'age')}" /></td>
 					</tr>
 					<tr>
 						<td><label class="label-control" for="phoneNumber"><g:message
-									code="patientProfile.phoneNumber.label" default="Phone:" />*</label></td>
+									code="patientProfile.phoneNumber.label" default="Phone: " />*</label></td>
 						<td><g:field type="tel" name="phoneNumber"
 								class="textbox-control" value="${orderDetails?.phoneNumber}"
 								pattern=".{3,}" required="required" maxlength="100"
@@ -103,42 +104,40 @@
 					</tr>
 					<tr>
 						<td><label class="label-control" for="emailID"><g:message
-									code="patientProfile.emailID.label" default="Email ID" /></label></td>
+									code="patientProfile.emailID.label" default="Email Id:" /></label></td>
 						<td><g:field class="textbox-control" name="emailID"
 								type="email" maxlength="100" value="${orderDetails?.emailID}" /></td>
 					</tr>
 					<tr>
-						<td><label class="label-control" for="address">Address
-								Line1:*</label></td>
+						<td><label class="label-control" for="address">Address: *</label></td>
 						<td><g:textField class="textbox-control" name="addressLine1"
 								value="${orderDetails?.addressLine1}" pattern=".{3,}"
 								required="required" maxlength="100" title='Minimum 3 characters' /></td>
 					</tr>
 					<tr>
-						<td><label class="label-control" for="landmark">Address
-								Line2:*</label></td>
+						<td></td>
 						<td><g:textField class="textbox-control" name="addressLine2"
 								value="${orderDetails?.addressLine2}" pattern=".{3,}"
 								required="required" maxlength="100" title='Minimum 3 characters' /></td>
 					</tr>
 					<tr>
-						<td><label class="label-control" for="landmark">Circle
+						<td><label class="label-control" for="landmark">Circle:
 						</label></td>
 						<td><g:hiddenField name="circle"
 								value="${orderDetails?.circle }" /> ${orderDetails?.circle } (Delivery restricted to this area)</td>
 					</tr>
 					<tr>
-						<td><label class="label-control" for="city">City </label></td>
+						<td><label class="label-control" for="city">City: </label></td>
 						<td><g:hiddenField name="city" value="${orderDetails?.city }" />
 							${orderDetails?.city }</td>
 					</tr>
 					<tr>
-						<td><label class="label-control" for="state">State </label></td>
+						<td><label class="label-control" for="state">State: </label></td>
 						<td><g:hiddenField name="state"
 								value="${orderDetails?.state }" /> ${orderDetails?.state }</td>
 					</tr>
 					<tr>
-						<td><label class="label-control" for="country">Country
+						<td><label class="label-control" for="country">Country:
 						</label></td>
 						<td><g:hiddenField name="country"
 								value="${orderDetails?.country }" /> ${orderDetails?.country }</td>

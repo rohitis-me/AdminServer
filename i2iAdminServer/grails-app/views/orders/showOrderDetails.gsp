@@ -24,26 +24,33 @@
 				<tr>
 					<td style="width: 25%">
 					<g:if test="${orderStatus == 2}">
-						<input type="radio" name="orderstatus" checked="checked" value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if>
+						<input type="radio" name="orderstatus" checked="checked" disabled value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if>
+					<g:elseif test="${orderstatus > 2}">
+						<input type="radio" name="orderstatus" disabled
+						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:elseif>
 					<g:else>
 						<input type="radio" name="orderstatus"
 						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:else>
 					</td>
 					<td style="width: 25%">
-						<g:if test="${orderStatus == 3}"><input type="radio" name="orderstatus" checked="checked"
+						<g:if test="${orderStatus == 3}"><input type="radio" name="orderstatus" checked="checked" disabled
 						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:if>
+						<g:elseif test="${orderStatus > 3}"><input type="radio" name="orderstatus" disabled
+						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:elseif>
 						<g:else><input type="radio" name="orderstatus"
 						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:else>
 					</td>
 					<td style="width: 25%">
-					<g:if test="${orderStatus == 4}"><input type="radio" name="orderstatus" checked="checked"
+					<g:if test="${orderStatus == 4}"><input type="radio" name="orderstatus" checked="checked" disabled
 						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:if>
+						<g:elseif test="${orderStatus > 4}"><input type="radio" name="orderstatus" disabled
+						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:elseif>
 						<g:else><input type="radio" name="orderstatus"
 						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:else>
 					</td>
 					<td style="width: 25%">
 					<g:if test="${orderStatus == 0}">
-					<input type="radio" name="orderstatus" checked="checked"
+					<input type="radio" name="orderstatus" checked="checked" disabled
 						value=${Constants.ORDER_REJECTED}>Reject Order</g:if>
 					<g:else>
 					<input type="radio" name="orderstatus"

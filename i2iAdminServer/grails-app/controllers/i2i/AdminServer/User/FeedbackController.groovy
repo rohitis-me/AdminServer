@@ -4,7 +4,7 @@ package i2i.AdminServer.User
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import i2i.AdminServer.User.EmailService
+import i2i.AdminServer.Constants
 
 @Transactional(readOnly = true)
 class FeedbackController {
@@ -37,7 +37,14 @@ class FeedbackController {
 			message(code: 'email.subject.feedback'),
 			params.message)
 
-		render "Thanks for your feedback!"
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'feedback.received.message', default: 'Thanks for your feedback!')
+				//redirect storeInstance
+			}
+		}
+			
+		render(view:'feedback')
 	}
 
 	@Transactional

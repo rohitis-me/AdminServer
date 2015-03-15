@@ -18,4 +18,11 @@ class Utility {
 		
 		return randomString
 	}
+	
+	public static Calendar getDateTimeInIST() {
+		TimeZone timezone = TimeZone.getTimeZone("GMT+05:30");
+		Calendar cal = Calendar.getInstance(timezone)
+		println "Calender: "+cal.getInstance().getTime().toString()
+		return cal.getInstance()
+	}
 }

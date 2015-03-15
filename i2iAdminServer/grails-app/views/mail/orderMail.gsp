@@ -1,5 +1,6 @@
 <%@ page contentType="text/html"%>
 <%@ page import="i2i.AdminServer.OrderDetailsCommand" %>
+<%@ page import="i2i.AdminServer.Constants" %>
 
 <div>
 <h2> Order Details:</h2> 
@@ -25,7 +26,7 @@ You could call ${orderDetails.name } on ${orderDetails.phoneNumber }
 Email: ${orderDetails.emailID }
 </g:if>
 
-<g:formatDate date="${orderDetails.estimatedDeliveryTime }" format="h:mm a, dd/MM/yyyy" /><br>
+<g:formatDate date="${orderDetails.estimatedDeliveryTime }" format="${Constants.dateFormat }" /><br>
 <g:if test="${orderDetails.isEmergencyDeliveryNeeded }">
 <i>Emergency</i>
 </g:if>

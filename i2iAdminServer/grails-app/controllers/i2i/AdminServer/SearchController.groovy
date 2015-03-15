@@ -37,8 +37,7 @@ class SearchController {
 
 			//FIXME: get delivery time from store
 			availabilityFlag= true
-			String deliveryTime = '4 hours'
-			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle])
 			}
 			else
 			{
@@ -48,8 +47,7 @@ class SearchController {
 				
 				//FIXME: get delivery time from store
 				availabilityFlag = false
-				String deliveryTime = '24 hours'
-				render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+				render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle])
 			}
 		}
 		else if(brandId) {
@@ -61,8 +59,7 @@ class SearchController {
 			
 			//FIXME: get delivery time from store
 			availabilityFlag = false
-			String deliveryTime = '24 hours'
-			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle, deliveryTime: deliveryTime])
+			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle])
 		}
 		else
 		{

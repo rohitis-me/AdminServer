@@ -4,7 +4,7 @@
 <g:set var="entityName"
 	value="${message(code: 'i2i.home.label', default: 'i2iHome')}" />
 <meta name="layout" content="searchLayout">
-<title><g:message message="i2i-Home page" /></title>
+<title><g:message message="Home page" /></title>
 
 <%--<title><g:message code="default.list.label" args="[entityName]" /></title>--%>
 </head>

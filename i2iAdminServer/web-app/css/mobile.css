@@ -20,7 +20,7 @@ body {
 	clip: rect(0px, auto, auto, auto);
 	text-align: left;
 	font-style: normal;
-	font-weight: bold;
+/* 	font-weight: bold; */
 	text-decoration: blink;
 	text-indent: 10%;
 	height: 20%;

@@ -22,7 +22,7 @@
 <r:layoutResources />
 </head>
 <body>
-	<div class="headerBanner" id="headerdiv" role="banner">i2i Tech</div>
+	<div class="headerBanner" id="headerdiv" role="banner">pillocate (Beta)</div>
 	<br />	
 	<g:layoutBody/>
 	<div class="footer" role="contentinfo"></div>

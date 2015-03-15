@@ -32,6 +32,7 @@ class OrderDetailsCommand {
 	long orderId
 	int quantity
 	boolean isEmergencyDeliveryNeeded
+	byte deliveryHours
 	
 	static constraints = {
 		name nullable:false, blank:false,size:1..100
