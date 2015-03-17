@@ -17,5 +17,7 @@ class Constants {
 	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
 	
 	public static final String dateFormat="dd-MM-yyyy, h:mm a"
+	
+	public static final String env_DEMO='Demo'
 
 }

@@ -24,6 +24,8 @@ class UrlMappings {
 		
 		"/feedback"(controller: "feedback", action:"feedback")
 		
+		"/sendFeedback"(controller: "feedback", action:"sendFeedback")
+		
 		//Home page
         "/"(controller: "search", action:"index")
 		

@@ -8,6 +8,7 @@
                       $('#search_textField').val(ui.item.label);
                       $('#inventory_id').val(ui.item.id);
                       $('#brand_id').val(ui.item.name);
+                      $(".search_form").submit()
                 } 
                 });
             });
@@ -22,7 +23,7 @@
 			}
 			}
 </g:javascript>
-<g:form controller="search" action="search" method="get">
+<g:form class='search_form' controller="search" action="search" method="get">
 	<br />
 	<table align="center" style="border-top: 0">
 		<tr>

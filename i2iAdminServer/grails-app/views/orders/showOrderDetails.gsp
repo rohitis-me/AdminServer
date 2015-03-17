@@ -72,16 +72,16 @@
 	
 	<table align="center" style="border-top: 0">
 		<tr>
-			<td style="width: 30%"><span class="label-control"><g:message
-						code="orders.personId.label" default="Person Name" /></span></td>
+			<td style="width: 40%"><span class="label-control"><g:message
+						code="orders.personId.label" default="Person Name:" /></span></td>
 			<g:if test="${orderDetailsCommand?.name}">
-				<td><span class="label-control"><g:fieldValue
+				<td style="width: 60%"><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="name" /></span></td>
 			</g:if>
 		</tr>
 		<tr>
 			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Age: " /></span></td>
+						code="orders.phone.number.label" default="Age:" /></span></td>
 			<g:if test="${orderDetailsCommand?.age}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="age" /></span></td>
@@ -89,7 +89,7 @@
 		</tr>
 		<tr>
 			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Phone Number: " /></span></td>
+						code="orders.phone.number.label" default="Phone Number:" /></span></td>
 			<g:if test="${orderDetailsCommand?.phoneNumber}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="phoneNumber" /></span></td>
@@ -97,7 +97,7 @@
 		</tr>
 		<tr>
 			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Email id: " /></span></td>
+						code="orders.phone.number.label" default="Email id:" /></span></td>
 			<g:if test="${orderDetailsCommand?.emailID}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="emailID" /></span></td>
@@ -105,7 +105,7 @@
 		</tr>
 		<tr>
 			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Address: " /></span></td>
+						code="orders.phone.number.label" default="Address:" /></span></td>
 			<g:if test="${orderDetailsCommand?.addressLine1}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="addressLine1" />, <g:fieldValue
@@ -115,7 +115,7 @@
 		</tr>
 		<tr>
 			<td><span id="brandId-label" class="label-control"><g:message
-						code="orders.brandId.label" default="Brand Name" /></span></td>
+						code="orders.brandId.label" default="Brand Name:" /></span></td>
 			<g:if test="${orderDetailsCommand?.brandName}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="brandName" /></span></td>
@@ -123,7 +123,7 @@
 		</tr>
 		<tr>
 			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Quantity: " /></span></td>
+						code="orders.phone.number.label" default="Quantity:" /></span></td>
 			<g:if test="${orderDetailsCommand?.quantity}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="quantity" /></span></td>
@@ -131,7 +131,7 @@
 		</tr>
 		<tr>
 			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Estimated delivery: " /></span></td>
+						code="orders.phone.number.label" default="Estimated delivery:" /></span></td>
 			<g:if test="${orderDetailsCommand?.estimatedDeliveryTime}">
 				<td><span class="label-control"><g:fieldValue
 							bean="${orderDetailsCommand}" field="estimatedDeliveryTime" /></span></td>
@@ -140,7 +140,7 @@
 		<tr>
 			<td><span class="label-control"><g:message
 						code="orders.phone.number.label"
-						default="Emergency delivery Needed: " /></span></td>
+						default="Emergency delivery Needed:" /></span></td>
 			<td><span class="label-control"><g:fieldValue
 						bean="${orderDetailsCommand}" field="isEmergencyDeliveryNeeded" /></span></td>
 		</tr>
@@ -154,7 +154,7 @@
 		<%--		</tr>--%>
 		<tr>
 			<td><span id="orderStatus-label" class="label-control"><g:message
-						code="orders.orderStatus.label" default="Order Status" /></span></td>
+						code="orders.orderStatus.label" default="Order Status:" /></span></td>
 			<td><g:if test="${orderStatus == 4 }">
 				Order delivered
 				</g:if> <g:elseif test="${orderStatus == 3 }">

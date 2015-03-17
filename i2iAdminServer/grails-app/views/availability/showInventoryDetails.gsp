@@ -95,12 +95,12 @@
 							<g:if test="${availabilityIndex <= 0 }">
 								<g:actionSubmit name="submit" action="onClickAvailable"
 									value="${message(code: 'default.button.available.label', default: 'Available')}"
-									class="btn btn-default" style="width:100%" />
+									class="btn btn-default" style="width:80%" />
 							</g:if>
 							<g:elseif test="${availabilityIndex > 0 }">
 								<g:actionSubmit name="submit" action="onClickUnavailable"
 									value="${message(code: 'default.button.unavailable.label', default: 'Unavailable')}"
-									class="btn btn-default" style="width:100%" />
+									class="btn btn-default" style="width:80%" />
 							</g:elseif>
 						</g:form></td>
 				</tr>

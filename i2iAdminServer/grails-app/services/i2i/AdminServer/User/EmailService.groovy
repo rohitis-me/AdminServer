@@ -8,11 +8,16 @@ import i2i.AdminServer.Constants
 class EmailService {
 
 	def mailService
+	def grailsApplication
 	
 	def serviceMethod() {
 	}
 
 	def sendEMail(String toAdd, String mailSubject, String msg){
+		
+		if(grailsApplication.config.env == Constants.env_DEMO)
+		mailSubject = Constants.env_DEMO+' '+mailSubject
+		
 		try {
 		mailService.sendMail {
 			to toAdd
@@ -28,6 +33,9 @@ class EmailService {
 	
 	def sendOrderMail(String toAdd, String mailSubject, OrderDetailsCommand orderDetails){
 		println "In send order Mail: "+orderDetails.properties
+		
+		if(grailsApplication.config.env == Constants.env_DEMO)
+		mailSubject = Constants.env_DEMO+' '+mailSubject
 		
 		try {
 		

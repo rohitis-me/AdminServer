@@ -27,7 +27,7 @@
 	    </div>	    
 		</g:if>
 		<div align="center">
-		<span class="label-control"><g:message code="search.select.store" default="Click on a store to proceed"/></span>
+		<span class="label-control"><g:message code="search.select.store" default="Select a store to proceed"/></span>
 		</div>
 		
 		<thead>

@@ -16,8 +16,10 @@
 		</div>
 	</g:if>
 	
-	<br />
-
+<%--	<br />--%>
+<p align="center">Have a complaint, suggestion or query?
+Write to us</p>
+<br/>
 	<g:form controller="feedback" action="sendFeedback" method="PUT">
 		<table align="center" style="border-top: 0">
 			<tbody>
