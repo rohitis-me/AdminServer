@@ -57,10 +57,12 @@ class EmailService {
 						model:[orderDetails:orderDetails])
 				}
 			}
+			println "SENT MAIL"
 		}
 		catch(Exception exp) {
 			println "Exception: "+exp
+			println "MAIL NOT SENT"
 		}
-		println "SENT MAIL"
+		
 	}
 }
