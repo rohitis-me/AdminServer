@@ -355,10 +355,10 @@ width: 60%;
 }
 .pagination > a, .pagination > span {
   float: left;
-  margin-left: 5px;
-  padding: 0 6px;
-  min-width: 17px;
-  line-height: 27px;
+  margin-left: 3px;
+  padding:0 3px;
+/*   min-width: 17px; */
+/*   line-height: 27px; */
   color: #d4d4d4;
   border: 1px solid black;
 }
