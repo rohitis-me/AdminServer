@@ -168,7 +168,7 @@
 									value="${orderDetails?.isEmergencyDeliveryNeeded}" /> <label
 								class="label-control" for='emergency_delivery'><g:message
 										code="order.emergency.delivery.label"
-										default="Emergency delivery Required" /></label></td>
+										default="Request Emergency delivery" /></label></td>
 						</tr>
 					</g:if>
 					<%--					<tr>--%>
@@ -181,10 +181,11 @@
 			</table>
 
 			<div class="end" align="center">
+			<g:message code="order.prescription.message"/><br>
 				<%--				<br />--%>
 				<g:submitButton name="create"
 					value="${message(code: 'default.button.submit.label', default: 'Submit')}"
-					class="btn btn-default" />
+					class="btn btn-default" onclick="return confirm('${message(code: 'order.confirm.message')}');"/>
 				<input type="button" class="btn btn-default"
 					value="${message(code: 'patient.details.back.button', default: 'Go Back')}"
 					onClick="history.go(-1);return true;">

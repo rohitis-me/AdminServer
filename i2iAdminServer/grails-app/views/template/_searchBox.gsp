@@ -27,7 +27,7 @@
 	<br />
 	<table align="center" style="border-top: 0">
 		<tr>
-			<td id="hidden" style="width: 15%"><span class="label-control">Circle: *</span></td>
+			<td id="hidden" style="width: 15%"><span class="label-control">Circle: </span></td>
 			<td style="width: 35%"><select name="circle" required
 				class="dropdown-control">
 				<g:if test="${circle=="Thiruvanmiyur"}">
@@ -44,7 +44,7 @@
 				</g:else>
 			</select></td>
 
-			<td id="hidden" style="width: 15%"><span class="label-control">City: *
+			<td id="hidden" style="width: 15%"><span class="label-control">City: 
 			</span></td>
 			<td style="width: 35%"><select name="city" required
 				class="dropdown-control">
