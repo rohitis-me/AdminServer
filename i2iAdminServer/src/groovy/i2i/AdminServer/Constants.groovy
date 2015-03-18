@@ -19,5 +19,6 @@ class Constants {
 	public static final String dateFormat="dd-MM-yyyy, h:mm a"
 	
 	public static final String env_DEMO='Demo'
+	public static final String env_LOCAL='Local'
 
 }
