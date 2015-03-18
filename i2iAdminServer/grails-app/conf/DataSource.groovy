@@ -2,15 +2,15 @@ dataSource {
 	pooled = true
 	driverClassName = "com.mysql.jdbc.Driver"
 //	driverClassName = "org.h2.Driver"
-//	username = "root"
-//	password = ""
-//	url = "jdbc:mysql://localhost:3306/i2idb4"
+	username = "root"
+	password = ""
+	url = "jdbc:mysql://localhost:3306/i2idb4"
 //	username = "i2iprodadmin"
 //	password = "i2iprodadmin"
 //	url = "jdbc:mysql://i2iproddb.cfssgccplj1d.ap-southeast-1.rds.amazonaws.com:3306/i2iproddb"
-	username = "i2idbadminuser"
-	password = "i2idbadminpass"
-	url = "jdbc:mysql://i2idemodb.cfssgccplj1d.ap-southeast-1.rds.amazonaws.com:3306/i2idemodb"
+//	username = "i2idbadminuser"
+//	password = "i2idbadminpass"
+//	url = "jdbc:mysql://i2idemodb.cfssgccplj1d.ap-southeast-1.rds.amazonaws.com:3306/i2idemodb"
 }
 hibernate {
     cache.use_second_level_cache = true

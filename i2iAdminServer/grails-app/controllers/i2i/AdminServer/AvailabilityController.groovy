@@ -3,6 +3,7 @@ package i2i.AdminServer
 
 
 import static org.springframework.http.HttpStatus.*
+import i2i.AdminServer.ClientSync.InventoryService;
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
@@ -11,6 +12,7 @@ class AvailabilityController {
 
 	StoreService storeService
 	AvailabilityService availabilityService
+	InventoryService inventoryService
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -151,5 +153,17 @@ class AvailabilityController {
 		
 		else
 		redirect (controller: 'Availability', action: 'showInventoryDetails')
+	}
+	
+	def searchInventory() {
+		println "received params: "+params+ " Brand Name: "+params.brandName;
+
+		String searchTerm = params.brandName
+//		String brandId = params.brandId
+//		String inventoryId = params.inventoryId
+		List drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm)
+		
+		render (view:"inventorySearchList", model: [drugList:drugList, brandName: searchTerm, circle: circle])
+		//		render "error"
 	}
 }
