@@ -30,11 +30,14 @@ class OrdersController {
 		//FIXME: has to be logged in to come here
 		if(storeId == '0')
 			render "error. Not logged in "
-		println "Storeid: "+storeId
-		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
+		
+			
+			List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
 		println "orderCount "+ ordersList.size()
+		
 		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
 		println "done orderdetailslist"
+		
 		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList])
 	}
 	
@@ -119,9 +122,11 @@ class OrdersController {
     }
 	
 	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
-		println "ODC: "+orderDetailsCommand.properties
+		log.info "ODC: "+orderDetailsCommand.properties
+		
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
-		println "orderId: "+uId
+		
+		log.info "orderId: "+uId
 		println "inventoryId: "+orderDetailsCommand.inventoryId
 		
 		if(uId) {
@@ -129,13 +134,9 @@ class OrdersController {
 			redirect(controller: 'orders', action: 'showOrderStatus', params:[uId: uId])
 		}
 		else {
-//			String errorMsg = ""
-//			orderDetailsCommand.errors.each {
-//				errorMsg+"\n"+it
-//			}
+
 			flash.message = message(code: 'save.error.label', default: 'Enter valid information')
 			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
-//			respond orderDetailsCommand.properties, view:'/patientProfile/deliveryDetails'
 		}
 	}
 
