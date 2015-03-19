@@ -201,7 +201,10 @@ class OrdersService {
 		println "in save order"
 		if(order.save(flush:true)) {
 			println "saveorder success"
-//			sendEmail(order)
+			
+			if(!grailsApplication.config.env == Constants.env_LOCAL)
+			sendEmail(order)
+			
 			return order.orderId
 		}
 		else {

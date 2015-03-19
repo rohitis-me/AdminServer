@@ -14,7 +14,7 @@ class SearchController {
 	}
 
 	def search() {
-		println "received params: "+params+ " Brand Name: "+params.brandName;
+		log.info "SEARCH received params: "+params+ " Brand Name: "+params.brandName;
 
 		String searchTerm = params.brandName
 		String circle = params.circle
@@ -72,7 +72,7 @@ class SearchController {
 
 	//TODO change once data is got from branddatabase
 	def listOfBrandNameStartingWith() {
-		println "received params: "+params
+		log.info "AUTO COMPLETE: received params: "+params
 
 		String searchTerm = params.term
 		String suggestion
