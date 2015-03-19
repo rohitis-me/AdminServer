@@ -20,9 +20,12 @@ class Utility {
 	}
 	
 	public static Calendar getDateTimeInIST() {
-		TimeZone timezone = TimeZone.getTimeZone("GMT+05:30");
+		
+		TimeZone timezone = TimeZone.getTimeZone("GMT");
 		Calendar cal = Calendar.getInstance(timezone)
-		println "Calender: "+cal.getInstance().getTime().toString()
-		return cal.getInstance()
+		cal.add(Calendar.HOUR, 5)
+		cal.add(Calendar.MINUTE, 30)
+		println "Calender: "+cal.getTime().toString()
+		return cal
 	}
 }

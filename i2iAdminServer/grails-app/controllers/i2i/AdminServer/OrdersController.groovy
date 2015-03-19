@@ -122,15 +122,15 @@ class OrdersController {
     }
 	
 	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
-		log.info "ODC: "+orderDetailsCommand.properties
+		println "ODC: "+orderDetailsCommand.properties
 		
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
 		
-		log.info "orderId: "+uId
+		println "orderId: "+uId
 		println "inventoryId: "+orderDetailsCommand.inventoryId
 		
 		if(uId) {
-			ordersService.sendEmail(orderDetailsCommand)
+//			ordersService.sendEmail(orderDetailsCommand)
 			redirect(controller: 'orders', action: 'showOrderStatus', params:[uId: uId])
 		}
 		else {

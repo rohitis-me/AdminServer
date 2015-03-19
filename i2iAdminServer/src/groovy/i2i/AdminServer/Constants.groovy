@@ -4,7 +4,7 @@ class Constants {
 
 	public static final byte ORDER_PLACED = 1;
 	public static final byte ORDER_ACCEPTED = 2;
-	public static final byte ORDER_INTRANSIT = 3;
+	public static final byte ORDER_DISPATCHED = 3;
 	public static final byte ORDER_DELIVERED = 4;
 	public static final byte ORDER_REJECTED = 0;
 
@@ -20,7 +20,12 @@ class Constants {
 	
 	public static final String env_DEMO='Demo'
 	public static final String env_LOCAL='Local'
+	public static final String env_PROD='Prod'
 
+	public static final String envLink_DEMO='http://demoi2i.elasticbeanstalk.com/'
+	public static final String envLink_PROD='http://www.pillocate.com/'
+	
+	public static String envLink=''
 	
 	//FIXME: Hard coding
 	public static final int hardCodedInventoryCount=2158

@@ -1,4 +1,5 @@
 
+<%@page import="java.lang.invoke.MethodHandleNatives.Constants"%>
 <%@ page import="i2i.AdminServer.Orders"%>
 <%@ page import="i2i.AdminServer.Constants"%>
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
 <g:set var="entityName"
 	value="${message(code: 'order.status.label', default: 'Order Status')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
-<meta http-equiv="refresh" content="60">
+<meta http-equiv="refresh" content="90">
 <%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
 <%--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">--%>
 </head>
@@ -28,30 +29,34 @@
 
 	<table align="center" style="border: 1px solid #DFDFDF;">
 		<tr>
-			<td style="width: 25%" ><g:if test="${orderStatus == 1}">
-					<input  type="radio" name="orderstatus" checked="checked" disabled>
+			<td style="width: 25%"><g:if
+					test="${orderStatus == Constants.ORDER_PLACED}">
+					<input type="radio" name="orderstatus" checked="checked" disabled>
 					<label class="label-control" style="font-style: italic;">Placed</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label class="label-control" style="font-style: italic;">Placed</label>
 				</g:else></td>
-			<td style="width: 25%"><g:if test="${orderStatus == 2}">
+			<td style="width: 25%"><g:if
+					test="${orderStatus == Constants.ORDER_ACCEPTED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
 					<label style="font-style: italic;">Accepted</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label style="font-style: italic;">Accepted</label>
 				</g:else></td>
-<%--		</tr>--%>
-<%--		<tr>--%>
-			<td style="width: 25%"><g:if test="${orderStatus == 3}">
+			<%--		</tr>--%>
+			<%--		<tr>--%>
+			<td style="width: 25%"><g:if
+					test="${orderStatus == Constants.ORDER_DISPATCHED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
 					<label style="font-style: italic;">Dispatched</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label style="font-style: italic;">Dispatched</label>
 				</g:else></td>
-			<td style="width: 25%"><g:if test="${orderStatus == 4}">
+			<td style="width: 25%"><g:if
+					test="${orderStatus == Constants.ORDER_DELIVERED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
 					<label style="font-style: italic;">Delivered</label>
 				</g:if> <g:else>

@@ -1,3 +1,5 @@
+import i2i.AdminServer.Constants
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -37,7 +39,14 @@ grails.mime.types = [ // the first one is the default format
 // set variables
 turnOnTestCode = 0
 //enableProdConfig = 0
-env='Demo'
+env='Local'
+
+if(env == Constants.env_DEMO)
+Constants.envLink= Constants.envLink_DEMO
+else if(env == Constants.env_PROD)
+Constants.envLink= Constants.envLink_PROD
+else if(env == Constants.env_LOCAL)
+Constants.envLink= "localhost:8080/i2iAdminServer/"
 //grails.mail.host = "192.168.2.8"
 
 // What URL patterns should be processed by the resources plugin
@@ -113,13 +122,13 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 	
-	appenders {
-		file name: "searchtxt", file: "/var/log/search.logs"
-		file name: "orderstxt", file: "/var/log/orders.logs"
-	 }
-	
-	debug searchtxt: "i2i.AdminServer.SearchController",
-		  orderstxt: "i2i.AdminServer.OrdersController"
+//	appenders {
+//		file name: "searchtxt", file: "/var/log/search.logs"
+//		file name: "orderstxt", file: "/var/log/orders.logs"
+//	 }
+//	
+//	debug searchtxt: "i2i.AdminServer.SearchController",
+//		  orderstxt: "i2i.AdminServer.OrdersController"
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP

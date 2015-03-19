@@ -39,7 +39,7 @@ class FeedbackController {
 
 		request.withFormat {
 			form multipartForm {
-				flash.message = message(code: 'feedback.received.message', default: 'Thanks for your feedback!')
+				flash.message = message(code: 'feedback.received.message', default: 'Your feedback has been recorded. Thanks!')
 				//redirect storeInstance
 			}
 		}

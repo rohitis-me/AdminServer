@@ -9,6 +9,9 @@
 Order Name: ${orderDetails.brandName }<br>
 Quantity: ${orderDetails.quantity }
 </p>
+<g:if test="${orderDetails.isEmergencyDeliveryNeeded }">
+<i>Emergency Delivery Requested</i>
+</g:if>
 <p>
 Name: ${orderDetails.name }
 <br/>
@@ -22,13 +25,17 @@ ${orderDetails.city }<br>
 <g:if test="${orderDetails.phoneNumber }">
 You could call ${orderDetails.name } on ${orderDetails.phoneNumber }
 </g:if>
+<br>
 <g:if test="${orderDetails.emailID }">
 Email: ${orderDetails.emailID }
 </g:if>
-
-<g:formatDate date="${orderDetails.estimatedDeliveryTime }" format="${Constants.dateFormat }" /><br>
-<g:if test="${orderDetails.isEmergencyDeliveryNeeded }">
-<i>Emergency</i>
-</g:if>
+<br>
+Delivery Expected by: <g:formatDate date="${orderDetails.estimatedDeliveryTime }" format="${Constants.dateFormat }" /><br>
+<br>
+PLEASE NOTE: The customer expects you to accept the order soon. To accept the order, click <a href="${Constants.envLink+'ordersList' }">here</a><br>
+</p>
+<p>
+<i>Regards,</i><br>
+Team i2i Technology
 </p>
 </div>

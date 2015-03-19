@@ -16,6 +16,9 @@
 				<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
 	
 		<div align="center">
+		<p><i>
+		<g:message code="order.status.selectmessage" default="Select current order status and click 'Save'."/>
+		</i></p>
 		<g:form>
 			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }" />
 
@@ -34,11 +37,11 @@
 					</td>
 					<td style="width: 25%">
 						<g:if test="${orderStatus == 3}"><input type="radio" name="orderstatus" checked="checked" disabled
-						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:if>
+						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:if>
 						<g:elseif test="${orderStatus > 3}"><input type="radio" name="orderstatus" disabled
-						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:elseif>
+						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:elseif>
 						<g:else><input type="radio" name="orderstatus"
-						value=${Constants.ORDER_INTRANSIT}>Order in transit </g:else>
+						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:else>
 					</td>
 					<td style="width: 25%">
 					<g:if test="${orderStatus == 4}"><input type="radio" name="orderstatus" checked="checked" disabled

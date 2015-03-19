@@ -14,7 +14,7 @@ class SearchController {
 	}
 
 	def search() {
-		log.info "SEARCH received params: "+params+ " Brand Name: "+params.brandName;
+		println "SEARCH received params: "+params+ " Brand Name: "+params.brandName;
 
 		String searchTerm = params.brandName
 		String circle = params.circle
