@@ -47,6 +47,11 @@ class AvailabilityService {
 		return storeIdList
 	}
 
+	def getAvailabilityFromInventoryId(String inventoryId){
+		Availability availability = Availability.findByInventoryId(inventoryId)
+		return availability
+	}
+
 	def getAvailabilityListFromStoreId(String storeId, int max, int offset)
 	{
 		def brandIdList = Availability.findAllByStoreId(storeId,[max:max, offset:offset])
@@ -54,6 +59,12 @@ class AvailabilityService {
 		return brandIdList
 	}
 
+	def getAvailabilityCountFromStoreId(String storeId)
+	{
+		def itemCount = Availability.countByStoreId(storeId)
+		return itemCount
+	}
+	
 	def populateInventoryAvailabilityListFromStoreId(String storeId, int max, int offset) {
 
 		List availabilityList = getAvailabilityListFromStoreId(storeId, max, offset)
@@ -121,5 +132,18 @@ class AvailabilityService {
 		def status = saveAvailability(availability)
 
 		return status
+	}
+
+	def populateInventoryAvailabilityListFromDrugList(List drugList) {
+		List inventoryAvailabilityList = new ArrayList<InventoryAvailabilityCommand>()
+		drugList.each {drug->
+			InventoryAvailabilityCommand inventory = populateInventoryAvailabilityFromId(drug?.brandId, drug?.inventoryId)
+			Availability availability = getAvailabilityFromInventoryId(drug?.inventoryId)
+			inventory.availabilityIndex = availability.availabilityIndex
+			inventory.availabilityId = availability.availabilityId
+			inventoryAvailabilityList.add(inventory)
+		}
+
+		return inventoryAvailabilityList
 	}
 }

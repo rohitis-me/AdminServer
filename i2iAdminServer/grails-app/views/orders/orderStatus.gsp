@@ -8,7 +8,7 @@
 <g:set var="entityName"
 	value="${message(code: 'order.status.label', default: 'Order Status')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
-<%--<meta http-equiv="refresh" content="60">--%>
+<meta http-equiv="refresh" content="60">
 <%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
 <%--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">--%>
 </head>

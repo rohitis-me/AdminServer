@@ -37,8 +37,9 @@ class AvailabilityController {
 		println "showInventoryAvailability param max: "+params.max +"param offset "+params.offset
 		int max = params.max ? params.int('max') : 10
 		int offset = params.offset ? params.int('offset') : 0
+		def availabilityCount = availabilityService.getAvailabilityCountFromStoreId(storeId)
 		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromStoreId(storeId, max, offset)
-		render(view:"showInventoryDetails", model: [inventoryAvailabilityList: inventoryAvailabilityList])
+		render(view:"showInventoryDetails", model: [inventoryAvailabilityList: inventoryAvailabilityList, availabilityCount:availabilityCount])
 	}
 
     def create() {
@@ -161,9 +162,14 @@ class AvailabilityController {
 		String searchTerm = params.brandName
 //		String brandId = params.brandId
 //		String inventoryId = params.inventoryId
-		List drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm)
+		int max = params.max ? params.int('max') : 10
+		int offset = params.offset ? params.int('offset') : 0
+		def resultCount = inventoryService.getCountofBrandNamesStartingWith(searchTerm)
+		println "resultCount: "+resultCount
+		List drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm,max,offset)
+		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromDrugList(drugList)
 		
-		render (view:"inventorySearchList", model: [drugList:drugList, brandName: searchTerm, circle: circle])
+		render(view:"inventorySearchList", model: [inventoryAvailabilityList: inventoryAvailabilityList, brandName:searchTerm, resultCount:resultCount])
 		//		render "error"
 	}
 }

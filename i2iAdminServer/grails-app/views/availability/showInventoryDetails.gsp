@@ -1,5 +1,6 @@
 
 <%@ page import="i2i.AdminServer.Availability"%>
+<%@ page import="i2i.AdminServer.Constants"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +55,7 @@
 			<div class="pagination" style="width: 60%;">
 				<%--		<tfoot>--%>
 				<g:paginate
-					total="${inventoryAvailabilityList.size() ?2158: 0}"
+					total="${inventoryAvailabilityList.size() ?availabilityCount: 0}"
 					controller="availability" action="showInventoryDetails" />
 				<%--		</tfoot>--%>
 			</div>

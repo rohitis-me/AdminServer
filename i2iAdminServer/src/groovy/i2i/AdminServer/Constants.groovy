@@ -20,4 +20,7 @@ class Constants {
 	
 	public static final String env_DEMO='Demo'
 
+	
+	//FIXME: Hard coding
+	public static final int hardCodedInventoryCount=2158
 }

@@ -133,8 +133,9 @@
 			<td><span class="label-control"><g:message
 						code="orders.phone.number.label" default="Estimated delivery:" /></span></td>
 			<g:if test="${orderDetailsCommand?.estimatedDeliveryTime}">
-				<td><span class="label-control"><g:fieldValue
-							bean="${orderDetailsCommand}" field="estimatedDeliveryTime" /></span></td>
+				<td><g:formatDate
+						date="${orderDetailsCommand.estimatedDeliveryTime }"
+						format="${Constants.dateFormat }" /></td>
 			</g:if>
 		</tr>
 		<tr>
