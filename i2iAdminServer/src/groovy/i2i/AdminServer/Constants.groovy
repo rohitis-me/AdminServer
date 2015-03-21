@@ -12,6 +12,9 @@ class Constants {
 	public static final byte AVAILABILITY_MEDIUM = 2;
 	public static final byte AVAILABILITY_HIGH = 3;
 	public static final byte UNAVAILABLE = 0;
+	
+	//public static final String orderStatus[] = {'Order Rejected', 'Order Placed', 'Order Accepted', 'Order Dispatched', 'Order Delivered'}
+	
 
 	public static final String supportEmail="support@i2itech.org"//for feedback
 	public static final String adminEmail="rohits.iitm@gmail.com"//for orders

@@ -6,6 +6,8 @@ import i2i.AdminServer.User.EmailService
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
+import i2i.AdminServer.Constants
+
 
 @Transactional
 class OrdersService {
@@ -46,11 +48,11 @@ class OrdersService {
 	}
 
 	def populateOrderDetailsFromOrder(Orders order) {
-		println "populateOrderDetailsFromOrder ORDER: "+order.properties
+		//		println "populateOrderDetailsFromOrder ORDER: "+order.properties
 		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
-		println "populateOrderDetailsFromOrder PATIENT: "+patient.properties
+		//		println "populateOrderDetailsFromOrder PATIENT: "+patient.properties
 		OrderDetailsCommand orderDetails = populateOrderDetailsFromPatientProfile(patient)
-//		println "ORDERDETAILS: "+orderDetails.properties
+		//		println "ORDERDETAILS: "+orderDetails.properties
 		orderDetails.brandId = order.brandId
 		orderDetails.inventoryId = order.inventoryId
 		orderDetails.storeId = order.storeId
@@ -65,7 +67,7 @@ class OrdersService {
 	}
 
 	def populateOrderStatusFromOrder(Orders order) {
-		println "populateOrderStatusFromOrder ORDER: "+order.properties
+		//		println "populateOrderStatusFromOrder ORDER: "+order.properties
 		//		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
 		//		println "PATIENT: "+patient.properties
 		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromPatientProfile(patient)
@@ -85,7 +87,7 @@ class OrdersService {
 		orderStatusCommand.storeCity = store.city
 		orderStatusCommand.storeState = store.state
 
-		println "storename: "+orderStatusCommand.storeName
+		//		println "storename: "+orderStatusCommand.storeName
 		orderStatusCommand.orderId = order.orderId
 		orderStatusCommand.orderStatus = order.orderStatus
 		orderStatusCommand.quantity = order.quantity
@@ -112,7 +114,7 @@ class OrdersService {
 		order.estimatedDeliveryTime = getEstimatedDeliveryTime(orderDetailsCommand.deliveryHours)
 		//		else
 		//			order.estimatedDeliveryTime = getEstimatedDeliveryTime()
-		println "estimated Del time :" + orderDetailsCommand.estimatedDeliveryTime
+		//		println "estimated Del time :" + orderDetailsCommand.estimatedDeliveryTime
 
 		order.isEmergencyDeliveryNeeded = orderDetailsCommand.isEmergencyDeliveryNeeded
 		return order
@@ -144,7 +146,7 @@ class OrdersService {
 			est = est + deliveryHours.toInteger().hours
 		}
 
-		println "Time: "+est
+		//		println "Time: "+est
 		return est
 	}
 
@@ -219,8 +221,9 @@ class OrdersService {
 		return order
 	}
 
-	def changeOrderStatusAndSave(def orderId, String orderstatus) {
+	def changeOrderStatusAndSave(def orderId, String orderstatus, Date estDeliveryTime) {
 		Orders order = getOrderFromOrderId(orderId)
+		order.estimatedDeliveryTime = estDeliveryTime
 
 		if(orderstatus=="2") order.orderStatus = Constants.ORDER_ACCEPTED
 		else if(orderstatus=="3") order.orderStatus = Constants.ORDER_DISPATCHED
@@ -253,11 +256,17 @@ class OrdersService {
 	}
 
 	def getListOfOrdersFromStoreId(String storeId) {
-		println "getListOfOrdersFromStoreId: "+storeId
+		//		println "getListOfOrdersFromStoreId: "+storeId
 		List orderList = Orders.findAllByStoreId(storeId)
 		return orderList
 	}
 
+	def getListOfOrdersFromStoreIdAndOrderStatus(String storeId, byte orderStatus) {
+		println "getListOfOrdersFromStoreId: "+storeId +" OS: "+orderStatus
+		List orderList = Orders.findAllByStoreIdAndOrderStatus(storeId,orderStatus)
+		return orderList
+	}
+	
 	def getListOfOrderDetailsFromOrdersList(List orderList) {
 		List orderDetailsList = new ArrayList<OrderDetailsCommand>()
 		orderList.each { order->
@@ -269,7 +278,7 @@ class OrdersService {
 	def sendEmail(OrderDetailsCommand orderDetails) {
 		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
 		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
-		println "OrderDEtailsCommand: "+orderDetails.properties
+		//		println "OrderDEtailsCommand: "+orderDetails.properties
 		emailService.sendOrderMail(emailId, "Order@i2i", orderDetails)
 	}
 }

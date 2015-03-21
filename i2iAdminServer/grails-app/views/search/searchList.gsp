@@ -17,6 +17,7 @@
 <%--	<g:set var="inventoryId" value="${inventoryId}"></g:set>--%>
 	<g:render template="/template/searchBox"></g:render>
 	<br />
+	
 	<table align="center">
 		<g:if test="${storesList }">
 		<g:if test="${!availabilityFlag }">
@@ -29,7 +30,7 @@
 		<div align="center">
 		<span class="label-control"><g:message code="search.select.store" default="Select a store to proceed"/></span>
 		</div>
-		
+		<br>
 		<thead>
 			<tr>
 				<th>Store Name</th>
@@ -70,7 +71,8 @@
 		</tbody>
 			</g:if>
 			<g:else>
-			<div align="center"><g:message code="search.result.unavailable" default="The stores in this area are currently offline"/></div>
+			<div align="center">
+			<g:message code="search.result.unavailable" default="The stores in this area are currently offline"/></div>
 <%--			<g:if test="${brandId == null || brandId == "" }">--%>
 <%--			<br/><div align="center"><g:message code="search.result.inputerror" default="Tip: Select brand from auto suggestion."/></div>--%>
 <%--			</g:if>--%>

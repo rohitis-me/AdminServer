@@ -32,13 +32,33 @@ class OrdersController {
 			render "error. Not logged in "
 		
 			
-			List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
+		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
+		println "orderCount "+ ordersList.size()
+		
+		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
+		println "done orderdetailslist"
+		//to show current tab colour
+		byte orderStatus = -1 
+		
+		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList,, orderStatus:orderStatus])
+	}
+
+	@Secured(['ROLE_CHEMIST_ADMIN'])
+	def showSortedOrderDetailsList() {
+		String storeId = storeService.getLoggedInStoreId()
+		
+		//FIXME: has to be logged in to come here
+		if(storeId == '0')
+			render "error. Not logged in "
+
+		byte orderStatus = params.orderStatus.toInteger()	
+		List ordersList = ordersService.getListOfOrdersFromStoreIdAndOrderStatus(storeId,orderStatus)
 		println "orderCount "+ ordersList.size()
 		
 		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
 		println "done orderdetailslist"
 		
-		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList])
+		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
 	}
 	
 	@Secured(['ROLE_CHEMIST_ADMIN'])
@@ -64,9 +84,9 @@ class OrdersController {
 	
 	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def saveOrderStatus(OrderDetailsCommand orderDetailsCommand) {
-		println "in save order status: "+params
+		println "in save order status: "+orderDetailsCommand.properties
 		def orderId = orderDetailsCommand.orderId
-		def status = ordersService.changeOrderStatusAndSave(orderId, params.orderstatus)
+		def status = ordersService.changeOrderStatusAndSave(orderId, params.orderstatus,orderDetailsCommand?.estimatedDeliveryTime)
 		
 		if(status == 0)
 		render "error"

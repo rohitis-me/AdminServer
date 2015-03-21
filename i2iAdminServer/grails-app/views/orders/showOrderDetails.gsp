@@ -13,56 +13,61 @@
 <body>
 	<g:render template="/template/navigation" />
 	<br />
-				<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
-	
-		<div align="center">
-		<p><i>
-		<g:message code="order.status.selectmessage" default="Select current order status and click 'Save'."/>
-		</i></p>
+	<g:set var="orderStatus" value="${orderDetailsCommand?.orderStatus}" />
+
+	<div align="center">
+		<p>
+			<i> <g:message code="order.status.selectmessage"
+					default="Select current order status and click 'Save'." />
+			</i>
+		</p>
 		<g:form>
 			<g:hiddenField name="orderId" value="${orderDetailsCommand.orderId }" />
 
 			<%--			<fieldset class="radiogroup" >			--%>
 			<table style="border: 1px solid #DFDFDF;">
 				<tr>
-					<td style="width: 25%">
-					<g:if test="${orderStatus == 2}">
-						<input type="radio" name="orderstatus" checked="checked" disabled value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if>
-					<g:elseif test="${orderstatus > 2}">
-						<input type="radio" name="orderstatus" disabled
-						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:elseif>
-					<g:else>
-						<input type="radio" name="orderstatus"
-						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:else>
-					</td>
-					<td style="width: 25%">
-						<g:if test="${orderStatus == 3}"><input type="radio" name="orderstatus" checked="checked" disabled
-						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:if>
-						<g:elseif test="${orderStatus > 3}"><input type="radio" name="orderstatus" disabled
-						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:elseif>
-						<g:else><input type="radio" name="orderstatus"
-						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:else>
-					</td>
-					<td style="width: 25%">
-					<g:if test="${orderStatus == 4}"><input type="radio" name="orderstatus" checked="checked" disabled
-						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:if>
-						<g:elseif test="${orderStatus > 4}"><input type="radio" name="orderstatus" disabled
-						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:elseif>
-						<g:else><input type="radio" name="orderstatus"
-						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:else>
-					</td>
-					<td style="width: 25%">
-					<g:if test="${orderStatus == 0}">
-					<input type="radio" name="orderstatus" checked="checked" disabled
-						value=${Constants.ORDER_REJECTED}>Reject Order</g:if>
-					<g:else>
-					<input type="radio" name="orderstatus"
-						value=${Constants.ORDER_REJECTED}>Reject Order</g:else>
-					</td>
-					</tr>
+					<td style="width: 25%"><g:if test="${orderStatus == 2}">
+							<input type="radio" name="orderstatus" checked="checked" disabled
+								value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if> <%--					<g:elseif test="${orderstatus > 2}">--%>
+						<%--						<input type="radio" name="orderstatus" disabled--%> <%--						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:elseif>--%>
+						<g:else>
+							<input type="radio" name="orderstatus"
+								value=${Constants.ORDER_ACCEPTED}>Accept Order </g:else></td>
+					<td style="width: 25%"><g:if test="${orderStatus == 3}">
+							<input type="radio" name="orderstatus" checked="checked" disabled
+								value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:if> <%--						<g:elseif test="${orderStatus > 3}"><input type="radio" name="orderstatus" disabled--%>
+						<%--						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:elseif>--%>
+						<g:else>
+							<input type="radio" name="orderstatus"
+								value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:else></td>
+					<td style="width: 25%"><g:if test="${orderStatus == 4}">
+							<input type="radio" name="orderstatus" checked="checked" disabled
+								value=${Constants.ORDER_DELIVERED}>Order Delivered</g:if> <%--						<g:elseif test="${orderStatus > 4}"><input type="radio" name="orderstatus" disabled--%>
+						<%--						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:elseif>--%>
+						<g:else>
+							<input type="radio" name="orderstatus"
+								value=${Constants.ORDER_DELIVERED}>Order Delivered</g:else></td>
+					<td style="width: 25%"><g:if test="${orderStatus == 0}">
+							<input type="radio" name="orderstatus" checked="checked" disabled
+								value=${Constants.ORDER_REJECTED}>Reject Order</g:if> <g:else>
+							<input type="radio" name="orderstatus"
+								value=${Constants.ORDER_REJECTED}>Reject Order</g:else></td>
+				</tr>
 			</table>
 			<%--			</fieldset>--%>
-<%--			<br />--%>
+			<%--			<br />--%>
+			<table style="border: 0;">
+				<tr>
+					<td><span class="label-control"><g:message
+								code="orders.phone.number.label" default="Estimated delivery:" /></span></td>
+					<td><g:datePicker precision="minute" 
+							name="estimatedDeliveryTime" years="${2015..2016}"
+							class="dropdown-control"
+							value="${orderDetailsCommand?.estimatedDeliveryTime}" /></td>
+				</tr>
+			</table>
+
 			<g:actionSubmit class="btn btn-default" action="saveOrderStatus"
 				value="${message(code: 'order.status.save.button', default: 'Save')}" />
 			<%--			<g:actionSubmit class="btn btn-default" action="acceptOrder"--%>
@@ -72,7 +77,7 @@
 			<%--				onclick="return confirm('${message(code: 'order.status.reject.message')}');" />--%>
 		</g:form>
 	</div>
-	
+
 	<table align="center" style="border-top: 0">
 		<tr>
 			<td style="width: 40%"><span class="label-control"><g:message
@@ -132,15 +137,15 @@
 							bean="${orderDetailsCommand}" field="quantity" /></span></td>
 			</g:if>
 		</tr>
-		<tr>
-			<td><span class="label-control"><g:message
-						code="orders.phone.number.label" default="Estimated delivery:" /></span></td>
-			<g:if test="${orderDetailsCommand?.estimatedDeliveryTime}">
-				<td><g:formatDate
-						date="${orderDetailsCommand.estimatedDeliveryTime }"
-						format="${Constants.dateFormat }" /></td>
-			</g:if>
-		</tr>
+<%--		<tr>--%>
+<%--			<td><span class="label-control"><g:message--%>
+<%--						code="orders.phone.number.label" default="Estimated delivery:" /></span></td>--%>
+<%--			<g:if test="${orderDetailsCommand?.estimatedDeliveryTime}">--%>
+<%--				<td><g:formatDate--%>
+<%--						date="${orderDetailsCommand.estimatedDeliveryTime }"--%>
+<%--						format="${Constants.dateFormat }" /></td>--%>
+<%--			</g:if>--%>
+<%--		</tr>--%>
 		<tr>
 			<td><span class="label-control"><g:message
 						code="orders.phone.number.label"
