@@ -8,10 +8,25 @@
 <meta name="layout" content="searchLayout">
 <g:set var="entityName"
 	value="${message(code: 'order.status.label', default: 'Order Status')}" />
-<title><g:message code="default.list.label" args="[entityName]" /></title>
+<title><g:message message="Order Status" /></title>
 <meta http-equiv="refresh" content="90">
 <%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
 <%--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">--%>
+
+<style>
+<%--@media only screen and (max-width:800px) {--%>
+<%--	.webTable {--%>
+<%--		display: none;--%>
+<%--	}--%>
+<%--}--%>
+<%----%>
+<%--@media only screen and (min-width:800px) {--%>
+<%--	.mobileTable {--%>
+<%--		display: none;--%>
+<%--	}--%>
+<%--}--%>
+</style>
+
 </head>
 <body>
 	<g:render template="/template/navigationClient" />
@@ -26,13 +41,13 @@
 	<%--	<br />--%>
 	<g:set var="orderStatus" value="${orderStatusCommand?.orderStatus}" />
 
-
-	<table align="center" style="border: 1px solid #DFDFDF;">
+	<table align="center" class="mobileTable"
+		style="border: 1px solid #DFDFDF;">
 		<tr>
 			<td style="width: 25%"><g:if
 					test="${orderStatus == Constants.ORDER_PLACED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
-					<label class="label-control" style="font-style: italic;">Placed</label>
+					<label class="label-control" style="font-style: italic;font-weight: bold;">Placed</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label class="label-control" style="font-style: italic;">Placed</label>
@@ -40,17 +55,17 @@
 			<td style="width: 25%"><g:if
 					test="${orderStatus == Constants.ORDER_ACCEPTED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
-					<label style="font-style: italic;">Accepted</label>
+					<label style="font-style: italic;font-weight: bold;">Accepted</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label style="font-style: italic;">Accepted</label>
 				</g:else></td>
-			<%--		</tr>--%>
-			<%--		<tr>--%>
+		</tr>
+		<tr>
 			<td style="width: 25%"><g:if
 					test="${orderStatus == Constants.ORDER_DISPATCHED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
-					<label style="font-style: italic;">Dispatched</label>
+					<label style="font-style: italic;font-weight: bold;">Dispatched</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label style="font-style: italic;">Dispatched</label>
@@ -58,7 +73,7 @@
 			<td style="width: 25%"><g:if
 					test="${orderStatus == Constants.ORDER_DELIVERED}">
 					<input type="radio" name="orderstatus" checked="checked" disabled>
-					<label style="font-style: italic;">Delivered</label>
+					<label style="font-style: italic;font-weight: bold;">Delivered</label>
 				</g:if> <g:else>
 					<input type="radio" name="orderstatus" disabled>
 					<label style="font-style: italic;">Delivered</label>
@@ -66,7 +81,45 @@
 		</tr>
 	</table>
 
-
+<%--	<table align="center" class="webTable"--%>
+<%--		style="border: 1px solid #DFDFDF;">--%>
+<%--		<tr>--%>
+<%--			<td style="width: 25%"><g:if--%>
+<%--					test="${orderStatus == Constants.ORDER_PLACED}">--%>
+<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
+<%--					<label class="label-control" style="font-style: italic;">Placed</label>--%>
+<%--				</g:if> <g:else>--%>
+<%--					<input type="radio" name="orderstatus" disabled>--%>
+<%--					<label class="label-control" style="font-style: italic;">Placed</label>--%>
+<%--				</g:else></td>--%>
+<%--			<td style="width: 25%"><g:if--%>
+<%--					test="${orderStatus == Constants.ORDER_ACCEPTED}">--%>
+<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
+<%--					<label style="font-style: italic;">Accepted</label>--%>
+<%--				</g:if> <g:else>--%>
+<%--					<input type="radio" name="orderstatus" disabled>--%>
+<%--					<label style="font-style: italic;">Accepted</label>--%>
+<%--				</g:else></td>--%>
+<%--		</tr>--%>
+<%--		<tr>--%>
+<%--			<td style="width: 25%"><g:if--%>
+<%--					test="${orderStatus == Constants.ORDER_DISPATCHED}">--%>
+<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
+<%--					<label style="font-style: italic;">Dispatched</label>--%>
+<%--				</g:if> <g:else>--%>
+<%--					<input type="radio" name="orderstatus" disabled>--%>
+<%--					<label style="font-style: italic;">Dispatched</label>--%>
+<%--				</g:else></td>--%>
+<%--			<td style="width: 25%"><g:if--%>
+<%--					test="${orderStatus == Constants.ORDER_DELIVERED}">--%>
+<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
+<%--					<label style="font-style: italic;">Delivered</label>--%>
+<%--				</g:if> <g:else>--%>
+<%--					<input type="radio" name="orderstatus" disabled>--%>
+<%--					<label style="font-style: italic;">Delivered</label>--%>
+<%--				</g:else></td>--%>
+<%--		</tr>--%>
+<%--	</table>--%>
 	<%--<div align="center">--%>
 	<%--  <div id="accordion">--%>
 	<%--        <div class="item">--%>
@@ -78,6 +131,11 @@
 						Name: </span></td>
 				<td style="width: 70%"><g:fieldValue class="label-control"
 						bean="${orderStatusCommand}" field="brandName" /></td>
+			</tr>
+			<tr>
+					<td style="width: 30%"><span class="label-control">Tracking Id: </span></td>
+					<td style="width: 70%"><g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="trackingId" /></td>
 			</tr>
 			<tr>
 				<td><span class="label-control">Expected Delivery: </span></td>

@@ -62,6 +62,7 @@ class OrdersService {
 		orderDetails.estimatedDeliveryTime = order.estimatedDeliveryTime
 		orderDetails.orderId = order.orderId
 		orderDetails.orderStatus = order.orderStatus
+		orderDetails.trackingId = order.uId
 		orderDetails.isEmergencyDeliveryNeeded = order.isEmergencyDeliveryNeeded
 		return orderDetails
 	}
@@ -91,6 +92,7 @@ class OrdersService {
 		orderStatusCommand.orderId = order.orderId
 		orderStatusCommand.orderStatus = order.orderStatus
 		orderStatusCommand.quantity = order.quantity
+		orderStatusCommand.trackingId = order.uId
 		orderStatusCommand.estimatedDeliveryTime = order.estimatedDeliveryTime
 		return orderStatusCommand
 	}
@@ -115,7 +117,7 @@ class OrdersService {
 		//		else
 		//			order.estimatedDeliveryTime = getEstimatedDeliveryTime()
 		//		println "estimated Del time :" + orderDetailsCommand.estimatedDeliveryTime
-
+		order.uId = orderDetailsCommand.trackingId
 		order.isEmergencyDeliveryNeeded = orderDetailsCommand.isEmergencyDeliveryNeeded
 		return order
 	}
@@ -280,5 +282,6 @@ class OrdersService {
 		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
 		//		println "OrderDEtailsCommand: "+orderDetails.properties
 		emailService.sendOrderMail(emailId, "Order@i2i", orderDetails)
+		emailService.sendTrackingIdToCustomer("Pillocate: Tracking Details", orderDetails)
 	}
 }

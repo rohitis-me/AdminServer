@@ -27,6 +27,7 @@ class OrderDetailsCommand {
 	String city
 	String state
 	String country
+	String trackingId
 	byte orderStatus
 	Date estimatedDeliveryTime
 	long orderId
@@ -44,5 +45,6 @@ class OrderDetailsCommand {
 		circle nullable:false, blank:false,size:3..100
 		state nullable:false, blank:false,size:3..100
 		storeId nullable:false, blank:false,size:1..100
+		trackingId nullable:true, blank:true,size:1..100
 	}
 }

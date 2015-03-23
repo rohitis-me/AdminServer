@@ -16,14 +16,14 @@ class AvailabilityController {
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Availability.list(params), model:[availabilityInstanceCount: Availability.count()]
-    }
-
-    def show(Availability availabilityInstance) {
-        respond availabilityInstance
-    }
+//    def index(Integer max) {
+//        params.max = Math.min(max ?: 10, 100)
+//        respond Availability.list(params), model:[availabilityInstanceCount: Availability.count()]
+//    }
+//
+//    def show(Availability availabilityInstance) {
+//        respond availabilityInstance
+//    }
 	
 	
 	@Secured(['ROLE_CHEMIST_ADMIN'])
@@ -42,9 +42,9 @@ class AvailabilityController {
 		render(view:"showInventoryDetails", model: [inventoryAvailabilityList: inventoryAvailabilityList, availabilityCount:availabilityCount])
 	}
 
-    def create() {
-        respond new Availability(params)
-    }
+//    def create() {
+//        respond new Availability(params)
+//    }
 
     @Transactional
     def save(Availability availabilityInstance) {
@@ -69,61 +69,61 @@ class AvailabilityController {
         }
     }
 
-    def edit(Availability availabilityInstance) {
-        respond availabilityInstance
-    }
+//    def edit(Availability availabilityInstance) {
+//        respond availabilityInstance
+//    }
 
-    @Transactional
-    def update(Availability availabilityInstance) {
-        if (availabilityInstance == null) {
-            notFound()
-            return
-        }
-
-        if (availabilityInstance.hasErrors()) {
-            respond availabilityInstance.errors, view:'edit'
-            return
-        }
-
-        availabilityInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Availability.label', default: 'Availability'), availabilityInstance.id])
-                redirect availabilityInstance
-            }
-            '*'{ respond availabilityInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Availability availabilityInstance) {
-
-        if (availabilityInstance == null) {
-            notFound()
-            return
-        }
-
-        availabilityInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Availability.label', default: 'Availability'), availabilityInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'availability.label', default: 'Availability'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+//    @Transactional
+//    def update(Availability availabilityInstance) {
+//        if (availabilityInstance == null) {
+//            notFound()
+//            return
+//        }
+//
+//        if (availabilityInstance.hasErrors()) {
+//            respond availabilityInstance.errors, view:'edit'
+//            return
+//        }
+//
+//        availabilityInstance.save flush:true
+//
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.updated.message', args: [message(code: 'Availability.label', default: 'Availability'), availabilityInstance.id])
+//                redirect availabilityInstance
+//            }
+//            '*'{ respond availabilityInstance, [status: OK] }
+//        }
+//    }
+//
+//    @Transactional
+//    def delete(Availability availabilityInstance) {
+//
+//        if (availabilityInstance == null) {
+//            notFound()
+//            return
+//        }
+//
+//        availabilityInstance.delete flush:true
+//
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Availability.label', default: 'Availability'), availabilityInstance.id])
+//                redirect action:"index", method:"GET"
+//            }
+//            '*'{ render status: NO_CONTENT }
+//        }
+//    }
+//
+//    protected void notFound() {
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.not.found.message', args: [message(code: 'availability.label', default: 'Availability'), params.id])
+//                redirect action: "index", method: "GET"
+//            }
+//            '*'{ render status: NOT_FOUND }
+//        }
+//    }
 	
 	def onClickAvailable()
 	{
@@ -170,6 +170,5 @@ class AvailabilityController {
 		List inventoryAvailabilityList = availabilityService.populateInventoryAvailabilityListFromDrugList(drugList)
 		
 		render(view:"inventorySearchList", model: [inventoryAvailabilityList: inventoryAvailabilityList, brandName:searchTerm, resultCount:resultCount])
-		//		render "error"
 	}
 }

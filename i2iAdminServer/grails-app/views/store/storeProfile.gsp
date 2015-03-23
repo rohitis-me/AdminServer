@@ -178,14 +178,14 @@
 							value="${storeInstance?.deliveryHoursIfUnavailable}" /><label class="label-control"> Hours</label></td>
 				</tr>
 
-				<tr>
-					<td></td>
-					<td><g:checkBox name="isEmergencyDeliveryAvailable" class='chk' id='emergency_delivery' 
-					value="${storeInstance?.isEmergencyDeliveryAvailable}" /> <label
-						class="label-control" for='emergency_delivery'><g:message
-								code="store.emergency.delivery.label"
-								default="Emergency delivery available" /></label></td>
-				</tr>
+<%--				<tr>--%>
+<%--					<td></td>--%>
+<%--					<td><g:checkBox name="isEmergencyDeliveryAvailable" class='chk' id='emergency_delivery' --%>
+<%--					value="${storeInstance?.isEmergencyDeliveryAvailable}" /> <label--%>
+<%--						class="label-control" for='emergency_delivery'><g:message--%>
+<%--								code="store.emergency.delivery.label"--%>
+<%--								default="Emergency delivery available" /></label></td>--%>
+<%--				</tr>--%>
 			</tbody>
 		</table>
 		<g:hiddenField name="storeId" value="${storeInstance?.storeId }" />

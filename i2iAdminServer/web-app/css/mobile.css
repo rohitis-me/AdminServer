@@ -10,8 +10,7 @@ body {
 }
 
 #headerdiv {
-	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times,
-		"Times New Roman", serif;
+	font-family: Times, "Times New Roman", serif;
 	background-color: #5F5C5C;
 	position: relative;
 	visibility: visible;
@@ -20,7 +19,7 @@ body {
 	clip: rect(0px, auto, auto, auto);
 	text-align: left;
 	font-style: normal;
-/* 	font-weight: bold; */
+	/* 	font-weight: bold; */
 	text-decoration: blink;
 	text-indent: 10px;
 	height: 20%;
@@ -41,21 +40,24 @@ body {
 }
 
 .btn {
+	
 }
 
 .btn-default {
-	width:40%;
+	width: 40%;
 }
 
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default
 	{
+	
 }
 
 .textbox-control {
-
+	
 }
 
 .textbox-control:focus {
+	
 }
 /* TABLES */
 table {
@@ -71,16 +73,18 @@ tr {
 }
 
 tr>td:first-child,tr>th:first-child {
-	padding-left: 1.25em;
+	/* 	padding-left: 1.25em; */
+	
 }
 
 tr>td:last-child,tr>th:last-child {
-	padding-right: 1.25em;
+	/* 	padding-right: 1.25em; */
+	
 }
 
 td,th {
 	line-height: 1.5em;
-	padding: 0.5em 0.6em;
+	/* 	padding: 0.5em 0.6em; */
 	text-align: left;
 	vertical-align: top;
 }
@@ -132,11 +136,11 @@ th.desc a {
 }
 
 .odd {
-	background:  #777373;
+	background: #777373;
 }
 
 .even {
-	background:  #777373;
+	background: #777373;
 }
 
 .odd:hover,.even:hover {
@@ -167,7 +171,7 @@ active {
 }
 
 #hidden {
-display: none;
+	display: none;
 }
 
 /* NAVIGATION MENU */
@@ -185,10 +189,10 @@ nav ul {
 }
 
 #accordion .item {
-    width:98%;
+	width: 98%;
 }
 
 input[type="radio"] {
-  margin-top: -1px;
-  vertical-align: middle;
+	margin-top: -1px;
+	vertical-align: middle;
 }

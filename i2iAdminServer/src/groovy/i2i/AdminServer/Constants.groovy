@@ -25,6 +25,7 @@ class Constants {
 	public static final String env_LOCAL='Local'
 	public static final String env_PROD='Prod'
 
+	public static final String envLink_LOCAL='http://localhost:8080/i2iAdminServer/'
 	public static final String envLink_DEMO='http://demoi2i.elasticbeanstalk.com/'
 	public static final String envLink_PROD='http://www.pillocate.com/'
 	

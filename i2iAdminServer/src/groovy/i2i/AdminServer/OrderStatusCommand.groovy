@@ -29,6 +29,7 @@ class OrderStatusCommand {
 	Date estimatedDeliveryTime
 	long orderId
 	int quantity
+	String trackingId
 	
 	static constraints = {
 		name nullable:false, blank:false,size:1..100
@@ -43,5 +44,6 @@ class OrderStatusCommand {
 		storeCity nullable:false, blank:false,size:3..100
 		storeCircle nullable:false, blank:false,size:3..100
 		storeState nullable:false, blank:false,size:3..100
+		trackingId nullable:true, blank:true,size:1..100
 	}
 }

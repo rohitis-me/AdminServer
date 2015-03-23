@@ -8,7 +8,7 @@
 <title><g:message message="i2i-Search Suggestions" /></title>
 <g:set var="entityName"
 	value="${message(code: 'i2i.search.suggestions.label', default: 'Search Suggestions')}" />
-<title><g:message code="default.list.label" args="[entityName]" /></title>
+<title><g:message message="Search Suggestions" /></title>
 </head>
 <body>
 	<g:render template="/template/navigationClient" />

@@ -41,7 +41,7 @@
 	<%--		<g:if test="${inventoryAvailabilityList.size() > 10 }">--%>
 <g:form controller="availability" action="searchInventory" method="get">
 		<div align="center">
-			<input name="brandName" required class="textbox-control" id="search_textField"
+			<input name="brandName" required class="textbox-control"
 				placeholder="Enter medicine brand" style=" width: 40%;" value="${brandName}"/>
 				<g:hiddenField name="brandId" id="brand_id" value="${brandId}"/>
 				<g:hiddenField name="inventoryId" id="inventory_id" value="${inventoryId}"/>

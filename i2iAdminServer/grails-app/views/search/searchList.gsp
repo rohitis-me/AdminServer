@@ -7,7 +7,7 @@
 <title><g:message message="i2i-Search List" /></title>
 <g:set var="entityName"
 	value="${message(code: 'i2i.search.results.label', default: 'Search Results')}" />
-<title><g:message code="default.list.label" args="[entityName]" /></title>
+<title><g:message message="Search results" /></title>
 <%--<r:require module="jquery-ui" />--%>
 </head>
 <body>

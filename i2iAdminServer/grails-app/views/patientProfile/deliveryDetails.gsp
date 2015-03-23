@@ -116,8 +116,10 @@
 						<td><label class="label-control" for="emailID"><g:message
 									code="patientProfile.emailID.label" default="Email Id:" /></label></td>
 						<td><g:field class="textbox-control" name="emailID"
-								type="email" maxlength="100" value="${orderDetails?.emailID}" /></td>
+								type="email" maxlength="100" value="${orderDetails?.emailID}" />
+								<g:message code="patientProfile.email.helptext"/></td>
 					</tr>
+					
 					<tr>
 						<td><label class="label-control" for="address">Address:
 								*</label></td>
@@ -160,17 +162,17 @@
 						<td><label class="label-control" for="textfield">Cash
 								on delivery</label></td>
 					</tr>
-					<g:if test="${isEmergencyDeliveryAvailable}">
-						<tr>
-							<td></td>
-							<td><g:checkBox name="isEmergencyDeliveryNeeded" class='chk'
-									id='emergency_delivery'
-									value="${orderDetails?.isEmergencyDeliveryNeeded}" /> <label
-								class="label-control" for='emergency_delivery'><g:message
-										code="order.emergency.delivery.label"
-										default="Request Emergency delivery" /></label></td>
-						</tr>
-					</g:if>
+<%--					<g:if test="${isEmergencyDeliveryAvailable}">--%>
+<%--						<tr>--%>
+<%--							<td></td>--%>
+<%--							<td><g:checkBox name="isEmergencyDeliveryNeeded" class='chk'--%>
+<%--									id='emergency_delivery'--%>
+<%--									value="${orderDetails?.isEmergencyDeliveryNeeded}" /> <label--%>
+<%--								class="label-control" for='emergency_delivery'><g:message--%>
+<%--										code="order.emergency.delivery.label"--%>
+<%--										default="Request Emergency delivery" /></label></td>--%>
+<%--						</tr>--%>
+<%--					</g:if>--%>
 					<%--					<tr>--%>
 					<%--						<td style="width: 15%"><label class="label-control" for="pin">Pin--%>
 					<%--								code </label></td>--%>

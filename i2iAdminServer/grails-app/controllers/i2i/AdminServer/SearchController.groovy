@@ -2,6 +2,7 @@ package i2i.AdminServer
 
 import grails.converters.JSON
 import i2i.AdminServer.ClientSync.InventoryService
+import i2i.AdminServer.Util.Utility
 
 class SearchController {
 
@@ -11,6 +12,7 @@ class SearchController {
 	StoreService storeService
 
 	def index() {
+		println "New session "+Utility.getDateTimeInIST().getTime().toString()
 	}
 
 	def search() {
@@ -81,7 +83,7 @@ class SearchController {
 		
 		List brandMapList = []
 		drugList.each {
-			println "druglist: "+it.brandId+"|"+it.inventoryId+"|"
+//			println "druglist: "+it.brandId+"|"+it.inventoryId+"|"
 			Map brandMap = [:]
 			suggestion = "${it.brandName}"//+" "+"${it.strength}"+" ${it.form}"
 			//			brandMap << suggestion
