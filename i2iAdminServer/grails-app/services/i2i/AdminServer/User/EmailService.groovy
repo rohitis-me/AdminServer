@@ -3,7 +3,7 @@ package i2i.AdminServer.User
 import grails.transaction.Transactional
 import i2i.AdminServer.Constants
 import i2i.AdminServer.OrderDetailsCommand
-import i2i.AdminServer.OrderStatusCommand
+import i2i.AdminServer.Store
 
 @Transactional
 class EmailService {
@@ -67,7 +67,7 @@ class EmailService {
 		}
 	}
 
-	def sendTrackingIdToCustomer(String mailSubject, OrderDetailsCommand orderDetails){
+	def sendTrackingIdToCustomer(String mailSubject, OrderDetailsCommand orderDetails, Store store){
 		println "In sendTrackingIdToCustomer: "+orderDetails.properties
 
 		if(!(grailsApplication.config.env == Constants.env_PROD))
@@ -83,19 +83,23 @@ class EmailService {
 					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/trackOrderMail",
-					model:[orderDetails:orderDetails])
+					model:[orderDetails:orderDetails, storeInstance: store])
+				}
+				println "SENT MAIL"
+			}
+			
+			else {
+				mailSubject = "AdminOnly "+mailSubject
+				
+				mailService.sendMail {
+					async true
+					to Constants.adminEmail
+					subject mailSubject
+					body( view:"/mail/trackOrderMail",
+					model:[orderDetails:orderDetails, storeInstance: store])
 				}
 			}
-			//			else
-			//			{
-			//				mailService.sendMail {
-			//					to Constants.adminEmail
-			//					subject mailSubject
-			//					body( view:"/mail/orderMail",
-			//						model:[orderDetails:orderDetails])
-			//				}
-			//			}
-			println "SENT MAIL"
+			
 		}
 		catch(Exception exp) {
 			println "Exception: "+exp

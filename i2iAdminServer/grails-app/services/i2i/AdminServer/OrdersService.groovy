@@ -280,8 +280,9 @@ class OrdersService {
 	def sendEmail(OrderDetailsCommand orderDetails) {
 		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
 		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
+		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
 		//		println "OrderDEtailsCommand: "+orderDetails.properties
 		emailService.sendOrderMail(emailId, "Order@i2i", orderDetails)
-		emailService.sendTrackingIdToCustomer("Pillocate: Tracking Details", orderDetails)
+		emailService.sendTrackingIdToCustomer("Pillocate: Tracking Details", orderDetails, store)
 	}
 }

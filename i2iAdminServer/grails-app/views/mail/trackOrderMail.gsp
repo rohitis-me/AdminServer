@@ -23,7 +23,26 @@ ${orderDetails.addressLine2 }<br>
 ${orderDetails.circle }<br>
 ${orderDetails.city }<br>
 <br>
+<p>
+
+<g:if test="${storeInstance }">
+<h1>
+Seller Details
+</h1>
+Your order has been placed at ${storeInstance.storeName }. Please find contact details below,
+<br>
+Phone number: ${storeInstance.phoneNumber }
+<br>
+Address:<br>
+${storeInstance.addressLine1 }<br>
+${storeInstance.addressLine2 }<br>
+${storeInstance.circle }<br>
+${storeInstance.city }<br>
+</g:if>
+</p>
 Track your order status <a href="${Constants.envLink+'orderStatus?trackingId='+orderDetails.trackingId }">here</a><br>
+
+
 <%--<g:if test="${orderDetails.phoneNumber }">--%>
 <%--You could call ${orderDetails.name } on ${orderDetails.phoneNumber }--%>
 <%--</g:if>--%>
