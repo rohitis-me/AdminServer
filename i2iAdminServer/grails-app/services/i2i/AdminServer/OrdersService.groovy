@@ -189,11 +189,12 @@ class OrdersService {
 		else return getUniqueRandomString()
 	}
 
-	def saveOrder(Orders order) {
+	def saveOrder(Orders order, boolean sendMailFlag = true) {
 		println "in save order"
 		if(order.save(flush:true)) {
 			println "saveorder success"
-			if(!(grailsApplication.config.env == Constants.env_LOCAL)) {
+			boolean chkSendMail = (sendMailFlag)// && !(grailsApplication.config.env == Constants.env_LOCAL))
+			if(chkSendMail) {
 				OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
 				sendEmail(orderDetailsCommand)
 			}
@@ -233,7 +234,7 @@ class OrdersService {
 		else if(orderstatus=="0") order.orderStatus = Constants.ORDER_REJECTED
 		else order.orderStatus = Constants.ORDER_PLACED
 
-		def status = saveOrder(order)
+		def status = saveOrder(order, false)
 
 		return status
 	}

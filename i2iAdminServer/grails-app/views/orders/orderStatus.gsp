@@ -144,16 +144,25 @@
 						format="${Constants.dateFormat }" /></td>
 			</tr>
 			<tr>
-				<td><span class="label-control">Seller: </span></td>
-				<td><g:fieldValue class="label-control"
-						bean="${orderStatusCommand}" field="storeName" /> <span
-					class="label-control">,</span> <g:fieldValue class="label-control"
-						bean="${orderStatusCommand}" field="storePhoneNumber" /><span
-					class="label-control">,</span> <g:fieldValue class="label-control"
-						bean="${orderStatusCommand}" field="storeAddressLine1" /><span
-					class="label-control">,</span> <g:fieldValue class="label-control"
-						bean="${orderStatusCommand}" field="storeAddressLine2" /></td>
-			</tr>
+					<td><span class="label-control">Seller: </span></td>
+					<td><g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeName" /> <span
+						class="label-control">,</span> <g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeAddressLine1" /><span
+						class="label-control">,</span> <g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeAddressLine2" />, <g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeCircle" />, <g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeCity" /></td>
+				</tr>
+				<tr>
+				<td><span class="label-control">Store Contact no.: </span>
+				</td>
+				<td>
+				<g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storePhoneNumber" /><span
+						class="label-control"></span>
+				</td>
+				</tr>
 		</tbody>
 	</table>
 

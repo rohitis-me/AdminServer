@@ -26,6 +26,10 @@ class UrlMappings {
 		
 		"/sendFeedback"(controller: "feedback", action:"sendFeedback")
 		
+		"/trackOrder"(controller: "orders", action:"trackOrderStatus")
+
+		"/showOrderDetails"(controller: "orders", action:"showTrackedOrderDetails")
+		
 		//Home page
         "/"(controller: "search", action:"index")
 		

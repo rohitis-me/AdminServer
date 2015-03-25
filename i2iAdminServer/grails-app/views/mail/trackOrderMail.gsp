@@ -26,9 +26,9 @@ ${orderDetails.city }<br>
 <p>
 
 <g:if test="${storeInstance }">
-<h1>
+<h2>
 Seller Details
-</h1>
+</h2>
 Your order has been placed at ${storeInstance.storeName }. Please find contact details below,
 <br>
 Phone number: ${storeInstance.phoneNumber }

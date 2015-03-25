@@ -24,7 +24,7 @@
 				value="${trackingId}" />
 			<%--				<g:hiddenField name="brandId" id="brand_id" value="${brandId}"/>--%>
 			<%--				<g:hiddenField name="inventoryId" id="inventory_id" value="${inventoryId}"/>--%>
-			<input type="submit" name="searchButton" value="Show details"
+			<input type="submit" name="searchButton" value="Track order"
 				class="btn btn-default" style="width: 20%; height: 33px" />
 		</div>
 	</g:form>
@@ -102,11 +102,20 @@
 					<td><g:fieldValue class="label-control"
 							bean="${orderStatusCommand}" field="storeName" /> <span
 						class="label-control">,</span> <g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storePhoneNumber" /><span
-						class="label-control">,</span> <g:fieldValue class="label-control"
 							bean="${orderStatusCommand}" field="storeAddressLine1" /><span
 						class="label-control">,</span> <g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storeAddressLine2" /></td>
+							bean="${orderStatusCommand}" field="storeAddressLine2" />, <g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeCircle" />, <g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storeCity" /></td>
+				</tr>
+				<tr>
+				<td><span class="label-control">Store Contact no.: </span>
+				</td>
+				<td>
+				<g:fieldValue class="label-control"
+							bean="${orderStatusCommand}" field="storePhoneNumber" /><span
+						class="label-control"></span>
+				</td>
 				</tr>
 			</tbody>
 		</table>
@@ -126,7 +135,7 @@
 	<g:elseif test="${trackingId}">
 		<br/><div align="center">
 			<g:message code="invalid.order.trackingid"
-				default="Enter valid Tracking id.." />
+				default="Invalid Tracking ID" />
 		</div>
 	</g:elseif>
 

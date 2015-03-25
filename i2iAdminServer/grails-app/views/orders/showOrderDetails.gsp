@@ -27,32 +27,43 @@
 			<%--			<fieldset class="radiogroup" >			--%>
 			<table style="border: 1px solid #DFDFDF;">
 				<tr>
-					<td style="width: 25%"><g:if test="${orderStatus == 2}">
-							<input type="radio" name="orderstatus" checked="checked" disabled
-								value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if> <%--					<g:elseif test="${orderstatus > 2}">--%>
-						<%--						<input type="radio" name="orderstatus" disabled--%> <%--						value=${Constants.ORDER_ACCEPTED}>Accept Order </g:elseif>--%>
-						<g:else>
+					<td style="width: 25%">
+					<g:if test="${orderStatus == Constants.ORDER_ACCEPTED}">
+							<input type="radio" name="orderstatus" checked="checked" 
+								value=${Constants.ORDER_ACCEPTED}>Accept Order </g:if> 
+							<g:elseif test="${orderStatus > Constants.ORDER_ACCEPTED || orderStatus == Constants.ORDER_REJECTED}">
+							<input type="radio" name="orderstatus" disabled
+								value=${Constants.ORDER_ACCEPTED}>Accept Order </g:elseif> 
+							<g:else>
 							<input type="radio" name="orderstatus"
 								value=${Constants.ORDER_ACCEPTED}>Accept Order </g:else></td>
-					<td style="width: 25%"><g:if test="${orderStatus == 3}">
-							<input type="radio" name="orderstatus" checked="checked" disabled
-								value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:if> <%--						<g:elseif test="${orderStatus > 3}"><input type="radio" name="orderstatus" disabled--%>
-						<%--						value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:elseif>--%>
+					
+					<td style="width: 25%">
+					<g:if test="${orderStatus == Constants.ORDER_DISPATCHED}">
+							<input type="radio" name="orderstatus" checked="checked" 
+								value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:if> 
+														<g:elseif test="${orderStatus > Constants.ORDER_DISPATCHED || orderStatus == Constants.ORDER_REJECTED}"><input type="radio" name="orderstatus" disabled
+												value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:elseif>
 						<g:else>
 							<input type="radio" name="orderstatus"
 								value=${Constants.ORDER_DISPATCHED}>Order Dispatched </g:else></td>
-					<td style="width: 25%"><g:if test="${orderStatus == 4}">
-							<input type="radio" name="orderstatus" checked="checked" disabled
-								value=${Constants.ORDER_DELIVERED}>Order Delivered</g:if> <%--						<g:elseif test="${orderStatus > 4}"><input type="radio" name="orderstatus" disabled--%>
-						<%--						value=${Constants.ORDER_DELIVERED}>Order Delivered</g:elseif>--%>
+					
+					<td style="width: 25%">
+					<g:if test="${orderStatus == Constants.ORDER_DELIVERED}">
+							<input type="radio" name="orderstatus" checked="checked" 
+								value=${Constants.ORDER_DELIVERED}>Order Delivered</g:if> 
+														<g:elseif test="${orderStatus > Constants.ORDER_DELIVERED || orderStatus == Constants.ORDER_REJECTED}"><input type="radio" name="orderstatus" disabled
+												value=${Constants.ORDER_DELIVERED}>Order Delivered</g:elseif>
 						<g:else>
 							<input type="radio" name="orderstatus"
 								value=${Constants.ORDER_DELIVERED}>Order Delivered</g:else></td>
-					<td style="width: 25%"><g:if test="${orderStatus == 0}">
-							<input type="radio" name="orderstatus" checked="checked" disabled
+								
+					<g:if test="${orderStatus <= Constants.ORDER_PLACED}">
+					<td style="width: 25%"><g:if test="${orderStatus == Constants.ORDER_REJECTED}">
+							<input type="radio" name="orderstatus" checked="checked" 
 								value=${Constants.ORDER_REJECTED}>Reject Order</g:if> <g:else>
 							<input type="radio" name="orderstatus"
-								value=${Constants.ORDER_REJECTED}>Reject Order</g:else></td>
+								value=${Constants.ORDER_REJECTED}>Reject Order</g:else></td></g:if>
 				</tr>
 			</table>
 			<%--			</fieldset>--%>
