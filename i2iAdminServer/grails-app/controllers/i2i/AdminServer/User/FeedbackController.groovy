@@ -32,10 +32,11 @@ class FeedbackController {
 	def sendFeedback(){
 		println "PARAMS: "+params
 		
+		String body = "Name: "+params.name + "\n Email: "+params.emailID+ "\n Message: "+params.message
 		emailService.sendEMail (
 			Constants.supportEmail,
 			message(code: 'email.subject.feedback'),
-			params.message)
+			body)
 
 		request.withFormat {
 			form multipartForm {

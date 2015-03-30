@@ -193,7 +193,7 @@ class OrdersService {
 		println "in save order"
 		if(order.save(flush:true)) {
 			println "saveorder success"
-			boolean chkSendMail = (sendMailFlag)// && !(grailsApplication.config.env == Constants.env_LOCAL))
+			boolean chkSendMail = (sendMailFlag && !(grailsApplication.config.env == Constants.env_LOCAL))
 			if(chkSendMail) {
 				OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
 				sendEmail(orderDetailsCommand)

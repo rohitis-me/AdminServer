@@ -4,7 +4,7 @@ body {
 	background-position: center;
 	font-family: Georgia, Times, serif;
 	font-weight: normal;
-	font-size: large;
+	font-size:medium;
 	line-height: 1.4em;
 	margin: 0px;
 }
@@ -27,6 +27,7 @@ body {
 	float: left;
 	line-height: normal;
 	font-variant: normal;
+	padding-bottom: 3px;
 }
 
 .label-control {
@@ -185,7 +186,12 @@ nav {
 
 nav ul {
 	margin: 0px;
-	padding: 5px 0px 5px 10px;
+	padding: 0px 0px 0px 10px;
+}
+
+nav li {
+	display: inline;
+	margin-right: 8px;
 }
 
 #accordion .item {
