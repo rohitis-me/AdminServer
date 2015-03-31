@@ -41,12 +41,17 @@ turnOnTestCode = 0
 //enableProdConfig = 0
 env=Constants.env_LOCAL
 
-if(env == Constants.env_DEMO)
+if(env == Constants.env_DEMO) {
 Constants.envLink= Constants.envLink_DEMO
-else if(env == Constants.env_PROD)
+Constants.analyticsTrackingId =  Constants.analyticsTrack_DEMO
+}
+else if(env == Constants.env_PROD) {
 Constants.envLink= Constants.envLink_PROD
-else if(env == Constants.env_LOCAL)
+Constants.analyticsTrackingId =  Constants.analyticsTrack_PROD
+}
+else if(env == Constants.env_LOCAL) {
 Constants.envLink= Constants.envLink_LOCAL
+}
 //grails.mail.host = "192.168.2.8"
 
 // What URL patterns should be processed by the resources plugin

@@ -30,6 +30,11 @@ class Constants {
 	public static final String envLink_PROD='http://www.pillocate.com/'
 	
 	public static String envLink=''
+	public static String analyticsTrackingId=''
+	
+	//Tracking ID for google analytics
+	public static final String analyticsTrack_DEMO='UA-61334324-1'
+	public static final String analyticsTrack_PROD='UA-61334324-2'
 	
 	//FIXME: Hard coding
 	public static final int hardCodedInventoryCount=2158
