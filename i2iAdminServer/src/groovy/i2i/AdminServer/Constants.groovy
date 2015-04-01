@@ -36,6 +36,9 @@ class Constants {
 	public static final String analyticsTrack_DEMO='UA-61334324-1'
 	public static final String analyticsTrack_PROD='UA-61334324-2'
 	
+	public static final String ROLE_CHEMIST_ADMIN = 'ROLE_CHEMIST_ADMIN'
+	public static final String ROLE_CONSUMER = 'ROLE_CONSUMER'
+	
 	//FIXME: Hard coding
 	public static final int hardCodedInventoryCount=2158
 }
