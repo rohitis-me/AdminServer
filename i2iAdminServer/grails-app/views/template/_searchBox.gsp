@@ -1,3 +1,5 @@
+	<%@ page import="i2i.AdminServer.Constants"%>
+	
 <g:javascript>
             $(document).ready(function() {
                 $('#search_textField').autocomplete({
@@ -44,6 +46,28 @@
 					<g:else>
 						<option value="Kottivakkam">Kottivakkam</option>
 					</g:else>
+					<g:if test="${circle=="Kotturpuram"}">
+						<option value="Kotturpuram" selected="selected">Kotturpuram</option>
+					</g:if>
+					
+					<g:else>
+						<option value="Kotturpuram">Kotturpuram</option>
+					</g:else>
+
+					<g:if test='${Constants.envLink == Constants.env_DEMO }'>
+					<g:if test="${circle=="Guindy"}">
+						<option value="Guindy" selected="selected">Guindy</option>
+					</g:if>
+					<g:else>
+						<option value="Guindy">Guindy</option>
+					</g:else>
+					<g:if test="${circle=="Taramani"}">
+						<option value="Taramani" selected="selected">Taramani</option>
+					</g:if>
+					<g:else>
+						<option value="Taramani">Taramani</option>
+					</g:else>
+					</g:if>
 			</select></td>
 
 			<td id="hidden" style="width: 15%"><span class="label-control">City:

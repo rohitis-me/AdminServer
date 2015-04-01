@@ -8,39 +8,18 @@ import i2i.AdminServer.User.Sec.SecUserSecRole
 
 class BootStrap {
 	def springSecurityService
-
+	def grailsApplication
+	
 	def init = { servletContext ->
 		println "in bs"
-//		String[] alphaArr = [
-//			'A',
-//			'B',
-//			'C',
-//			'D',
-//			'S',
-//			'R',
-//			'E',
-//			'M',
-//			'N',
-//			'P',
-//			'L'
-//		]
-//		String[] circleArr = [
-//			'Adyar',
-//			'Perungudi',
-//			'Sholinganallur',
-//			'Alandur',
-//			'Besant Nagar',
-//			'Thiruvanmiyur',
-//			'Saidapet'
-//		]
-//		String[] cityArr = ['Chennai']
-//		String[] stateArr = ['Tamil Nadu']
 
+
+		if(grailsApplication.config.turnOnBootStrapCode) {
 		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 
-		def adminUser = SecUser.findByUsername('medilinepharmaadmin') ?: new SecUser(
-				username: 'medilinepharmaadmin',
-				password: 'medilinepharmaadmin').save(flush: true)
+		def adminUser = SecUser.findByUsername('kotturpurampharmaadmin') ?: new SecUser(
+				username: 'kotturpurampharmaadmin',
+				password: 'kotturpurampharmaadmin').save(flush: true)
 
 		if (!adminUser.authorities.contains(adminRole)) {
 			SecUserSecRole.create adminUser, adminRole
@@ -50,6 +29,8 @@ class BootStrap {
 //		int cnt = alphaArr.length
 		int storeCount = Store.count()
 		int availabilityCount = Availability.count()
+		
+		String demoStoreId = '2'
 
 //		for(int i=0; i<10; i++) {
 
@@ -61,16 +42,16 @@ class BootStrap {
 //			String name = alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]
 //			println "NAME: "+name
 			//Init stores
-			if(storeCount == 0) {
+			if(storeCount == 1) {
 				Store store = new Store(
-						storeId : "1",
-						storeName : 'Mediline Pharmacy',
+						storeId : demoStoreId,
+						storeName : 'Demo Kotturpuram Pharmacy',
 						addressLine1 : "A4- 2nd Main Road",
-						addressLine2 : "Thiruvalluvar Nagar",
-						circle : "Thiruvanmiyur",
+						addressLine2 : "KK Road",
+						circle : "Kotturpuram",
 						city : "Chennai",
-						phoneNumber: '04442331561',
-						emailId: 'mahadevanvolex@gmail.com',
+						phoneNumber: '8801736544',
+						emailId: 'gchandu27@gmail.com',
 						state : 'Tamil Nadu',
 						latitude : "",
 						longitude : "")
@@ -78,15 +59,14 @@ class BootStrap {
 				if(! store.save(flush:true)) {
 					store.errors.each { println "error in saving store: "+it }
 				}
-			}
-				if(availabilityCount == 0) {
+//			}
+//				if(availabilityCount == 0) {
 				def inventoryCount = Inventory.count()
 				List inventoryList = Inventory.list()
 				
 				for(int j=1; j<=inventoryCount; j++) {
-					
 					Availability availability = new Availability(
-							storeId : "1",
+							storeId : demoStoreId,
 							inventoryId : (j+0).toString(),
 							availabilityIndex : 2)
 
@@ -98,11 +78,14 @@ class BootStrap {
 			//			}
 //		}
 		
-		if(UserProfile.count() == 0) {
-		def storeId = Store.first().storeId
-		def userId = SecUser.first().id
+		if(UserProfile.count() <= 1) {
+		def storeId = demoStoreId
+		def userId = adminUser.id
 		new UserProfile(storeId:storeId, userId: userId).save(flush:true)
 		}
+		
+		}
+		println "end of bs"
 		
 	}
 		def destroy = {

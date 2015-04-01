@@ -32,7 +32,9 @@ class SearchService {
 	}
 	
 	def getListOfStoresInCircle(String circle) {
+		println "getListOfStoresInCircle: "+circle
 		List storeList = storeService.getStoresFromCircle(circle)
+		println "getListOfStoresInCircle: "+storeList
 		return storeList
 	}
 	
