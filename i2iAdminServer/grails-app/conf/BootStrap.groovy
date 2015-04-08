@@ -17,9 +17,9 @@ class BootStrap {
 		if(grailsApplication.config.turnOnBootStrapCode) {
 		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 
-		def adminUser = SecUser.findByUsername('kotturpurampharmaadmin') ?: new SecUser(
-				username: 'kotturpurampharmaadmin',
-				password: 'kotturpurampharmaadmin').save(flush: true)
+		def adminUser = SecUser.findByUsername('kottivakkampharmaadmin') ?: new SecUser(
+				username: 'kottivakkampharmaadmin',
+				password: 'kottivakkampharmaadmin').save(flush: true)
 
 		if (!adminUser.authorities.contains(adminRole)) {
 			SecUserSecRole.create adminUser, adminRole
@@ -45,10 +45,10 @@ class BootStrap {
 			if(storeCount == 1) {
 				Store store = new Store(
 						storeId : demoStoreId,
-						storeName : 'Demo Kotturpuram Pharmacy',
+						storeName : 'Demo Kottivakkam Pharmacy',
 						addressLine1 : "A4- 2nd Main Road",
 						addressLine2 : "KK Road",
-						circle : "Kotturpuram",
+						circle : "Kottivakkam",
 						city : "Chennai",
 						phoneNumber: '8801736544',
 						emailId: 'gchandu27@gmail.com',
@@ -61,19 +61,25 @@ class BootStrap {
 				}
 //			}
 //				if(availabilityCount == 0) {
-				def inventoryCount = Inventory.count()
-				List inventoryList = Inventory.list()
+//				def inventoryCount = Inventory.count()
+//				List inventoryList = Inventory.list()
 				
-				for(int j=1; j<=inventoryCount; j++) {
+				def brandDataCount = BrandDatabase.count()
+//				List inventoryList = Inventory.list()
+								
+				println "saving availability info"
+				for(int j=1; j<=brandDataCount; j++) {
 					Availability availability = new Availability(
 							storeId : demoStoreId,
-							inventoryId : (j+0).toString(),
+							brandId : (j+0).toString(),
 							availabilityIndex : 2)
 
 					if(! availability.save(flush:true)) {
 						availability.errors.each { println "error in saving availability: "+it }
 					}
 				}
+				
+				println "done saving availability info"
 			}
 			//			}
 //		}

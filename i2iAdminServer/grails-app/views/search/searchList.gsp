@@ -54,9 +54,9 @@
 
 					<td>
 							${fieldValue(bean: storeInstance, field: "storeName")}<br>
-							${fieldValue(bean: storeInstance, field: "addressLine1")} <br>
-						${fieldValue(bean: storeInstance, field: "addressLine2")} <br>
-						${fieldValue(bean: storeInstance, field: "circle")}, ${fieldValue(bean: storeInstance, field: "city")}
+<%--							${fieldValue(bean: storeInstance, field: "addressLine1")} <br>--%>
+<%--						${fieldValue(bean: storeInstance, field: "addressLine2")} <br>--%>
+<%--						${fieldValue(bean: storeInstance, field: "circle")}, ${fieldValue(bean: storeInstance, field: "city")}--%>
 						</td>
 
 					<td>

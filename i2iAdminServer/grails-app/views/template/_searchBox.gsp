@@ -34,40 +34,15 @@
 			</span></td>
 			<td style="width: 35%"><select name="circle" required
 				class="dropdown-control">
-					<g:if test="${circle=="Thiruvanmiyur"}">
-						<option value="Thiruvanmiyur" selected="selected">Thiruvanmiyur</option>
+				<g:each in="${Constants.circleArray }" var="circleName">
+					<g:if test="${circle== circleName}">
+						<option value="${circleName }" selected="selected">${circleName }</option>
 					</g:if>
 					<g:else>
-						<option value="Thiruvanmiyur">Thiruvanmiyur</option>
+						<option value="${circleName }">${circleName }</option>
 					</g:else>
-					<g:if test="${circle=="Kottivakkam"}">
-						<option value="Kottivakkam" selected="selected">Kottivakkam</option>
-					</g:if>
-					<g:else>
-						<option value="Kottivakkam">Kottivakkam</option>
-					</g:else>
-					<g:if test="${circle=="Kotturpuram"}">
-						<option value="Kotturpuram" selected="selected">Kotturpuram</option>
-					</g:if>
+				</g:each>
 					
-					<g:else>
-						<option value="Kotturpuram">Kotturpuram</option>
-					</g:else>
-
-					<g:if test='${Constants.envLink == Constants.env_DEMO }'>
-					<g:if test="${circle=="Guindy"}">
-						<option value="Guindy" selected="selected">Guindy</option>
-					</g:if>
-					<g:else>
-						<option value="Guindy">Guindy</option>
-					</g:else>
-					<g:if test="${circle=="Taramani"}">
-						<option value="Taramani" selected="selected">Taramani</option>
-					</g:if>
-					<g:else>
-						<option value="Taramani">Taramani</option>
-					</g:else>
-					</g:if>
 			</select></td>
 
 			<td id="hidden" style="width: 15%"><span class="label-control">City:
