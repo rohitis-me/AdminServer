@@ -161,14 +161,15 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 ]
 
 //Added by the Spring Security ui plugin:
-grails.plugin.springsecurity.ui.register.postRegisterUrl = '/welcome'
-grails.plugin.springsecurity.ui.register.emailBody = '...'
-grails.plugin.springsecurity.ui.register.emailFrom = '...'
-grails.plugin.springsecurity.ui.register.emailSubject = '...'
-grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_CONSUMER'] //remove later
-grails.plugin.springsecurity.ui.password.minLength = '5'
-grails.plugin.springsecurity.ui.password.maxLength = '20'
+grails.plugin.springsecurity.ui.register.postRegisterUrl = '/'
+grails.plugin.springsecurity.ui.register.postResetUrl = '/'
+//grails.plugin.springsecurity.ui.register.emailBody = '...'
+//grails.plugin.springsecurity.ui.register.emailFrom = '...'
+//grails.plugin.springsecurity.ui.register.emailSubject = '...'
+grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_CONSUMER'] //FIX ME remove later
 grails.plugin.springsecurity.ui.password.validationRegex = '^.*(?=.*\\d)(?=.*[a-zA-Z]).*$'
+grails.plugin.springsecurity.ui.password.minLength = 5
+grails.plugin.springsecurity.ui.password.maxLength = 20
 //grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 //	'/**':                              ['permitAll'],
 //	'/index':                         ['permitAll'],

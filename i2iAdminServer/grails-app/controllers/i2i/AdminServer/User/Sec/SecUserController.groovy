@@ -5,7 +5,6 @@ package i2i.AdminServer.User.Sec
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import i2i.AdminServer.Constants
-import i2i.AdminServer.User.RegisterCommand
 
 //@Transactional(readOnly = true)
 class SecUserController {
@@ -29,23 +28,23 @@ class SecUserController {
 			redirect (controller: 'orders', action: 'showOrderDetailsList')
 	}
 
-	def registerUser(RegisterCommand registerCommand){
-		println "received params: "+params
-		println "RC: "+ registerCommand.properties
-		
-		if(!registerCommand.validate()) {
-			registerCommand.errors.each { println it }
-
-			redirect (controller: 'login', action: 'auth')
-		}
-		else{
-			secUserService.registerAndSaveNewConsumer(registerCommand.username, registerCommand.password)
-//			redirect (controller: 'login', action: 'auth', model: [j_username : registerCommand.username, j_password:registerCommand.password])
-//			redirect(controller:'login', action:'j_spring_security_check')
-			springSecurityService.reauthenticate(registerCommand.username);
-			redirect (controller: 'login', action: 'auth')
-		}
-	}
+//	def registerUser(RegisterCommand registerCommand){
+//		println "received params: "+params
+//		println "RC: "+ registerCommand.properties
+//		
+//		if(!registerCommand.validate()) {
+//			registerCommand.errors.each { println it }
+//
+//			redirect (controller: 'login', action: 'auth')
+//		}
+//		else{
+//			secUserService.registerAndSaveNewConsumer(registerCommand.username, registerCommand.password)
+////			redirect (controller: 'login', action: 'auth', model: [j_username : registerCommand.username, j_password:registerCommand.password])
+////			redirect(controller:'login', action:'j_spring_security_check')
+//			springSecurityService.reauthenticate(registerCommand.username);
+//			redirect (controller: 'login', action: 'auth')
+//		}
+//	}
 
 	def index(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
