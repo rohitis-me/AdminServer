@@ -38,7 +38,7 @@ grails.mime.types = [ // the first one is the default format
 
 // set variables
 turnOnTestCode = 0
-turnOnBootStrapCode = 0
+turnOnBootStrapCode = 1
 
 //enableProdConfig = 0
 env=Constants.env_LOCAL

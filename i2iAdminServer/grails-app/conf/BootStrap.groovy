@@ -1,6 +1,6 @@
 import i2i.AdminServer.Availability
+import i2i.AdminServer.BrandDatabase
 import i2i.AdminServer.Store
-import i2i.AdminServer.ClientSync.Inventory
 import i2i.AdminServer.User.UserProfile
 import i2i.AdminServer.User.Sec.SecRole
 import i2i.AdminServer.User.Sec.SecUser
@@ -11,7 +11,7 @@ class BootStrap {
 	def grailsApplication
 	
 	def init = { servletContext ->
-		println "in bs"
+		println "in bs: turn on bootstrap code: "+grailsApplication.config.turnOnBootStrapCode
 
 
 		if(grailsApplication.config.turnOnBootStrapCode) {
@@ -67,13 +67,14 @@ class BootStrap {
 				def brandDataCount = BrandDatabase.count()
 //				List inventoryList = Inventory.list()
 								
-				println "saving availability info"
+				println "saving availability info for branddb count: "+brandDataCount
 				for(int j=1; j<=brandDataCount; j++) {
 					Availability availability = new Availability(
 							storeId : demoStoreId,
 							brandId : (j+0).toString(),
 							availabilityIndex : 2)
 
+					println "saving availability for brand: "+j
 					if(! availability.save(flush:true)) {
 						availability.errors.each { println "error in saving availability: "+it }
 					}
