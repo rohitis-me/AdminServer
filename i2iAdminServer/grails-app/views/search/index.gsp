@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<g:render template="/template/navigationClient" />
+	<g:render template="/template/navigationConsumer" />
 
 <%--	<h2--%>
 <%--		style="text-align: center; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">--%>

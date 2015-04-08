@@ -14,7 +14,7 @@
 
 </head>
 <body>
-	<g:render template="/template/navigationClient" />
+	<g:render template="/template/navigationConsumer" />
 
 	<g:if test="${flash.message}">
 		<div class="message" role="status">

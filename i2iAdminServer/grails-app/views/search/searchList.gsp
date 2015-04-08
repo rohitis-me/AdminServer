@@ -11,7 +11,7 @@
 <%--<r:require module="jquery-ui" />--%>
 </head>
 <body>
-		<g:render template="/template/navigationClient" />
+		<g:render template="/template/navigationConsumer" />
 <%--<br/>--%>
 <%--	<g:set var="brandId" value="${brandId}"></g:set>--%>
 <%--	<g:set var="inventoryId" value="${inventoryId}"></g:set>--%>
@@ -50,6 +50,9 @@
 				<tr style="cursor: pointer;" class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="patientProfile"
 					action="deliveryDetails"
 					params="[storeId: storeId, brandId: brandId, inventoryId:inventoryId, circle: circle, deliveryHours:deliveryHours]"/>" '>
+<%--				<tr style="cursor: pointer;" class="${(i % 2) == 0 ? 'even' : 'odd'}" onclick='document.location = "<g:createLink controller="SecUser"--%>
+<%--					action="showLoginPage"--%>
+<%--					params="[storeId: storeId, brandId: brandId, inventoryId:inventoryId, circle: circle, deliveryHours:deliveryHours]"/>" '>--%>
 
 
 					<td>

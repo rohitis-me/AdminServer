@@ -8,7 +8,7 @@
 		args="[entityName]" /></title>
 </head>
 <body>
-	<g:render template="/template/navigationClient" />
+	<g:render template="/template/navigationConsumer" />
 <br/>
 	<g:if test="${flash.message}">
 		<div align="center" class="message" role="status">

@@ -46,6 +46,16 @@ class BootStrap {
 			SecUserSecRole.create adminUser, adminRole
 		}
 
+		def consumerRole = SecRole.findByAuthority('ROLE_CONSUMER') ?: new SecRole(authority: 'ROLE_CONSUMER').save(failOnError: true)
+		
+		def consumerUser = SecUser.findByUsername('consumeri2i') ?: new SecUser(
+				username: 'consumeri2i',
+				password: 'consumeri2i').save(flush: true)
+
+		if (!consumerUser.authorities.contains(consumerRole)) {
+			SecUserSecRole.create consumerUser, consumerRole
+		}
+				
 //		Random random = new Random();
 //		int cnt = alphaArr.length
 		int storeCount = Store.count()

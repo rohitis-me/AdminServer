@@ -4,101 +4,150 @@ package i2i.AdminServer.User.Sec
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import i2i.AdminServer.Constants
+import i2i.AdminServer.User.RegisterCommand
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 class SecUserController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	def springSecurityService
+	def secUserService
+	
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond SecUser.list(params), model:[secUserInstanceCount: SecUser.count()]
-    }
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def show(SecUser secUserInstance) {
-        respond secUserInstance
-    }
+	def showHomePage(){
+		println "received params: "+params
 
-    def create() {
-        respond new SecUser(params)
-    }
+		def authList = springSecurityService.getPrincipal().getAuthorities()
+		println "AUTH: "+authList
+		String role = authList.getAt(0)
+		println "role: "+role
+		if(role == Constants.ROLE_CONSUMER)
+			redirect (controller: 'search', action: 'index')
+		else
+			redirect (controller: 'orders', action: 'showOrderDetailsList')
+	}
 
-    @Transactional
-    def save(SecUser secUserInstance) {
-        if (secUserInstance == null) {
-            notFound()
-            return
-        }
+	def registerUser(RegisterCommand registerCommand){
+		println "received params: "+params
+		println "RC: "+ registerCommand.properties
+		
+		if(!registerCommand.validate()) {
+			registerCommand.errors.each { println it }
 
-        if (secUserInstance.hasErrors()) {
-            respond secUserInstance.errors, view:'create'
-            return
-        }
+			redirect (controller: 'login', action: 'auth')
+		}
+		else{
+			secUserService.registerAndSaveNewConsumer(registerCommand.username, registerCommand.password)
+//			redirect (controller: 'login', action: 'auth', model: [j_username : registerCommand.username, j_password:registerCommand.password])
+//			redirect(controller:'login', action:'j_spring_security_check')
+			springSecurityService.reauthenticate(registerCommand.username);
+			redirect (controller: 'login', action: 'auth')
+		}
+	}
 
-        secUserInstance.save flush:true
+	def index(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		respond SecUser.list(params), model:[secUserInstanceCount: SecUser.count()]
+	}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'secUser.label', default: 'SecUser'), secUserInstance.id])
-                redirect secUserInstance
-            }
-            '*' { respond secUserInstance, [status: CREATED] }
-        }
-    }
+	def show(SecUser secUserInstance) {
+		respond secUserInstance
+	}
 
-    def edit(SecUser secUserInstance) {
-        respond secUserInstance
-    }
+	def create() {
+		respond new SecUser(params)
+	}
 
-    @Transactional
-    def update(SecUser secUserInstance) {
-        if (secUserInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def save(SecUser secUserInstance) {
+		if (secUserInstance == null) {
+			notFound()
+			return
+		}
 
-        if (secUserInstance.hasErrors()) {
-            respond secUserInstance.errors, view:'edit'
-            return
-        }
+		if (secUserInstance.hasErrors()) {
+			respond secUserInstance.errors, view:'create'
+			return
+		}
 
-        secUserInstance.save flush:true
+		secUserInstance.save flush:true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'SecUser.label', default: 'SecUser'), secUserInstance.id])
-                redirect secUserInstance
-            }
-            '*'{ respond secUserInstance, [status: OK] }
-        }
-    }
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.created.message', args: [
+					message(code: 'secUser.label', default: 'SecUser'),
+					secUserInstance.id
+				])
+				redirect secUserInstance
+			}
+			'*' { respond secUserInstance, [status: CREATED] }
+		}
+	}
 
-    @Transactional
-    def delete(SecUser secUserInstance) {
+	def edit(SecUser secUserInstance) {
+		respond secUserInstance
+	}
 
-        if (secUserInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def update(SecUser secUserInstance) {
+		if (secUserInstance == null) {
+			notFound()
+			return
+		}
 
-        secUserInstance.delete flush:true
+		if (secUserInstance.hasErrors()) {
+			respond secUserInstance.errors, view:'edit'
+			return
+		}
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'SecUser.label', default: 'SecUser'), secUserInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		secUserInstance.save flush:true
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'secUser.label', default: 'SecUser'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.updated.message', args: [
+					message(code: 'SecUser.label', default: 'SecUser'),
+					secUserInstance.id
+				])
+				redirect secUserInstance
+			}
+			'*'{ respond secUserInstance, [status: OK] }
+		}
+	}
+
+	@Transactional
+	def delete(SecUser secUserInstance) {
+
+		if (secUserInstance == null) {
+			notFound()
+			return
+		}
+
+		secUserInstance.delete flush:true
+
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.deleted.message', args: [
+					message(code: 'SecUser.label', default: 'SecUser'),
+					secUserInstance.id
+				])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
+
+	protected void notFound() {
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.not.found.message', args: [
+					message(code: 'secUser.label', default: 'SecUser'),
+					params.id
+				])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
 }

@@ -11,7 +11,7 @@
 		default="Delivery Details" /></title>
 </head>
 <body>
-	<g:render template="/template/navigationClient" />
+	<g:render template="/template/navigationConsumer" />
 	<%--	<br />--%>
 	<div data-role="content">
 		<g:if test="${flash.message}">

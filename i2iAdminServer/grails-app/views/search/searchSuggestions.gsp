@@ -11,7 +11,7 @@
 <title><g:message message="Search Suggestions" /></title>
 </head>
 <body>
-	<g:render template="/template/navigationClient" />
+	<g:render template="/template/navigationConsumer" />
 
 <%--<br/>--%>
 <%--	<g:set var="brandId" value="${brandId}"></g:set>--%>

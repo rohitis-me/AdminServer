@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<g:render template="/template/navigationClient" />
+	<g:render template="/template/navigationConsumer" />
 	<br />
 
 	<g:form controller="orders" action="showTrackedOrderDetails"
