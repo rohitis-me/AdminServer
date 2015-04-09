@@ -11,30 +11,9 @@ class BootStrap {
 
 	def init = { servletContext ->
 		println "in bs"
-//		String[] alphaArr = [
-//			'A',
-//			'B',
-//			'C',
-//			'D',
-//			'S',
-//			'R',
-//			'E',
-//			'M',
-//			'N',
-//			'P',
-//			'L'
-//		]
-//		String[] circleArr = [
-//			'Adyar',
-//			'Perungudi',
-//			'Sholinganallur',
-//			'Alandur',
-//			'Besant Nagar',
-//			'Thiruvanmiyur',
-//			'Saidapet'
-//		]
-//		String[] cityArr = ['Chennai']
-//		String[] stateArr = ['Tamil Nadu']
+		def grailsApplication
+		
+		if(grailsApplication.config.turnOnBootStrapCode) {
 
 		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 
@@ -47,29 +26,11 @@ class BootStrap {
 		}
 
 		def consumerRole = SecRole.findByAuthority('ROLE_CONSUMER') ?: new SecRole(authority: 'ROLE_CONSUMER').save(failOnError: true)
-		
-		def consumerUser = SecUser.findByUsername('consumeri2i') ?: new SecUser(
-				username: 'consumeri2i',
-				password: 'consumeri2i').save(flush: true)
-
-		if (!consumerUser.authorities.contains(consumerRole)) {
-			SecUserSecRole.create consumerUser, consumerRole
-		}
 				
-//		Random random = new Random();
 //		int cnt = alphaArr.length
 		int storeCount = Store.count()
 		int availabilityCount = Availability.count()
 
-//		for(int i=0; i<10; i++) {
-
-//			def str = (i+1).toString();
-//			def city = cityArr[random.nextInt(cityArr.length)]
-//			def circle = circleArr[random.nextInt(circleArr.length)]
-//			def state = stateArr[random.nextInt(stateArr.length)]
-//
-//			String name = alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]
-//			println "NAME: "+name
 			//Init stores
 			if(storeCount == 0) {
 				Store store = new Store(
@@ -112,6 +73,8 @@ class BootStrap {
 		def storeId = Store.first().storeId
 		def userId = SecUser.first().id
 		new UserProfile(storeId:storeId, userId: userId).save(flush:true)
+		}
+		
 		}
 		
 	}

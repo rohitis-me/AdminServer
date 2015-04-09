@@ -37,6 +37,7 @@ grails.mime.types = [ // the first one is the default format
 //grails.urlmapping.cache.maxsize = 1000
 
 // set variables
+turnOnBootStrapCode = 0
 turnOnTestCode = 0
 //enableProdConfig = 0
 env=Constants.env_LOCAL

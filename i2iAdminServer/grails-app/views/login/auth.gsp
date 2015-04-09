@@ -26,8 +26,7 @@
 					<tbody>
 						<tr>
 							<td style="width: 40%"><label class="label-control"
-								for='username'><g:message
-										code="springSecurity.login.username.label" />:</label></td>
+								for='username'>Email:</label></td>
 							<td><input type='text' class='textbox-control' required
 								name='j_username' id='username' size="20" /></td>
 						</tr>

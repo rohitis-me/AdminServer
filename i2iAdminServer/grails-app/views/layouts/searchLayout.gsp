@@ -31,9 +31,11 @@
 
   ga('create', '${Constants.analyticsTrackingId}', 'auto');
   ga('send', 'pageview');
-
 </script>
 <!-- End Google Analytics -->
+<!-- OPENTRACKER START -->
+<script defer src="https://script.opentracker.net/?site=demo.pillocate.com"></script>
+<!-- OPENTRACKER END --> 
 
 </head>
 <body>
