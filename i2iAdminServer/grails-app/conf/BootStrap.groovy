@@ -8,10 +8,10 @@ import i2i.AdminServer.User.Sec.SecUserSecRole
 
 class BootStrap {
 	def springSecurityService
+	def grailsApplication
 
 	def init = { servletContext ->
 		println "in bs"
-		def grailsApplication
 		
 		if(grailsApplication.config.turnOnBootStrapCode) {
 
