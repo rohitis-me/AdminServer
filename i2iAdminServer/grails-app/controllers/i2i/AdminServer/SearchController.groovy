@@ -77,9 +77,11 @@ class SearchController {
 		println "AUTO COMPLETE: received params: "+params
 
 		String searchTerm = params.term
+		String circle = params.circle
+		
 		String suggestion
 
-		List drugList = brandDatabaseService.getBrandDataList(searchTerm)
+		List drugList = brandDatabaseService.getBrandDataList(searchTerm, circle)
 		
 		List brandMapList = []
 		drugList.each {
