@@ -2,18 +2,31 @@
 	
 <g:javascript>
             $(document).ready(function() {
-                $('#search_textField').autocomplete({
-                
-                      source: '<g:createLink controller="search"
+            
+                $("#search_textField").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: '<g:createLink controller="search"
 		action="listOfBrandNameStartingWith" />',
-                                            
-                      select: function (event, ui){
+                dataType: "json",
+                data: {
+                    term: request.term,
+                    circle: $("#circleSelectBox").val(), 
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        
+        select: function (event, ui){
                       $('#search_textField').val(ui.item.label);
                       $('#inventory_id').val(ui.item.id);
                       $('#brand_id').val(ui.item.name);
                       $(".search_form").submit()
-                } 
-                });
+                }
+    });
+                
             });
             function onTextEnter(event) {
 			 if(event.keyCode != 13) {
@@ -32,18 +45,21 @@
 		<tr>
 			<td id="hidden" style="width: 15%"><span class="label-control">Circle:
 			</span></td>
-			<td style="width: 35%"><select name="circle" required
-				class="dropdown-control">
-				<g:each in="${Constants.circleArray }" var="circleName">
-					<g:if test="${circle== circleName}">
-						<option value="${circleName }" selected="selected">${circleName }</option>
-					</g:if>
-					<g:else>
-						<option value="${circleName }">${circleName }</option>
-					</g:else>
-				</g:each>
-					
-			</select></td>
+			<td style="width: 35%">
+			<g:select name="circle" from="${Constants.circleArray }" id="circleSelectBox" value="${circle }"/>
+<%--			<select name="circle" required--%>
+<%--				class="dropdown-control">--%>
+<%--				<g:each in="${Constants.circleArray }" var="circleName">--%>
+<%--					<g:if test="${circle== circleName}">--%>
+<%--						<option value="${circleName }" selected="selected">${circleName }</option>--%>
+<%--					</g:if>--%>
+<%--					<g:else>--%>
+<%--						<option value="${circleName }">${circleName }</option>--%>
+<%--					</g:else>--%>
+<%--				</g:each>--%>
+<%--					--%>
+<%--			</select>--%>
+			</td>
 
 			<td id="hidden" style="width: 15%"><span class="label-control">City:
 			</span></td>
