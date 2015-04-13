@@ -17,9 +17,9 @@ class BootStrap {
 		if(grailsApplication.config.turnOnBootStrapCode) {
 		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 
-		def adminUser = SecUser.findByUsername('kottivakkampharmaadmin') ?: new SecUser(
-				username: 'kottivakkampharmaadmin',
-				password: 'kottivakkampharmaadmin').save(flush: true)
+		def adminUser = SecUser.findByUsername('shobikaecr@gmail.com') ?: new SecUser(
+				username: 'shobikaecr@gmail.com',
+				password: 'shobikaecradmin').save(flush: true)
 
 		if (!adminUser.authorities.contains(adminRole)) {
 			SecUserSecRole.create adminUser, adminRole
@@ -45,13 +45,13 @@ class BootStrap {
 			if(storeCount == 1) {
 				Store store = new Store(
 						storeId : demoStoreId,
-						storeName : 'Demo Kottivakkam Pharmacy',
-						addressLine1 : "A4- 2nd Main Road",
-						addressLine2 : "KK Road",
+						storeName : 'Shobika Pharmacy',
+						addressLine1 : "Shop no. 4&5, Mosque Complex",
+						addressLine2 : "Old no.58, New no. 80, Srinivasapuram, ECR (Thiruvanmiyur)",
 						circle : "Kottivakkam",
 						city : "Chennai",
-						phoneNumber: '8801736544',
-						emailId: 'gchandu27@gmail.com',
+						phoneNumber: '04442721155',
+						emailId: 'shobikaecr@gmail.com',
 						state : 'Tamil Nadu',
 						latitude : "",
 						longitude : "")
@@ -64,7 +64,7 @@ class BootStrap {
 //				def inventoryCount = Inventory.count()
 //				List inventoryList = Inventory.list()
 				
-				def brandDataCount = BrandDatabase.count()
+				def brandDataCount = 0//BrandDatabase.count()
 //				List inventoryList = Inventory.list()
 								
 				println "saving availability info for branddb count: "+brandDataCount

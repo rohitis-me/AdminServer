@@ -54,9 +54,9 @@ class AvailabilityService {
 
 	def getAvailabilityListFromStoreId(String storeId, int max, int offset)
 	{
-		def brandIdList = Availability.findAllByStoreId(storeId,[max:max, offset:offset])
+		def availabilityList = Availability.findAllByStoreId(storeId,[max:max, offset:offset])
 		//println "brandid count: "+brandIdList.size()
-		return brandIdList
+		return availabilityList
 	}
 
 	def getAvailabilityCountFromStoreId(String storeId)
@@ -104,8 +104,17 @@ class AvailabilityService {
 
 		inventory.brandId = brandId
 		inventory.brandName = brand.brandName
-		inventory.strength = brand.strength
-		inventory.form = brand.form
+		//FIXME
+		if(brand.strength)
+		inventory.brandName = brand.brandName+' '+brand.strength
+		if(brand.form)
+		inventory.brandName = brand.brandName+' '+brand.form
+		if(brand.generic) {
+			String generic = brand.generic
+//			if(generic.length()>15)
+//			generic = generic.substring(0,15)+'..'
+			inventory.brandName = inventory.brandName+' ('+generic+')'
+		}
 
 		return inventory
 	}

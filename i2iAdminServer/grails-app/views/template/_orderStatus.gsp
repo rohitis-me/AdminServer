@@ -44,48 +44,6 @@
 		</tr>
 	</table>
 
-<%--	<table align="center" class="webTable"--%>
-<%--		style="border: 1px solid #DFDFDF;">--%>
-<%--		<tr>--%>
-<%--			<td style="width: 25%"><g:if--%>
-<%--					test="${orderStatus == Constants.ORDER_PLACED}">--%>
-<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
-<%--					<label class="label-control" style="font-style: italic;">Placed</label>--%>
-<%--				</g:if> <g:else>--%>
-<%--					<input type="radio" name="orderstatus" disabled>--%>
-<%--					<label class="label-control" style="font-style: italic;">Placed</label>--%>
-<%--				</g:else></td>--%>
-<%--			<td style="width: 25%"><g:if--%>
-<%--					test="${orderStatus == Constants.ORDER_ACCEPTED}">--%>
-<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
-<%--					<label style="font-style: italic;">Accepted</label>--%>
-<%--				</g:if> <g:else>--%>
-<%--					<input type="radio" name="orderstatus" disabled>--%>
-<%--					<label style="font-style: italic;">Accepted</label>--%>
-<%--				</g:else></td>--%>
-<%--		</tr>--%>
-<%--		<tr>--%>
-<%--			<td style="width: 25%"><g:if--%>
-<%--					test="${orderStatus == Constants.ORDER_DISPATCHED}">--%>
-<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
-<%--					<label style="font-style: italic;">Dispatched</label>--%>
-<%--				</g:if> <g:else>--%>
-<%--					<input type="radio" name="orderstatus" disabled>--%>
-<%--					<label style="font-style: italic;">Dispatched</label>--%>
-<%--				</g:else></td>--%>
-<%--			<td style="width: 25%"><g:if--%>
-<%--					test="${orderStatus == Constants.ORDER_DELIVERED}">--%>
-<%--					<input type="radio" name="orderstatus" checked="checked" disabled>--%>
-<%--					<label style="font-style: italic;">Delivered</label>--%>
-<%--				</g:if> <g:else>--%>
-<%--					<input type="radio" name="orderstatus" disabled>--%>
-<%--					<label style="font-style: italic;">Delivered</label>--%>
-<%--				</g:else></td>--%>
-<%--		</tr>--%>
-<%--	</table>--%>
-	<%--<div align="center">--%>
-	<%--  <div id="accordion">--%>
-	<%--        <div class="item">--%>
 	<h2 align="center">Order Details</h2>
 	<table align="center" style="border-top: 0;">
 		<tbody>
@@ -108,14 +66,15 @@
 			</tr>
 			<tr>
 					<td><span class="label-control">Seller: </span></td>
-					<td><g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storeName" /> <span
-						class="label-control">,</span> <g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storeAddressLine1" /><span
-						class="label-control">,</span> <g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storeAddressLine2" />, <g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storeCircle" />, <g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storeCity" /></td>
+					<td><g:fieldValue class="label-control"	bean="${orderStatusCommand}" field="storeName" /> 
+<%--							<span--%>
+<%--						class="label-control">,</span> <g:fieldValue class="label-control"--%>
+<%--							bean="${orderStatusCommand}" field="storeAddressLine1" /><span--%>
+<%--						class="label-control">,</span> <g:fieldValue class="label-control"--%>
+<%--							bean="${orderStatusCommand}" field="storeAddressLine2" />, <g:fieldValue class="label-control"--%>
+<%--							bean="${orderStatusCommand}" field="storeCircle" />, <g:fieldValue class="label-control"--%>
+<%--							bean="${orderStatusCommand}" field="storeCity" />--%>
+							</td>
 				</tr>
 				<tr>
 				<td><span class="label-control">Seller Contact No: </span>

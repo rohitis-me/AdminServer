@@ -46,19 +46,8 @@
 			<td id="hidden" style="width: 15%"><span class="label-control">Circle:
 			</span></td>
 			<td style="width: 35%">
-			<g:select name="circle" from="${Constants.circleArray }" id="circleSelectBox" value="${circle }"/>
-<%--			<select name="circle" required--%>
-<%--				class="dropdown-control">--%>
-<%--				<g:each in="${Constants.circleArray }" var="circleName">--%>
-<%--					<g:if test="${circle== circleName}">--%>
-<%--						<option value="${circleName }" selected="selected">${circleName }</option>--%>
-<%--					</g:if>--%>
-<%--					<g:else>--%>
-<%--						<option value="${circleName }">${circleName }</option>--%>
-<%--					</g:else>--%>
-<%--				</g:each>--%>
-<%--					--%>
-<%--			</select>--%>
+			<g:select class="dropdown-control" name="circle" from="${Constants.circleArray }" id="circleSelectBox" value="${circle }"/>
+
 			</td>
 
 			<td id="hidden" style="width: 15%"><span class="label-control">City:

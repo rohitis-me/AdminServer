@@ -33,6 +33,20 @@ class StoreService {
 		println debugStr+"getStoreNameFromStoreId store not found: "+storeId
 	}
 	
+	def getStoreListFromStoreIdList(List storeIds) {
+		List storeList = new ArrayList<Store>();
+		storeIds.each { storeId->
+			Store store = Store.findByStoreId(storeId)
+			if(store)
+			storeList.add(store)
+			else
+			println debugStr+"getStoreListFromStoreIdList store not found. ID: "+storeId
+		}
+		println "storeservice getStoreListFromStoreIdList: "+storeList.count
+		return storeList
+
+	}
+	
 	def getStoreListFromStoreIdListAndCircle(List storeIds, String circle) {
 		List storeList = new ArrayList<Store>();
 		storeIds.each { storeId->
@@ -41,7 +55,7 @@ class StoreService {
 			if(store && (store.circle == circle))
 			storeList.add(store)
 			else
-			println debugStr+"getStoreListFromStoreIdList store not found: "+storeId
+			println debugStr+"getStoreListFromStoreIdListAndCircle store not found. ID: "+storeId
 			
 		}
 		println "storeservice getStoreListFromStoreIdList: "+storeList.count
@@ -52,9 +66,9 @@ class StoreService {
 //		return tmpList
 	}
 	
-	def getStoresFromCircle(String circle) {
-		println "circle"+circle
-		List storeList = Store.findAllByCircle(circle)
+	def getStoresFromCircleList(List circle) {
+		println "circlelist: "+circle
+		List storeList = Store.findAllByCircleInList(circle)
 		println "STORELIST: "+storeList.size()
 		return storeList
 	}

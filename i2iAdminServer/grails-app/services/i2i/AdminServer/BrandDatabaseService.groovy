@@ -98,6 +98,7 @@ class BrandDatabaseService {
 	def getBrandDataList(String searchTerm, String circle) {
 		List drugList = new ArrayList<BrandDataCommand>()
 
+		//FIXME: NOT scalable
 		if(circle == 'Thiruvanmiyur')
 			drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm)
 

@@ -126,6 +126,9 @@
 		<tbody>
 			<g:each in="${orderDetailsList}" status="i" var="ordersInstance">
 				<g:set var="orderId" value="${ordersInstance?.orderId}"></g:set>
+				<g:set var="rowOrderStatus"
+							value="${ordersInstance?.orderStatus}" />
+				<g:if test="${rowOrderStatus > 0 || orderStatus== 0 }">
 				<tr style="cursor: pointer;"
 					class="${(i % 2) == 0 ? 'even' : 'odd'}"
 					onclick='document.location = "<g:createLink controller="orders"
@@ -146,15 +149,15 @@
 						${fieldValue(bean: ordersInstance, field: "circle")} <br> ${fieldValue(bean: ordersInstance, field: "city")}
 					</td>
 
-					<td><g:set var="orderStatus"
-							value="${ordersInstance?.orderStatus}" /> <%--						${fieldValue(bean: ordersInstance, field: "orderStatus")}--%>
+					<td>
 
-						<g:if test="${orderStatus == 4 }">Order Delivered</g:if> <g:elseif
-							test="${orderStatus == 3 }">Order Dispatched</g:elseif> <g:elseif
-							test="${orderStatus == 2 }">Order Accepted</g:elseif> <g:elseif
-							test="${orderStatus == 1 }">Order Placed</g:elseif> <g:elseif
-							test="${orderStatus < 1 }">Order Rejected</g:elseif></td>
+						<g:if test="${rowOrderStatus == 4 }">Order Delivered</g:if> <g:elseif
+							test="${rowOrderStatus == 3 }">Order Dispatched</g:elseif> <g:elseif
+							test="${rowOrderStatus == 2 }">Order Accepted</g:elseif> <g:elseif
+							test="${rowOrderStatus == 1 }">Order Placed</g:elseif> <g:elseif
+							test="${rowOrderStatus < 1 }">Order Rejected</g:elseif></td>
 				</tr>
+				</g:if>
 			</g:each>
 		</tbody>
 	</table>
