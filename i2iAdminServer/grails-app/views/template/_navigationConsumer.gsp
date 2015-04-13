@@ -1,48 +1,70 @@
-<nav>
-	<ul>
-		<g:if test="${entityName== 'i2iHome' }">
-			<li><g:link class="current" controller="search" action="index">Home</g:link></li>
-		</g:if>
-		<g:else>
-			<li><g:link controller="search" action="index">Home</g:link></li>
-		</g:else>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#site-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><div class="site-logo" href="#">
+					<img src="${resource(dir: 'images', file: 'logo.png')}"
+						alt="pillocate logo" />
+				</div></a>
+		</div>
 
-		<g:if test="${entityName== 'TrackOrder' }">
-			<li><g:link class="current" controller="orders"
-					action="trackOrderStatus">Track Order</g:link></li>
-		</g:if>
-		<g:else>
-			<li><g:link controller="orders" action="trackOrderStatus">Track Order</g:link></li>
-		</g:else>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="site-navbar-collapse">
+			<ul class="nav navbar-nav navbar-right site-home-nav">
+				<g:if test="${entityName== 'i2iHome' }">
+					<li class="active"><g:link controller="search" action="index">Home</g:link></li>
+				</g:if>
+				<g:else>
+					<li><g:link controller="search" action="index">Home</g:link></li>
+				</g:else>
 
-		<g:if test="${entityName== 'Feedback' }">
-			<li><g:link class="current" controller="feedback"
-					action="feedback">Feedback</g:link></li>
-		</g:if>
-		<g:else>
-			<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>
-		</g:else>
+				<g:if test="${entityName== 'TrackOrder' }">
+					<li class="active"><g:link controller="orders"
+							action="trackOrderStatus">Track Order</g:link></li>
+				</g:if>
+				<g:else>
+					<li><g:link controller="orders" action="trackOrderStatus">Track Order</g:link></li>
+				</g:else>
 
-		<sec:ifNotLoggedIn>
-			<g:if test="${entityName== 'Login' }">
-				<li><g:link class="current" controller="login" action="auth">Login</g:link></li>
-			</g:if>
-			<g:else>
-				<li><g:link controller="login" action="auth">Login</g:link></li>
-			</g:else>
-		</sec:ifNotLoggedIn>
-<%--		<sec:ifAllGranted roles="ROLE_CONSUMER">--%>
-<%--			<g:if test="${entityName== 'MyAccount' }">--%>
-<%--				<li><g:link class="current" controller="login" action="auth">My Account</g:link></li>--%>
-<%--			</g:if>--%>
-<%--			<g:else>--%>
-<%--				<li><g:link controller="login" action="auth">My Account</g:link></li>--%>
-<%--			</g:else>--%>
-<%--		</sec:ifAllGranted>--%>
+				<g:if test="${entityName== 'Feedback' }">
+					<li class="active"><g:link controller="feedback"
+							action="feedback">Feedback</g:link></li>
+				</g:if>
+				<g:else>
+					<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>
+				</g:else>
 
-		<sec:ifLoggedIn>
-			<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
-		</sec:ifLoggedIn>
+				<sec:ifNotLoggedIn>
+					<g:if test="${entityName== 'Login' }">
+						<li class="active"><g:link controller="login" action="auth">Login</g:link></li>
+					</g:if>
+					<g:else>
+						<li><g:link controller="login" action="auth">Login</g:link></li>
+					</g:else>
+				</sec:ifNotLoggedIn>
+				<%--				<sec:ifAllGranted roles="ROLE_CONSUMER">--%>
+				<%--					<g:if test="${entityName== 'MyAccount' }">--%>
+				<%--						<li><g:link class="current" controller="login" action="auth">My Account</g:link></li>--%>
+				<%--					</g:if>--%>
+				<%--					<g:else>--%>
+				<%--						<li><g:link controller="login" action="auth">My Account</g:link></li>--%>
+				<%--					</g:else>--%>
+				<%--				</sec:ifAllGranted>--%>
 
-	</ul>
+				<sec:ifLoggedIn>
+					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
+				</sec:ifLoggedIn>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container -->
 </nav>
+<!-- Begin page content -->

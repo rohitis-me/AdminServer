@@ -75,7 +75,7 @@ class SearchController {
 	//TODO change once data is got from branddatabase
 	def listOfBrandNameStartingWith() {
 		log.info "AUTO COMPLETE: received params: "+params
-
+println "AUTO COMPLETE: received params: "+params
 		String searchTerm = params.term
 		String suggestion
 
