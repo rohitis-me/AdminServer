@@ -21,6 +21,9 @@
 <r:require module="jquery-ui" />
 <g:layoutHead />
 <r:layoutResources />
+<!-- OPENTRACKER START -->
+<script defer src="https://script.opentracker.net/?site=www.pillocate.com"></script> 
+<!-- OPENTRACKER END -->
 
 <!-- Google Analytics -->
 <script>
@@ -33,9 +36,6 @@
   ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
-<!-- OPENTRACKER START -->
-<script defer src="https://script.opentracker.net/?site=demo.pillocate.com"></script>
-<!-- OPENTRACKER END --> 
 
 </head>
 <body>

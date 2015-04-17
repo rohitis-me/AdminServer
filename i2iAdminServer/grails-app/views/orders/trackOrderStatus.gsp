@@ -32,17 +32,7 @@
       </div>
     </div>
     
-<%--	<g:form controller="orders" action="showTrackedOrderDetails"--%>
-<%--		method="get">--%>
-<%--		<div align="center">--%>
-<%--			<input name="trackingId" required class="textbox-control"--%>
-<%--				placeholder="Enter tracking id" style="width: 40%;"--%>
-<%--				value="${trackingId}" />--%>
-<%--			<input type="submit" name="searchButton" value="Track order"--%>
-<%--				class="btn btn-default" style="width: 20%; height: 33px" />--%>
-<%--		</div>--%>
-<%--	</g:form>--%>
-	
+	<br/>
 	<g:if test="${flash.message}">
 		<div class="message" role="status">
 			${flash.message}

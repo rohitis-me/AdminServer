@@ -85,9 +85,11 @@
 				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					<g:set var="availabilityIndex"
 						value="${availabilityInstance?.availabilityIndex}" />
-					<td>
-						<%--					<input type='checkbox' id='availabilitychk' class='chk' value="${availabilityIndex}"/> --%>
-						${fieldValue(bean: availabilityInstance, field: "brandName")}
+					<td title="${availabilityInstance.brandName }">
+					<g:set var="compositeBrandName" value="${availabilityInstance.brandName }" />
+					    ${(compositeBrandName.length()<25)? compositeBrandName:(compositeBrandName.substring(0,25)+'...') }
+<%--						${(fieldValue(bean: availabilityInstance, field: "brandName")).substring(0,(((availabilityInstance.brandName).length()>20)?20:(availabilityInstance.brandName).length()))}--%>
+<%--						<g:field name="brandName" type="text" value="${(availabilityInstance.brandName).substring(0, (availabilityInstance.brandName).length()) }" placeholder="${availabilityInstance.brandName }" disabled="true"/>--%>
 					</td>
 
 					<%--						<td>--%>

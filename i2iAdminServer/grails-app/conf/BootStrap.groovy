@@ -1,6 +1,6 @@
 import i2i.AdminServer.Availability
+import i2i.AdminServer.BrandDatabase
 import i2i.AdminServer.Store
-import i2i.AdminServer.ClientSync.Inventory
 import i2i.AdminServer.User.UserProfile
 import i2i.AdminServer.User.Sec.SecRole
 import i2i.AdminServer.User.Sec.SecUser
@@ -9,39 +9,49 @@ import i2i.AdminServer.User.Sec.SecUserSecRole
 class BootStrap {
 	def springSecurityService
 	def grailsApplication
-
+	
 	def init = { servletContext ->
-		println "in bs"
-		
-		if(grailsApplication.config.turnOnBootStrapCode) {
+		println "in bs: turn on bootstrap code: "+grailsApplication.config.turnOnBootStrapCode
 
+
+		if(grailsApplication.config.turnOnBootStrapCode) {
 		def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 
-		def adminUser = SecUser.findByUsername('medilinepharmaadmin') ?: new SecUser(
-				username: 'medilinepharmaadmin',
-				password: 'medilinepharmaadmin').save(flush: true)
+		def adminUser = SecUser.findByUsername('shobikaecr@gmail.com') ?: new SecUser(
+				username: 'shobikaecr@gmail.com',
+				password: 'shobikaecradmin').save(flush: true)
 
 		if (!adminUser.authorities.contains(adminRole)) {
 			SecUserSecRole.create adminUser, adminRole
 		}
 
-		def consumerRole = SecRole.findByAuthority('ROLE_CONSUMER') ?: new SecRole(authority: 'ROLE_CONSUMER').save(failOnError: true)
-				
+//		Random random = new Random();
 //		int cnt = alphaArr.length
 		int storeCount = Store.count()
 		int availabilityCount = Availability.count()
+		
+		String demoStoreId = '2'
 
+//		for(int i=0; i<10; i++) {
+
+//			def str = (i+1).toString();
+//			def city = cityArr[random.nextInt(cityArr.length)]
+//			def circle = circleArr[random.nextInt(circleArr.length)]
+//			def state = stateArr[random.nextInt(stateArr.length)]
+//
+//			String name = alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]+alphaArr[random.nextInt(cnt)]
+//			println "NAME: "+name
 			//Init stores
-			if(storeCount == 0) {
+			if(storeCount == 1) {
 				Store store = new Store(
-						storeId : "1",
-						storeName : 'Mediline Pharmacy',
-						addressLine1 : "A4- 2nd Main Road",
-						addressLine2 : "Thiruvalluvar Nagar",
-						circle : "Thiruvanmiyur",
+						storeId : demoStoreId,
+						storeName : 'Shobika Pharmacy',
+						addressLine1 : "Shop no. 4&5, Mosque Complex",
+						addressLine2 : "Old no.58, New no. 80, Srinivasapuram, ECR (Thiruvanmiyur)",
+						circle : "Kottivakkam",
 						city : "Chennai",
-						phoneNumber: '04442331561',
-						emailId: 'mahadevanvolex@gmail.com',
+						phoneNumber: '04442721155',
+						emailId: 'shobikaecr@gmail.com',
 						state : 'Tamil Nadu',
 						latitude : "",
 						longitude : "")
@@ -49,33 +59,40 @@ class BootStrap {
 				if(! store.save(flush:true)) {
 					store.errors.each { println "error in saving store: "+it }
 				}
-			}
-				if(availabilityCount == 0) {
-				def inventoryCount = Inventory.count()
-				List inventoryList = Inventory.list()
+//			}
+//				if(availabilityCount == 0) {
+//				def inventoryCount = Inventory.count()
+//				List inventoryList = Inventory.list()
 				
-				for(int j=1; j<=inventoryCount; j++) {
-					
+				def brandDataCount = 0//BrandDatabase.count()
+//				List inventoryList = Inventory.list()
+								
+				println "saving availability info for branddb count: "+brandDataCount
+				for(int j=1; j<=brandDataCount; j++) {
 					Availability availability = new Availability(
-							storeId : "1",
-							inventoryId : (j+0).toString(),
+							storeId : demoStoreId,
+							brandId : (j+0).toString(),
 							availabilityIndex : 2)
 
+					println "saving availability for brand: "+j
 					if(! availability.save(flush:true)) {
 						availability.errors.each { println "error in saving availability: "+it }
 					}
 				}
+				
+				println "done saving availability info"
 			}
 			//			}
 //		}
 		
-		if(UserProfile.count() == 0) {
-		def storeId = Store.first().storeId
-		def userId = SecUser.first().id
+		if(UserProfile.count() <= 1) {
+		def storeId = demoStoreId
+		def userId = adminUser.id
 		new UserProfile(storeId:storeId, userId: userId).save(flush:true)
 		}
 		
 		}
+		println "end of bs"
 		
 	}
 		def destroy = {

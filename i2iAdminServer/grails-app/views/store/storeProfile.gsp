@@ -106,19 +106,23 @@
 							value="${storeInstance?.addressLine2}" /></td>
 				</tr>
 
-				<tr>
-					<td>
-						<div
-							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'circle', 'error')} required">
-							<label class="label-control" for="circle"> <g:message
-									code="store.circle.label" default="Circle" /> <span
-								class="required-indicator">*</span>
-							</label>
-						</div>
-					</td>
-					<td><g:textField class="textbox-control" name="circle"
-							maxlength="100" required="" value="${storeInstance?.circle}" /></td>
-				</tr>
+					<g:hiddenField name="circle" value="${storeInstance?.circle}"/>
+<%--				<tr>--%>
+<%--					<td>--%>
+<%--						<div--%>
+<%--							class="fieldcontain ${hasErrors(bean: storeInstance, field: 'circle', 'error')} required">--%>
+<%--							<label class="label-control" for="circle"> <g:message--%>
+<%--									code="store.circle.label" default="Circle" /> <span--%>
+<%--								class="required-indicator">*</span>--%>
+<%--							</label>--%>
+<%--						</div>--%>
+<%--					</td>--%>
+<%--					<td>--%>
+<%--					<g:textField class="textbox-control" name="circle"--%>
+<%--							maxlength="100" required="" value="${storeInstance?.circle}" />--%>
+							
+<%--							</td>--%>
+<%--				</tr>--%>
 
 				<tr>
 					<td>

@@ -53,19 +53,46 @@ class SearchController {
 			}
 		}
 		else if(brandId) {
-			//FIXME: add code here.
 //			List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
-			List stores = searchService.getListOfStoresInCircle(circle)
+			
+			List stores = new ArrayList<Store>()
+			
+			//FIXME: not scalable. Else condition does not use circle
+			
+			stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
+			if(stores.size() >0)
+			availabilityFlag= true
+			else {
+				availabilityFlag = false
+				stores = searchService.getListOfStoresInCircle(circle)
+			}
+//			if(circle == 'Thiruvanmiyur') {
+//				stores = searchService.getListOfStoresInCircle(circle)
+//				availabilityFlag = false
+//			}
+//			else {
+//				stores = searchService.getListOfStoresWhereBrandIsAvailableInCircle(brandId, circle)
+//				availabilityFlag = true
+//			}
+//			
+//			//FIXME: not scalable
+//			if(!availabilityFlag) {
+//				stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
+//				
+//				if(stores.size() >0)
+//				availabilityFlag= true
+//			}
+			
 			
 			stores.each {store-> println store.storeName }
 			
-			//FIXME: get delivery time from store
-			availabilityFlag = false
+			
+			
 			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle])
 		}
 		else
 		{
-			List drugList = brandDatabaseService.getBrandDataList(searchTerm)
+			List drugList = brandDatabaseService.getBrandDataList(searchTerm,circle)
 
 			render (view:"searchSuggestions", model: [drugList:drugList, brandName: searchTerm, circle: circle])
 		}
@@ -74,12 +101,14 @@ class SearchController {
 
 	//TODO change once data is got from branddatabase
 	def listOfBrandNameStartingWith() {
-		log.info "AUTO COMPLETE: received params: "+params
-println "AUTO COMPLETE: received params: "+params
+		println "AUTO COMPLETE: received params: "+params
+
 		String searchTerm = params.term
+		String circle = params.circle
+		
 		String suggestion
 
-		List drugList = brandDatabaseService.getBrandDataList(searchTerm)
+		List drugList = brandDatabaseService.getBrandDataList(searchTerm, circle)
 		
 		List brandMapList = []
 		drugList.each {

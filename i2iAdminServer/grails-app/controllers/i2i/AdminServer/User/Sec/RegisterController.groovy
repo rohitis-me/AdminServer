@@ -8,15 +8,24 @@ import grails.plugin.springsecurity.ui.RegistrationCode
 class RegisterController extends grails.plugin.springsecurity.ui.RegisterController {
 
 	@Override
+	def index() {
+		def copy = [:] + (flash.chainedParams ?: [:])
+		copy.remove 'controller'
+		copy.remove 'action'
+		render view: '/login/auth', model: [command: new RegisterCommand(copy)]
+	}
+	
+	@Override
 	def register(RegisterCommand command) {
 		
 		def conf = SpringSecurityUtils.securityConfig
 		
 				if (command.hasErrors()) {
-					render view: 'index', model: [command: command]
+//					redirect(controller: 'login', action: 'auth', model:[command: command])
+					render view: '/login/auth', model: [command: command]
 					return
 				}
-		println "success1"
+				println "success1"
 				String salt = saltSource instanceof NullSaltSource ? null : command.username
 				def user = lookupUserClass().newInstance(email: command.email, username: command.username,
 						accountLocked: false, enabled: true)
