@@ -5,6 +5,7 @@ import i2i.AdminServer.OrderDetailsCommand
 import i2i.AdminServer.OrdersService
 import i2i.AdminServer.StoreService
 import i2i.AdminServer.ClientSync.InventoryService
+import grails.plugin.springsecurity.annotation.Secured
 
 class PatientProfileController {
 
@@ -19,6 +20,7 @@ class PatientProfileController {
 //        redirect(action: "list", params: params)
 //    }
 
+	@Secured(['ROLE_CONSUMER'])
 	def deliveryDetails(OrderDetailsCommand orderDetailsCommand) {
 		println "ODC properties: "+orderDetailsCommand.properties
 		//println "PARAMS: "+orderDetailsCommand.properties

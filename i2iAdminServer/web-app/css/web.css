@@ -10,7 +10,8 @@ body {
 }
 
 #headerdiv {
-	font-family: Times, "Times New Roman", serif; background-color : #5F5C5C;
+	font-family: Times, "Times New Roman", serif;
+	background-color: #5F5C5C;
 	position: relative;
 	visibility: visible;
 	color: #F8F7F2;
@@ -240,62 +241,93 @@ nav {
 	color: #ffffff;
 	background-color: #0C0C0C;
 	height: 30px;
+	width: 100%;
+	white-space: nowrap;
 }
 
 nav ul {
-	margin: 0px;
-	padding: 5px 0px 5px 100px;
+	display: inline-block;
+	margin: 0;
+	padding-left: 100px;
 }
 
 nav li {
-	display: inline;
-	margin-right: 40px;
+	display: inline-block;
+	margin-right: 5px;
+	height: 100%;
+	position: relative;
+	vertical-align: middle;
 }
 
 nav li a {
+	padding: 5px; 
+	white-space: nowrap;
 	color: #ffffff;
+	text-decoration: none;
 	cursor: pointer;
+/* 	display: block; */
 }
 
 nav li a:hover,nav li a.current {
-	color: #A8A6F6;
+	background-color: #848383;
 }
 
+.nav-menu {
+	white-space: nowrap;
+	width: 100%;
+}
+
+.nav-menu-list {
+	display: inline-block;
+	list-style: outside none none;
+	margin: 0;
+	padding: 0;
+}
+
+.nav-menu-item {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+
+nav-menu-link {
+	padding: 0.5em 1em;
+	color: #777;
+	display: block;
+	white-space: nowrap;
+	text-decoration: none;
+}
 /*Login page*/
 #login .inner {
 	width: 60%;
-	padding: 12px;
-	margin: 60px auto;
+	padding: 5px;
+	/* 	margin: 60px auto; */
 	text-align: left;
 	border: 1px solid #cccccc;
 	border-radius: 4px;
 	background-color: #777373;
 }
 
-#login #remember_me_holder {
-	text-align: right;
-}
-
-#login #remember_me_holder label {
-	float: none;
-	margin-left: 0;
-	text-align: left;
-	width: 200px
-}
-
 #login .inner .login_message {
-	padding: 6px 25px 20px 25px;
-	color: #c33;
+	text-align: center;
+	color: white;
 }
 
 /*link*/
-a:link,a:visited,a:hover {
+a:link,a:visited {
 	text-decoration: none;
 }
 
+a:hover {
+	color: white;
+}
+
 a:hover,a:active {
-	outline: none;
 	/* prevents outline in webkit on active links but retains it for tab focus */
+	
 }
 
 /* body { */

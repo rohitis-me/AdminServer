@@ -5,27 +5,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="layout" content="searchLayout">
+<meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'track.order.status.label', default: 'TrackOrder')}" />
-<title><g:message message="Track Order" /></title>
+<title>pillocate | Track Order</title>
 </head>
 
 <body>
-	<g:render template="/template/navigationClient" />
-	<br />
+	<g:render template="/template/navigationConsumer" />
 
-	<g:form controller="orders" action="showTrackedOrderDetails"
-		method="get">
-		<div align="center">
-			<input name="trackingId" required class="textbox-control"
-				placeholder="Enter tracking id" style="width: 40%;"
-				value="${trackingId}" />
-			<input type="submit" name="searchButton" value="Track order"
-				class="btn btn-default" style="width: 20%; height: 33px" />
-		</div>
-	</g:form>
-	
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <g:form controller="orders" action="showTrackedOrderDetails"
+		method="get">        
+          <div class="form-group">
+            <div class="col-sm-12">
+            <div class="order-input-icon">
+                <input name="trackingId" required class="form-control input-lg" placeholder="Enter tracking id..." type="text" value="${trackingId}">
+                <input class="order-input-search" name="searchButton" value="Track order" type="submit">
+            </div>
+            </div>
+          </div>
+        </g:form>	
+        </div> 
+      </div>
+    </div>
+    
+	<br/>
 	<g:if test="${flash.message}">
 		<div class="message" role="status">
 			${flash.message}

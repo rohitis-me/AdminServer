@@ -92,7 +92,7 @@ class SearchController {
 		}
 		else
 		{
-			List drugList = brandDatabaseService.getBrandDataList(searchTerm)
+			List drugList = brandDatabaseService.getBrandDataList(searchTerm,circle)
 
 			render (view:"searchSuggestions", model: [drugList:drugList, brandName: searchTerm, circle: circle])
 		}

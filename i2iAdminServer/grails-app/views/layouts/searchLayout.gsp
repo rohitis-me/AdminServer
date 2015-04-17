@@ -34,7 +34,6 @@
 
   ga('create', '${Constants.analyticsTrackingId}', 'auto');
   ga('send', 'pageview');
-
 </script>
 <!-- End Google Analytics -->
 

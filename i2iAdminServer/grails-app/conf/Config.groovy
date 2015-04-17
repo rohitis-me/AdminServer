@@ -152,15 +152,26 @@ log4j = {
 
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/orders/showOrderDetailsList/'
-grails.plugin.springsecurity.logout.afterLogoutUrl = '/orders/showOrderDetailsList/'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/secUser/showHomePage/'
+grails.plugin.springsecurity.logout.afterLogoutUrl = '/search/index/'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'i2i.AdminServer.User.Sec.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'i2i.AdminServer.User.Sec.SecUserSecRole'
-grails.plugin.springsecurity.authority.className = 'i2i.AdminServer.User.Sec.SecRole'
+grails.plugin.springsecurity.authority.className = 'i2i.AdminServer.User.Sec.SecRole' 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**':                              ['permitAll']
 ]
+
+//Added by the Spring Security ui plugin:
+grails.plugin.springsecurity.ui.register.postRegisterUrl = '/'
+grails.plugin.springsecurity.ui.register.postResetUrl = '/'
+//grails.plugin.springsecurity.ui.register.emailBody = '...'
+//grails.plugin.springsecurity.ui.register.emailFrom = '...'
+//grails.plugin.springsecurity.ui.register.emailSubject = '...'
+grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_CONSUMER'] //FIX ME remove later
+grails.plugin.springsecurity.ui.password.validationRegex = '^.*(?=.*\\d)(?=.*[a-zA-Z]).*$'
+grails.plugin.springsecurity.ui.password.minLength = 5
+grails.plugin.springsecurity.ui.password.maxLength = 20
 //grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 //	'/**':                              ['permitAll'],
 //	'/index':                         ['permitAll'],
