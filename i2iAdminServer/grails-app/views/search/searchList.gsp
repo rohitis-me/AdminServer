@@ -150,14 +150,6 @@
 					params="[storeId: storeId, brandId: brandId, inventoryId:inventoryId, circle: circle, deliveryHours:deliveryHours]"/>" '>
 
 
-<<<<<<< HEAD
-					<td>
-							${fieldValue(bean: storeInstance, field: "storeName")}<br>
-<%--							${fieldValue(bean: storeInstance, field: "addressLine1")} <br>--%>
-<%--						${fieldValue(bean: storeInstance, field: "addressLine2")} <br>--%>
-<%--						${fieldValue(bean: storeInstance, field: "circle")}, ${fieldValue(bean: storeInstance, field: "city")}--%>
-						</td>
-=======
 											<td>
 												${fieldValue(bean: storeInstance, field: "storeName")}<br>
 												<%--							${fieldValue(bean: storeInstance, field: "addressLine1")} <br>--%>
@@ -170,7 +162,6 @@
 														message="Home Delivery Available" /></span><br> <g:message
 													code="search.list.etd" message="Delivery in: " /> ${deliveryHours}
 												hours</td>
->>>>>>> origin/Login-Branch
 
 											<%--						<td>${fieldValue(bean: storeInstance, field: "availabilityIndex")}</td>--%>
 

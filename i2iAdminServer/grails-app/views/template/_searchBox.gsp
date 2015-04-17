@@ -39,19 +39,6 @@
 				}
 			}
 </g:javascript>
-<<<<<<< HEAD
-<g:form class='search_form' controller="search" action="search"
-	method="get">
-	<table align="center" style="border-top: 0">
-		<tr>
-			<td id="hidden" style="width: 15%"><span class="label-control">Circle:
-			</span></td>
-			<td style="width: 35%">
-			<g:select class="dropdown-control" name="circle" from="${Constants.circleArray }" id="circleSelectBox" value="${circle }"/>
-
-			</td>
-=======
->>>>>>> origin/Login-Branch
 
 <div class="col-md-8 col-md-offset-2">
 	<g:form class='search_form' controller="search" action="search"
@@ -66,7 +53,7 @@
 			<div class="col-sm-6">
 				<div class="form-group">
 					<label for="inputEmail3" class="control-label">City :</label> <select
-						class="form-control input-lg" required="" name="city">
+						class="form-control input-lg" required="required" name="city">
 						<option value="Chennai" selected="selected">Chennai</option>
 					</select>
 				</div>

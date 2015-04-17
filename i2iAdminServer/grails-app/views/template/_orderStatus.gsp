@@ -9,51 +9,6 @@
 					<div class="panel-heading">Order Status</div>
 					<div class="panel-body">
 
-<<<<<<< HEAD
-	<h2 align="center">Order Details</h2>
-	<table align="center" style="border-top: 0;">
-		<tbody>
-			<tr>
-				<td style="width: 30%"><span class="label-control">Order
-						Name: </span></td>
-				<td style="width: 70%"><g:fieldValue class="label-control"
-						bean="${orderStatusCommand}" field="brandName" /></td>
-			</tr>
-			<tr>
-					<td style="width: 30%"><span class="label-control">Tracking Id: </span></td>
-					<td style="width: 70%"><g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="trackingId" /></td>
-			</tr>
-			<tr>
-				<td><span class="label-control">Expected Delivery: </span></td>
-				<td><g:formatDate
-						date="${orderStatusCommand.estimatedDeliveryTime }"
-						format="${Constants.dateFormat }" /></td>
-			</tr>
-			<tr>
-					<td><span class="label-control">Seller: </span></td>
-					<td><g:fieldValue class="label-control"	bean="${orderStatusCommand}" field="storeName" /> 
-<%--							<span--%>
-<%--						class="label-control">,</span> <g:fieldValue class="label-control"--%>
-<%--							bean="${orderStatusCommand}" field="storeAddressLine1" /><span--%>
-<%--						class="label-control">,</span> <g:fieldValue class="label-control"--%>
-<%--							bean="${orderStatusCommand}" field="storeAddressLine2" />, <g:fieldValue class="label-control"--%>
-<%--							bean="${orderStatusCommand}" field="storeCircle" />, <g:fieldValue class="label-control"--%>
-<%--							bean="${orderStatusCommand}" field="storeCity" />--%>
-							</td>
-				</tr>
-				<tr>
-				<td><span class="label-control">Seller Contact No: </span>
-				</td>
-				<td>
-				<g:fieldValue class="label-control"
-							bean="${orderStatusCommand}" field="storePhoneNumber" /><span
-						class="label-control"></span>
-				</td>
-				</tr>
-		</tbody>
-	</table>
-=======
 						<table align="center" style="width: 100%">
 							<tr>
 								<td style="width: 25%"><g:if
@@ -96,7 +51,6 @@
 									</g:else></td>
 							</tr>
 						</table>
->>>>>>> origin/Login-Branch
 
 					</div>
 					<div class="bg-default bg-primary">Order Details</div>
