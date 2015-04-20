@@ -1348,7 +1348,7 @@ a.text-primary:hover {
   color: #286090;
 }
 .text-success {
-  color: #3c763d;
+  color: #00A79D;
 }
 a.text-success:hover {
   color: #2b542c;
@@ -1601,7 +1601,7 @@ pre code {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
+    width: 970px;
   }
 }
 .container-fluid {

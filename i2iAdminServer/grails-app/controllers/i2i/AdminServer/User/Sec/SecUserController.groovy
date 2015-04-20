@@ -22,10 +22,10 @@ class SecUserController {
 		println "AUTH: "+authList
 		String role = authList.getAt(0)
 		println "role: "+role
-		if(role == Constants.ROLE_CONSUMER)
-			redirect (controller: 'search', action: 'index')
-		else
+		if(role == Constants.ROLE_CHEMIST_ADMIN)
 			redirect (controller: 'orders', action: 'showOrderDetailsList')
+		else
+			redirect (controller: 'search', action: 'index')
 	}
 
 //	def registerUser(RegisterCommand registerCommand){

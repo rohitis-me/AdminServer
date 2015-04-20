@@ -38,20 +38,19 @@
 									<p style="color: red;">${flash.message}</p>
 								</div>
 							</g:if>
-							<form action='${postUrl}' method='POST' id='loginForm'>
 								<div class="form-group">
 									<span class="input-icon"> <input class="form-control"
 										placeholder="E-mail address"
-										type="email" required name='j_username' id='username'
-										size="20"> <i class="fa fa-envelope"></i></span>
+										type="email" required="required" name='j_username' id='username'
+										size="20" value=""> <i class="fa fa-envelope"></i></span>
 								</div>
 								<div class="form-group form-actions">
 									<span class="input-icon"> <input
 										class="form-control password"
 										placeholder=<g:message
 										code="springSecurity.login.password.label"/>
-										type="password" required name='j_password' id='password'
-										size="20"> <i class="fa fa-lock"></i> 
+										type="password" required="required" name='j_password' id='password'
+										size="20" value=""> <i class="fa fa-lock"></i> 
 										<span
 										class="forgot-pass"> <g:link controller='register'
 												action='forgotPassword'>
@@ -70,7 +69,7 @@
 <%--									<g:link controller='register'>--%>
 <%--										<g:message code='spring.security.ui.login.register' />--%>
 <%--									</g:link>--%>
-									<button type="submit" id="submit" class="btn btn-primary pull-right">
+									<button type="submit" id="login_submit" class="btn btn-primary pull-right">
 										&nbsp; Login <i class="fa fa-sign-in"></i>&nbsp;
 									</button>
 								</div>
@@ -84,8 +83,6 @@
 						<div class="panel-body">
 							<h3>New User sign up</h3>
 							<p>This information will let us know more about you.</p>
-							<g:form controller="register" action='register'
-								name='registerForm' id="reg_form">
 								<g:if test='${emailSent}'>
 									<br />
 									<g:message code='spring.security.ui.register.sent' />
@@ -96,8 +93,8 @@
 									<div class="form-group">
 										<span class="input-icon"> <input class="form-control"
 											name="useremail" placeholder="E-mail address"
-											type="email" required id="reg_email"
-											value="${command?.email}" size='40' /> <i
+											type="text" required="required" id="reg_email"
+											value="${command?.email}" size='60' /> <i
 											class="fa fa-envelope"></i>
 										</span>
 											<g:hasErrors bean="${command}" field="username">
@@ -112,7 +109,7 @@
 									<div class="form-group form-actions">
 										<span class="input-icon"> <input
 											class="form-control password" name="password"
-											placeholder="Password" type="password" required size='40'
+											placeholder="Password" type="password" required="required" size='20'
 											value="${command?.password}" /> <i class="fa fa-lock"></i>
 										</span>
 										<g:hasErrors bean="${command}" field="password">
@@ -127,8 +124,8 @@
 									<div class="form-group form-actions">
 										<span class="input-icon"> <input
 											class="form-control password" name="password2"
-											placeholder="Confirm password" type="password" required
-											size='40' value="${command?.password2}" /> <i
+											placeholder="Confirm password" type="password" required="required"
+											size='20' value="${command?.password2}" /> <i
 											class="fa fa-lock"></i>
 										</span>
 											<g:hasErrors bean="${command}" field="password2">
@@ -140,7 +137,6 @@
 										</g:hasErrors>
 									</div>
 									<div class="form-actions clearfix">
-										<button id="reg_submit" type="submit" class="btn btn-primary pull-right" onclick="submitMyForm()">
 											Sign-Up <i class="glyphicon glyphicon-play-circle"></i>
 										</button>
 									</div>
@@ -162,11 +158,12 @@
 		$(document).ready(function() {
 			$('#username').focus();
 		});
-		
-		function submitMyForm(){
+		$('#login_submit').click(function() {
+		    });
+		$('#reg_submit').click(function() {
 		    $('#reg_user_name').val($('#reg_email').val());
-		    $('#reg_form').submit();}
-		<%--		function onTextEnter(event) {--%>
+		    });
+<%--				function onTextEnter(event) {--%>
 <%--			$('#reg_user_name').val($('#user_email').val());--%>
 <%--		}--%>
 	</script>

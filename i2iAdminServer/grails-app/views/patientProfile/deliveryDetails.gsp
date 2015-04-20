@@ -271,7 +271,7 @@
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<button type="button" class="btn btn-success btn-block"
-										onClick="history.go(-1);return true;">
+										onclick="history.go(-1);return true;">
 										<i class="glyphicon glyphicon-menu-left"></i> Go Back
 									</button>
 								</div>

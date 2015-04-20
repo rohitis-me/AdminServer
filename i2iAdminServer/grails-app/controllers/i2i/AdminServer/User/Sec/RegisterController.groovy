@@ -14,59 +14,63 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 		copy.remove 'action'
 		render view: '/login/auth', model: [command: new RegisterCommand(copy)]
 	}
-	
+
 	@Override
 	def register(RegisterCommand command) {
-		
 		def conf = SpringSecurityUtils.securityConfig
-		
-				if (command.hasErrors()) {
-//					redirect(controller: 'login', action: 'auth', model:[command: command])
-					render view: '/login/auth', model: [command: command]
-					return
-				}
-				println "success1"
-				String salt = saltSource instanceof NullSaltSource ? null : command.username
-				def user = lookupUserClass().newInstance(email: command.email, username: command.username,
-						accountLocked: false, enabled: true)
-		
-				RegistrationCode registrationCode = springSecurityUiService.register(user, command.password, salt)
-				if (registrationCode == null || registrationCode.hasErrors()) {
-					// null means problem creating the user
-					flash.error = message(code: 'spring.security.ui.register.miscError')
-					flash.chainedParams = params
-					redirect action: 'index'
-					return
-				}
-		
-				//FIXME: remove later
-				def UserRole = lookupUserRoleClass()
-				def Role = lookupRoleClass()
-				for (roleName in conf.ui.register.defaultRoleNames) {
-					UserRole.create user, Role.findByAuthority(roleName)
-					println "created rolename: "+roleName
-				}
-				
-				springSecurityService.reauthenticate user.username
-				
-						flash.message = message(code: 'spring.security.ui.register.complete')
-						redirect (controller: 'secUser', action: 'showHomePage')
-				
-//				String url = generateLink('verifyRegistration', [t: registrationCode.token])
-		
-//				def conf = SpringSecurityUtils.securityConfig
-//				def body = conf.ui.register.emailBody
-//				if (body.contains('$')) {
-//					body = evaluate(body, [user: user, url: url])
-//				}
-//				mailService.sendMail {
-//					to command.email
-//					from conf.ui.register.emailFrom
-//					subject conf.ui.register.emailSubject
-//					html body.toString()
-//				}
-		
-//				render view: 'index', model: [emailSent: true]
-			}
-	
+		println "RC:" + command
+		command.email = command.username
+		println "username: "+command.username
+		println "email: "+command.email
+
+		if (command.hasErrors()) {
+			//redirect(controller: 'login', action: 'auth', params:[command: command])
+			render view: '/login/auth', model: [command: command]
+		println "error"
+			return
+		}
+		println "success1"
+		String salt = saltSource instanceof NullSaltSource ? null : command.username
+		def user = lookupUserClass().newInstance(email: command.email, username: command.username,
+		accountLocked: false, enabled: true)
+
+		RegistrationCode registrationCode = springSecurityUiService.register(user, command.password, salt)
+		if (registrationCode == null || registrationCode.hasErrors()) {
+			// null means problem creating the user
+			flash.error = message(code: 'spring.security.ui.register.miscError')
+			flash.chainedParams = params
+			redirect action: 'index'
+			return
+		}
+
+		//FIXME: remove later
+		def UserRole = lookupUserRoleClass()
+		def Role = lookupRoleClass()
+		for (roleName in conf.ui.register.defaultRoleNames) {
+			UserRole.create user, Role.findByAuthority(roleName)
+			println "created rolename: "+roleName
+		}
+
+		springSecurityService.reauthenticate user.username
+
+		flash.message = message(code: 'spring.security.ui.register.complete')
+		redirect (controller: 'secUser', action: 'showHomePage')
+
+		//				String url = generateLink('verifyRegistration', [t: registrationCode.token])
+
+		//				def conf = SpringSecurityUtils.securityConfig
+		//				def body = conf.ui.register.emailBody
+		//				if (body.contains('$')) {
+		//					body = evaluate(body, [user: user, url: url])
+		//				}
+		//				mailService.sendMail {
+		//					to command.email
+		//					from conf.ui.register.emailFrom
+		//					subject conf.ui.register.emailSubject
+		//					html body.toString()
+		//				}
+
+		//				render view: 'index', model: [emailSent: true]
+	}
+
 }
