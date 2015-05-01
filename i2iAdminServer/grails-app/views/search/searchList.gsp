@@ -109,9 +109,9 @@
 				<g:if test="${storesList }">
 					<g:if test="${!availabilityFlag }">
 						<div align="center">
-							<i> <g:message code="search.result.unavailable"
+							<p style="color: red;"> <g:message code="search.result.unavailable"
 									default="Currently unavailable. You could place an order under the following stores." />
-							</i>
+							</p>
 						</div>
 					</g:if>
 					<div align="center">

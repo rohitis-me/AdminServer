@@ -20,7 +20,7 @@ class PatientProfileController {
 //        redirect(action: "list", params: params)
 //    }
 
-	@Secured(['ROLE_CONSUMER'])
+//	@Secured(['ROLE_CONSUMER'])
 	def deliveryDetails(OrderDetailsCommand orderDetailsCommand) {
 		println "ODC properties: "+orderDetailsCommand.properties
 		//println "PARAMS: "+orderDetailsCommand.properties

@@ -16,21 +16,37 @@ import i2i.AdminServer.Constants
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
-grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
+grails.mime.disable.accept.header.userAgents = [
+	'Gecko',
+	'WebKit',
+	'Presto',
+	'Trident'
+]
 grails.mime.types = [ // the first one is the default format
-    all:           '*/*', // 'all' maps to '*' or the first available format in withFormat
-    atom:          'application/atom+xml',
-    css:           'text/css',
-    csv:           'text/csv',
-    form:          'application/x-www-form-urlencoded',
-    html:          ['text/html','application/xhtml+xml'],
-    js:            'text/javascript',
-    json:          ['application/json', 'text/json'],
-    multipartForm: 'multipart/form-data',
-    rss:           'application/rss+xml',
-    text:          'text/plain',
-    hal:           ['application/hal+json','application/hal+xml'],
-    xml:           ['text/xml', 'application/xml']
+	all:           '*/*', // 'all' maps to '*' or the first available format in withFormat
+	atom:          'application/atom+xml',
+	css:           'text/css',
+	csv:           'text/csv',
+	form:          'application/x-www-form-urlencoded',
+	html:          [
+		'text/html',
+		'application/xhtml+xml'
+	],
+	js:            'text/javascript',
+	json:          [
+		'application/json',
+		'text/json'
+	],
+	multipartForm: 'multipart/form-data',
+	rss:           'application/rss+xml',
+	text:          'text/plain',
+	hal:           [
+		'application/hal+json',
+		'application/hal+xml'
+	],
+	xml:           [
+		'text/xml',
+		'application/xml']
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -44,21 +60,33 @@ turnOnBootStrapCode = 0
 env=Constants.env_LOCAL
 
 if(env == Constants.env_DEMO) {
-Constants.envLink= Constants.envLink_DEMO
-Constants.analyticsTrackingId =  Constants.analyticsTrack_DEMO
+	Constants.envLink= Constants.envLink_DEMO
+	Constants.analyticsTrackingId =  Constants.analyticsTrack_DEMO
 }
 else if(env == Constants.env_PROD) {
-Constants.envLink= Constants.envLink_PROD
-Constants.analyticsTrackingId =  Constants.analyticsTrack_PROD
+	Constants.envLink= Constants.envLink_PROD
+	Constants.analyticsTrackingId =  Constants.analyticsTrack_PROD
 }
 else if(env == Constants.env_LOCAL) {
-Constants.envLink= Constants.envLink_LOCAL
+	Constants.envLink= Constants.envLink_LOCAL
 }
 //grails.mail.host = "192.168.2.8"
 
 // What URL patterns should be processed by the resources plugin
-grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
-grails.resources.adhoc.includes = ['/images/**', '/css/**', '/js/**', '/plugins/**']
+grails.resources.adhoc.patterns = [
+	'/images/*',
+	'/css/*',
+	'/js/*',
+	'/plugins/*',
+	'/fonts/*'
+]
+grails.resources.adhoc.includes = [
+	'/images/**',
+	'/css/**',
+	'/js/**',
+	'/plugins/**',
+	'/fonts/**'
+]
 
 // Legacy setting for codec used to encode data with ${}
 grails.views.default.codec = "html"
@@ -69,20 +97,20 @@ grails.controllers.defaultScope = 'singleton'
 
 // GSP settings
 grails {
-    views {
-        gsp {
-            encoding = 'UTF-8'
-            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
-            codecs {
-                expression = 'html' // escapes values inside ${}
-                scriptlet = 'html' // escapes output from scriptlets in GSPs
-                taglib = 'none' // escapes output from taglibs
-                staticparts = 'none' // escapes output from static template parts
-            }
-        }
-        // escapes all not-encoded output at final stage of outputting
-        // filteringCodecForContentType.'text/html' = 'html'
-    }
+	views {
+		gsp {
+			encoding = 'UTF-8'
+			htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+			codecs {
+				expression = 'html' // escapes values inside ${}
+				scriptlet = 'html' // escapes output from scriptlets in GSPs
+				taglib = 'none' // escapes output from taglibs
+				staticparts = 'none' // escapes output from static template parts
+			}
+		}
+		// escapes all not-encoded output at final stage of outputting
+		// filteringCodecForContentType.'text/html' = 'html'
+	}
 }
 
 
@@ -112,42 +140,42 @@ grails.hibernate.pass.readonly = false
 grails.hibernate.osiv.readonly = false
 
 environments {
-    development {
-        grails.logging.jul.usebridge = true
-    }
-    production {
-        grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
-    }
+	development {
+		grails.logging.jul.usebridge = true
+	}
+	production {
+		grails.logging.jul.usebridge = false
+		// TODO: grails.serverURL = "http://www.changeme.com"
+	}
 }
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
-	
-//	appenders {
-//		file name: "searchtxt", file: "/var/log/search.logs"
-//		file name: "orderstxt", file: "/var/log/orders.logs"
-//	 }
-//	
-//	debug searchtxt: "i2i.AdminServer.SearchController",
-//		  orderstxt: "i2i.AdminServer.OrdersController"
+	// Example of changing the log pattern for the default console appender:
+	//
+	//appenders {
+	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+	//}
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+	//	appenders {
+	//		file name: "searchtxt", file: "/var/log/search.logs"
+	//		file name: "orderstxt", file: "/var/log/orders.logs"
+	//	 }
+	//
+	//	debug searchtxt: "i2i.AdminServer.SearchController",
+	//		  orderstxt: "i2i.AdminServer.OrdersController"
+
+	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+			'org.codehaus.groovy.grails.web.pages',          // GSP
+			'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+			'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+			'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+			'org.codehaus.groovy.grails.commons',            // core / classloading
+			'org.codehaus.groovy.grails.plugins',            // plugins
+			'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+			'org.springframework',
+			'org.hibernate',
+			'net.sf.ehcache.hibernate'
 }
 
 
@@ -157,10 +185,9 @@ grails.plugin.springsecurity.logout.afterLogoutUrl = '/search/index/'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'i2i.AdminServer.User.Sec.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'i2i.AdminServer.User.Sec.SecUserSecRole'
-grails.plugin.springsecurity.authority.className = 'i2i.AdminServer.User.Sec.SecRole' 
+grails.plugin.springsecurity.authority.className = 'i2i.AdminServer.User.Sec.SecRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/**':                              ['permitAll']
-]
+	'/**':                              ['permitAll']]
 
 //Added by the Spring Security ui plugin:
 grails.plugin.springsecurity.ui.register.postRegisterUrl = '/'
@@ -168,7 +195,8 @@ grails.plugin.springsecurity.ui.register.postResetUrl = '/'
 //grails.plugin.springsecurity.ui.register.emailBody = '...'
 //grails.plugin.springsecurity.ui.register.emailFrom = '...'
 //grails.plugin.springsecurity.ui.register.emailSubject = '...'
-grails.plugin.springsecurity.ui.register.defaultRoleNames = ['ROLE_CONSUMER'] //FIX ME remove later
+grails.plugin.springsecurity.ui.register.defaultRoleNames = [
+	'ROLE_CONSUMER'] //FIX ME remove later
 grails.plugin.springsecurity.ui.password.validationRegex = '^.*(?=.*\\d)(?=.*[a-zA-Z]).*$'
 grails.plugin.springsecurity.ui.password.minLength = 5
 grails.plugin.springsecurity.ui.password.maxLength = 20
@@ -190,8 +218,8 @@ grails {
 		username = "i2itechnologypvtltd@gmail.com"
 		password = "support@i2i"
 		props = ["mail.smtp.auth":"true",
-				 "mail.smtp.socketFactory.port":"465",
-				 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-				 "mail.smtp.socketFactory.fallback":"false"]
-	  }
- }
+			"mail.smtp.socketFactory.port":"465",
+			"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			"mail.smtp.socketFactory.fallback":"false"]
+	}
+}

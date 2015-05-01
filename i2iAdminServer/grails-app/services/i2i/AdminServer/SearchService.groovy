@@ -63,6 +63,10 @@ class SearchService {
 	def getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(String inventoryId, String circle) {
 		List storeIdList = availabilityService.getStoreIdsFromInventoryId(inventoryId)
 		List storeList = storeService.getStoreListFromStoreIdListAndCircle(storeIdList, circle)
+		//FIXME temp fix
+		if(storeList.size() == 0) {
+			storeList = storeService.getStoreListFromStoreIdList(storeIdList)
+		}
 		println "iId: "+inventoryId+" storelist: "+storeList.size()
 		//		println "turnontestcode: "+grailsApplication.config.turnOnTestCode
 		//		if(grailsApplication.config.turnOnTestCode) {

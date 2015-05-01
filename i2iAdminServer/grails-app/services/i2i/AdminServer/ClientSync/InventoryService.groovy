@@ -45,6 +45,12 @@ class InventoryService {
 		return brandDataList
 	}
 	
+	def getListOfBrandNamesStartingWith(String brandName, String storeId) {
+		List inventoryList = Inventory.findAllByStoreIdAndBrandNameIlike(storeId,brandName+"%") // ignore case
+		List brandDataList = populateBrandDataListFromInventoryList(inventoryList)
+		return brandDataList
+	}
+	
 	def getListOfBrandNamesStartingWith(String brandName,int max, int offset) {
 		List inventoryList = Inventory.findAllByBrandNameIlike(brandName+"%",[max:max, offset:offset]) // ignore case
 		List brandDataList = populateBrandDataListFromInventoryList(inventoryList)

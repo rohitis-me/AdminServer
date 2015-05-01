@@ -113,16 +113,12 @@ class SearchController {
 		List brandMapList = []
 		drugList.each {
 //			println "druglist: "+it.brandId+"|"+it.inventoryId+"|"
-			Map brandMap = [:]
+			Map brandMap = brandDatabaseService.getBrandDataMap(it)
 			suggestion = "${it.brandName}"//+" "+"${it.strength}"+" ${it.form}"
 			//			brandMap << suggestion
-			brandMap.put("id", it.inventoryId)//brandId}")
-			brandMap.put("name", it.brandId)
-			brandMap.put("label", it.brandName)
 			brandMapList.add(brandMap)
 		}
 		render brandMapList as JSON
-
 	}
 
 }

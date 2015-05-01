@@ -7,7 +7,7 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'patientProfile.label', default: 'PatientProfile')}" />
-<title>pillocate | delivery-details</title>
+<title><g:message code="title.brand.tag"/> | <g:message code="title.page.deliverydetails"/></title>
 </head>
 <body>
 	<g:render template="/template/navigationConsumer" />

@@ -4,7 +4,7 @@
 <meta name='layout' content='pillocateLayout' />
 <g:set var="entityName"
 	value="${message(code: 'springSecurity.login.title', default: 'Login')}" />
-<title>pillocate | login</title>
+<title><g:message code="title.brand.tag"/> | <g:message code="title.page.login"/></title>
 </head>
 
 <body>
@@ -38,10 +38,11 @@
 									<p style="color: red;">${flash.message}</p>
 								</div>
 							</g:if>
+							<form action='${postUrl}' method='POST' id='loginForm' name="loginForm">
 								<div class="form-group">
 									<span class="input-icon"> <input class="form-control"
 										placeholder="E-mail address"
-										type="email" required="required" name='j_username' id='username'
+										type="text" required="required" name='j_username' id='username'
 										size="20" value=""> <i class="fa fa-envelope"></i></span>
 								</div>
 								<div class="form-group form-actions">
@@ -83,6 +84,7 @@
 						<div class="panel-body">
 							<h3>New User sign up</h3>
 							<p>This information will let us know more about you.</p>
+							<g:form controller="register" action='register' id="registerForm" name='registerForm'>
 								<g:if test='${emailSent}'>
 									<br />
 									<g:message code='spring.security.ui.register.sent' />
@@ -92,7 +94,7 @@
 										value="${command?.username}" />
 									<div class="form-group">
 										<span class="input-icon"> <input class="form-control"
-											name="useremail" placeholder="E-mail address"
+											name="email" placeholder="E-mail address"
 											type="text" required="required" id="reg_email"
 											value="${command?.email}" size='60' /> <i
 											class="fa fa-envelope"></i>
@@ -137,6 +139,12 @@
 										</g:hasErrors>
 									</div>
 									<div class="form-actions clearfix">
+<%--									<label for="remember" class="checkbox-inline"> <input--%>
+<%--										class="grey remember" type="checkbox"--%>
+<%--										name='${rememberMeParameter}' id='terms_con'--%>
+<%--										<g:if test='${hasCookie}'>checked='checked'</g:if> /> I accept terms of service--%>
+<%--									</label>--%>
+										<button type="submit" id="reg_submit" class="btn btn-primary pull-right" >
 											Sign-Up <i class="glyphicon glyphicon-play-circle"></i>
 										</button>
 									</div>
@@ -159,9 +167,11 @@
 			$('#username').focus();
 		});
 		$('#login_submit').click(function() {
+		    $('#loginForm').submit();
 		    });
 		$('#reg_submit').click(function() {
 		    $('#reg_user_name').val($('#reg_email').val());
+		    $('#registerForm').submit();
 		    });
 <%--				function onTextEnter(event) {--%>
 <%--			$('#reg_user_name').val($('#user_email').val());--%>

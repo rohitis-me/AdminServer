@@ -8,7 +8,7 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'track.order.status.label', default: 'TrackOrder')}" />
-<title>pillocate | Track Order</title>
+<title><g:message code="title.brand.tag"/> | <g:message code="title.page.track"/> </title>
 </head>
 
 <body>

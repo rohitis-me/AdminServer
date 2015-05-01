@@ -99,15 +99,25 @@ class BrandDatabaseService {
 		List drugList = new ArrayList<BrandDataCommand>()
 
 		//FIXME: NOT scalable
-		if(circle == 'Thiruvanmiyur')
-			drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm)
-
-		if(drugList.size() == 0) {
+		if(circle == 'Thiruvanmiyur') 
+			drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm, '1')
+		println "drug size: "+drugList.size()
+		if(drugList.size() == 0) //chose from store id = 2
+			drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm, '2')
+		if(drugList.size() == 0) 
 			drugList = getListOfBrandNamesStartingWith(searchTerm)
-		}
+		
 		return drugList
 	}
 
+	def getBrandDataMap(BrandDataCommand brandDataCommand){
+		Map brandMap = [:]
+		brandMap.put("id", brandDataCommand.inventoryId)//brandId}")
+		brandMap.put("name", brandDataCommand.brandId)
+		brandMap.put("label", brandDataCommand.brandName)
+		return brandMap
+	}
+	
 	def getBrandNameFromId(String brandId, String inventoryId) {
 		String brandName=""
 		if(brandId) {

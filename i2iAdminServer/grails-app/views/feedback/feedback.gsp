@@ -4,7 +4,7 @@
 <g:set var="entityName"
 	value="${message(code: 'feedback.label', default: 'Feedback')}" />
 <meta name="layout" content="pillocateLayout">
-<title>pillocate | Feedback</title>
+<title><g:message code="title.brand.tag"/> | <g:message code="title.page.feedback"/></title>
 </head>
 <body>
 	<g:render template="/template/navigationConsumer" />

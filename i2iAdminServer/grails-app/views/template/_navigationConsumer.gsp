@@ -9,7 +9,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#"><div class="site-logo" href="#">
+			<a class="navbar-brand" href="${createLink(controller:'search', action:'index')}"><div class="site-logo">
 					<img src="${resource(dir: 'images', file: 'logo.png')}"
 						alt="pillocate logo" />
 				</div></a>

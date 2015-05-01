@@ -40,6 +40,8 @@ class Constants {
 	public static final String ROLE_CHEMIST_ADMIN = 'ROLE_CHEMIST_ADMIN'
 	public static final String ROLE_CONSUMER = 'ROLE_CONSUMER'
 	
-	//FIXME: Hard coding
-	public static final int hardCodedInventoryCount=2158
+	public static final String WEBSERVICE_ERROR_DELIVERYDETAILS = '-1'
+	public static final String WEBSERVICE_ERROR_TRACKINGID = '-2'
+	
+	
 }

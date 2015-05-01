@@ -12,21 +12,25 @@ class RegisterController extends grails.plugin.springsecurity.ui.RegisterControl
 		def copy = [:] + (flash.chainedParams ?: [:])
 		copy.remove 'controller'
 		copy.remove 'action'
-		render view: '/login/auth', model: [command: new RegisterCommand(copy)]
+		String postUrl = "${request.contextPath}${conf.apf.filterProcessesUrl}"
+		render view: '/login/auth', model: [postUrl:postUrl, command: new RegisterCommand(copy)]
 	}
 
 	@Override
 	def register(RegisterCommand command) {
 		def conf = SpringSecurityUtils.securityConfig
 		println "RC:" + command
-		command.email = command.username
+		if(!command.username)
+			command.username = command.email
 		println "username: "+command.username
 		println "email: "+command.email
 
 		if (command.hasErrors()) {
-			//redirect(controller: 'login', action: 'auth', params:[command: command])
-			render view: '/login/auth', model: [command: command]
-		println "error"
+			command.errors.each {
+				println "ERROR: "+it
+			}
+			String postUrl = "${request.contextPath}${conf.apf.filterProcessesUrl}"
+			render view: '/login/auth', model: [postUrl:postUrl, command: command]
 			return
 		}
 		println "success1"

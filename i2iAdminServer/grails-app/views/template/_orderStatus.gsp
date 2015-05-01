@@ -18,7 +18,7 @@
 										<label style="font-weight: bold;">Placed</label>
 									</g:if> <g:else>
 										<input type="radio" name="orderstatus" disabled>
-										<label style="font-style: italic;">Placed</label>
+										<label style="font-weight: normal;">Placed</label>
 									</g:else></td>
 								<td style="width: 25%"><g:if
 										test="${orderStatus == Constants.ORDER_ACCEPTED}">
@@ -27,7 +27,7 @@
 										<label style="font-weight: bold;">Accepted</label>
 									</g:if> <g:else>
 										<input type="radio" name="orderstatus" disabled>
-										<label style="font-style: italic;">Accepted</label>
+										<label style="font-weight: normal;">Accepted</label>
 									</g:else></td>
 							</tr>
 							<tr>
@@ -38,7 +38,7 @@
 										<label style="font-weight: bold;">Dispatched</label>
 									</g:if> <g:else>
 										<input type="radio" name="orderstatus" disabled>
-										<label style="font-style: italic;">Dispatched</label>
+										<label style="font-weight: normal;">Dispatched</label>
 									</g:else></td>
 								<td style="width: 25%"><g:if
 										test="${orderStatus == Constants.ORDER_DELIVERED}">
@@ -47,7 +47,7 @@
 										<label style="font-weight: bold;">Delivered</label>
 									</g:if> <g:else>
 										<input type="radio" name="orderstatus" disabled>
-										<label style="font-style: italic;">Delivered</label>
+										<label style="font-weight: normal;">Delivered</label>
 									</g:else></td>
 							</tr>
 						</table>
