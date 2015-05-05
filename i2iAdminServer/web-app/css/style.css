@@ -122,6 +122,7 @@
 .site-input-icon {position:relative;}
 .site-input-icon .form-control { padding-right:45px;}
 .main-input-search { position:absolute !important; top:0; bottom:0; right:0; min-width:50px; border:0; background-color:transparent; z-index:2; font-size:22px;}
+.coupon-code-input { position:absolute !important; top:0; bottom:0; right:0; min-width:50px; border:0; background-color:#f5f5f5; z-index:2; font-size:16px;	border: 1px solid #847A7A;}
 
 .site-input-icon > [class*="fa-"], .site-input-icon > [class*="glyphicon-"] {
     bottom: 0;

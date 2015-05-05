@@ -1,5 +1,6 @@
-	<%@ page import="i2i.AdminServer.Constants"%>
-	
+
+<%@ page import="i2i.AdminServer.Constants"%>
+
 <g:javascript>
             $(document).ready(function() {
             
@@ -40,14 +41,15 @@
 			}
 </g:javascript>
 
-<div class="col-md-8 col-md-offset-2">
-	<g:form class='search_form' controller="search" action="search"
-		method="get">
+<div class="col-md-10 col-md-offset-1">
+	<g:form class='search_form' controller="search" action="search" method="get">
 		<div class="row clearfix">
 			<div class="col-sm-6">
 				<div class="form-group">
-					<label for="circle" class="control-label">Circle :</label> 						
-					<g:select class="form-control input-lg" required="" name="circle" from="${Constants.circleArray }" id="circleSelectBox" value="${circle}"></g:select>
+					<label for="circle" class="control-label">Circle :</label>
+					<g:select class="form-control input-lg" required="" name="circle"
+						from="${Constants.circleArray }" id="circleSelectBox"
+						value="${circle}"></g:select>
 				</div>
 			</div>
 			<div class="col-sm-6">
@@ -66,7 +68,7 @@
 					<div class="site-input-icon">
 						<input name="brandName" required class="form-control input-lg"
 							id="search_textField" placeholder="Enter medicine brand"
-							type="text" value="${brandName}" onkeydown="onTextEnter(event)"/>
+							type="text" value="${brandName}" onkeydown="onTextEnter(event)" />
 						<input class="main-input-search" name="searchButton" value=""
 							type="submit" /><i class="fa fa-search"></i>
 					</div>
@@ -74,9 +76,10 @@
 				</div>
 			</div>
 			<g:if test="${brandName }">
-							<div align="center">
-				
-				<p><g:message code="search.list.guide.query" args="[brandName]" /></p>
+				<div align="center">
+
+					<label><g:message code="search.list.guide.query"
+							args="[brandName]" /></label>
 				</div>
 			</g:if>
 

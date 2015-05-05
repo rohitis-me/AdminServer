@@ -5,6 +5,7 @@ package i2i.AdminServer
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import i2i.AdminServer.Constants
 
 //@Transactional(readOnly = true)
 class OrdersController {
@@ -72,6 +73,7 @@ class OrdersController {
 
 	def showOrderStatus() {
 		def uId = params.trackingId
+		def offerCode = params.offerCode
 		//		def orderStatus = ordersService.getOrderStatusFromOrderId(orderId)
 
 		//Orders order = ordersService.getOrderFromOrderId(uId)
@@ -79,6 +81,7 @@ class OrdersController {
 		if(order) {
 			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
 			orderStatusCommand.trackingId = uId
+			orderStatusCommand.offerCode = offerCode 
 			println "OrderStatusCommand: "+orderStatusCommand.properties
 			render(view: "orderStatus", model: [orderStatusCommand: orderStatusCommand])
 		}
@@ -130,13 +133,13 @@ class OrdersController {
 	def cancelOrder(OrderDetailsCommand orderDetailsCommand) {
 		println "params: "+params
 		def orderId = orderDetailsCommand.orderId
-		def status = ordersService.rejectOrderAndSave(orderId)
+		def status = ordersService.cancelOrderAndSave(orderId)
 
 		if(status == 0)
 			render "error"
-
-		else
+		else{
 			redirect (controller: 'search', action: 'index')
+		}
 	}
 
 	def placeNextOrder() {
@@ -153,7 +156,7 @@ class OrdersController {
 		println "uId: "+uId
 		
 		Orders order = ordersService.getOrderFromUId(uId)
-		if(order) {
+		if(order && order.orderStatus != Constants.ORDER_REJECTED) {
 			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
 			orderStatusCommand.trackingId = uId
 			println "OrderStatusCommand: "+orderStatusCommand.properties
@@ -171,7 +174,17 @@ class OrdersController {
 
 	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
 		println "ODC: "+orderDetailsCommand.properties
-
+		println "params: "+params
+		
+		//FIXME: do this in gsp
+		orderDetailsCommand.offerCode = ordersService.checkOfferCode(orderDetailsCommand.offerCode)
+		
+		if (orderDetailsCommand.hasErrors()) {
+			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
+//			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
+			return
+		}
+		
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
 
 		println "orderId: "+uId
@@ -179,7 +192,7 @@ class OrdersController {
 
 		if(uId) {
 			//			ordersService.sendEmail(orderDetailsCommand)
-			redirect(controller: 'orders', action: 'showOrderStatus', params:[trackingId: uId])
+			redirect(controller: 'orders', action: 'showOrderStatus', params:[trackingId: uId,offerCode:orderDetailsCommand?.offerCode])
 		}
 		else {
 

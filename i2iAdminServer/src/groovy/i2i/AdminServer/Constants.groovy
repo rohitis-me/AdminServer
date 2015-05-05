@@ -15,10 +15,10 @@ class Constants {
 	
 	//public static final String orderStatus[] = {'Order Rejected', 'Order Placed', 'Order Accepted', 'Order Dispatched', 'Order Delivered'}
 	
-	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi"]
+	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
 
-	public static final String supportEmail="support@i2itech.org"//for feedback
-	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
+	public static final String supportEmail="support@i2itech.co.in"//for feedback
+	public static final String adminEmail="support@i2itech.co.in"//for orders
 	
 	public static final String dateFormat="dd-MM-yyyy, h:mm a"
 	
@@ -43,5 +43,10 @@ class Constants {
 	public static final String WEBSERVICE_ERROR_DELIVERYDETAILS = '-1'
 	public static final String WEBSERVICE_ERROR_TRACKINGID = '-2'
 	
-	
+	public static final String mailSubject_NewOrder_Admin = 'Order@i2i'
+	public static final String mailSubject_NewOrder_Consumer = 'Pillocate: Order placed successfully'
+	public static final String mailSubject_OrderAccepted_Consumer = 'Pillocate: Order Confirmation'
+	public static final String mailSubject_OrderRejected_Consumer = 'Pillocate: Order rejected'
+	public static final String mailSubject_OrderCancel_Admin = 'Cancellation-Order@i2i'
+	public static final String mailSubject_OrderCancel_Consumer = 'Pillocate: Order Cancellation'
 }

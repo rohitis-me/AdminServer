@@ -12,8 +12,6 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-
 				<div class="col-md-12">
 					<div class="panel panel-default">
 						<!-- Default panel contents -->
@@ -22,8 +20,7 @@
 								Sign up Today, it's <small class="text-danger bold">
 									FREE</small>
 							</h1>
-							<p>When you sign up with pillocate.com, able to get different
-								information by E-mail and SMS.</p>
+							<p>When you sign up, we can customize your pillocate experience and serve you better!</p>
 						</div>
 					</div>
 				</div>
@@ -31,8 +28,8 @@
 					<div class="panel panel-default register-widget">
 						<!-- Default panel contents -->
 						<div class="panel-body">
-							<h3>Already a member? Log in</h3>
-							<p>Please enter your name and password to log in.</p>
+							<h3>Existing User? Log in</h3>
+							<p>Please enter your e-mail and password to log in.</p>
 							<g:if test='${flash.message}'>
 								<div class='login_message'>
 									<p style="color: red;">${flash.message}</p>
@@ -82,7 +79,7 @@
 				<div class="col-md-6">
 					<div class="panel panel-default register-widget">
 						<div class="panel-body">
-							<h3>New User sign up</h3>
+							<h3>New User? Sign up</h3>
 							<p>This information will let us know more about you.</p>
 							<g:form controller="register" action='register' id="registerForm" name='registerForm'>
 								<g:if test='${emailSent}'>
@@ -139,11 +136,10 @@
 										</g:hasErrors>
 									</div>
 									<div class="form-actions clearfix">
-<%--									<label for="remember" class="checkbox-inline"> <input--%>
-<%--										class="grey remember" type="checkbox"--%>
-<%--										name='${rememberMeParameter}' id='terms_con'--%>
-<%--										<g:if test='${hasCookie}'>checked='checked'</g:if> /> I accept terms of service--%>
-<%--									</label>--%>
+									<label for="termsConditions" class="checkbox-inline"> <input
+										class="grey remember" type="checkbox" required="required"/> I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a>
+
+									</label>
 										<button type="submit" id="reg_submit" class="btn btn-primary pull-right" >
 											Sign-Up <i class="glyphicon glyphicon-play-circle"></i>
 										</button>
@@ -157,8 +153,6 @@
 				<!-- end row -->
 			</div>
 		</div>
-	</div>
-
 
 
 

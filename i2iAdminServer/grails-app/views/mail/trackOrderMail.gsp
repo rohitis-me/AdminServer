@@ -4,7 +4,19 @@
 
 <div>
 <p>
+<g:if test="${orderDetails.orderStatus == Constants.ORDER_ACCEPTED}">
+Your order has been accepted successfully. Please find your order details below,
+</g:if>
+<g:elseif test="${orderDetails.orderStatus == Constants.ORDER_DELIVERED}">
+Your order has been delivered successfully. Please find your order details below,
+</g:elseif>
+<g:elseif test="${orderDetails.orderStatus == Constants.ORDER_REJECTED}">
+Your order has been cancelled successfully. Please find your order details below,
+<%--Thanks for ordering at pillocate! Your order has been rejected as stock is not available. Please find your order details below,--%>
+</g:elseif>
+<g:else>
 Thanks for ordering at pillocate! Please find your order details below,
+</g:else>
 </p>
 
 <p>
@@ -40,8 +52,9 @@ ${storeInstance.circle }<br>
 ${storeInstance.city }<br>
 </g:if>
 </p>
+<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED && orderDetails.orderStatus != Constants.ORDER_DELIVERED}">
 Track your order status <a href="${Constants.envLink+'orderStatus?trackingId='+orderDetails.trackingId }">here</a><br>
-
+</g:if>
 
 <%--<g:if test="${orderDetails.phoneNumber }">--%>
 <%--You could call ${orderDetails.name } on ${orderDetails.phoneNumber }--%>

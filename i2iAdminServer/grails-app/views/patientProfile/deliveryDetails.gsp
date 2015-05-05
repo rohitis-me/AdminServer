@@ -7,7 +7,8 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'patientProfile.label', default: 'PatientProfile')}" />
-<title><g:message code="title.brand.tag"/> | <g:message code="title.page.deliverydetails"/></title>
+<title><g:message code="title.brand.tag" /> | <g:message
+		code="title.page.deliverydetails" /></title>
 </head>
 <body>
 	<g:render template="/template/navigationConsumer" />
@@ -26,8 +27,8 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<g:form controller="orders" action="saveOrder">
+			<div class="col-md-10 col-md-offset-1">
+				<g:form controller="orders" action="saveOrder" id="order_form">
 					<g:set var="quantity" value="${orderDetails?.quantity}" />
 					<g:hiddenField name="brandName" value="${orderDetails.brandName}" />
 					<div class="form-horizontal">
@@ -69,8 +70,7 @@
 									<label for="inputEmail3" class="col-sm-4 control-label">Store
 										Name :</label>
 									<div class="col-sm-8">
-										<label class="order-info">
-											${storeName}
+										<label class="order-info"> ${storeName}
 										</label>
 									</div>
 								</div>
@@ -244,45 +244,57 @@
 										<label class="order-info">Cash on delivery</label>
 									</div>
 								</div>
-							</div>
-							<%--					<g:if test="${isEmergencyDeliveryAvailable}">--%>
-							<%--						<tr>--%>
-							<%--							<td></td>--%>
-							<%--							<td><g:checkBox name="isEmergencyDeliveryNeeded" class='chk'--%>
-							<%--									id='emergency_delivery'--%>
-							<%--									value="${orderDetails?.isEmergencyDeliveryNeeded}" /> <label--%>
-							<%--								class="label-control" for='emergency_delivery'><g:message--%>
-							<%--										code="order.emergency.delivery.label"--%>
-							<%--										default="Request Emergency delivery" /></label></td>--%>
-							<%--						</tr>--%>
-
-							<div class="bg-default text-center">
-								<h5>
-									<span class="text-danger"><g:message
-											code="order.prescription.message" /></span>
-								</h5>
-							</div>
-							<div class="panel-footer clearfix">
-								<div class="col-sm-offset-3 col-xs-6 col-sm-3">
-									<button type="submit" class="btn btn-primary btn-block"
-										onclick="return confirm('${message(code: 'order.confirm.message')}');">
-										<i class="glyphicon glyphicon-ok"></i>&nbsp; Submit
-									</button>
+								<div class="form-group">
+									<g:form id='coupon_code' name="offerForm"
+										controller="patientProfile">
+										<label for="offerCode" class="col-sm-4 control-label">Offer
+											code :</label>
+										<div class="col-sm-7">
+											<div class="order-input-icon">
+												<input id="offercode_input" class="form-control"
+													name="offerCode" placeholder="Enter offer code" type="text"
+													maxlength="100" value="${orderDetails?.offerCode}">
+												<g:submitToRemote class="coupon-code-input" update="offerCodeFeedback"
+													action="isValidOfferCode" value="Apply"/>
+											</div>
+											<div id="offerCodeFeedback" style="color: blue;"></div>
+										</div>
+									</g:form>
 								</div>
-								<div class="col-xs-6 col-sm-3">
-									<button type="button" class="btn btn-success btn-block"
-										onclick="history.go(-1);return true;">
-										<i class="glyphicon glyphicon-menu-left"></i> Go Back
-									</button>
+
+								<div class="bg-default text-center">
+									<h5>
+										<span class="text-danger"><g:message
+												code="order.prescription.message" /></span>
+									</h5>
+								</div>
+								<div class="panel-footer clearfix">
+									<div class="col-sm-offset-3 col-xs-6 col-sm-3">
+										<button id="order_submit" type="submit" class="btn btn-primary btn-block"
+											onclick="return confirm('${message(code: 'order.confirm.message')}');">
+											<i class="glyphicon glyphicon-ok"></i>&nbsp; Submit
+										</button>
+									</div>
+									<div class="col-xs-6 col-sm-3">
+										<button type="button" class="btn btn-success btn-block"
+											onclick="history.go(-1);return true;">
+											<i class="glyphicon glyphicon-menu-left"></i> Go Back
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+						</div>
 				</g:form>
 			</div>
 		</div>
 	</div>
 
-
+<%--	<script>--%>
+<%--		$('#order_submit').click(function() {--%>
+<%--		    $('#offercode_input').val($('#reg_email').val());--%>
+<%--		    $('#order_form').submit();--%>
+<%--		    });--%>
+<%--	</script>--%>
 </body>
 </html>

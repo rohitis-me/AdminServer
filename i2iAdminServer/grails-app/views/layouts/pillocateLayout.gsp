@@ -12,15 +12,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title><g:layoutTitle default="i2i" /></title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="">
 <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.png')}" type="image/x-icon">
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}">
-<%--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap-theme.css')}" type="text/css">--%>
-<link rel="stylesheet" href="${resource(dir: 'css', file: 'style.css')}" type="text/css">
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'font-awesome.css')}" type="text/css">
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'style.css')}" type="text/css">
 <g:javascript library="application" />
 
 <!-- Google Analytics -->
@@ -55,8 +53,8 @@
    <ul class="footer-link text-center">
 <%--        <li><a href="">About Us</a></li>--%>
         <li><a href="${createLink(controller:'feedback', action:'feedback')}">Contact Us</a></li>
-        <li><a href="">Terms &amp; Conditions</a></li>
-        <li><a href="">Privacy Policy</a></li>                        
+        <li><a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></li>
+        <li><a href="${createLink(uri:'/privacyPolicy')}">Privacy Policy</a></li>     
     </ul>
 <%--    <article class="Footer-social clearfix">--%>
 <%--        <ul>--%>

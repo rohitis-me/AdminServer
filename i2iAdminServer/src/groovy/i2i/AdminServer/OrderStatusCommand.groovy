@@ -30,6 +30,7 @@ class OrderStatusCommand {
 	long orderId
 	int quantity
 	String trackingId
+	String offerCode
 	
 	static constraints = {
 		name nullable:false, blank:false,size:1..100
@@ -45,5 +46,6 @@ class OrderStatusCommand {
 		storeCircle nullable:false, blank:false,size:3..100
 		storeState nullable:false, blank:false,size:3..100
 		trackingId nullable:true, blank:true,size:1..100
+		offerCode nullable:true, blank:true,size:1..100
 	}
 }

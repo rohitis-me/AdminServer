@@ -52,7 +52,7 @@ class SearchService {
 		if(circle == 'Thiruvanmiyur')
 		circleList.add('Kottivakkam')
 		
-		if(circle == 'Kandanchavadi')
+		if(circle == 'Kandanchavadi' || circle == 'Adyar' || circle == 'Besant Nagar')
 			circle = 'Kottivakkam'
 
 		List storeList = storeService.getStoresFromCircleList(circleList)

@@ -100,25 +100,26 @@
 	<%--<br/>--%>
 	<%--	<g:set var="brandId" value="${brandId}"></g:set>--%>
 	<%--	<g:set var="inventoryId" value="${inventoryId}"></g:set>--%>
+	
+	    <div class="container">
+<%--       <h1 class="site-header">Online portal to find medicines near you </h1>--%>
+       <div class="row">
 	<g:render template="/template/searchBox"></g:render>
 
-
-	<div class="container">
-		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<g:if test="${storesList }">
 					<g:if test="${!availabilityFlag }">
 						<div align="center">
-							<p style="color: red;"> <g:message code="search.result.unavailable"
+							<label style="color: red;"> <g:message code="search.result.unavailable"
 									default="Currently unavailable. You could place an order under the following stores." />
-							</p>
+							</label>
 						</div>
 					</g:if>
 					<div align="center">
-						<p>
+						<label>
 							<g:message code="search.select.store"
 								default="Select a store to proceed" />
-						</p>
+						</label>
 					</div>
 					<div class="form-horizontal">
 						<div class="panel panel-default order-panel">
@@ -174,8 +175,8 @@
 				</g:if>
 				<g:else>
 					<div align="center">
-						<g:message code="search.result.unavailable"
-							default="The stores in this area are currently offline" />
+						<label style="color: red;"> <g:message code="search.result.unavailable"
+							default="The stores in this area are currently offline" /></label>
 					</div>
 					<%--			<g:if test="${brandId == null || brandId == "" }">--%>
 					<%--			<br/><div align="center"><g:message code="search.result.inputerror" default="Tip: Select brand from auto suggestion."/></div>--%>

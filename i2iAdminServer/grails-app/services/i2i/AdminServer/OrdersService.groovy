@@ -167,9 +167,13 @@ class OrdersService {
 			Orders order = populateOrderFromOrderDetailsCommand(orderDetails)
 			order.personId = patientId
 			order.uId = getUniqueRandomString()
-
 			def orderId = saveOrder(order)
+			
 			if(orderId != 0) {
+				if(grailsApplication.config.env != Constants.env_LOCAL) {
+					OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
+					sendNewOrderEmail(orderDetailsCommand)
+				}
 				return order.uId
 			}
 		}
@@ -189,16 +193,10 @@ class OrdersService {
 		else return getUniqueRandomString()
 	}
 
-	def saveOrder(Orders order, boolean sendMailFlag = true) {
+	def saveOrder(Orders order) {
 		println "in save order"
 		if(order.save(flush:true)) {
 			println "saveorder success"
-			boolean chkSendMail = (sendMailFlag && !(grailsApplication.config.env == Constants.env_LOCAL))
-			if(chkSendMail) {
-				OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
-				sendEmail(orderDetailsCommand)
-			}
-
 			return order.orderId
 		}
 		else {
@@ -234,8 +232,12 @@ class OrdersService {
 		else if(orderstatus=="0") order.orderStatus = Constants.ORDER_REJECTED
 		else order.orderStatus = Constants.ORDER_PLACED
 
-		def status = saveOrder(order, false)
-
+		def status = saveOrder(order)
+		
+		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
+				OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
+				sendOrderStatusChangeEmail(orderDetailsCommand)
+		}
 		return status
 	}
 
@@ -244,7 +246,11 @@ class OrdersService {
 		order.orderStatus = Constants.ORDER_ACCEPTED
 
 		def status = saveOrder(order)
-
+		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
+			OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
+			sendOrderStatusChangeEmail(orderDetailsCommand)
+		}
+		
 		return status
 	}
 
@@ -254,10 +260,28 @@ class OrdersService {
 		order.orderStatus = Constants.ORDER_REJECTED
 
 		def status = saveOrder(order)
-
+		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
+			OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
+			sendOrderStatusChangeEmail(orderDetailsCommand)
+		}
+		
 		return status
 	}
 
+	def cancelOrderAndSave(def orderId) {
+		println "orderid: "+orderId
+		Orders order = getOrderFromOrderId(orderId)
+		order.orderStatus = Constants.ORDER_REJECTED
+
+		def status = saveOrder(order)
+		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
+			OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
+			sendOrderCancelEmail(orderDetailsCommand)
+		}
+		
+		return status
+	}
+	
 	def getListOfOrdersFromStoreId(String storeId) {
 		//		println "getListOfOrdersFromStoreId: "+storeId
 		List orderList = Orders.findAllByStoreId(storeId)
@@ -278,12 +302,46 @@ class OrdersService {
 		return orderDetailsList
 	}
 
-	def sendEmail(OrderDetailsCommand orderDetails) {
+	def sendNewOrderEmail(OrderDetailsCommand orderDetails) {
 		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
 		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
 		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
 		//		println "OrderDEtailsCommand: "+orderDetails.properties
-		emailService.sendOrderMail(emailId, "Order@i2i", orderDetails)
-		emailService.sendTrackingIdToCustomer("Pillocate: Tracking Details", orderDetails, store)
+		emailService.sendOrderMail(emailId, Constants.mailSubject_NewOrder_Admin, orderDetails)
+		emailService.sendTrackingIdToCustomer(Constants.mailSubject_NewOrder_Consumer, orderDetails, store)
+	}
+	
+	def sendOrderCancelEmail(OrderDetailsCommand orderDetails) {
+		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
+		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
+		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+		//		println "OrderDEtailsCommand: "+orderDetails.properties
+		emailService.sendOrderMail(emailId, Constants.mailSubject_OrderCancel_Admin, orderDetails)
+		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer, orderDetails, store)
+	}
+	
+	def sendOrderStatusChangeEmail(OrderDetailsCommand orderDetails) {
+		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
+		if(orderDetails.orderStatus == Constants.ORDER_ACCEPTED){
+			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+			emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderAccepted_Consumer, orderDetails, store)
+		}
+		else if(orderDetails.orderStatus == Constants.ORDER_REJECTED){
+			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+			emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderRejected_Consumer, orderDetails, store)
+		}
+	}
+	
+	def checkOfferCode(String offerCode){
+		offerCode = offerCode?.toUpperCase()
+		if (offerCode) {
+			if (offerCode.equals('PH137') || offerCode.equals('AP137') || offerCode.equals('SM137') || offerCode.equals('CS137') || offerCode.equals('HS137')) {
+				return offerCode// true//'Coupon code entered is invalid. Click "Continue" to confirm order anyway. Click "Retry" to enter coupon code again'
+			}
+			else
+				return ""
+		}
+		else
+			return ""
 	}
 }

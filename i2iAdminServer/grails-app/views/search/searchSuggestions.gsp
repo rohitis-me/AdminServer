@@ -15,15 +15,15 @@
 
 	<%--<br/>--%>
 	<%--	<g:set var="brandId" value="${brandId}"></g:set>--%>
-	<g:render template="/template/searchBox"></g:render>
 
 	<div class="container">
 		<div class="row">
+	<g:render template="/template/searchBox"></g:render>
 			<div class="col-md-10 col-md-offset-1">
 				<g:if test="${drugList}">
 					<div align="center">
-						${drugList.size()}<g:message code="search.result.medicine.found"
-							default=" medicines found!" />
+						<label>${drugList.size()}<g:message code="search.result.medicine.found"
+							default=" medicines found!" /></label>
 					</div>
 					<div class="form-horizontal">
 						<div class="panel panel-default order-panel">
@@ -74,8 +74,8 @@
 				</g:if>
 							<g:else>
 								<div align="center">
-									<g:message code="search.result.unavailable"
-										default="No medicines found!" />
+									<label class="control-label" style="color: red;"> <g:message code="search.result.unavailable"
+										default="Medicine not found. Please try again!" /></label>
 								</div>
 								<%--			<g:if test="${brandId == null || brandId == "" }">--%>
 								<%--			<br/><div align="center"><g:message code="search.result.inputerror" default="Tip: Select brand from auto suggestion."/></div>--%>

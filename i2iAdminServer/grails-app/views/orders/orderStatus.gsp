@@ -7,7 +7,7 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'order.status.label', default: 'Order Status')}" />
-<title>pillocate | Order Status</title>
+<title>Pillocate | Order Status</title>
 <meta http-equiv="refresh" content="90">
 <%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
 <%--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">--%>
@@ -17,11 +17,16 @@
 	<g:render template="/template/navigationConsumer" />
 
 	<g:if test="${flash.message}">
-		<div class="message" role="status">
+		<div class="message" role="status" align="center">
 			${flash.message}
 		</div>
 	</g:if>
-
+	<g:elseif test="${orderStatusCommand?.offerCode}">
+		<div class="message" align="center" style="color: white; background: #5cb85c;">
+			<g:message code="orderStatus.couponCode.success.message" args="${[orderStatusCommand?.offerCode]}"/>
+		</div>
+		<br/>
+	</g:elseif>
 	<g:render template="/template/orderStatus" />
 
 	<div class="pagination">

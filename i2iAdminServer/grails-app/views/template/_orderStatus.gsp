@@ -70,7 +70,11 @@
 								<td><span class="label-control">Expected Delivery: </span></td>
 								<td><g:formatDate
 										date="${orderStatusCommand.estimatedDeliveryTime }"
-										format="${Constants.dateFormat }" /></td>
+										format="${Constants.dateFormat }" /> 
+								<g:if test="${orderStatus == Constants.ORDER_PLACED}">
+								<g:message code="orderStatus.estimateddeliverytime.accept.pending" default="(approximate)"/>
+								</g:if>
+								</td>
 							</tr>
 							<tr>
 								<td><span class="label-control">Seller: </span></td>
