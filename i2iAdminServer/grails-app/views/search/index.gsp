@@ -30,7 +30,7 @@
                       <span>or</span>
                     <div class="line r"></div>
                 </div>
-                <p class="call-us"><i class="fa fa-phone-square"></i> Call us/ <span class="text-success"><i class="fa fa-whatsapp"></i> whatsapp</span>/ <span class="text-primary"><i class="fa fa-mobile"></i> SMS on <span class="text-">+91-9591729831</span></span> to <br><span class="text-order">Place your order now!</span></p>
+                <p class="call-us"><i class="fa fa-phone-square"></i> Call us/ <span class="text-success"><i class="fa fa-whatsapp"></i> whatsapp</span>/ <span class="text-primary"><i class="fa fa-mobile"></i> SMS on <span class="text-">+91-9591729831</span></span> to <br><span class="text-order" style="font-family: Helvetica,Arial,sans-serif">Place your order now!</span></p>
               </div>
             </div>
          </div>

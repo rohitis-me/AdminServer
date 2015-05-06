@@ -12,6 +12,7 @@ class Orders {
 	String uId
 	int quantity
 	boolean isEmergencyDeliveryNeeded
+	String offerCode
 	
     static constraints = {
 		personId nullable:false, blank:false,size:1..100
@@ -20,6 +21,7 @@ class Orders {
 		storeId nullable:false, blank:false,size:1..100
 		estimatedDeliveryTime nullable:true, blank:true
 		uId nullable:false, blank:false,size:1..100
+		offerCode nullable:true, blank:true,size:1..100
 	}
 	
 	static mapping = {

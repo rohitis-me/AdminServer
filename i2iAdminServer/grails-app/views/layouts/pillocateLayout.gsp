@@ -33,15 +33,18 @@
 </script>
 <!-- End Google Analytics -->
 <!-- OPENTRACKER START -->
-<script defer
-	src="https://script.opentracker.net/?site=demo.pillocate.com"></script>
+<g:if test="${grailsApplication.config.env == Constants.env_PROD}">
+<script defer src="https://script.opentracker.net/?site=www.pillocate.com"></script>
+</g:if>
+<g:if test="${grailsApplication.config.env == Constants.env_DEMO}">
+<script defer src="https://script.opentracker.net/?site=demo.pillocate.com"></script>
+</g:if>
 <!-- OPENTRACKER END -->
 <!-- DESIGN START -->
 	<script src="${resource(dir: 'js', file: '1.11.2.jquery.min.js')}"></script>
 	<script src="${resource(dir: 'js', file: 'bootstrap.min.js')}"></script>
 	<script src="${resource(dir: 'js', file: 'site-min.js')}"></script>
 <!-- DESIGN END -->
-
 <r:require module="jquery-ui" />
 <g:layoutHead />
 <r:layoutResources />

@@ -111,7 +111,7 @@
 					<g:if test="${!availabilityFlag }">
 						<div align="center">
 							<label style="color: red;"> <g:message code="search.result.unavailable"
-									default="Currently unavailable. You could place an order under the following stores." />
+									default="This medicine is unavailable in your local pharmacy. You could try placing an order with alternate stores below, and you will be notified if they are available." />
 							</label>
 						</div>
 					</g:if>
@@ -162,7 +162,7 @@
 														code="search.list.homedelivery"
 														message="Home Delivery Available" /></span><br> <g:message
 													code="search.list.etd" message="Delivery in: " /> ${deliveryHours}
-												hours</td>
+												hours (subject to order acceptance by pharmacy)</td>
 
 											<%--						<td>${fieldValue(bean: storeInstance, field: "availabilityIndex")}</td>--%>
 

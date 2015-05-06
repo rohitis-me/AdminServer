@@ -64,6 +64,7 @@ class OrdersService {
 		orderDetails.orderStatus = order.orderStatus
 		orderDetails.trackingId = order.uId
 		orderDetails.isEmergencyDeliveryNeeded = order.isEmergencyDeliveryNeeded
+		orderDetails.offerCode = order.offerCode
 		return orderDetails
 	}
 
@@ -94,6 +95,7 @@ class OrdersService {
 		orderStatusCommand.quantity = order.quantity
 		orderStatusCommand.trackingId = order.uId
 		orderStatusCommand.estimatedDeliveryTime = order.estimatedDeliveryTime
+		orderStatusCommand.offerCode = order.offerCode
 		return orderStatusCommand
 	}
 	//FIXME
@@ -103,7 +105,8 @@ class OrdersService {
 		order.inventoryId = orderDetailsCommand.inventoryId
 		order.storeId = orderDetailsCommand.storeId
 		order.quantity = orderDetailsCommand.quantity
-
+		order.offerCode = orderDetailsCommand.offerCode
+		
 		if(orderDetailsCommand.orderId)
 			order.orderId = orderDetailsCommand.orderId
 

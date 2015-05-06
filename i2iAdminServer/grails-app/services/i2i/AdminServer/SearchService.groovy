@@ -49,11 +49,11 @@ class SearchService {
 		List circleList = new ArrayList<String>()
 		circleList.add(circle)
 		//FIXME: temp fix
-		if(circle == 'Thiruvanmiyur')
-		circleList.add('Kottivakkam')
+//		if(circle == 'Thiruvanmiyur')
+//		circleList.add('Kottivakkam')
 		
 		if(circle == 'Kandanchavadi' || circle == 'Adyar' || circle == 'Besant Nagar')
-			circle = 'Kottivakkam'
+			circleList.add('Kottivakkam')
 
 		List storeList = storeService.getStoresFromCircleList(circleList)
 		println "getListOfStoresInCircle: "+storeList

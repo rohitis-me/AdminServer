@@ -41,14 +41,14 @@
 					<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>
 				</g:else>
 
-				<sec:ifNotLoggedIn>
-					<g:if test="${entityName== 'Login' }">
-						<li class="active"><g:link controller="login" action="auth">Login</g:link></li>
-					</g:if>
-					<g:else>
-						<li><g:link controller="login" action="auth">Login</g:link></li>
-					</g:else>
-				</sec:ifNotLoggedIn>
+<%--				<sec:ifNotLoggedIn>--%>
+<%--					<g:if test="${entityName== 'Login' }">--%>
+<%--						<li class="active"><g:link controller="login" action="auth">Login</g:link></li>--%>
+<%--					</g:if>--%>
+<%--					<g:else>--%>
+<%--						<li><g:link controller="login" action="auth">Login</g:link></li>--%>
+<%--					</g:else>--%>
+<%--				</sec:ifNotLoggedIn>--%>
 				<%--				<sec:ifAllGranted roles="ROLE_CONSUMER">--%>
 				<%--					<g:if test="${entityName== 'MyAccount' }">--%>
 				<%--						<li><g:link class="current" controller="login" action="auth">My Account</g:link></li>--%>

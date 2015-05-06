@@ -23,6 +23,9 @@ Thanks for ordering at pillocate! Please find your order details below,
 Order Name: ${orderDetails.brandName }<br>
 Tracking Id: ${orderDetails.trackingId }<br>
 Quantity: ${orderDetails.quantity }
+<g:if test="${orderDetails.orderStatus > Constants.ORDER_ACCEPTED}">
+Expected delivery time: <g:formatDate date="${orderDetails.estimatedDeliveryTime}" format="${Constants.dateFormat }" /> 
+</g:if>
 </p>
 
 <p>
