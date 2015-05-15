@@ -211,15 +211,31 @@ grails.plugin.springsecurity.ui.password.maxLength = 20
 //	'/**/favicon.ico':                ['permitAll']
 //]
 
+//grails {
+//	mail {
+//		host = "smtp.gmail.com"
+//		port = 465
+//		if(env == Constants.env_PROD)
+//			username = "i2itechnologypvtltd@gmail.com"
+//		else
+//			username = "noreply.pillocate@gmail.com"
+//		password = "support@i2i"
+//		props = ["mail.smtp.auth":"true",
+//			"mail.smtp.socketFactory.port":"465",
+//			"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+//			"mail.smtp.socketFactory.fallback":"false"]
+//	}
+//}
+
 grails {
 	mail {
-		host = "smtp.gmail.com"
-		port = 465
-		username = "i2itechnologypvtltd@gmail.com"
-		password = "support@i2i"
-		props = ["mail.smtp.auth":"true",
-			"mail.smtp.socketFactory.port":"465",
-			"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-			"mail.smtp.socketFactory.fallback":"false"]
+	  host = "smtp.zoho.com"
+	  username = "support@i2itech.co.in"
+	  password = "support@123"
+	  port = 465
+	  props = ["mail.smtp.auth":"true",
+			   "mail.smtp.socketFactory.port":"465",
+			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			   "mail.smtp.socketFactory.fallback":"false"]
 	}
-}
+  }

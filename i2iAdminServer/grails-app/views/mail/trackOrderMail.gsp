@@ -44,7 +44,9 @@ ${orderDetails.city }<br>
 <h2>
 Seller Details
 </h2>
+<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">
 Your order has been placed at ${storeInstance.storeName }. Please find contact details below,
+</g:if>
 <br>
 Phone number: ${storeInstance.phoneNumber }
 <br>

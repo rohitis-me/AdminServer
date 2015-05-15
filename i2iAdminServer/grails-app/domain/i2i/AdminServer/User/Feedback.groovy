@@ -6,7 +6,7 @@ class Feedback {
 	String message
 	
 	static constraints = {
-		name nullable:false, blank:false,size:1..100
+		name nullable:true, blank:true,size:1..100
 		message nullable:false, blank:false,size:1..1000
 		emailID nullable:true, blank:true,size:3..100
 	}

@@ -67,12 +67,9 @@ class PatientProfileController {
 	def isValidOfferCode(){
 		String couponCode = params.offerCode?.toUpperCase()
 		println "isValidOfferCode: "+params
-		if (couponCode) {
-			if (couponCode.equals('PH137') || couponCode.equals('AP137') || couponCode.equals('SM137') || couponCode.equals('CS137') || couponCode.equals('HS137')) {
+		couponCode = ordersService.checkOfferCode(couponCode)
+		if (!couponCode.equals("")) {
 				render 'Coupon code applied successfully!'// true//'Coupon code entered is invalid. Click "Continue" to confirm order anyway. Click "Retry" to enter coupon code again'
-			}
-			else
-				render 'Invalid coupon code'
 		}
 		else
 			render 'Invalid coupon code' 

@@ -23,6 +23,7 @@ class EmailService {
 			mailService.sendMail {
 				async true
 				to toAdd
+				from "i2i Support  <support@i2itech.co.in>"
 				subject mailSubject
 				body msg
 			}
@@ -45,6 +46,7 @@ class EmailService {
 				mailService.sendMail {
 					async true
 					to toAdd
+					from "i2i Support  <support@i2itech.co.in>"
 					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/orderMail",
@@ -54,6 +56,7 @@ class EmailService {
 			else {
 				mailService.sendMail {
 					to Constants.adminEmail
+					from "i2i Support  <support@i2itech.co.in>"
 					subject mailSubject
 					body( view:"/mail/orderMail",
 					model:[orderDetails:orderDetails])
@@ -80,6 +83,7 @@ class EmailService {
 				mailService.sendMail {
 					async true
 					to toAdd
+					from "i2i Support  <support@i2itech.co.in>"
 					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/trackOrderMail",
@@ -94,6 +98,7 @@ class EmailService {
 				mailService.sendMail {
 					async true
 					to Constants.adminEmail
+					from "i2i Support  <support@i2itech.co.in>"
 					subject mailSubject
 					body( view:"/mail/trackOrderMail",
 					model:[orderDetails:orderDetails, storeInstance: store])

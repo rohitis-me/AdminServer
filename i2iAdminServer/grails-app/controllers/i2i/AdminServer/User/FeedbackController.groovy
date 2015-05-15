@@ -6,12 +6,13 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import i2i.AdminServer.Constants
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 class FeedbackController {
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	EmailService emailService
+	FeedbackService feedbackService
 	
 //	def index(Integer max) {
 //		params.max = Math.min(max ?: 10, 100)
@@ -32,18 +33,23 @@ class FeedbackController {
 	def sendFeedback(){
 		println "PARAMS: "+params
 		
-		String body = "Name: "+params.name + "\n Email: "+params.emailID+ "\n Message: "+params.message
+		String body = "Name: "+params.name + "\nEmail: "+params.emailID+ "\nMessage: "+params.message
 		emailService.sendEMail (
 			Constants.supportEmail,
 			message(code: 'email.subject.feedback'),
 			body)
 
-		request.withFormat {
-			form multipartForm {
+		def status = feedbackService.saveFeedback(params.name, params.emailID, params.message)
+		
+		if(status == 0)
+			flash.message = message(code: 'feedback.not.received.message', default: 'Error in processing your request. Please try again!')
+		else
+//		request.withFormat {
+//			form multipartForm {
 				flash.message = message(code: 'feedback.received.message', default: 'Your feedback has been recorded. Thanks!')
 				//redirect storeInstance
-			}
-		}
+//			}
+//		}
 			
 		render(view:'feedback')
 	}

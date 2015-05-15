@@ -2,6 +2,8 @@ package i2i.AdminServer
 
 import grails.converters.JSON
 import i2i.AdminServer.ClientSync.InventoryService
+import i2i.AdminServer.User.EmailService;
+import i2i.AdminServer.User.FeedbackService;
 import i2i.AdminServer.Constants
 //import com.google.gson.reflect.TypeToken
 
@@ -12,7 +14,9 @@ class WebserviceController {
 	BrandDatabaseService brandDatabaseService
 	StoreService storeService
 	OrdersService ordersService
-
+	EmailService emailService
+	FeedbackService feedbackService
+	
 //	//GsonBuilder
 //	def gsonBuilder
 
@@ -187,7 +191,15 @@ class WebserviceController {
 
 	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
 		println "ODC: "+orderDetailsCommand.properties
-
+		
+		orderDetailsCommand.offerCode = ordersService.checkOfferCode(orderDetailsCommand.offerCode)
+		
+		if (orderDetailsCommand.hasErrors()) {
+			def orderStatus = ['orderDetails':orderDetailsCommand]
+			render orderStatus as JSON
+			return
+		}
+		
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
 
 		println "orderId: "+uId
@@ -269,5 +281,57 @@ class WebserviceController {
 			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
 //			render(view: "trackOrderStatus",model: [trackingId:trackingId])
 		}
+	}
+	
+	def cancelOrder() {
+		def orderId = params.orderId
+		def status = ordersService.cancelOrderAndSave(orderId)
+
+		if(status == 0)
+			render (text: "Error in proccessing your request. Please try again later!")
+		else{
+			def order = ordersService.getOrderFromOrderId(orderId)
+			render order as JSON
+		}
+	}
+	
+	def sendFeedback(){
+		println "PARAMS: "+params
+		
+		String body = "Name: "+params.name + "\nEmail: "+params.emailID+ "\nMessage: "+params.message
+		emailService.sendEMail (
+			Constants.supportEmail,
+			message(code: 'email.subject.feedback'),
+			body)
+
+		def status = feedbackService.saveFeedback(params.name, params.emailID, params.message)
+		
+		if(status == 0)
+			render (text: "Error in processing your request. Please try again!")
+		else
+			render (text: "Your feedback has been recorded. Thanks!")
+				
+//		request.withFormat {
+//			form multipartForm {
+//				render (text: "Your feedback has been recorded. Thanks!")
+//			}
+//		}		
+	}
+	
+	def getCircleArray(){
+		
+		def circleArray = ['circleArray':Constants.circleArray]
+		
+		render circleArray as JSON
+	}
+	
+	def isValidOfferCode(){
+		String couponCode = params.offerCode?.toUpperCase()
+		couponCode = ordersService.checkOfferCode(couponCode)
+		if (!couponCode.equals("")) {
+				render (text: 'Coupon code applied successfully!')// true//'Coupon code entered is invalid. Click "Continue" to confirm order anyway. Click "Retry" to enter coupon code again'
+		}
+		else
+			render (text: 'Invalid coupon code')
 	}
 }

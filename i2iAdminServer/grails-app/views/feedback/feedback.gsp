@@ -26,18 +26,19 @@
                     <div class="panel-body">
                     <div class="alert alert-default">Have a complaint, suggestion or query? Write to us</div>
                       <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-4 control-label"><span class="text-danger">*</span> Name : </label>
+                        <label for="inputEmail3" class="col-sm-4 control-label"><span class="text-danger"></span> Name : </label>
                         <div class="col-sm-7">
-                          <input name="name" class="form-control" required="required" placeholder="Full Name" type="text">
+                          <input name="name" class="form-control" placeholder="Full Name" type="text">
                         </div>
                       </div>
                       
                       
                       <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-4 control-label"><span class="text-danger"></span> Email Id : </label>
+                        <label for="inputEmail3" class="col-sm-4 control-label"><span class="text-danger"></span> Email Id <g:message code="feedback.email.helptext" default="(for us to respond)"/> : </label>
                         <div class="col-sm-7">
                           <input class="form-control" placeholder="Email id" name="emailID"
 							type="email" maxlength="100">
+							
                         </div>
                       </div>
                       <div class="form-group">

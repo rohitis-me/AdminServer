@@ -1,3 +1,15 @@
+<style type="text/css">
+.h-toll-free {
+    color: #777;
+    font-size: 14px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: 0 3px;
+    display: block;
+    position:relative;
+}
+</style>
+
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default">
 	<div class="container">
@@ -61,6 +73,7 @@
 				<sec:ifLoggedIn>
 					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 				</sec:ifLoggedIn>
+				<li><p class="h-toll-free"><i class="glyphicon glyphicon-earphone"></i>+91-9591729831</p> </li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->

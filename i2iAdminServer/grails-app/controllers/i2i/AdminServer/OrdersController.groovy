@@ -136,7 +136,7 @@ class OrdersController {
 		def status = ordersService.cancelOrderAndSave(orderId)
 
 		if(status == 0)
-			render "error"
+			render "Error in proccessing your request. Please try again later!"
 		else{
 			redirect (controller: 'search', action: 'index')
 		}

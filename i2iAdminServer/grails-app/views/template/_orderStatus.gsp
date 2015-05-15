@@ -108,7 +108,7 @@
 										${message(code: 'order.place.next.button', default: 'Next Order')}
 									</button>
 								</div>
-								<g:if test="${orderStatus != Constants.ORDER_DELIVERED}">
+								<g:if test="${orderStatus != Constants.ORDER_DISPATCHED && orderStatus != Constants.ORDER_DELIVERED}">
 								<div class="col-xs-6 col-sm-3">
 									<button type="submit" class="btn btn-danger btn-block"
 										name="_action_cancelOrder"

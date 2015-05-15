@@ -35,6 +35,7 @@ class UrlMappings {
 		
 		//Errors
         "500"(view:'/errors/serverError')
+		"404"(view:'/errors/pageNotFound')
 		
 		"/privacyPolicy"(view:'/policies/privacyPolicy')
 		"/termsConditions"(view:'/policies/termsConditions')

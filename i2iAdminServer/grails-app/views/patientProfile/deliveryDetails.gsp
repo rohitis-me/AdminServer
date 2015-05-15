@@ -193,7 +193,7 @@
 									<div class="col-sm-7">
 										<input class="form-control" name="addressLine2"
 											value="${orderDetails?.addressLine2}" pattern=".{3,}"
-											required="required" maxlength="100"
+											maxlength="100"
 											title='Minimum 3 characters' />
 										<g:hasErrors bean="${orderDetails}" field="addressLine2">
 											<g:eachError bean="${orderDetails}" field="addressLine2">
@@ -261,7 +261,19 @@
 										</div>
 									</g:form>
 								</div>
+								
+								<div class="form-group">
+<%--								<label for="termsConditions" class="checkbox-inline"> <input--%>
+<%--										class="grey remember" type="checkbox" required="required"/> I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a>--%>
+<%--								</label>--%>
+									<label for="inputEmail3" class="col-sm-4 control-label"><input
+										class="grey remember" type="checkbox" required="required"/></label>
+									<div class="col-sm-8">
+										<label class="order-info">I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></label>
+									</div>
+								</div>
 
+									
 								<div class="bg-default text-center">
 									<h5>
 										<span class="text-danger"><g:message
