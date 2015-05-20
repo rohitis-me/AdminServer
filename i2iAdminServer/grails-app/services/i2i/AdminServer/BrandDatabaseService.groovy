@@ -112,7 +112,7 @@ class BrandDatabaseService {
 
 	def getBrandDataMap(BrandDataCommand brandDataCommand){
 		Map brandMap = [:]
-		brandMap.put("id", brandDataCommand.inventoryId)//brandId}")
+		brandMap.put("id", brandDataCommand.inventoryId)//brandId}")done because of jquery auto complete
 		brandMap.put("name", brandDataCommand.brandId)
 		brandMap.put("label", brandDataCommand.brandName)
 		return brandMap

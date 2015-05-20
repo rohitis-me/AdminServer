@@ -66,6 +66,9 @@ grails.project.dependency.resolution = {
 		//plugin for mail support
 		compile ":mail:1.0.7"
 		
+		//plugin for file attachment
+		runtime ":aws:1.9.13.3"
+		
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.18" // or ":hibernate4:4.3.5.1"
         runtime ":database-migration:1.4.0"

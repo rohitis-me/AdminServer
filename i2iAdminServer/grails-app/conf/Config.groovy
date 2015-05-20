@@ -239,3 +239,27 @@ grails {
 			   "mail.smtp.socketFactory.fallback":"false"]
 	}
   }
+
+grails {
+	plugin {
+	   aws {
+		  credentials {
+			 accessKey = "AKIAI6DDA3BJ7CD4Z6WA"
+			 secretKey = "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"
+		  }
+	   }
+	}
+ }
+
+grails {
+	plugin {
+	   aws {
+		  s3 {
+			 bucket = "grails-plugin-test"
+			 bucketLocation = "US East (N. Virginia)"
+			 acl = "private"
+		  }
+	   }
+	}
+ }
+
