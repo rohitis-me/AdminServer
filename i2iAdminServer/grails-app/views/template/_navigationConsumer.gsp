@@ -81,3 +81,9 @@
 	<!-- /.container -->
 </nav>
 <!-- Begin page content -->
+
+<script type="text/javascript">
+    mixpanel.track_links("#site-navbar-collapse a", "Clicked nav link", {
+        "referrer": document.referrer
+    });
+</script>

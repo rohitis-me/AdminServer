@@ -39,10 +39,15 @@
 				console.log("in else")
 				}
 			}
+			
+			$("searchForm").onSubmit(function(){
+    			mixpanel.track("Searched for Medicine");
+			}); 
+			
 </g:javascript>
 
 <div class="col-md-10 col-md-offset-1">
-	<g:form class='search_form' controller="search" action="search" method="get">
+	<g:form class='search_form' controller="search" action="search" method="get" id="searchForm">
 		<div class="row clearfix">
 			<div class="col-sm-6">
 				<div class="form-group">

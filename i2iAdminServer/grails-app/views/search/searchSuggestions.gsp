@@ -87,5 +87,16 @@
 	</div>
 
 <br/>
+
+	<script>
+		$(document).ready(function() {
+			mixpanel.track("Search Suggestions displayed");
+		});
+<%--		$('#reg_submit').click(function() {--%>
+<%--		    $('#reg_user_name').val($('#reg_email').val());--%>
+<%--		    $('#registerForm').submit();--%>
+<%--		    });--%>
+
+	</script>
 </body>
 </html>

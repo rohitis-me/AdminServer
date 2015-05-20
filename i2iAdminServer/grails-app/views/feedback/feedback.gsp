@@ -98,5 +98,16 @@
 <%--		</div>--%>
 <%--	</g:form>--%>
 <%--	<br />--%>
+
+	<script>
+		$(document).ready(function() {
+			mixpanel.track("Clicked Feedback link");
+		});
+<%--		$('#reg_submit').click(function() {--%>
+<%--		    $('#reg_user_name').val($('#reg_email').val());--%>
+<%--		    $('#registerForm').submit();--%>
+<%--		    });--%>
+
+	</script>
 </body>
 </html>

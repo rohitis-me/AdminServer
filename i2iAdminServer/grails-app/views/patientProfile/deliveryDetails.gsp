@@ -288,7 +288,7 @@
 										</button>
 									</div>
 									<div class="col-xs-6 col-sm-3">
-										<button type="button" class="btn btn-success btn-block"
+										<button id="go_back" type="button" class="btn btn-success btn-block"
 											onclick="history.go(-1);return true;">
 											<i class="glyphicon glyphicon-menu-left"></i> Go Back
 										</button>
@@ -302,11 +302,16 @@
 		</div>
 	</div>
 
-<%--	<script>--%>
-<%--		$('#order_submit').click(function() {--%>
-<%--		    $('#offercode_input').val($('#reg_email').val());--%>
-<%--		    $('#order_form').submit();--%>
-<%--		    });--%>
-<%--	</script>--%>
+	<script>
+		$(document).ready(function() {
+			mixpanel.track("Delivery details displayed");
+		});
+		$('#order_submit').click(function() {
+			mixpanel.track("Order details submitted");
+		    });
+		$('#go_back').click(function() {
+			mixpanel.track("Go back from Order details");
+		    });
+	</script>
 </body>
 </html>

@@ -264,6 +264,15 @@
 		</div>
 	</div>
 
+	<script>
+		$(document).ready(function() {
+			mixpanel.track("Clicked Privacy policy link");
+		});
+<%--		$('#reg_submit').click(function() {--%>
+<%--		    $('#reg_user_name').val($('#reg_email').val());--%>
+<%--		    $('#registerForm').submit();--%>
+<%--		    });--%>
 
+	</script>
 </body>
 </html>

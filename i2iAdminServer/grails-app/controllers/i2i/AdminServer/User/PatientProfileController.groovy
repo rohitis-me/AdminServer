@@ -31,7 +31,6 @@ class PatientProfileController {
 			println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
 			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
 			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
-			println "success"
 		
 			//FIXME
 			orderDetails.circle = orderDetailsCommand.circle
@@ -50,7 +49,6 @@ class PatientProfileController {
 			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
 			orderDetails.inventoryId = orderDetailsCommand.inventoryId
 			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
-			println "success"
 		
 			//FIXME
 			orderDetails.circle = orderDetailsCommand.circle

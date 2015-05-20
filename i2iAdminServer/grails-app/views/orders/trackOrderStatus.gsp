@@ -52,5 +52,11 @@
 		<g:paginate total="${ordersInstanceCount ?: 0}" />
 	</div>
 	<br />
+	
+		<script>
+		$(document).ready(function() {
+			mixpanel.track("Clicked Track Order status link");
+		});
+	</script>
 </body>
 </html>
