@@ -9,7 +9,7 @@ import grails.transaction.Transactional
 class FileAttachmentController {
 	def aws
 	
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+//	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index = {
 	}
@@ -18,15 +18,16 @@ class FileAttachmentController {
 		println "file upload" + params
 		
 		def fileToUpload = "/Users/ChandU/Desktop/pharmas/Adyar.png" 
-		def uploadedFile = new File(fileToUpload).s3upload {path "test/" }
+		def uploadedFile = new File(fileToUpload).s3upload {path "testi2i/" }
 
 		render """${uploadedFile.source.toString()} <br /><br />${uploadedFile.url()}"""
 	}
 
 	def uploadFromInputStream = {
-
-		def file = request.getFile('photo')
-		def uploadedFile = file.inputStream.s3upload("file-name-${System.currentTimeMillis()}.jpg") { bucket "file-upload-from-inputstream" }
+		println "file input" + params
+		def file = request.getFile('inputFile')
+		println "file upload" + file
+		def uploadedFile = file.inputStream.s3upload(file.originalFilename) { path "pictures/" }
 
 		render uploadedFile.source.toString()
 	}

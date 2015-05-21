@@ -21,7 +21,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<g:form controller="fileAttachment" action="uploadWithDefaultProperties">
+				<g:uploadForm controller="fileAttachment" action="uploadWithDefaultProperties">
 					<div class="form-horizontal">
 						<div class="panel panel-default order-panel">
 							<div class="panel-heading text-center">Upload Prescription</div>
@@ -51,7 +51,7 @@
 							</div>
 						</div>
 					</div>
-				</g:form>
+				</g:uploadForm>
 			</div>
 		</div>
 	</div>

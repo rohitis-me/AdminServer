@@ -255,8 +255,8 @@ grails {
 	plugin {
 	   aws {
 		  s3 {
-			 bucket = "grails-plugin-test"
-			 bucketLocation = "US East (N. Virginia)"
+			 bucket = "testi2i"
+			 bucketLocation = "us-east-1"
 			 acl = "private"
 		  }
 	   }
