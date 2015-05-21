@@ -4,44 +4,55 @@ package i2i.AdminServer.User
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import com.amazonaws.services.s3.model.*
 
 //@Transactional(readOnly = true)
 class FileAttachmentController {
-	def aws
-	
-//	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	def amazonWebService
+
+	//	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index = {
 	}
 
-	def uploadWithDefaultProperties = {
-		println "file upload" + params
+	def uploadFile(){
+
+		List buckets = amazonWebService.s3.listBuckets()
+		println "count"+ buckets.size()
+//		buckets.each { Bucket bucket ->
+//			println "bucketName: ${bucket.name}, creationDate: ${bucket.creationDate}"
+//		}
 		
-		def fileToUpload = "/Users/ChandU/Desktop/pharmas/Adyar.png" 
-		def uploadedFile = new File(fileToUpload).s3upload {path "testi2i/" }
-
-		render """${uploadedFile.source.toString()} <br /><br />${uploadedFile.url()}"""
 	}
+	
+//	def uploadWithDefaultProperties = {
+//		println "file upload" + params
+//
+//		def fileToUpload = "/Users/ChandU/Desktop/pharmas/Adyar.png"
+//		def uploadedFile = new File(fileToUpload).s3upload {path "testi2i/" }
+//
+//		render """${uploadedFile.source.toString()} <br /><br />${uploadedFile.url()}"""
+//	}
+//
+//	def uploadFromInputStream = {
+//		println "file input" + params
+//		def file = request.getFile('inputFile')
+//		println "file upload" + file
+//		def uploadedFile = file.inputStream.s3upload(file.originalFilename) { path "pictures/" }
+//
+//		render uploadedFile.source.toString()
+//	}
 
-	def uploadFromInputStream = {
-		println "file input" + params
-		def file = request.getFile('inputFile')
-		println "file upload" + file
-		def uploadedFile = file.inputStream.s3upload(file.originalFilename) { path "pictures/" }
-
-		render uploadedFile.source.toString()
-	}
-
-	def deleteUploadedFile = {
-
-		def bucket = params.bucket
-		def file = params.file
-		def path = params.path
-
-		aws.s3().on(bucket).delete(file, path)
-
-		render "Deleted file ${file} (path '${path}') of bucket ${bucket}"
-	}
+//	def deleteUploadedFile = {
+//
+//		def bucket = params.bucket
+//		def file = params.file
+//		def path = params.path
+//
+//		aws.s3().on(bucket).delete(file, path)
+//
+//		render "Deleted file ${file} (path '${path}') of bucket ${bucket}"
+//	}
 
 
 

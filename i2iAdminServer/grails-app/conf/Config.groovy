@@ -240,26 +240,24 @@ grails {
 	}
   }
 
-grails {
-	plugin {
-	   aws {
-		  credentials {
-			 accessKey = "AKIAI6DDA3BJ7CD4Z6WA"
-			 secretKey = "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"
-		  }
-	   }
-	}
- }
+//grails {
+//	plugin {
+//	   aws {
+//		  credentials {
+//			 accessKey = "AKIAIJP3RBP3MNCVDH3A"
+//			 secretKey = "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"
+//		  }
+//		  s3 {
+//			  bucket = "testi2i"
+//			  bucketLocation = "us-east-1"
+//			  acl = "private"
+//		   }
+//	   }
+//	}
+// }
 
-grails {
-	plugin {
-	   aws {
-		  s3 {
-			 bucket = "testi2i"
-			 bucketLocation = "us-east-1"
-			 acl = "private"
-		  }
-	   }
-	}
- }
+
+grails.plugin.awssdk.accessKey = "AKIAIJP3RBP3MNCVDH3A"
+grails.plugin.awssdk.secretKey = "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"
+grails.plugin.awssdk.region = 'us-east-1'
 
