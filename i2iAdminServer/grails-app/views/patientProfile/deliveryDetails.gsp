@@ -66,14 +66,7 @@
 										</g:elseif>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">Store
-										Name :</label>
-									<div class="col-sm-8">
-										<label class="order-info"> ${storeName}
-										</label>
-									</div>
-								</div>
+
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label">Quantity
 										:</label>
@@ -90,6 +83,15 @@
 										</g:hasErrors>
 									</div>
 								</div>
+								<g:if test="${orderDetails?.deliveryHours}">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-4 control-label">Delivery
+										Time :</label>
+									<div class="col-sm-8">
+										<label class="order-info">${orderDetails?.deliveryHours} hours (subject to order acceptance by pharmacy)</label>
+									</div>
+								</div>
+							</g:if>
 							</div>
 							<div class="bg-default">Delivery details</div>
 
@@ -99,6 +101,9 @@
 							<g:hiddenField name="storeId" value="${orderDetails?.storeId }" />
 							<g:hiddenField name="deliveryHours"
 								value="${orderDetails?.deliveryHours }" />
+							<g:hiddenField name="city" value="${orderDetails?.city }" />
+							<g:hiddenField name="state" value="${orderDetails?.state }" />
+							<g:hiddenField name="country" value="${orderDetails?.country }" />
 
 							<div class="panel-body">
 								<div class="form-group">
@@ -120,57 +125,9 @@
 										</g:hasErrors>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label"><span
-										class="text-danger">*</span> Age : </label>
-									<div class="col-sm-7">
-										<input class="form-control" placeholder="Age" type="number"
-											size="6" name="age" min="0" max="99" required="required"
-											value="${fieldValue(bean: orderDetails, field: 'age')}">
-										<g:hasErrors bean="${orderDetails}" field="age">
-											<g:eachError bean="${orderDetails}" field="age">
-												<p style="color: red;">
-													<g:message error="${it}" />
-												</p>
-											</g:eachError>
-										</g:hasErrors>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">
-										<span class="text-danger">*</span> Phone :
-									</label>
-									<div class="col-sm-7">
-										<input class="form-control" placeholder="Phone No." type="tel"
-											name="phoneNumber" value="${orderDetails?.phoneNumber}"
-											pattern=".{3,}" required="required" maxlength="100"
-											title='Enter valid phone number'>
-										<g:hasErrors bean="${orderDetails}" field="phoneNumber">
-											<g:eachError bean="${orderDetails}" field="phoneNumber">
-												<p style="color: red;">
-													<g:message error="${it}" />
-												</p>
-											</g:eachError>
-										</g:hasErrors>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label"><span
-										class="text-danger">*</span> Email Id : </label>
-									<div class="col-sm-7">
-										<input class="form-control" placeholder="Email id"
-											name="emailID" type="email" maxlength="100"
-											value="${orderDetails?.emailID}" />
-										<g:message code="patientProfile.email.helptext" />
-										<g:hasErrors bean="${orderDetails}" field="emailID">
-											<g:eachError bean="${orderDetails}" field="emailID">
-												<p style="color: red;">
-													<g:message error="${it}" />
-												</p>
-											</g:eachError>
-										</g:hasErrors>
-									</div>
-								</div>
+								
+<%--																</div>--%>
+								
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label"><span
 										class="text-danger">*</span> Address : </label>
@@ -188,6 +145,7 @@
 										</g:hasErrors>
 									</div>
 								</div>
+								
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label"></label>
 									<div class="col-sm-7">
@@ -213,30 +171,44 @@
 											(Delivery restricted to this area)</label>
 									</div>
 								</div>
+								
 								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">City
-										:</label>
-									<div class="col-sm-8">
-										<label class="order-info"><g:hiddenField name="city"
-												value="${orderDetails?.city }" /> ${orderDetails?.city }</label>
+									<label for="inputEmail3" class="col-sm-4 control-label">
+										<span class="text-danger">*</span> Phone :
+									</label>
+									<div class="col-sm-7">
+										<input class="form-control" placeholder="Phone No." type="tel"
+											name="phoneNumber" value="${orderDetails?.phoneNumber}"
+											pattern=".{3,}" required="required" maxlength="100"
+											title='Enter valid phone number'>
+										<g:hasErrors bean="${orderDetails}" field="phoneNumber">
+											<g:eachError bean="${orderDetails}" field="phoneNumber">
+												<p style="color: red;">
+													<g:message error="${it}" />
+												</p>
+											</g:eachError>
+										</g:hasErrors>
 									</div>
 								</div>
+								
 								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">State
-										:</label>
-									<div class="col-sm-8">
-										<label class="order-info"><g:hiddenField name="state"
-												value="${orderDetails?.state }" /> ${orderDetails?.state }</label>
+									<label for="inputEmail3" class="col-sm-4 control-label"><span
+										class="text-danger"></span> Email Id : </label>
+									<div class="col-sm-7">
+										<input class="form-control" placeholder="Email id"
+											name="emailID" type="email" maxlength="100"
+											value="${orderDetails?.emailID}" />
+										<g:message code="patientProfile.email.helptext" />
+										<g:hasErrors bean="${orderDetails}" field="emailID">
+											<g:eachError bean="${orderDetails}" field="emailID">
+												<p style="color: red;">
+													<g:message error="${it}" />
+												</p>
+											</g:eachError>
+										</g:hasErrors>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">Country
-										:</label>
-									<div class="col-sm-8">
-										<label class="order-info"><g:hiddenField
-												name="country" value="${orderDetails?.country }" /> ${orderDetails?.country }</label>
-									</div>
-								</div>
+										
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label">Payment
 										Method :</label>
@@ -272,7 +244,7 @@
 										<label class="order-info">I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></label>
 									</div>
 								</div>
-
+			</div>
 									
 								<div class="bg-default text-center">
 									<h5>
@@ -280,6 +252,7 @@
 												code="order.prescription.message" /></span>
 									</h5>
 								</div>
+					
 								<div class="panel-footer clearfix">
 									<div class="col-sm-offset-3 col-xs-6 col-sm-3">
 										<button id="order_submit" type="submit" class="btn btn-primary btn-block"
@@ -294,9 +267,7 @@
 										</button>
 									</div>
 								</div>
-							</div>
-						</div>
-						</div>
+</div></div>
 				</g:form>
 			</div>
 		</div>

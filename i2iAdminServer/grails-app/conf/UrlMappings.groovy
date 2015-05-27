@@ -32,10 +32,12 @@ class UrlMappings {
 		
 		//Home page
         "/"(controller: "search", action:"index")
+//		"/*"(view:'/errors/maintenanceError')
 		
 		//Errors
         "500"(view:'/errors/serverError')
 		"404"(view:'/errors/pageNotFound')
+		"503"(view:'/errors/maintenanceError')
 		
 		"/privacyPolicy"(view:'/policies/privacyPolicy')
 		"/termsConditions"(view:'/policies/termsConditions')

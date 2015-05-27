@@ -18,7 +18,7 @@ class Constants {
 	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
 
 	public static final String supportEmail="support@i2itech.co.in"//for feedback
-	public static final String adminEmail="rohits.iitm@gmail.com "//for orders
+	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
 	
 	public static final String dateFormat="dd-MM-yyyy, h:mm a"
 	

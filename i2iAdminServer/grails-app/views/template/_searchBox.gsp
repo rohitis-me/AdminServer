@@ -2,7 +2,6 @@
 <%@ page import="i2i.AdminServer.Constants"%>
 
 <g:javascript>
-            $(document).ready(function() {
             
                 $("#search_textField").autocomplete({
         source: function(request, response) {
@@ -28,7 +27,14 @@
                 }
     });
                 
-            });
+            $(document).ready(function() {
+		$.getJSON("http://www.telize.com/geoip?callback=?",
+			function(json) {
+    			alert('City: '+json.city);
+			}
+		);
+	});
+
             function onTextEnter(event) {
 			 if(event.keyCode != 13) {
 				console.log("in if")
@@ -40,14 +46,12 @@
 				}
 			}
 			
-			$("searchForm").onSubmit(function(){
-    			mixpanel.track("Searched for Medicine");
-			}); 
+			
 			
 </g:javascript>
 
 <div class="col-md-10 col-md-offset-1">
-	<g:form class='search_form' controller="search" action="search" method="get" id="searchForm">
+	<g:form class='search_form' controller="search" action="search" method="get" >
 		<div class="row clearfix">
 			<div class="col-sm-6">
 				<div class="form-group">

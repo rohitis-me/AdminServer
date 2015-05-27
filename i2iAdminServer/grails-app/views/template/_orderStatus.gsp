@@ -76,19 +76,13 @@
 								</g:if>
 								</td>
 							</tr>
-							<tr>
+							<%--<tr>
 								<td><span class="label-control">Seller: </span></td>
 								<td><g:fieldValue class="label-control"
-										bean="${orderStatusCommand}" field="storeName" /> <%--							<span--%>
-									<%--						class="label-control">,</span> <g:fieldValue class="label-control"--%>
-									<%--							bean="${orderStatusCommand}" field="storeAddressLine1" /><span--%>
-									<%--						class="label-control">,</span> <g:fieldValue class="label-control"--%>
-									<%--							bean="${orderStatusCommand}" field="storeAddressLine2" />, <g:fieldValue class="label-control"--%>
-									<%--							bean="${orderStatusCommand}" field="storeCircle" />, <g:fieldValue class="label-control"--%>
-									<%--							bean="${orderStatusCommand}" field="storeCity" />--%>
+										bean="${orderStatusCommand}" field="storeName" /> 
 								</td>
 							</tr>
-							<tr>
+							--%><tr>
 								<td><span class="label-control">Seller Contact No: </span></td>
 								<td><g:fieldValue class="label-control"
 										bean="${orderStatusCommand}" field="storePhoneNumber" /><span
