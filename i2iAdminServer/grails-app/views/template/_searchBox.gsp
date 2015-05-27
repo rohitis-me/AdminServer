@@ -26,14 +26,18 @@
                       $(".search_form").submit()
                 }
     });
-                
-            $(document).ready(function() {
-		$.getJSON("http://www.telize.com/geoip?callback=?",
-			function(json) {
-    			alert('City: '+json.city);
-			}
-		);
-	});
+               
+<%--             $(".search_form").onsubmit(function(){--%>
+<%--    			mixpanel.track("Searched for Medicine");--%>
+<%--			}); --%>
+			 
+<%--            $(document).ready(function() {--%>
+<%--		$.getJSON("http://www.telize.com/geoip?callback=?",--%>
+<%--			function(json) {--%>
+<%--    			alert('City: '+json.city);--%>
+<%--			}--%>
+<%--		);--%>
+<%--	});--%>
 
             function onTextEnter(event) {
 			 if(event.keyCode != 13) {
@@ -51,7 +55,7 @@
 </g:javascript>
 
 <div class="col-md-10 col-md-offset-1">
-	<g:form class='search_form' controller="search" action="search" method="get" >
+	<g:form class='search_form' controller="search" action="search" method="get">
 		<div class="row clearfix">
 			<div class="col-sm-6">
 				<div class="form-group">

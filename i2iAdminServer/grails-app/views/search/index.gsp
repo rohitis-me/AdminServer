@@ -49,9 +49,9 @@
 	</div>
 
 	<script>
-<%--		$(document).ready(function() {--%>
-<%--			mixpanel.track("New Session");--%>
-<%--		});--%>
+		$(document).ready(function() {
+			mixpanel.track("New Session");
+		});
 <%--		$('#reg_submit').click(function() {--%>
 <%--		    $('#reg_user_name').val($('#reg_email').val());--%>
 <%--		    $('#registerForm').submit();--%>
