@@ -44,8 +44,6 @@ mixpanel.init("124b937fb93313a62e4857cf8a366b41");</script>
 	<script src="${resource(dir: 'js', file: '1.11.2.jquery.min.js')}"></script>
 	<script src="${resource(dir: 'js', file: 'bootstrap.min.js')}"></script>
 	<script src="${resource(dir: 'js', file: 'site-min.js')}"></script>
-	<script src="${resource(dir: 'js', file: 'bootstrap-modal.js')}"></script>
-	<script src="${resource(dir: 'js', file: 'bootstrap-transition.js')}"></script>
 <!-- DESIGN END -->
 <r:require module="jquery-ui" />
 <g:layoutHead />
