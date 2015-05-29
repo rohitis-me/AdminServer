@@ -14,15 +14,15 @@ class AmazonS3Controller {
 
 	def uploadWithDefaultProperties = {
 
-		def fileToUpload = "/Users/blanq01/Desktop/grails-aws/cool-1.jpg"
+		def fileToUpload = "C:/Users/ChandU/Desktop/pharmas/Adyar.png"
 		def uploadedFile = new File(fileToUpload).s3upload { }
 
 		render """${uploadedFile.source.toString()} <br /><br />${uploadedFile.url()}"""
 	}
 
 	def uploadFromInputStream = {
-
-		def file = request.getFile('photo')
+println "upload file"
+		def file = request.getFile('inputFile')
 		def uploadedFile = file.inputStream.s3upload("file-name-${System.currentTimeMillis()}.jpg") { bucket "file-upload-from-inputstream" }
 
 		render uploadedFile.source.toString()
