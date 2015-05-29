@@ -8,12 +8,12 @@ import grails.transaction.Transactional
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
-//import com.dto.UploadRequest
+import i2i.AdminServer.Util.Utility
 
 //@Transactional(readOnly = true)
 class FileAttachmentController {
 	AmazonWebService amazonWebService
-
+	FileAttachmentService fileAttachmentService
 	//	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index = {
@@ -21,35 +21,54 @@ class FileAttachmentController {
 
 	def uploadFile(){
 		println "in upload file" + params
-//		List buckets
+		//		List buckets
 		CommonsMultipartFile file = request.getFile('inputFile')
-		try {
-			ObjectMetadata objectMetadata = new ObjectMetadata();
-			objectMetadata.setContentLength(file.getInputStream().available())
-			objectMetadata.setContentType(file.getContentType())
-			
-			Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest('testi2i', 'test/testupload2.jpg',file.getInputStream(),objectMetadata ))
-			
-			while (!upload.done) {
-				 println "Transfer: $upload.description"
-				 println "  - State: $upload.state"
-				 println "  - Progress: $upload.progress.bytesTransfered"
-				 // Do work while we wait for our upload to complete…
-				 Thread.sleep(500)
+		if(file.isEmpty()) {
+			flash.message = "File cannot be empty"
+		}
+		else {
+			try {
+				ObjectMetadata objectMetadata = new ObjectMetadata();
+				objectMetadata.setContentLength(file.getInputStream().available())
+				objectMetadata.setContentType(file.getContentType())
+
+				String fileOriginalName = file.getOriginalFilename()
+				String bucketName = 'testi2i'
+				Date uploadDate = Utility.getDateTimeInIST().getTime()
+				def uId = '1235'
+				String fileName = ''+uId+'-'+uploadDate.getTime()+'.png'
+				println "file name: "+'order_prescription/'+fileName
+				Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(bucketName,'order_prescription/'+fileName,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
+
+				while (!upload.done) {
+					println "Transfer: $upload.description"
+					println "  - State: $upload.state"
+					println "  - Progress: $upload.progress.bytesTransfered"
+					// Do work while we wait for our upload to complete…
+					Thread.sleep(500)
+				}
+
+				println "upload success: "+ upload
+				String fileLocation = "https://s3-ap-southeast-1.amazonaws.com/"+bucketName+"/order_prescription/"+fileName
+				def status = fileAttachmentService.saveFileAttachment(fileOriginalName, fileLocation, uploadDate)
+
+				if(status == 0)
+					flash.message = message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!')
+				else
+					flash.message = message(code: 'fileAttachment.saved.success.message', default: 'Your feedback has been recorded. Thanks!')
+
+				//			buckets = amazonWebService.s3.listBuckets()
+				//amazonWebService.s3.putObject(new PutObjectRequest('testi2i', 'order_prescription/testupload.jpg', file).withCannedAcl(CannedAccessControlList.PublicRead))
+
+				redirect (controller: "orders", action: "showOrderStatus")
 			}
-			
-//			buckets = amazonWebService.s3.listBuckets()
-			//amazonWebService.s3.putObject(new PutObjectRequest('testi2i', 'order_prescription/testupload.jpg', file).withCannedAcl(CannedAccessControlList.PublicRead))
-			
-			redirect (controller: "orders", action: "showOrderStatus", params: [trackingId:params.trackingId, offerCode:params.offerCode])
+			catch (Exception exp) {
+				println "Exception: "+exp
+				redirect (controller: "fileAttachment", action: "index")
+			}
+			//			println "count"+ buckets.size()
 		}
-		catch (Exception exp) {
-			println "Exception: "+exp
-			redirect (controller: "fileAttachment", action: "index")
-		}
-		println "count"+ buckets.size()
-		
-		
+
 	}
 
 	//	def uploadWithDefaultProperties = {

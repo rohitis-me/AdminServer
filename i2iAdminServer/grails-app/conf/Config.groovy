@@ -240,28 +240,13 @@ grails {
 	}
   }
 
-//grails {
-//	plugin {
-//	   aws {
-//		  credentials {
-//			 accessKey = "AKIAILAGOAL2JOETQC7Q"
-//			 secretKey = "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"
-//		  }
-//		  s3 {
-//			  bucket = "testi2i"
-//			  bucketLocation = 'ap-southeast-1'
-//			  acl = "public"
-//		   }
-//	   }
-//	}
-// }
 
 grails {
 	plugin {
 		awssdk {
-			accessKey = "AKIAILAGOAL2JOETQC7Q"    // Default access key
-			secretKey = "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"    // Default secret key
-			region = 'AP_Singapore'        // Default region
+			accessKey = "xxx"    // Default access key
+			secretKey = "xxx"    // Default secret key
+			region = 'xxx'        // Default region
 			s3 {}
 			// Proxy settings
 			proxyHost = '10.200.1.26'
@@ -270,7 +255,5 @@ grails {
 	}
 }
 
-//grails.plugin.awssdk.accessKey = "AKIAILAGOAL2JOETQC7Q"
-//grails.plugin.awssdk.secretKey = "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"
-//grails.plugin.awssdk.region = 'AP_Singapore'
+
 
