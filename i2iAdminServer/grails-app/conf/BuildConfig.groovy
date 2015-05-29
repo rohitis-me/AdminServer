@@ -50,6 +50,10 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         runtime 'mysql:mysql-connector-java:5.1.34'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+                build 'org.apache.httpcomponents:httpcore:4.3.2'
+                build 'org.apache.httpcomponents:httpclient:4.3.2'
+                runtime 'org.apache.httpcomponents:httpcore:4.3.2'
+                runtime 'org.apache.httpcomponents:httpclient:4.3.2'
     }
 
     plugins {
@@ -65,6 +69,10 @@ grails.project.dependency.resolution = {
 		
 		//plugin for mail support
 		compile ":mail:1.0.7"
+		
+		//plugin for file attachment
+//		runtime ":aws:1.9.13.3"
+		runtime ':aws-sdk:1.9.6'
 		
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.18" // or ":hibernate4:4.3.5.1"

@@ -21,14 +21,6 @@
 <r:require module="jquery-ui" />
 <g:layoutHead />
 <r:layoutResources />
-<!-- OPENTRACKER START -->
-<g:if test="${grailsApplication.config.env == Constants.env_PROD}">
-<script defer src="https://script.opentracker.net/?site=www.pillocate.com"></script>
-</g:if>
-<g:if test="${grailsApplication.config.env == Constants.env_DEMO}">
-<script defer src="https://script.opentracker.net/?site=demo.pillocate.com"></script>
-</g:if>
-<!-- OPENTRACKER END -->
 
 <!-- Google Analytics -->
 <script>

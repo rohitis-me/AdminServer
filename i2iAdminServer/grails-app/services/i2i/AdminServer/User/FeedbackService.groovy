@@ -23,7 +23,7 @@ class FeedbackService {
 			return 1
 		}
 		else {
-			feedback.errors.each { println "Error saving patientProfile: "+it }
+			feedback.errors.each { println "Error saving feedback: "+it }
 			return 0
 		}
 	}

@@ -239,3 +239,21 @@ grails {
 			   "mail.smtp.socketFactory.fallback":"false"]
 	}
   }
+
+
+grails {
+	plugin {
+		awssdk {
+			accessKey = "xxx"    // Default access key
+			secretKey = "xxx"    // Default secret key
+			region = 'xxx'        // Default region
+			s3 {}
+			// Proxy settings
+			proxyHost = '10.200.1.26'
+			proxyPort = 8080
+		}
+	}
+}
+
+
+
