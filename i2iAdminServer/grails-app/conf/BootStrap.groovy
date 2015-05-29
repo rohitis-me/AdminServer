@@ -1,6 +1,5 @@
 import i2i.AdminServer.Availability
-import i2i.AdminServer.BrandDatabase
-import i2i.AdminServer.Store
+import i2i.AdminServer.ClientSync.Inventory
 import i2i.AdminServer.User.UserProfile
 import i2i.AdminServer.User.Sec.SecRole
 import i2i.AdminServer.User.Sec.SecUser
@@ -15,32 +14,65 @@ class BootStrap {
 
 
 		if(grailsApplication.config.turnOnBootStrapCode) {
-			
-			if(Availability.count() <2159) {
+			def availabilityCount = Availability.count()
+			def inventoryCount = Inventory.count()
+			if(Availability.count() == 0) {
 			Availability availability
-			for (int i=2159; i<10876;i++) {
+			Inventory inventory
+			println "populating availability table"
+			for (int i=1; i<= 10;i++) {
 				availability = new Availability()
+				inventory = Inventory.findByInventoryId(i.toString())
 				availability.availabilityId = i
-				availability.storeId = '2'
+				availability.storeId = inventory.storeId
 				availability.availabilityIndex = 2
-				availability.inventoryId = i.toString()
+				availability.inventoryId = inventory.inventoryId
 				if(!availability.save(flush:true)){
 					availability.errors.each {
 						println "ERROR: "+it
 					}
 				}
+				else 
+				println "availability: "+availability.availabilityId
 			}
 			}
 			
-//			def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
-//
-//			def adminUser = SecUser.findByUsername('shobikaecr@gmail.com') ?: new SecUser(
-//					username: 'shobikaecr@gmail.com',
-//					password: 'shobikaecradmin').save(flush: true)
-//
-//			if (!adminUser.authorities.contains(adminRole)) {
-//				SecUserSecRole.create adminUser, adminRole
-//
+			def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
+
+			
+			
+			def adminUser = SecUser.findByUsername('hariom.medical8686@gmail.com') ?: new SecUser(
+					username: 'hariom.medical8686@gmail.com',
+					email: 'hariom.medical8686@gmail.com',
+					password: 'hariommedicaladmin').save(flush: true)
+			
+					
+
+					println "adminUser: "+adminUser
+			if (!adminUser.authorities.contains(adminRole)) 
+				SecUserSecRole.create adminUser, adminRole
+
+				String demoStoreId = '3'
+				
+				if(UserProfile.count() <= 2) {
+					def storeId = demoStoreId
+					def userId = adminUser.id
+					new UserProfile(storeId:storeId, userId: userId).save(flush:true)
+					
+				
+				
+				demoStoreId = '4'
+				storeId = demoStoreId
+				
+				adminUser = SecUser.findByUsername('metromedical101@gmail.com') ?: new SecUser(
+					username: 'metromedical101@gmail.com',
+					email: 'metromedical101@gmail.com',
+					password: 'metromedicaladmin').save(flush: true)
+					
+					userId = adminUser.id
+					new UserProfile(storeId:storeId, userId: userId).save(flush:true)
+		
+				}
 //				def consumerRole = SecRole.findByAuthority('ROLE_CONSUMER') ?: new SecRole(authority: 'ROLE_CONSUMER').save(failOnError: true)
 
 //				def consumerUser = SecUser.findByUsername('gchandu27@gmail.com') ?: new SecUser(
@@ -94,11 +126,7 @@ class BootStrap {
 //					println "done saving availability info"
 //				}
 //
-//				if(UserProfile.count() <= 1) {
-//					def storeId = demoStoreId
-//					def userId = adminUser.id
-//					new UserProfile(storeId:storeId, userId: userId).save(flush:true)
-//				}
+				
 
 			}
 			println "end of bs"

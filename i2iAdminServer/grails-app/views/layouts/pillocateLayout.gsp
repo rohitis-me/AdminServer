@@ -44,6 +44,8 @@ mixpanel.init("124b937fb93313a62e4857cf8a366b41");</script>
 	<script src="${resource(dir: 'js', file: '1.11.2.jquery.min.js')}"></script>
 	<script src="${resource(dir: 'js', file: 'bootstrap.min.js')}"></script>
 	<script src="${resource(dir: 'js', file: 'site-min.js')}"></script>
+	<script src="${resource(dir: 'js', file: 'bootstrap-modal.js')}"></script>
+	<script src="${resource(dir: 'js', file: 'bootstrap-transition.js')}"></script>
 <!-- DESIGN END -->
 <r:require module="jquery-ui" />
 <g:layoutHead />
@@ -59,15 +61,6 @@ mixpanel.init("124b937fb93313a62e4857cf8a366b41");</script>
         <li><a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></li>
         <li><a href="${createLink(uri:'/privacyPolicy')}">Privacy Policy</a></li>     
     </ul>
-<%--    <article class="Footer-social clearfix">--%>
-<%--        <ul>--%>
-<%--            <li><a class="Twitter" href="#"></a></li>--%>
-<%--            <li><a class="Facebook" href="#"></a></li>--%>
-<%--            <li><a class="Google" href="#"></a></li>--%>
-<%--            <li><a class="Pinterest" href="#"></a></li>--%>
-<%--        </ul>--%>
-<%--        <div class="Footer-so-line"></div>--%>
-<%--    </article>--%>
 		<div class="container">
 			<p class="float-left copyright">© 2015 pillocate.com All rights
 				reserved.</p>

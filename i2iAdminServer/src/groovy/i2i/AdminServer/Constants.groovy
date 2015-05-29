@@ -15,7 +15,8 @@ class Constants {
 	
 	//public static final String orderStatus[] = {'Order Rejected', 'Order Placed', 'Order Accepted', 'Order Dispatched', 'Order Delivered'}
 	
-	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
+//	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
+	public static final String[] circleArray = ["Bandra (West)", "SantaCruz (West)"]
 
 	public static final String supportEmail="support@i2itech.co.in"//for feedback
 	public static final String adminEmail="rohits.iitm@gmail.com"//for orders

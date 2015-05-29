@@ -94,18 +94,30 @@ class BrandDatabaseService {
 		return (BrandToBeApproved.count()+1).toString()
 	}
 
-	//Changes to be made when brand data fetched from brand database
-	def getBrandDataList(String searchTerm, String circle) {
+	//TODO: Changes to be made when brand data fetched from brand database
+	def getBrandDataList(String searchTerm, String circle, String city) {
 		List drugList = new ArrayList<BrandDataCommand>()
 
 		//FIXME: NOT scalable
+		if(city == 'Chennai') {
 		if(circle == 'Thiruvanmiyur') 
-			drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm, '1')
+			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '1')
 		println "drug size: "+drugList.size()
 		if(drugList.size() == 0) //chose from store id = 2
-			drugList = inventoryService.getListOfBrandNamesStartingWith(searchTerm, '2')
-		if(drugList.size() == 0) 
-			drugList = getListOfBrandNamesStartingWith(searchTerm)
+			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '2')
+		
+		}
+		if(city == 'Mumbai') {
+
+			if(circle == 'Bandra (West)')
+			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '4')//Metro
+			else
+			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '3')//HariOm- Khar and santacruz
+			
+		}
+		
+		if(drugList.size() == 0)
+		drugList = getListOfBrandNamesStartingWith(searchTerm)
 		
 		return drugList
 	}

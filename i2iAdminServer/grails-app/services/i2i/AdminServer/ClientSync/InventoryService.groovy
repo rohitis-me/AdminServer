@@ -45,7 +45,7 @@ class InventoryService {
 		return brandDataList
 	}
 	
-	def getListOfBrandNamesStartingWith(String brandName, String storeId) {
+	def getListOfBrandNamesStartingWithAndStoreId(String brandName, String storeId) {
 		List inventoryList = Inventory.findAllByStoreIdAndBrandNameIlike(storeId,brandName+"%") // ignore case
 		if(inventoryList.size()<10) {
 			inventoryList.addAll(Inventory.findAllByStoreIdAndBrandNameIlike(storeId,"% "+brandName+"%"))

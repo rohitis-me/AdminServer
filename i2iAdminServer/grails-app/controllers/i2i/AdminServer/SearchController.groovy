@@ -22,6 +22,7 @@ class SearchController {
 		String circle = params.circle
 		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
 		String brandId = params.brandId
+		String city = params.city
 
 		//TODO: taking inventoryId into consideration for now
 		String inventoryId = params.inventoryId
@@ -51,7 +52,7 @@ class SearchController {
 		}
 		else
 		{
-			List drugList = brandDatabaseService.getBrandDataList(searchTerm,circle)
+			List drugList = brandDatabaseService.getBrandDataList(searchTerm,circle, city)
 			if(drugList){
 				render (view:"searchSuggestions", model: [drugList:drugList, brandName: searchTerm, circle: circle])
 			}
@@ -63,69 +64,6 @@ class SearchController {
 	}
 
 
-	//	def search() {
-	//		println "SEARCH received params: "+params+ " Brand Name: "+params.brandName;
-	//
-	//		String searchTerm = params.brandName
-	//		String circle = params.circle
-	//		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
-	//		String brandId = params.brandId
-	//
-	//		//TODO: taking inventoryId into consideration for now
-	//		String inventoryId = params.inventoryId
-	//
-	//		boolean availabilityFlag= false
-	//
-	//		//FIXME filter stores with circle also||get brandId against inventoryId and search for all stores where it is available
-	//		if(inventoryId){
-	//			println "inventoryId available: "+inventoryId
-	//			List stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(inventoryId, circle)
-	//
-	//			if(stores)
-	//			{
-	//			stores.each {store-> println "STORE:"+store.storeName }
-	//
-	//			//FIXME: get delivery time from store
-	//			availabilityFlag= true
-	//			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle])
-	//			}
-	//			else
-	//			{
-	//				stores = searchService.getListOfStoresInCircle(circle)
-	//
-	//				stores.each {store-> println store.storeName }
-	//
-	//				//FIXME: get delivery time from store
-	//				availabilityFlag = false
-	//				render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle])
-	//			}
-	//		}
-	//		else if(brandId) {
-	////			List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
-	//
-	//			List stores = new ArrayList<Store>()
-	//
-	//			//FIXME: not scalable. Else condition does not use circle
-	//
-	//			stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
-	//			if(stores.size() >0)
-	//			availabilityFlag= true
-	//			else {
-	//				availabilityFlag = false
-	//				stores = searchService.getListOfStoresInCircle(circle)
-	//			}
-	//
-	//			stores.each {store-> println store.storeName }
-	//			render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId: brandId, brandName: searchTerm, circle: circle])
-	//		}
-	//		else
-	//		{
-	//			List drugList = brandDatabaseService.getBrandDataList(searchTerm,circle)
-	//
-	//			render (view:"searchSuggestions", model: [drugList:drugList, brandName: searchTerm, circle: circle])
-	//		}
-	//		//		render "error"
-	//	}
 
 	//TODO change once data is got from branddatabase
 	def listOfBrandNameStartingWith() {
@@ -133,10 +71,11 @@ class SearchController {
 
 		String searchTerm = params.term
 		String circle = params.circle
+		String city = params.city
 
 		String suggestion
 
-		List drugList = brandDatabaseService.getBrandDataList(searchTerm, circle)
+		List drugList = brandDatabaseService.getBrandDataList(searchTerm, circle, city)
 
 		List brandMapList = []
 		drugList.each {
