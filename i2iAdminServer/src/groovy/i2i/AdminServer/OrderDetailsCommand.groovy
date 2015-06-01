@@ -35,6 +35,7 @@ class OrderDetailsCommand {
 	boolean isEmergencyDeliveryNeeded
 	byte deliveryHours
 	String offerCode
+	Long attachmentId
 	
 	static constraints = {
 		name nullable:false, blank:false,size:1..100
@@ -54,5 +55,6 @@ class OrderDetailsCommand {
 				}
 			}
 		}*/
+		attachmentId nullable:true, blank:true,size:1..100
 	}
 }

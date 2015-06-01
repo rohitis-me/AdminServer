@@ -1,4 +1,5 @@
 import i2i.AdminServer.Availability
+import i2i.AdminServer.Store
 import i2i.AdminServer.ClientSync.Inventory
 import i2i.AdminServer.User.UserProfile
 import i2i.AdminServer.User.Sec.SecRole
@@ -16,26 +17,26 @@ class BootStrap {
 		if(grailsApplication.config.turnOnBootStrapCode) {
 			def availabilityCount = Availability.count()
 			def inventoryCount = Inventory.count()
-			if(Availability.count() == 0) {
-			Availability availability
-			Inventory inventory
-			println "populating availability table"
-			for (int i=1; i<= 10;i++) {
-				availability = new Availability()
-				inventory = Inventory.findByInventoryId(i.toString())
-				availability.availabilityId = i
-				availability.storeId = inventory.storeId
-				availability.availabilityIndex = 2
-				availability.inventoryId = inventory.inventoryId
-				if(!availability.save(flush:true)){
-					availability.errors.each {
-						println "ERROR: "+it
-					}
-				}
-				else 
-				println "availability: "+availability.availabilityId
-			}
-			}
+//			if(Availability.count() == 0) {
+//			Availability availability
+//			Inventory inventory
+//			println "populating availability table"
+//			for (int i=1; i<= 10;i++) {
+//				availability = new Availability()
+//				inventory = Inventory.findByInventoryId(i.toString())
+//				availability.availabilityId = i
+//				availability.storeId = inventory.storeId
+//				availability.availabilityIndex = 2
+//				availability.inventoryId = inventory.inventoryId
+//				if(!availability.save(flush:true)){
+//					availability.errors.each {
+//						println "ERROR: "+it
+//					}
+//				}
+//				else 
+//				println "availability: "+availability.availabilityId
+//			}
+//			}
 			
 			def adminRole = SecRole.findByAuthority('ROLE_CHEMIST_ADMIN') ?: new SecRole(authority: 'ROLE_CHEMIST_ADMIN').save(failOnError: true)
 
@@ -53,26 +54,67 @@ class BootStrap {
 				SecUserSecRole.create adminUser, adminRole
 
 				String demoStoreId = '3'
-				
+				if(!Store.findByStoreId(demoStoreId)) {
+				Store store = new Store(storeId : '3',
+					storeName : 'Hari Om pharmacy ',
+					addressLine1 : "Shop No. 5, Marble Arch Building, ",
+					addressLine2 : "Central Avenue Road, Santacruz (W), Mumbai 400054",
+					circle : "SantaCruz (West)",
+					city : "Mumbai",
+					phoneNumber: '02226488624',
+					emailId: 'hariom.medical8686@gmail.com',
+					state : 'Maharastra',
+					latitude : "",
+					longitude : "")
+
+			if(! store.save(flush:true)) {
+				store.errors.each { println "error in saving store: "+it }
+			}
+				}
+				if(!Store.findByStoreId('4')) {
+										Store store1 = new Store(storeId : '4',
+											storeName : 'Metro Medical',
+											addressLine1 : "9A, Rizvi Mahal, Water Field Road, Opp. Bhabha hopsital",
+											addressLine2 : "Bandra (W), Mumbai 400050",
+											circle : "Bandra (West)",
+											city : "Mumbai",
+											phoneNumber: '02226430460',
+											emailId: 'metromedical101@gmail.com',
+											state : 'Maharastra',
+											latitude : "",
+											longitude : "")
+						
+									if(! store1.save(flush:true)) {
+										store.errors.each { println "error in saving store: "+it }
+									}
+				}
 				if(UserProfile.count() <= 2) {
 					def storeId = demoStoreId
 					def userId = adminUser.id
-					new UserProfile(storeId:storeId, userId: userId).save(flush:true)
 					
+					if(!UserProfile.findByUserId(userId))
+					new UserProfile(storeId:storeId, userId: userId).save(flush:true)
+				}	
 				
 				
 				demoStoreId = '4'
-				storeId = demoStoreId
+
+				def storeId = demoStoreId
 				
 				adminUser = SecUser.findByUsername('metromedical101@gmail.com') ?: new SecUser(
 					username: 'metromedical101@gmail.com',
 					email: 'metromedical101@gmail.com',
 					password: 'metromedicaladmin').save(flush: true)
 					
-					userId = adminUser.id
+					if (!adminUser.authorities.contains(adminRole))
+					SecUserSecRole.create adminUser, adminRole
+					
+					def userId = adminUser.id
+					
+					if(!UserProfile.findByUserId(userId))
 					new UserProfile(storeId:storeId, userId: userId).save(flush:true)
 		
-				}
+				
 //				def consumerRole = SecRole.findByAuthority('ROLE_CONSUMER') ?: new SecRole(authority: 'ROLE_CONSUMER').save(failOnError: true)
 
 //				def consumerUser = SecUser.findByUsername('gchandu27@gmail.com') ?: new SecUser(

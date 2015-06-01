@@ -34,8 +34,8 @@ class PatientProfileController {
 		
 			//FIXME
 			orderDetails.circle = orderDetailsCommand.circle
-			orderDetails.city = 'Chennai'
-			orderDetails.state = 'Tamil Nadu'
+			orderDetails.city = 'Mumbai'
+			orderDetails.state = 'Maharastra'
 			orderDetails.country = 'India'
 			orderDetails.age = 40
 			orderDetails.quantity = 1
@@ -52,8 +52,8 @@ class PatientProfileController {
 		
 			//FIXME
 			orderDetails.circle = orderDetailsCommand.circle
-			orderDetails.city = 'Chennai'
-			orderDetails.state = 'Tamil Nadu'
+			orderDetails.city = 'Mumbai'
+			orderDetails.state = 'Maharastra'
 			orderDetails.country = 'India'
 			orderDetails.age = 40
 			orderDetails.quantity = 1

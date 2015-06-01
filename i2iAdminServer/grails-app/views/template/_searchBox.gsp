@@ -70,7 +70,7 @@
 				<div class="form-group">
 					<label for="inputEmail3" class="control-label">City :</label> <select
 						class="form-control input-lg" required="required" id="citySelectBox" name="city">
-						<option value="Chennai" selected="selected">Chennai</option>
+<%--						<option value="Chennai" selected="selected">Chennai</option>--%>
 						<option value="Mumbai" selected="selected">Mumbai</option>
 					</select>
 				</div>

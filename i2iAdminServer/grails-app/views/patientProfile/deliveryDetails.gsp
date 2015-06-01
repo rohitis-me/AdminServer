@@ -1,5 +1,5 @@
 
-
+<%@ page import="i2i.AdminServer.Constants"%>
 <%@ page import="i2i.AdminServer.User.PatientProfile"%>
 <!doctype html>
 <html>
@@ -28,7 +28,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<g:form controller="orders" action="saveOrder" id="order_form">
+				<g:form controller="fileAttachment" action="index">
 					<g:set var="quantity" value="${orderDetails?.quantity}" />
 					<g:hiddenField name="brandName" value="${orderDetails.brandName}" />
 					<div class="form-horizontal">
@@ -93,6 +93,14 @@
 								</div>
 							</g:if>
 							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"></label>
+									<g:radioGroup name="prescriptionUploadOption" labels="['Show prescription on delivery', 'Upload prescription now']" values="[0,1]" value="0">
+										
+										${it.radio} <g:message code="${it.label}" />
+										
+									</g:radioGroup>
+								</div>
 							<div class="bg-default">Delivery details</div>
 
 							<g:hiddenField name="brandId" value="${orderDetails?.brandId }" />
@@ -209,6 +217,8 @@
 									</div>
 								</div>
 										
+								
+								
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label">Payment
 										Method :</label>

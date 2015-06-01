@@ -65,6 +65,7 @@ class OrdersService {
 		orderDetails.trackingId = order.uId
 		orderDetails.isEmergencyDeliveryNeeded = order.isEmergencyDeliveryNeeded
 		orderDetails.offerCode = order.offerCode
+		orderDetails.attachmentId = order.attachmentId
 		return orderDetails
 	}
 
@@ -122,6 +123,7 @@ class OrdersService {
 		//		println "estimated Del time :" + orderDetailsCommand.estimatedDeliveryTime
 		order.uId = orderDetailsCommand.trackingId
 		order.isEmergencyDeliveryNeeded = orderDetailsCommand.isEmergencyDeliveryNeeded
+		order.attachmentId = orderDetailsCommand.attachmentId
 		return order
 	}
 

@@ -1,3 +1,4 @@
+<%@ page import="i2i.AdminServer.Constants"%>
 <style type="text/css">
 .h-toll-free {
     color: #777;
@@ -53,27 +54,11 @@
 					<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>
 				</g:else>
 
-<%--				<sec:ifNotLoggedIn>--%>
-<%--					<g:if test="${entityName== 'Login' }">--%>
-<%--						<li class="active"><g:link controller="login" action="auth">Login</g:link></li>--%>
-<%--					</g:if>--%>
-<%--					<g:else>--%>
-<%--						<li><g:link controller="login" action="auth">Login</g:link></li>--%>
-<%--					</g:else>--%>
-<%--				</sec:ifNotLoggedIn>--%>
-				<%--				<sec:ifAllGranted roles="ROLE_CONSUMER">--%>
-				<%--					<g:if test="${entityName== 'MyAccount' }">--%>
-				<%--						<li><g:link class="current" controller="login" action="auth">My Account</g:link></li>--%>
-				<%--					</g:if>--%>
-				<%--					<g:else>--%>
-				<%--						<li><g:link controller="login" action="auth">My Account</g:link></li>--%>
-				<%--					</g:else>--%>
-				<%--				</sec:ifAllGranted>--%>
 
 				<sec:ifLoggedIn>
 					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 				</sec:ifLoggedIn>
-				<li><p class="h-toll-free"><i class="glyphicon glyphicon-earphone"></i>+91-9591729831</p> </li>
+				<li><p class="h-toll-free"><i class="glyphicon glyphicon-earphone"></i>${Constants.helpline }</p> </li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->

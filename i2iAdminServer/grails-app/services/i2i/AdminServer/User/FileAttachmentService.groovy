@@ -1,7 +1,7 @@
 package i2i.AdminServer.User
 
 import grails.transaction.Transactional
-
+import i2i.AdminServer.Constants
 
 @Transactional
 class FileAttachmentService {
@@ -20,11 +20,19 @@ class FileAttachmentService {
 		println "attachment: "+attachment.properties
 		if(attachment && attachment.save()) {
 			println "attachment save success"
-			return 1
+			return attachment.attachmentId
 		}
 		else {
 			attachment.errors.each { println "Error saving attachment: "+it }
 			return 0
 		}
+	}
+	
+	def getAttachmentLinkFromAttachmentId(def attachmentId)
+	{
+		println "AID "+ attachmentId
+		FileAttachment attachment = FileAttachment.findByAttachmentId(attachmentId)
+		String link = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+attachment.path
+		return link
 	}
 }

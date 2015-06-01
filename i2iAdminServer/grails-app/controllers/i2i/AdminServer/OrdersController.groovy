@@ -1,17 +1,17 @@
 package i2i.AdminServer
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import i2i.AdminServer.Constants
+import i2i.AdminServer.User.FileAttachmentService;
 
 //@Transactional(readOnly = true)
 class OrdersController {
 
 	OrdersService ordersService
 	StoreService storeService
+	FileAttachmentService fileAttachmentService
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -68,7 +68,10 @@ class OrdersController {
 		def orderId = orderDetailsCommand.orderId
 		Orders order = ordersService.getOrderFromOrderId(orderId)
 		orderDetailsCommand = ordersService.populateOrderDetailsFromOrder(order)
-		render(view:"showOrderDetails", model: [orderDetailsCommand: orderDetailsCommand])
+		String attachmentLink = ""
+		if(orderDetailsCommand?.attachmentId)
+			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderDetailsCommand?.attachmentId)
+		render(view:"showOrderDetails", model: [orderDetailsCommand: orderDetailsCommand, attachmentLink:attachmentLink])
 	}
 
 	def showOrderStatus() {
@@ -179,11 +182,11 @@ class OrdersController {
 		//FIXME: do this in gsp
 		orderDetailsCommand.offerCode = ordersService.checkOfferCode(orderDetailsCommand.offerCode)
 		
-		if (orderDetailsCommand.hasErrors()) {
-			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
-//			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
-			return
-		}
+//		if (orderDetailsCommand.hasErrors()) {
+//			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
+////			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
+//			return
+//		}
 		
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
 

@@ -1,3 +1,4 @@
+import net.sf.ehcache.config.DiskStoreConfiguration.Env;
 import i2i.AdminServer.Constants
 
 // locations to search for config files that get merged into the main config;
@@ -54,7 +55,7 @@ grails.mime.types = [ // the first one is the default format
 
 // set variables
 turnOnTestCode = 0
-turnOnBootStrapCode = 0
+turnOnBootStrapCode = 1
 
 //enableProdConfig = 0
 env=Constants.env_LOCAL
@@ -62,13 +63,16 @@ env=Constants.env_LOCAL
 if(env == Constants.env_DEMO) {
 	Constants.envLink= Constants.envLink_DEMO
 	Constants.analyticsTrackingId =  Constants.analyticsTrack_DEMO
+	Constants.amazonS3Bucket = Constants.bucket_DEMO
 }
 else if(env == Constants.env_PROD) {
 	Constants.envLink= Constants.envLink_PROD
 	Constants.analyticsTrackingId =  Constants.analyticsTrack_PROD
+	Constants.amazonS3Bucket = Constants.bucket_PROD
 }
 else if(env == Constants.env_LOCAL) {
 	Constants.envLink= Constants.envLink_LOCAL
+	Constants.amazonS3Bucket = Constants.bucket_LOCAL
 }
 //grails.mail.host = "192.168.2.8"
 
@@ -241,19 +245,7 @@ grails {
   }
 
 
-grails {
-	plugin {
-		awssdk {
-			accessKey = "xxx"    // Default access key
-			secretKey = "xxx"    // Default secret key
-			region = 'xxx'        // Default region
-			s3 {}
-			// Proxy settings
-			proxyHost = '10.200.1.26'
-			proxyPort = 8080
-		}
-	}
-}
+
 
 
 

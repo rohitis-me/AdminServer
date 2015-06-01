@@ -97,7 +97,7 @@ class BrandDatabaseService {
 	//TODO: Changes to be made when brand data fetched from brand database
 	def getBrandDataList(String searchTerm, String circle, String city) {
 		List drugList = new ArrayList<BrandDataCommand>()
-
+		println "city" + city + "circle" + circle
 		//FIXME: NOT scalable
 		if(city == 'Chennai') {
 		if(circle == 'Thiruvanmiyur') 

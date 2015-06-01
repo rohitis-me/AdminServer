@@ -148,6 +148,13 @@
 							bean="${orderDetailsCommand}" field="quantity" /></span></td>
 			</g:if>
 		</tr>
+		<tr>
+			<td><span class="label-control"><g:message
+						code="orders.attachment.label" default="Prescription:" /></span></td>
+			<g:if test="${attachmentLink!=""}">
+				<td><span class="label-control"><a href="${attachmentLink}">Click here to see uploaded prescription</a></span></td>
+			</g:if>
+		</tr>
 <%--		<tr>--%>
 <%--			<td><span class="label-control"><g:message--%>
 <%--						code="orders.phone.number.label" default="Estimated delivery:" /></span></td>--%>

@@ -16,7 +16,7 @@ class Constants {
 	//public static final String orderStatus[] = {'Order Rejected', 'Order Placed', 'Order Accepted', 'Order Dispatched', 'Order Delivered'}
 	
 //	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
-	public static final String[] circleArray = ["Bandra (West)", "SantaCruz (West)"]
+	public static final String[] circleArray = ["Bandra (West)", "SantaCruz (West)", "Khar (West)"]
 
 	public static final String supportEmail="support@i2itech.co.in"//for feedback
 	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
@@ -28,11 +28,14 @@ class Constants {
 	public static final String env_PROD='Prod'
 
 	public static final String envLink_LOCAL='http://localhost:8080/i2iAdminServer/'
-	public static final String envLink_DEMO='http://demoi2i.elasticbeanstalk.com/'
+	public static final String envLink_DEMO='http://demo.pillocate.com/'
 	public static final String envLink_PROD='http://www.pillocate.com/'
 	
 	public static String envLink=''
 	public static String analyticsTrackingId=''
+	
+	public static final String PrescriptionOnDeliveryMessage = 'Show prescription on delivery'
+	public static final String PrescriptionUploadNowMessage = 'Upload prescription now'
 	
 	//Tracking ID for google analytics
 	public static final String analyticsTrack_DEMO='UA-61334324-1'
@@ -50,4 +53,12 @@ class Constants {
 	public static final String mailSubject_OrderRejected_Consumer = 'Pillocate: Order rejected'
 	public static final String mailSubject_OrderCancel_Admin = 'Cancellation-Order@i2i'
 	public static final String mailSubject_OrderCancel_Consumer = 'Pillocate: Order Cancellation'
+	
+	public static final String amazonS3Link ='https://s3-ap-southeast-1.amazonaws.com/'
+	public static final String bucket_LOCAL='testi2i'
+	public static final String bucket_DEMO='demoi2i'
+	public static final String bucket_PROD='prodi2i'
+	public static String amazonS3Bucket =''
+	
+	public static final String helpline = '+91-8452941303'
 }

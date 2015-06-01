@@ -3,72 +3,121 @@ package i2i.AdminServer.User
 
 
 import static org.springframework.http.HttpStatus.*
+
+import java.util.Date;
+
 import grails.plugin.awssdk.AmazonWebService
 import grails.transaction.Transactional
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile
+
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
+
+import i2i.AdminServer.OrderDetailsCommand;
 import i2i.AdminServer.Util.Utility
+import i2i.AdminServer.Constants
 
 //@Transactional(readOnly = true)
 class FileAttachmentController {
 	AmazonWebService amazonWebService
 	FileAttachmentService fileAttachmentService
+
 	//	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def index = {
+	def index(OrderDetailsCommand orderDetailsCommand){
+		println "in file attachment: ODC: "+ orderDetailsCommand.properties
+		String prescriptionUpload = params.prescriptionUploadOption
+		println "prescrioption option "+prescriptionUpload
+		if(prescriptionUpload == '0') {
+			redirect (controller: "orders", action: "saveOrder", params:[brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
+				emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
+				country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
+				estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
+		}
+		if (!orderDetailsCommand || orderDetailsCommand?.hasErrors()) {
+			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
+//			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
+			return
+		}
+		
+		render(view: "index", model: [orderDetails: orderDetailsCommand])
 	}
 
-	def uploadFile(){
+	def uploadFile(OrderDetailsCommand orderDetailsCommand){
 		println "in upload file" + params
 		//		List buckets
 		CommonsMultipartFile file = request.getFile('inputFile')
+		println "size " + file.getSize()
 		if(file.isEmpty()) {
 			flash.message = "File cannot be empty"
+//			redirect (controller: "fileAttachment", action: "index", params:[orderDetailsCommand:orderDetailsCommand, prescriptionUploadOption: '1'])
+			redirect (controller: "fileAttachment", action: "index", params:[ prescriptionUploadOption: '1', brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
+				emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
+				country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
+				estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
+		}
+		else if(file.getSize() > 10*1000000)
+		{
+			flash.message = "File size cannot exceed 10 MB"
+//			redirect (controller: "fileAttachment", action: "index", params:[orderDetailsCommand:orderDetailsCommand,prescriptionUploadOption:'1'])
+			redirect (controller: "fileAttachment", action: "index", params:[prescriptionUploadOption:'1', brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
+				emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
+				country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
+				estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
 		}
 		else {
 			try {
+				
+//				List buckets = amazonWebService.s3.listBuckets()
+//				buckets.each { Bucket bucket ->
+//					println "bucketName: ${bucket.name}, creationDate: ${bucket.creationDate}"
+//				}
+				
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(file.getInputStream().available())
 				objectMetadata.setContentType(file.getContentType())
 
 				String fileOriginalName = file.getOriginalFilename()
-				String bucketName = 'testi2i'
 				Date uploadDate = Utility.getDateTimeInIST().getTime()
-				def uId = '1235'
-				String fileName = ''+uId+'-'+uploadDate.getTime()+'.png'
-				println "file name: "+'order_prescription/'+fileName
-				Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(bucketName,'order_prescription/'+fileName,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
+				String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
+				println "file name: "+filePath
+				Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(Constants.amazonS3Bucket,filePath,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
 
 				while (!upload.done) {
-					println "Transfer: $upload.description"
-					println "  - State: $upload.state"
-					println "  - Progress: $upload.progress.bytesTransfered"
-					// Do work while we wait for our upload to complete…
-					Thread.sleep(500)
+//					println "Transfer: $upload.description"
+//					println "  - State: $upload.state"
+//					println "  - Progress: $upload.progress.bytesTransfered"
+//					// Do work while we wait for our upload to complete…
+//					Thread.sleep(1000)
 				}
 
 				println "upload success: "+ upload
-				String fileLocation = "https://s3-ap-southeast-1.amazonaws.com/"+bucketName+"/order_prescription/"+fileName
-				def status = fileAttachmentService.saveFileAttachment(fileOriginalName, fileLocation, uploadDate)
+				String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
+				println "file link: "+fileLocation
+				def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
 
-				if(status == 0)
+				if(attachmentId == 0)
 					flash.message = message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!')
 				else
-					flash.message = message(code: 'fileAttachment.saved.success.message', default: 'Your feedback has been recorded. Thanks!')
+					flash.message = message(code: 'fileAttachment.saved.success.message', default: 'Your prescription has been uploaded successfully!')
 
-				//			buckets = amazonWebService.s3.listBuckets()
-				//amazonWebService.s3.putObject(new PutObjectRequest('testi2i', 'order_prescription/testupload.jpg', file).withCannedAcl(CannedAccessControlList.PublicRead))
-
-				redirect (controller: "orders", action: "showOrderStatus")
+				orderDetailsCommand?.attachmentId = attachmentId
+				redirect (controller: "orders", action: "saveOrder", params:[brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
+						emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state, 
+						country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
+						estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
 			}
 			catch (Exception exp) {
 				println "Exception: "+exp
-				redirect (controller: "fileAttachment", action: "index")
-			}
-			//			println "count"+ buckets.size()
+				flash.message = message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!')
+//				redirect (controller: "fileAttachment", action: "index",  params:[orderDetailsCommand:orderDetailsCommand, prescriptionUploadOption:'1'])
+				redirect (controller: "fileAttachment", action: "index", params:[prescriptionUploadOption:'1', brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
+					emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
+					country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
+					estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
+				}
 		}
-
 	}
 
 	//	def uploadWithDefaultProperties = {

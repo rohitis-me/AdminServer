@@ -29,8 +29,9 @@ class BrandRequestInfoController {
 
 		println "No errors"
 		String body = "BrandName: "+brandRequestCommand?.brandName + "\nEmail: "+brandRequestCommand?.emailID+ "\nPhone: "+brandRequestCommand?.phoneNumber +"\nCircle: "+brandRequestCommand?.circle
+		String toAdd = Constants.adminEmail + ","+ "adhirajalai@gmail.com"+","+ "chandu@i2itech.co.in"
 		emailService.sendEMail (
-				Constants.supportEmail,
+				toAdd,
 				message(code: 'email.subject.medicineRequest'),
 				body)
 

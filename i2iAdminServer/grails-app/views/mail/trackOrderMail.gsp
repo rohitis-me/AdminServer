@@ -44,7 +44,7 @@ ${orderDetails.city }<br>
 <h2>
 Seller Details
 </h2>
-<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">
+<%--<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">--%>
 Your order has been placed at ${storeInstance.storeName }. Please find contact details below,
 </g:if>
 <br>
@@ -55,7 +55,7 @@ ${storeInstance.addressLine1 }<br>
 ${storeInstance.addressLine2 }<br>
 ${storeInstance.circle }<br>
 ${storeInstance.city }<br>
-</g:if>
+<%--</g:if>--%>
 </p>
 <g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED && orderDetails.orderStatus != Constants.ORDER_DELIVERED}">
 Track your order status <a href="${Constants.envLink+'orderStatus?trackingId='+orderDetails.trackingId }">here</a><br>
