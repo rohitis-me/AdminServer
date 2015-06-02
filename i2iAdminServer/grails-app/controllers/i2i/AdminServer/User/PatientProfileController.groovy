@@ -37,7 +37,7 @@ class PatientProfileController {
 			orderDetails.city = 'Mumbai'
 			orderDetails.state = 'Maharastra'
 			orderDetails.country = 'India'
-			orderDetails.age = 40
+//			orderDetails.age = 40
 			orderDetails.quantity = 1
 			
 	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName, isEmergencyDeliveryAvailable:storeData?.isEmergencyDeliveryAvailable])

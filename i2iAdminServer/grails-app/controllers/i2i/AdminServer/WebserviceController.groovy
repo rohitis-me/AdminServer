@@ -334,4 +334,8 @@ class WebserviceController {
 		else
 			render (text: 'Invalid coupon code')
 	}
+	
+	def isAppUpToDate(){
+		return 1
+	}
 }
