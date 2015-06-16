@@ -29,34 +29,33 @@ Expected delivery time: <g:formatDate date="${orderDetails.estimatedDeliveryTime
 </p>
 
 <p>
-Name: ${orderDetails.name }
+Name: ${orderCollCommand.name }
 <br/>
 Address: 
 <br>
-${orderDetails.addressLine1 }<br>
-${orderDetails.addressLine2 }<br>
-${orderDetails.circle }<br>
-${orderDetails.city }<br>
+${orderCollCommand.addressLine1 }<br>
+${orderCollCommand.addressLine2 }<br>
+${orderCollCommand.circle }<br>
+${orderCollCommand.city }<br>
 <br>
-<p>
-
-<g:if test="${storeInstance }">
-<h2>
-Seller Details
-</h2>
-<%--<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">--%>
-Your order has been placed at ${storeInstance.storeName }. Please find contact details below,
-</g:if>
-<br>
-Phone number: ${storeInstance.phoneNumber }
-<br>
-Address:<br>
-${storeInstance.addressLine1 }<br>
-${storeInstance.addressLine2 }<br>
-${storeInstance.circle }<br>
-${storeInstance.city }<br>
+<%--<p>--%>
+<%--<g:if test="${storeInstance }">--%>
+<%--<h2>--%>
+<%--Seller Details--%>
+<%--</h2>--%>
+<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">
+<%--Your order has been placed at ${storeInstance.storeName }. Please find contact details below,--%>
 <%--</g:if>--%>
-</p>
+<%--<br>--%>
+<%--Phone number: ${storeInstance.phoneNumber }--%>
+<%--<br>--%>
+<%--Address:<br>--%>
+<%--${storeInstance.addressLine1 }<br>--%>
+<%--${storeInstance.addressLine2 }<br>--%>
+<%--${storeInstance.circle }<br>--%>
+<%--${storeInstance.city }<br>--%>
+</g:if>
+<%--</p>--%>
 <g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED && orderDetails.orderStatus != Constants.ORDER_DELIVERED}">
 Track your order status <a href="${Constants.envLink+'orderStatus?trackingId='+orderDetails.trackingId }">here</a><br>
 </g:if>

@@ -8,7 +8,6 @@ Following order has been cancelled by Customer. Please stop the dispatch process
 </g:if>
 <br/>
 <h2> Order Details:</h2> 
-
 <p>
 Order Name: ${orderDetails.brandName }<br>
 Quantity: ${orderDetails.quantity }
@@ -17,22 +16,22 @@ Quantity: ${orderDetails.quantity }
 <i>Emergency Delivery Requested</i>
 </g:if>
 <p>
-Name: ${orderDetails.name }
+Name: ${orderCollCommand.name }
 <br/>
 Address: 
 <br>
-${orderDetails.addressLine1 }<br/>
-${orderDetails.addressLine2 }<br/>
-${orderDetails.circle }<br/>
-${orderDetails.city }<br/>
+${orderCollCommand.addressLine1 }<br/>
+${orderCollCommand.addressLine2 }<br/>
+${orderCollCommand.circle }<br/>
+${orderCollCommand.city }<br/>
 <br/>
 <g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">
-<g:if test="${orderDetails.phoneNumber }">
+<g:if test="${orderCollCommand.phoneNumber }">
 You could call ${orderDetails.name } on ${orderDetails.phoneNumber }
 </g:if>
 <br>
-<g:if test="${orderDetails.emailID }">
-Email: ${orderDetails.emailID }
+<g:if test="${orderCollCommand.emailID }">
+Email: ${orderCollCommand.emailID }
 </g:if>
 <br>
 Delivery Expected by: <g:formatDate date="${orderDetails.estimatedDeliveryTime }" format="${Constants.dateFormat }" /><br>

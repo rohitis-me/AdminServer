@@ -40,10 +40,12 @@ class SearchController {
 			if(stores){
 				stores.each {store-> println "STORE:"+store.storeName }
 				//FIXME: get delivery time from store
-				availabilityFlag= true
+				availabilityFlag = true
 				String storeId = stores.first().storeId
 				def deliveryHours = stores.first()?.deliveryHoursIfAvailable
-				redirect (controller:'patientProfile', action:'deliveryDetails', params:[storeId: storeId, brandId: brandId, inventoryId:inventoryId, circle: circle, deliveryHours:deliveryHours])
+//				redirect (controller:'testShoppingCart', action:'add', params:[id:1])
+				render (view:"searchResult", model: [storeId:storeId, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, quantity: 1])
+//				redirect (controller:'patientProfile', action:'deliveryDetails', params:[storeId: storeId, brandId: brandId, inventoryId:inventoryId, circle: circle, deliveryHours:deliveryHours])
 				//render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle])
 			}
 			else{
@@ -88,4 +90,7 @@ class SearchController {
 		render brandMapList as JSON
 	}
 
+	def placeOrderNow(){
+		redirect (controller:'shoppingCart', action:'addItemToCartAndPlaceOrder', params: params)
+	}
 }

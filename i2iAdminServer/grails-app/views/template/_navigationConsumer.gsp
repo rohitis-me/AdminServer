@@ -1,4 +1,9 @@
 <%@ page import="i2i.AdminServer.Constants"%>
+<%@ page import="com.metasieve.shoppingcart.ShoppingCartService" %>
+<%
+    def shoppingCartService = grailsApplication.classLoader.loadClass('com.metasieve.shoppingcart.ShoppingCartService').newInstance()
+%>
+
 <style type="text/css">
 .h-toll-free {
     color: #777;
@@ -39,11 +44,11 @@
 				</g:else>
 
 				<g:if test="${entityName== 'TrackOrder' }">
-					<li class="active"><g:link controller="orders"
-							action="trackOrderStatus">Track Order</g:link></li>
+					<li class="active"><g:link controller="orderCollection"
+							action="trackOrderCollectionDetails">Track Order</g:link></li>
 				</g:if>
 				<g:else>
-					<li><g:link controller="orders" action="trackOrderStatus">Track Order</g:link></li>
+					<li><g:link controller="orderCollection" action="trackOrderCollectionDetails">Track Order</g:link></li>
 				</g:else>
 
 				<g:if test="${entityName== 'Feedback' }">
@@ -54,7 +59,18 @@
 					<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>
 				</g:else>
 
-
+				<g:set var="itemsCount" value="${0}" />
+				<g:if test="${shoppingCartService && shoppingCartService.getItems()}">
+				<g:set var="itemsCount" value="${shoppingCartService.getItems()?.size()}" />
+				</g:if>
+				<g:if test="${entityName== 'Cart' }">
+					<li class="active"><g:link controller="shoppingCart"
+							action="showCartItems">Checkout (${itemsCount}) </g:link></li>
+				</g:if>
+				<g:else>
+					<li><g:link controller="shoppingCart" action="showCartItems">Checkout (${itemsCount})</g:link></li>
+				</g:else>
+				
 				<sec:ifLoggedIn>
 					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 				</sec:ifLoggedIn>

@@ -1,11 +1,12 @@
 package i2i.AdminServer.User
 
 import i2i.AdminServer.BrandDatabaseService
+import i2i.AdminServer.Constants
+import i2i.AdminServer.OrderCollectionCommand
 import i2i.AdminServer.OrderDetailsCommand
 import i2i.AdminServer.OrdersService
 import i2i.AdminServer.StoreService
 import i2i.AdminServer.ClientSync.InventoryService
-import grails.plugin.springsecurity.annotation.Secured
 
 class PatientProfileController {
 
@@ -60,6 +61,28 @@ class PatientProfileController {
 			
 	        render(view:'deliveryDetails', model: [orderDetails : orderDetails, brandData:brandData, storeName:storeData?.storeName, isEmergencyDeliveryAvailable:storeData?.isEmergencyDeliveryAvailable])
 		}
+	}
+	
+	def showDeliveryDetails() {
+		println "OCC: "+params
+		//println "PARAMS: "+orderDetailsCommand.properties
+		
+//		if(orderDetailsCommand.brandId){
+//			def brandData = brandDatabaseService.getBrandDataFromBrandId(orderDetailsCommand.brandId)
+//			def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
+//			println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
+//			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
+//			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
+//		
+//			//FIXME
+			OrderCollectionCommand orderDetails = new OrderCollectionCommand()
+			orderDetails.circle = Constants.circleArray[0] //FIXME
+			orderDetails.city = 'Mumbai'
+			orderDetails.state = 'Maharastra'
+			orderDetails.country = 'India'
+			
+			render(view:'deliveryDetails', model: [attachmentId:params.attachmentId, orderDetails: orderDetails])
+//		}
 	}
 	
 	def isValidOfferCode(){

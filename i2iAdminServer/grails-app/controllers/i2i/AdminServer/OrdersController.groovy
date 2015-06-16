@@ -3,8 +3,7 @@ package i2i.AdminServer
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
-import i2i.AdminServer.Constants
-import i2i.AdminServer.User.FileAttachmentService;
+import i2i.AdminServer.User.FileAttachmentService
 
 //@Transactional(readOnly = true)
 class OrdersController {
@@ -191,7 +190,6 @@ class OrdersController {
 		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
 
 		println "orderId: "+uId
-		println "inventoryId: "+orderDetailsCommand.inventoryId
 
 		if(uId) {
 			//			ordersService.sendEmail(orderDetailsCommand)

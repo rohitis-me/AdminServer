@@ -16,6 +16,7 @@ class OrdersService {
 	StoreService storeService
 	PatientProfileService patientProfileService
 	EmailService emailService
+	OrderCollectionService orderCollectionService
 	def grailsApplication
 
 	private final String tag= 'OrderService'
@@ -49,9 +50,9 @@ class OrdersService {
 
 	def populateOrderDetailsFromOrder(Orders order) {
 		//		println "populateOrderDetailsFromOrder ORDER: "+order.properties
-		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
+//		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
 		//		println "populateOrderDetailsFromOrder PATIENT: "+patient.properties
-		OrderDetailsCommand orderDetails = populateOrderDetailsFromPatientProfile(patient)
+		OrderDetailsCommand orderDetails = new OrderDetailsCommand()// populateOrderDetailsFromPatientProfile(patient)
 		//		println "ORDERDETAILS: "+orderDetails.properties
 		orderDetails.brandId = order.brandId
 		orderDetails.inventoryId = order.inventoryId
@@ -64,8 +65,8 @@ class OrdersService {
 		orderDetails.orderStatus = order.orderStatus
 		orderDetails.trackingId = order.uId
 		orderDetails.isEmergencyDeliveryNeeded = order.isEmergencyDeliveryNeeded
-		orderDetails.offerCode = order.offerCode
-		orderDetails.attachmentId = order.attachmentId
+//		orderDetails.offerCode = order.offerCode
+//		orderDetails.attachmentId = order.attachmentId
 		return orderDetails
 	}
 
@@ -187,6 +188,28 @@ class OrdersService {
 		return 0
 
 	}
+	
+	def saveOrderFromBrandOrdered(BrandOrdered brandOrdered, int quantity, Long orderCollectionId){
+		Orders order = new Orders()
+		order.brandId = brandOrdered.brandId
+		order.inventoryId = brandOrdered.inventoryId
+		order.storeId = brandOrdered.storeId
+		order.quantity = quantity
+		order.orderCollectionId = orderCollectionId
+		
+		order.orderStatus = 1
+		println "store Id: " +order.storeId
+		Store store = storeService.getStoreDataFromStoreId(order.storeId)
+		println "store: " +store?.properties
+		byte deliveryHrs = store?.deliveryHoursIfAvailable?store.deliveryHoursIfAvailable:0 
+		order.estimatedDeliveryTime = getEstimatedDeliveryTime(deliveryHrs)
+		order.uId = getUniqueRandomString()
+		order.isEmergencyDeliveryNeeded = false
+		def orderId = saveOrder(order)
+		if(orderId != 0) 
+			return populateOrderDetailsFromOrder(order)
+		else return null
+	}
 
 	String getUniqueRandomString()
 	{
@@ -226,6 +249,12 @@ class OrdersService {
 		Orders order = Orders.findByUId(uId)
 		return order
 	}
+	
+	def getListOfOrdersFromOrderCollectionId(Long orderCollectionId) {
+		//		println "getListOfOrdersFromStoreId: "+storeId
+		List orderList = Orders.findAllByOrderCollectionId(orderCollectionId)
+		return orderList
+	}
 
 	def changeOrderStatusAndSave(def orderId, String orderstatus, Date estDeliveryTime) {
 		Orders order = getOrderFromOrderId(orderId)
@@ -241,7 +270,8 @@ class OrdersService {
 		
 		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
 				OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
-				sendOrderStatusChangeEmail(orderDetailsCommand)
+				OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
+				sendOrderStatusChangeEmail(orderDetailsCommand, orderCollCommand)
 		}
 		return status
 	}
@@ -253,7 +283,8 @@ class OrdersService {
 		def status = saveOrder(order)
 		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
 			OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
-			sendOrderStatusChangeEmail(orderDetailsCommand)
+			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
+			sendOrderStatusChangeEmail(orderDetailsCommand, orderCollCommand)
 		}
 		
 		return status
@@ -267,7 +298,8 @@ class OrdersService {
 		def status = saveOrder(order)
 		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
 			OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
-			sendOrderStatusChangeEmail(orderDetailsCommand)
+			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
+			sendOrderStatusChangeEmail(orderDetailsCommand, orderCollCommand)
 		}
 		
 		return status
@@ -281,7 +313,8 @@ class OrdersService {
 		def status = saveOrder(order)
 		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
 			OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
-			sendOrderCancelEmail(orderDetailsCommand)
+			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
+			sendOrderCancelEmail(orderDetailsCommand, orderCollCommand)
 		}
 		
 		return status
@@ -316,13 +349,13 @@ class OrdersService {
 		emailService.sendTrackingIdToCustomer(Constants.mailSubject_NewOrder_Consumer, orderDetails, store)
 	}
 	
-	def sendOrderCancelEmail(OrderDetailsCommand orderDetails) {
+	def sendOrderCancelEmail(OrderDetailsCommand orderDetails, OrderCollectionCommand orderCollCommand) {
 		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
 		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
-		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+//		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
 		//		println "OrderDEtailsCommand: "+orderDetails.properties
-		emailService.sendOrderMail(emailId, Constants.mailSubject_OrderCancel_Admin, orderDetails)
-		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer, orderDetails, store)
+		emailService.sendOrderMail(emailId, Constants.mailSubject_OrderCancel_Admin, orderDetails, orderCollCommand)
+		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer, orderDetails, orderCollCommand)
 	}
 	
 	def sendOrderStatusChangeEmail(OrderDetailsCommand orderDetails) {
