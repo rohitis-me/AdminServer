@@ -34,6 +34,9 @@ class UrlMappings {
         "/"(controller: "search", action:"index")
 //		"/*"(view:'/errors/maintenanceError')
 		
+		//NEW
+		"/ordersStatus"(controller: "orderCollection", action:"showOrderCollectionDetails")
+		//NEW
 		//Errors
         "500"(view:'/errors/serverError')
 		"404"(view:'/errors/pageNotFound')

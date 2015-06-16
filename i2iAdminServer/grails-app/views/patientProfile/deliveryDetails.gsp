@@ -15,8 +15,8 @@
 	<%--	<br />--%>
 	<%--	<div data-role="content">--%>
 	<g:if test="${flash.message}">
-		<div class="message" role="alert">
-			${flash.message}
+		<div class="message" align="center" role="alert">
+			<p style="color: red;">${flash.message}</p>
 		</div>
 	</g:if>
 	<g:hasErrors bean="${orderDetails}">
@@ -28,87 +28,13 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<g:form controller="fileAttachment" action="index">
-					<g:set var="quantity" value="${orderDetails?.quantity}" />
-					<g:hiddenField name="brandName" value="${orderDetails.brandName}" />
+				<g:form controller="orderCollection" action="saveOrderItems">
+<%--					<g:set var="quantity" value="${orderDetails?.quantity}" />--%>
+<%--					<g:hiddenField name="brandName" value="${orderDetails?.brandName}" />--%>
 					<div class="form-horizontal">
 						<div class="panel panel-default order-panel">
-							<div class="panel-heading">Order details</div>
-							<div class="panel-body">
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">Item
-										Name :</label>
-
-									<div class="col-sm-8">
-										<label class="order-info"> <g:fieldValue
-												bean="${orderDetails}" field="brandName" /> <g:if
-												test="${brandData?.form}">
-												${" "+brandData.form}
-											</g:if> <g:if test="${brandData?.strength}">
-												${" "+brandData.strength}
-											</g:if></label>
-									</div>
-									<label for="inputEmail3" class="col-sm-4 control-label"></label>
-									<div class="col-sm-8">
-										<g:set var="number_units"
-											value="${brandData?.noOfUnits?.isInteger()?brandData.noOfUnits.toFloat():null}" />
-										<g:if
-											test="${brandData?.noOfUnits && !brandData.noOfUnits?.contains("ml") && number_units && number_units > 1}">
-											<span class="order-info">Each strip has </span>
-											${brandData?.noOfUnits}
-											<span class="order-info"> units</span>
-											<g:set var="quantity" value="${brandData?.noOfUnits}" />
-										</g:if>
-										<g:elseif
-											test="${brandData?.noOfUnits  && brandData.noOfUnits?.contains("ml")}">
-											<span class="order-info">Each unit has </span>
-											${brandData.noOfUnits}
-										</g:elseif>
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">Quantity
-										:</label>
-									<div class="col-sm-7">
-										<input class="form-control" placeholder="Quantity"
-											type="number" size="6" name="quantity" min="1" max="99999"
-											value="${quantity}">
-										<g:hasErrors bean="${orderDetails}" field="quantity">
-											<g:eachError bean="${orderDetails}" field="quantity">
-												<p style="color: red;">
-													<g:message error="${it}" />
-												</p>
-											</g:eachError>
-										</g:hasErrors>
-									</div>
-								</div>
-								<g:if test="${orderDetails?.deliveryHours}">
-								<div class="form-group">
-									<label for="inputEmail3" class="col-sm-4 control-label">Delivery
-										Time :</label>
-									<div class="col-sm-8">
-										<label class="order-info">${orderDetails?.deliveryHours} hours (subject to order acceptance by pharmacy)</label>
-									</div>
-								</div>
-							</g:if>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-4 control-label"></label>
-									<g:radioGroup name="prescriptionUploadOption" labels="['Show prescription on delivery', 'Upload prescription now']" values="[0,1]" value="0">
-										
-										${it.radio} <g:message code="${it.label}" />
-										
-									</g:radioGroup>
-								</div>
-							<div class="bg-default">Delivery details</div>
-
-							<g:hiddenField name="brandId" value="${orderDetails?.brandId }" />
-							<g:hiddenField name="inventoryId"
-								value="${orderDetails?.inventoryId }" />
-							<g:hiddenField name="storeId" value="${orderDetails?.storeId }" />
-							<g:hiddenField name="deliveryHours"
-								value="${orderDetails?.deliveryHours }" />
+						<div class="panel-heading">Delivery Details</div>
+							<g:hiddenField name="attachmentId" value="${attachmentId}" />
 							<g:hiddenField name="city" value="${orderDetails?.city }" />
 							<g:hiddenField name="state" value="${orderDetails?.state }" />
 							<g:hiddenField name="country" value="${orderDetails?.country }" />
@@ -133,9 +59,6 @@
 										</g:hasErrors>
 									</div>
 								</div>
-								
-<%--																</div>--%>
-								
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label"><span
 										class="text-danger">*</span> Address : </label>
@@ -175,8 +98,8 @@
 										:</label>
 									<div class="col-sm-8">
 										<label class="order-info"><g:hiddenField name="circle"
-												value="${orderDetails?.circle }" /> ${orderDetails?.circle }
-											(Delivery restricted to this area)</label>
+												value="${orderDetails?.circle }" /> ${orderDetails?.circle }</label>
+											<p style="color: red;">(Delivery restricted to this area)</p>
 									</div>
 								</div>
 								

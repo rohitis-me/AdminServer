@@ -1,7 +1,7 @@
 package i2i.AdminServer.User
 
 import grails.transaction.Transactional
-import i2i.AdminServer.OrderDetailsCommand
+import i2i.AdminServer.OrderCollectionCommand
 
 @Transactional
 class PatientProfileService {
@@ -14,7 +14,7 @@ class PatientProfileService {
 		PatientProfile patientProfile = PatientProfile.findByPatientId(patientId)
 	}
 	
-	def populatePatientProfileFromOrderDetailsCommand(OrderDetailsCommand order) {
+	def populatePatientProfileFromOrderCollCommand(OrderCollectionCommand order) {
 		def patientProfile = new PatientProfile()
 		patientProfile.name = order.name
 		patientProfile.phoneNumber = order.phoneNumber

@@ -46,27 +46,27 @@
 			<div class="col-md-10 col-md-offset-1">
 				<g:uploadForm controller="fileAttachment" action="uploadFile">
 
-					<g:hiddenField name="quantity" value="${orderDetails?.quantity}" />
-					<g:hiddenField name="brandName" value="${orderDetails.brandName}" />
-					<g:hiddenField name="brandId" value="${orderDetails?.brandId }" />
-					<g:hiddenField name="inventoryId"
-						value="${orderDetails?.inventoryId }" />
-					<g:hiddenField name="storeId" value="${orderDetails?.storeId }" />
-					<g:hiddenField name="deliveryHours"
-						value="${orderDetails?.deliveryHours }" />
-					<g:hiddenField name="city" value="${orderDetails?.city }" />
-					<g:hiddenField name="state" value="${orderDetails?.state }" />
-					<g:hiddenField name="country" value="${orderDetails?.country }" />
-					<g:hiddenField name="name" value="${orderDetails?.name}" />
-					<g:hiddenField name="addressLine1"
-						value="${orderDetails?.addressLine1}" />
-					<g:hiddenField name="addressLine2"
-						value="${orderDetails?.addressLine2}" />
-					<g:hiddenField name="circle" value="${orderDetails?.circle}" />
-					<g:hiddenField name="phoneNumber"
-						value="${orderDetails?.phoneNumber}" />
-					<g:hiddenField name="emailID" value="${orderDetails?.emailID}" />
-					<g:hiddenField name="offerCode" value="${orderDetails?.offerCode}" />
+<%--					<g:hiddenField name="quantity" value="${orderDetails?.quantity}" />--%>
+<%--					<g:hiddenField name="brandName" value="${orderDetails.brandName}" />--%>
+<%--					<g:hiddenField name="brandId" value="${orderDetails?.brandId }" />--%>
+<%--					<g:hiddenField name="inventoryId"--%>
+<%--						value="${orderDetails?.inventoryId }" />--%>
+<%--					<g:hiddenField name="storeId" value="${orderDetails?.storeId }" />--%>
+<%--					<g:hiddenField name="deliveryHours"--%>
+<%--						value="${orderDetails?.deliveryHours }" />--%>
+<%--					<g:hiddenField name="city" value="${orderDetails?.city }" />--%>
+<%--					<g:hiddenField name="state" value="${orderDetails?.state }" />--%>
+<%--					<g:hiddenField name="country" value="${orderDetails?.country }" />--%>
+<%--					<g:hiddenField name="name" value="${orderDetails?.name}" />--%>
+<%--					<g:hiddenField name="addressLine1"--%>
+<%--						value="${orderDetails?.addressLine1}" />--%>
+<%--					<g:hiddenField name="addressLine2"--%>
+<%--						value="${orderDetails?.addressLine2}" />--%>
+<%--					<g:hiddenField name="circle" value="${orderDetails?.circle}" />--%>
+<%--					<g:hiddenField name="phoneNumber"--%>
+<%--						value="${orderDetails?.phoneNumber}" />--%>
+<%--					<g:hiddenField name="emailID" value="${orderDetails?.emailID}" />--%>
+<%--					<g:hiddenField name="offerCode" value="${orderDetails?.offerCode}" />--%>
 
 					<div class="form-horizontal">
 						<div class="panel panel-default order-panel">
@@ -95,14 +95,20 @@
 
 							</div>
 							<div class="panel-footer clearfix">
-								<div class="row">
 									<div class="col-sm-offset-4 col-xs-12 col-sm-3">
 										<button type="submit" class="btn btn-primary btn-block">
 											<i class="glyphicon glyphicon-upload"></i>&nbsp; Upload
 										</button>
 									</div>
+									<div class="col-xs-6 col-sm-3">
+										<button id="go_back" type="button" class="btn btn-success btn-block"
+											onclick="history.go(-1);return true;">
+											<i class="glyphicon glyphicon-menu-left"></i> Go Back
+										</button>
 								</div>
 							</div>
+
+							
 						</div>
 					</div>
 				</g:uploadForm>
