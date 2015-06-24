@@ -6,7 +6,7 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'ordercollection.items.list', default: 'Order Collection Status')}" />
-<title><g:message message="Pillocate | Order Details" /></title>
+<title><g:message code="title.brand.tag" /> | <g:message message="Track Order" /></title>
 </head>
 <body>
 	<g:render template="/template/navigationConsumer" />

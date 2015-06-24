@@ -5,7 +5,7 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'fileAttachment.label', default: 'FileAttachment')}" />
-<title><g:message code="default.list.label" args="[entityName]" /></title>
+<title><g:message code="title.brand.tag" /> | Prescription upload</title>
 <%--<r:require modules="bootstrap-file-upload"/>--%>
 <style type="text/css">
 <%--
@@ -95,7 +95,7 @@
 
 							</div>
 							<div class="panel-footer clearfix">
-									<div class="col-sm-offset-4 col-xs-12 col-sm-3">
+									<div class="col-sm-offset-3 col-xs-6 col-sm-3">
 										<button type="submit" class="btn btn-primary btn-block">
 											<i class="glyphicon glyphicon-upload"></i>&nbsp; Upload
 										</button>

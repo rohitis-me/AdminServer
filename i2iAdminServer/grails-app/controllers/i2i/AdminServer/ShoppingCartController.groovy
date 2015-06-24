@@ -8,11 +8,11 @@ package i2i.AdminServer
 import com.metasieve.shoppingcart.SessionUtils
 import com.metasieve.shoppingcart.Shoppable
 import com.metasieve.shoppingcart.ShoppingCartService
-//import grails.plugin.springsecurity.annotation.Secured
 
 class ShoppingCartController {
 
 	ShoppingCartService shoppingCartService
+	StoreService storeService
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -121,19 +121,16 @@ class ShoppingCartController {
 	
 	def placeOrder(){
 		println "params: " + params
+		
+//		String circle = Constants.circleArray[0] //FIXME
 //		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-//		
-//		List cartItemMapList = []
+//
 //		cartItems.each{item ->
-//			println "id: "+ item.id
 //			def product = Shoppable.findByShoppingItem(item)
-//			def name = product.toString()
-//			println "item Name: "+ name
-//			def qty = shoppingCartService.getQuantity(item)
-//			Map nameQtyMap = [:]
-//			nameQtyMap.put("item", name)
-//			nameQtyMap.put("qty", qty)
-//			cartItemMapList.add(nameQtyMap)
+//			def store = storeService.getStoreDataFromStoreId(product.storeId)
+//			if(store){
+//				 circle = store.circle
+//			}
 //		}
 		
 		if(params.prescriptionUploadOption == '0')
@@ -145,6 +142,11 @@ class ShoppingCartController {
 	def goToHomePage(){
 		println "in go to home"
 		redirect (controller: 'search', action: 'index')
+	}
+	
+	def changeCartItemQuantity(){
+		println "change quantity: "+ params
+		redirect (controller: 'shoppingCart', action: 'showCartItems')
 	}
 
 }

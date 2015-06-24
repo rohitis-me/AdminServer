@@ -3,7 +3,9 @@ package i2i.AdminServer
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import i2i.AdminServer.User.FileAttachmentService
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 
@@ -16,8 +18,94 @@ class OrderCollectionController {
 	OrderCollectionService orderCollectionService
 	ShoppingCartService shoppingCartService
 	PatientProfileService patientProfileService
-	
+	StoreService storeService
+	FileAttachmentService fileAttachmentService
+
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+	@Secured(['ROLE_CHEMIST_ADMIN'])
+	def showOrderDetailsList() {
+		String storeId = storeService.getLoggedInStoreId()
+
+		//FIXME: has to be logged in to come here
+		if(storeId == '0')
+			render "error. Not logged in "
+
+		List orderCollIds = ordersService.getListOfOrderCollectionIdsFromStoreId(storeId)
+		orderCollIds.each { println "orderCollId: "+it }
+		println "orderCollIdCount "+ orderCollIds.size()
+
+		List orderDetailsList = orderCollectionService.getOrderCollectionCommandListFromOrderCollectionIdList(orderCollIds)
+		//		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
+		//		println "orderCount "+ ordersList.size()
+		//
+		//		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
+		println "done orderdetailslist"
+		//to show current tab colour
+		byte orderStatus = -2
+
+		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
+	}
+
+	@Secured(['ROLE_CHEMIST_ADMIN'])
+	def showSortedOrderDetailsList() {
+		String storeId = storeService.getLoggedInStoreId()
+
+		//FIXME: has to be logged in to come here
+		if(storeId == '0')
+			render "error. Not logged in "
+
+		List orderCollIds = ordersService.getListOfOrderCollectionIdsFromStoreId(storeId)
+		orderCollIds.each { println "orderCollId: "+it }
+		println "orderCollIdCount "+ orderCollIds.size()
+		byte orderStatus = params.orderStatus.toInteger()
+
+		List orderDetailsList = orderCollectionService.getOrderCollectionCommandListFromOrderCollectionIdListAndOrderStatus(orderCollIds,orderStatus)
+		//		List ordersList = ordersService.getOrderCollectionCommandListFromOrderCollectionIdListAndOrderStatus(storeId,orderStatus)
+		//		println "orderCount "+ ordersList.size()
+		//
+		//		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
+		println "done orderdetailslist"
+
+		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
+	}
+
+	@Secured(['ROLE_CHEMIST_ADMIN'])
+	def showOrderDetails() {
+		println "showOrderDetails params: "+params
+		Long orderCollId = params.orderCollectionId?.toLong()
+
+		String storeId = storeService.getLoggedInStoreId()
+
+		//FIXME: has to be logged in to come here
+		if(storeId == '0')
+			render "error. Not logged in "
+
+		OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollId)
+		List orderDetailsCommandList = ordersService.getListOfOrdersFromOrderCollectionIdAndStoreId(orderCollId,storeId)
+
+		String attachmentLink = ""
+		if(orderCollCommand?.attachmentId)
+			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderCollCommand?.attachmentId)
+		render(view:"showOrderDetails", model: [orderDetailsCommandList: orderDetailsCommandList, orderCollCommand:orderCollCommand, attachmentLink:attachmentLink, storeId:storeId])
+	}
+
+	@Secured(['ROLE_CHEMIST_ADMIN'])
+	def saveOrderStatus() {
+		println "showOrderDetails params: "+params
+		Long orderCollId = params.orderCollectionId?.toLong()
+		String storeId = params.storeId
+		String comment = params.deliveryComment
+
+		//		println "in save order status: "+orderDetailsCommand.properties
+		//		def orderId = orderDetailsCommand.orderId
+		def status = ordersService.changeOrderStatusAndSave(storeId, orderCollId, params.orderstatus, params.estimatedDeliveryTime, comment)
+
+		if(status == 0)
+			render "error"
+		else
+			redirect (controller: 'orderCollection', action: 'showOrderDetailsList')
+	}
 
 	def saveOrderItems(OrderCollectionCommand orderCollCommand) {
 		println "ODC: "+orderCollCommand.properties
@@ -38,11 +126,11 @@ class OrderCollectionController {
 			flash.message = message(code: 'save.error.label', default: 'Enter valid information')
 			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderCollCommand]
 			return
-//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
+			//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
 		}
 
 		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-		
+
 		List orderDetailsList = []
 		cartItems.each{item ->
 			println "id: "+ item.id
@@ -51,9 +139,9 @@ class OrderCollectionController {
 			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
 			orderDetailsList.add(orderDetails)
 		}
-		
+
 		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
-		
+
 		def checkedOutItems = shoppingCartService.checkOut()
 		println "size: "+checkedOutItems.size()
 
@@ -76,7 +164,7 @@ class OrderCollectionController {
 			//			orderStatusCommand.offerCode = offerCode
 			//			println "OrderStatusCommand: "+orderStatusCommand.properties
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-			render(view: "orderCollectionDetails", model: [orderDetailsList:orderDetailsList, patient:patient, trackingId: trackingId, offerCode:offerCode])
+			render(view: "orderCollectionDetails", model: [orderDetailsList:orderDetailsList, patient:patient, trackingId: trackingId, offerCode:offerCode, deliveryComment:orderCollection.deliveryComment])
 		}
 		else
 		{
@@ -92,14 +180,39 @@ class OrderCollectionController {
 		println "orderId: "+params.orderId
 		def orderId = params.orderId
 		def status = ordersService.cancelOrderAndSave(orderId)
-		
+
 		if(status == 0)
 			render "Error in proccessing your request. Please try again later!"
 		else{
-			redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: params.trackingId,offerCode:params.offerCode])
+			redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: params.trackingId])
 		}
 	}
 
+	//	def cancelOrder() {
+	//		println "orderRefId: "+params.trackingId
+	//		def orderRefId = params.trackingId
+	//
+	//		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
+	//		if(orderCollection) {
+	//			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
+	//			println "items count: "+orderList.size()
+	//			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
+	//			//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
+	//			//			orderStatusCommand.trackingId = uId
+	//			//			orderStatusCommand.offerCode = offerCode
+	//			//			println "OrderStatusCommand: "+orderStatusCommand.properties
+	//			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
+	//			render(view: "orderCollectionDetails", model: [orderDetailsList:orderDetailsList, patient:patient, trackingId: trackingId, offerCode:offerCode])
+	//		}
+	//
+	//		def status = ordersService.cancelOrderAndSave(orderId)
+	//
+	//		if(status == 0)
+	//			render "Error in proccessing your request. Please try again later!"
+	//		else{
+	//			redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: params.trackingId,offerCode:params.offerCode])
+	//		}
+	//	}
 	def showTrackedOrderDetails(){
 		String trackingId = params?.trackingId
 		String trackId = trackingId?.toUpperCase()
@@ -109,9 +222,9 @@ class OrderCollectionController {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
 			println "items count: "+orderList.size()
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
-			
+
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-			render(view: "trackOrderCollectionDetails", model: [orderDetailsList:orderDetailsList, patient:patient, trackingId: trackingId])
+			render(view: "trackOrderCollectionDetails", model: [orderDetailsList:orderDetailsList, patient:patient, trackingId: trackingId, deliveryComment:orderCollection.deliveryComment])
 		}
 		else
 		{

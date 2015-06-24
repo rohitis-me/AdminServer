@@ -23,7 +23,7 @@ class SecUserController {
 		String role = authList.getAt(0)
 		println "role: "+role
 		if(role == Constants.ROLE_CHEMIST_ADMIN)
-			redirect (controller: 'orders', action: 'showOrderDetailsList')
+			redirect (controller: 'orderCollection', action: 'showOrderDetailsList')
 		else
 			redirect (controller: 'search', action: 'index')
 	}

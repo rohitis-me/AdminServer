@@ -59,6 +59,7 @@ turnOnBootStrapCode = 1
 
 //enableProdConfig = 0
 env=Constants.env_LOCAL
+Constants.circleArray = Constants.circleArray_Mumbai
 
 if(env == Constants.env_DEMO) {
 	Constants.envLink= Constants.envLink_DEMO

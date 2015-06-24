@@ -6,7 +6,7 @@
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
 	value="${message(code: 'i2i.search.results.label', default: 'Search Results')}" />
-<title><g:message message="Search results" /></title>
+<title><g:message code="title.brand.tag" /> | <g:message message="Search Result" /></title>
 </head>
 <body>
 	<g:render template="/template/navigationConsumer" />
@@ -80,15 +80,15 @@
                     <div class="panel-footer clearfix">
                        <div class="col-sm-offset-3 col-xs-6 col-sm-3" id="disableSubmit">
                        <g:if test="${disableAdd == '1' }">
-                       <button type="submit" disabled class="btn btn-primary btn-block"><i class="glyphicon glyphicon-ok"></i>&nbsp; Add To Cart</button>
+                       <button type="submit" disabled class="btn btn-primary btn-block"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add To Cart</button>
                        </g:if>
                        <g:else>
-                        <button type="submit" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-ok"></i>&nbsp; Add To Cart</button>
+                        <button type="submit" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add To Cart</button>
                        </g:else>
                        </div>
                    	<div class="col-xs-6 col-sm-3">
 						<button type="submit" name="placeOrderNow" class="btn btn-success btn-block">
-							<i class="glyphicon glyphicon-menu-left"></i> Buy Now
+							<i class="glyphicon glyphicon-ok"></i> Buy Now
 						</button>
 					</div>
                     </div>

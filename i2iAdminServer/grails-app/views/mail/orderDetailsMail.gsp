@@ -6,7 +6,7 @@
 <div>
 <h2> Order Details:</h2> 
 <g:each in="${orderDetailsList}" status="i" var="orderInstance">
-<g:if test="${orderInstance.orderStatus == Constants.ORDER_REJECTED}">
+<g:if test="${orderInstance.orderStatus == Constants.ORDER_CANCELLED}">
 Following order has been cancelled by Customer. Please stop the dispatch process.
 </g:if>
 <p> ${i+1}.

@@ -158,7 +158,7 @@ class EmailService {
 		if(!(grailsApplication.config.env == Constants.env_PROD))
 			mailSubject = grailsApplication.config.env+' '+mailSubject
 
-		String toAdd = orderDetails.emailID
+		String toAdd = orderCollCommand.emailID
 		try {
 
 			if(toAdd) {

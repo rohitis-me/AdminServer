@@ -30,13 +30,24 @@ ${patient.circle },
 ${patient.city }</label>
 									</div>
 								</div>
+								<g:if test="${deliveryComment}">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-4 control-label">Reason for Late delivery :</label>
+									<div class="col-sm-8">
+										<label class="order-info">${deliveryComment}</label>
+									</div>
+								</div>
+								</g:if>
 					</div>
 							<table class="table table-hover table-striped">
 								<thead class="bg-default bg-primary">
 									<tr>
 										<th>Order</th>
 										<th>Status</th>
-										<th>Expected Delivery</th>
+										<th><g:if test="${orderDetailsList[0].orderStatus < Constants.ORDER_DISPATCHED}">
+										Expected Dispatch</g:if>
+										<g:else>Expected Delivery</g:else>
+										</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -63,13 +74,15 @@ ${patient.city }</label>
 											<g:if test="${orderStatus == Constants.ORDER_DELIVERED}">
 											Delivered
 											</g:if>
-											<g:if test="${orderStatus == Constants.ORDER_REJECTED}">
+											<g:if test="${orderStatus == Constants.ORDER_CANCELLED}">
 											Order Cancelled
 											</g:if>
-											
+											<g:if test="${orderStatus == Constants.ORDER_REJECTED}">
+											Order Rejected
+											</g:if>
 											</td>
 											<td>
-											<g:if test="${orderStatus != Constants.ORDER_REJECTED && orderStatus != Constants.ORDER_DELIVERED}">
+											<g:if test="${orderStatus != Constants.ORDER_REJECTED && orderStatus != Constants.ORDER_CANCELLED && orderStatus != Constants.ORDER_DELIVERED}">
 											<g:formatDate
 										date="${orderInstance.estimatedDeliveryTime }"
 										format="${Constants.dateFormat }" /> 
@@ -79,7 +92,7 @@ ${patient.city }</label>
 											<g:if test="${orderStatus == Constants.ORDER_PLACED || orderStatus == Constants.ORDER_ACCEPTED}">
 											<g:form action="cancelOrder" params='[orderId: orderInstance.orderId, trackingId:trackingId, offerCode:offerCode]'>
 												<button type="submit" class="btn btn-danger btn-block" onclick="return confirm('${message(code: 'order.status.reject.message')}');">
-												<i class="glyphicon glyphicon-remove"></i> Cancel Order </button>
+												<i class="glyphicon glyphicon-remove"></i>Cancel Order</button>
 												</g:form>
 												</g:if>
 											</td>
@@ -89,16 +102,24 @@ ${patient.city }</label>
 							</table>
 							<br />
 							<g:form>
+<%--							<g:form action="cancelOrder" params='[trackingId:trackingId, offerCode:offerCode]'>--%>
 							<div class="panel-footer clearfix">
-							<div class="row">
 								<div class="col-sm-offset-3 col-xs-6 col-sm-3">
-									<button type="submit" class="btn btn-primary btn-block"
+									<button type="submit" class="btn btn-success btn-block"
 										name="_action_placeNextOrder">
 										<i class="glyphicon glyphicon-menu-right"></i>
 										${message(code: 'order.place.next.button', default: 'Next Order')}
 									</button>
 								</div>
-								</div>
+<%--								<g:if test="${orderStatus != Constants.ORDER_DISPATCHED && orderStatus != Constants.ORDER_DELIVERED}">--%>
+<%--								<div class="col-xs-6 col-sm-3">--%>
+<%--									<button type="submit" class="btn btn-danger btn-block"--%>
+<%--										onclick="return confirm('${message(code: 'order.status.reject.message')}');">--%>
+<%--										<i class="glyphicon glyphicon-remove"></i>--%>
+<%--										${message(code: 'order.cancel.order.button', default: 'Cancel Order')}--%>
+<%--									</button>--%>
+<%--								</div>--%>
+<%--								</g:if>--%>
 							</div>
 							</g:form>
 						</div>

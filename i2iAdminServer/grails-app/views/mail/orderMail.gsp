@@ -3,7 +3,7 @@
 <%@ page import="i2i.AdminServer.Constants" %>
 
 <div>
-<g:if test="${orderDetails.orderStatus == Constants.ORDER_REJECTED}">
+<g:if test="${orderDetails.orderStatus == Constants.ORDER_CANCELLED}">
 Following order has been cancelled by Customer. Please stop the dispatch process.
 </g:if>
 <br/>
@@ -25,9 +25,9 @@ ${orderCollCommand.addressLine2 }<br/>
 ${orderCollCommand.circle }<br/>
 ${orderCollCommand.city }<br/>
 <br/>
-<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">
+<g:if test="${orderDetails.orderStatus != Constants.ORDER_CANCELLED && orderDetails.orderStatus != Constants.ORDER_REJECTED}">
 <g:if test="${orderCollCommand.phoneNumber }">
-You could call ${orderDetails.name } on ${orderDetails.phoneNumber }
+You could call ${orderCollCommand.name } on ${orderCollCommand.phoneNumber }
 </g:if>
 <br>
 <g:if test="${orderCollCommand.emailID }">

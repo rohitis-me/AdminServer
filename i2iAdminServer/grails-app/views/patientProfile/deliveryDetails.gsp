@@ -167,16 +167,13 @@
 									</g:form>
 								</div>
 								
-								<div class="form-group">
-<%--								<label for="termsConditions" class="checkbox-inline"> <input--%>
-<%--										class="grey remember" type="checkbox" required="required"/> I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a>--%>
-<%--								</label>--%>
-									<label for="inputEmail3" class="col-sm-4 control-label"><input
-										class="grey remember" type="checkbox" required="required"/></label>
-									<div class="col-sm-8">
-										<label class="order-info">I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></label>
-									</div>
-								</div>
+<%--								<div class="form-group">--%>
+<%--									<label for="inputEmail3" class="col-sm-4 control-label"><input--%>
+<%--										class="grey remember" type="checkbox" required="required"/></label>--%>
+<%--									<div class="col-sm-8">--%>
+<%--										<label class="order-info">   I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></label>--%>
+<%--									</div>--%>
+<%--								</div>--%>
 			</div>
 									
 								<div class="bg-default text-center">
@@ -184,8 +181,12 @@
 										<span class="text-danger"><g:message
 												code="order.prescription.message" /></span>
 									</h5>
+<%--								</div>--%>
+<%--								<div class="bg-default text-center">--%>
+									<h5><span class="text-danger"><input
+										class="grey remember" type="checkbox" required="required"/>&nbsp;&nbsp;&nbsp;I accept <a href="${createLink(uri:'/termsConditions')}">Terms &amp; Conditions</a></span></h5>
+<%--									</div>--%>
 								</div>
-					
 								<div class="panel-footer clearfix">
 									<div class="col-sm-offset-3 col-xs-6 col-sm-3">
 										<button id="order_submit" type="submit" class="btn btn-primary btn-block"

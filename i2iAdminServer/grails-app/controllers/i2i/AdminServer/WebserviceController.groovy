@@ -397,8 +397,11 @@ class WebserviceController {
 	}
 
 	def getCircleArray(){
-
-		def circleArray = ['circleArray':Constants.circleArray]
+		def circleArray = []
+		if(params.city == 'Chennai')
+			circleArray = ['circleArray':Constants.circleArray_Chennai]
+		if(params.city == 'Mumbai')
+			circleArray = ['circleArray':Constants.circleArray_Mumbai]
 
 		render circleArray as JSON
 	}
@@ -412,11 +415,7 @@ class WebserviceController {
 		else
 			render (text: 'Invalid coupon code')
 	}
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> origin/shopping-cart-branch
 	def isAppUpToDate(){
 		return 1
 	}

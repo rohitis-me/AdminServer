@@ -8,10 +8,10 @@
 		</g:else>
 		
 		<g:if test="${entityName== 'Orders' }">
-			<li><g:link class="current" controller="orders" action="showOrderDetailsList">Orders</g:link></li>
+			<li><g:link class="current" controller="orderCollection" action="showOrderDetailsList">Orders</g:link></li>
 		</g:if>
 		<g:else>
-			<li><g:link controller="orders" action="showOrderDetailsList">Orders</g:link></li>
+			<li><g:link controller="orderCollection" action="showOrderDetailsList">Orders</g:link></li>
 		</g:else>
 				
 		<g:if test="${entityName== 'Availability' }">

@@ -6,8 +6,9 @@ class Constants {
 	public static final byte ORDER_ACCEPTED = 2;
 	public static final byte ORDER_DISPATCHED = 3;
 	public static final byte ORDER_DELIVERED = 4;
-	public static final byte ORDER_REJECTED = 0;
-
+	public static final byte ORDER_CANCELLED = 0;
+	public static final byte ORDER_REJECTED = -1;
+	
 	public static final byte AVAILABILITY_LOW = 1;
 	public static final byte AVAILABILITY_MEDIUM = 2;
 	public static final byte AVAILABILITY_HIGH = 3;
@@ -15,8 +16,8 @@ class Constants {
 	
 	//public static final String orderStatus[] = {'Order Rejected', 'Order Placed', 'Order Accepted', 'Order Dispatched', 'Order Delivered'}
 	
-//	public static final String[] circleArray = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
-	public static final String[] circleArray = ["Bandra (West)", "SantaCruz (West)", "Khar (West)"]
+	public static final String[] circleArray_Chennai = ["Thiruvanmiyur", "Kottivakkam", "Kandanchavadi", "Adyar", "Besant Nagar"]
+	public static final String[] circleArray_Mumbai = ["Bandra (West)", "SantaCruz (West)", "Khar (West)"]
 
 	public static final String supportEmail="support@i2itech.co.in"//for feedback
 	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
@@ -33,6 +34,8 @@ class Constants {
 	
 	public static String envLink=''
 	public static String analyticsTrackingId=''
+	public static String[] circleArray = []
+	public static final int[] quantityArray = ['1','2','3','4','5','6','7','8','9','10']
 	
 	public static final String PrescriptionOnDeliveryMessage = 'Show prescription on delivery'
 	public static final String PrescriptionUploadNowMessage = 'Upload prescription now'

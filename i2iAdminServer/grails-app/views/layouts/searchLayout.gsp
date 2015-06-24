@@ -36,8 +36,7 @@
 
 </head>
 <body>
-	<div class="headerBanner" id="headerdiv" role="banner">pillocate
-		(Beta)</div>
+	<div class="headerBanner" id="headerdiv" role="banner">pillocate</div>
 	<br />
 	<g:layoutBody />
 	<div class="footer" role="contentinfo"></div>

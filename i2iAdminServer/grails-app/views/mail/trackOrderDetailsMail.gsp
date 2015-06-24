@@ -12,9 +12,12 @@ Your order has been accepted successfully. Please find your order details below,
 <g:elseif test="${orderInstance.orderStatus == Constants.ORDER_DELIVERED && i==0}">
 Your order has been delivered successfully. Please find your order details below,
 </g:elseif>
-<g:elseif test="${orderInstance.orderStatus == Constants.ORDER_REJECTED && i==0}">
+<g:elseif test="${orderInstance.orderStatus == Constants.ORDER_CANCELLED && i==0}">
 Your order has been cancelled successfully. Please find your order details below,
-<%--Thanks for ordering at pillocate! Your order has been rejected as stock is not available. Please find your order details below,--%>
+</g:elseif>
+<g:elseif test="${orderInstance.orderStatus == Constants.ORDER_REJECTED && i==0}">
+Thanks for ordering at pillocate! Your order has been rejected as stock is not available. 
+We will Notify As soon as stock is available. Please find your order details below,
 </g:elseif>
 <g:elseif test="${i==0}">
 Thanks for ordering at pillocate! Please find your order details below,

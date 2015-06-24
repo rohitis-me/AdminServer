@@ -16,9 +16,9 @@
 			${flash.message}
 		</div>
 	</g:if>
-	<g:elseif test="${orderStatusCommand?.offerCode}">
+	<g:elseif test="${offerCode}">
 		<div class="message" align="center" style="color: white; background: #5cb85c;">
-			<g:message code="orderStatus.couponCode.success.message" args="${[orderStatusCommand?.offerCode]}"/>
+			<g:message code="orderStatus.couponCode.success.message" args="${[offerCode]}"/>
 		</div>
 		<br/>
 	</g:elseif>

@@ -27,6 +27,8 @@ class OrderCollectionCommand {
 	Long orderCollectionId
 	String offerCode
 	String attachmentId
+	String deliveryComment
+	byte orderStatus //FIXME
 	
 	static constraints = {
 		name nullable:false, blank:false,size:1..100
@@ -46,5 +48,6 @@ class OrderCollectionCommand {
 			}
 		}*/
 		attachmentId nullable:true, blank:true,size:1..100
+		deliveryComment nullable:true, blank:true,size:1..100
 	}
 }

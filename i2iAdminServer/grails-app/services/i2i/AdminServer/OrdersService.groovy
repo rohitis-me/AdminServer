@@ -1,5 +1,7 @@
 package i2i.AdminServer
 
+import java.util.List;
+
 import grails.transaction.Transactional
 import groovy.time.TimeCategory
 import i2i.AdminServer.User.EmailService
@@ -50,7 +52,7 @@ class OrdersService {
 
 	def populateOrderDetailsFromOrder(Orders order) {
 		//		println "populateOrderDetailsFromOrder ORDER: "+order.properties
-//		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
+		//		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
 		//		println "populateOrderDetailsFromOrder PATIENT: "+patient.properties
 		OrderDetailsCommand orderDetails = new OrderDetailsCommand()// populateOrderDetailsFromPatientProfile(patient)
 		//		println "ORDERDETAILS: "+orderDetails.properties
@@ -65,8 +67,8 @@ class OrdersService {
 		orderDetails.orderStatus = order.orderStatus
 		orderDetails.trackingId = order.uId
 		orderDetails.isEmergencyDeliveryNeeded = order.isEmergencyDeliveryNeeded
-//		orderDetails.offerCode = order.offerCode
-//		orderDetails.attachmentId = order.attachmentId
+		//		orderDetails.offerCode = order.offerCode
+		//		orderDetails.attachmentId = order.attachmentId
 		return orderDetails
 	}
 
@@ -108,7 +110,7 @@ class OrdersService {
 		order.storeId = orderDetailsCommand.storeId
 		order.quantity = orderDetailsCommand.quantity
 		order.offerCode = orderDetailsCommand.offerCode
-		
+
 		if(orderDetailsCommand.orderId)
 			order.orderId = orderDetailsCommand.orderId
 
@@ -174,7 +176,7 @@ class OrdersService {
 			order.personId = patientId
 			order.uId = getUniqueRandomString()
 			def orderId = saveOrder(order)
-			
+
 			if(orderId != 0) {
 				if(grailsApplication.config.env != Constants.env_LOCAL) {
 					OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
@@ -188,7 +190,7 @@ class OrdersService {
 		return 0
 
 	}
-	
+
 	def saveOrderFromBrandOrdered(BrandOrdered brandOrdered, int quantity, Long orderCollectionId){
 		Orders order = new Orders()
 		order.brandId = brandOrdered.brandId
@@ -196,17 +198,17 @@ class OrdersService {
 		order.storeId = brandOrdered.storeId
 		order.quantity = quantity
 		order.orderCollectionId = orderCollectionId
-		
+
 		order.orderStatus = 1
 		println "store Id: " +order.storeId
 		Store store = storeService.getStoreDataFromStoreId(order.storeId)
 		println "store: " +store?.properties
-		byte deliveryHrs = store?.deliveryHoursIfAvailable?store.deliveryHoursIfAvailable:0 
+		byte deliveryHrs = store?.deliveryHoursIfAvailable?store.deliveryHoursIfAvailable:0
 		order.estimatedDeliveryTime = getEstimatedDeliveryTime(deliveryHrs)
 		order.uId = getUniqueRandomString()
 		order.isEmergencyDeliveryNeeded = false
 		def orderId = saveOrder(order)
-		if(orderId != 0) 
+		if(orderId != 0)
 			return populateOrderDetailsFromOrder(order)
 		else return null
 	}
@@ -249,29 +251,54 @@ class OrdersService {
 		Orders order = Orders.findByUId(uId)
 		return order
 	}
-	
+
 	def getListOfOrdersFromOrderCollectionId(Long orderCollectionId) {
 		//		println "getListOfOrdersFromStoreId: "+storeId
 		List orderList = Orders.findAllByOrderCollectionId(orderCollectionId)
 		return orderList
 	}
 
-	def changeOrderStatusAndSave(def orderId, String orderstatus, Date estDeliveryTime) {
-		Orders order = getOrderFromOrderId(orderId)
-		order.estimatedDeliveryTime = estDeliveryTime
+	def getListOfOrdersFromOrderCollectionIdAndStoreId(Long orderCollectionId, String storeId) {
+		//		println "getListOfOrdersFromStoreId: "+storeId
+		List orderList = Orders.findAllByOrderCollectionIdAndStoreId(orderCollectionId, storeId)
+		return getListOfOrderDetailsFromOrdersList(orderList)
+	}
 
-		if(orderstatus=="2") order.orderStatus = Constants.ORDER_ACCEPTED
-		else if(orderstatus=="3") order.orderStatus = Constants.ORDER_DISPATCHED
-		else if(orderstatus=="4") order.orderStatus = Constants.ORDER_DELIVERED
-		else if(orderstatus=="0") order.orderStatus = Constants.ORDER_REJECTED
-		else order.orderStatus = Constants.ORDER_PLACED
+	def getOrderStatusFromOrderCollectionIdAndStoreId(Long orderCollectionId, String storeId) {
+		Orders order = Orders.findByOrderCollectionIdAndStoreId(orderCollectionId, storeId)
+		def orderStatus = Constants.ORDER_PLACED
+		if(order) orderStatus = order.orderStatus
+		return orderStatus
+	}
+	
+	def getOrderStatusFromOrderCollectionId(Long orderCollectionId) {
+		Orders order = Orders.findByOrderCollectionIdAndStoreId(orderCollectionId)
+		def orderStatus = Constants.ORDER_PLACED
+		if(order) orderStatus = order.orderStatus
+		return orderStatus
+	}
+	
+	def changeOrderStatusAndSave(String storeId, Long orderCollectionId, String orderstatus, Date estDeliveryTime, String deliveryComment) {
+		println "comment OS " + deliveryComment
+		def status = 0
+		List orderList = Orders.findAllByOrderCollectionIdAndStoreId(orderCollectionId, storeId)
+		orderList.each {order->
+			order.estimatedDeliveryTime = estDeliveryTime
 
-		def status = saveOrder(order)
-		
+			if(orderstatus=="2") order.orderStatus = Constants.ORDER_ACCEPTED
+			else if(orderstatus=="3") order.orderStatus = Constants.ORDER_DISPATCHED
+			else if(orderstatus=="4") order.orderStatus = Constants.ORDER_DELIVERED
+			else if(orderstatus=="0") order.orderStatus = Constants.ORDER_CANCELLED
+			else if(orderstatus=="-1") order.orderStatus = Constants.ORDER_REJECTED
+			else order.orderStatus = Constants.ORDER_PLACED
+
+			status = saveOrder(order)
+		}
 		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
-				OrderDetailsCommand orderDetailsCommand = populateOrderDetailsFromOrder(order)
-				OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
-				sendOrderStatusChangeEmail(orderDetailsCommand, orderCollCommand)
+			List orderDetailsList = getListOfOrderDetailsFromOrdersList(orderList)
+			orderCollectionService.changeCommentAndSave(orderCollectionId, deliveryComment)
+			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollectionId)
+			sendOrderStatusChangeEmail(orderCollCommand, orderDetailsList)
 		}
 		return status
 	}
@@ -286,7 +313,7 @@ class OrdersService {
 			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
 			sendOrderStatusChangeEmail(orderDetailsCommand, orderCollCommand)
 		}
-		
+
 		return status
 	}
 
@@ -301,14 +328,14 @@ class OrdersService {
 			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
 			sendOrderStatusChangeEmail(orderDetailsCommand, orderCollCommand)
 		}
-		
+
 		return status
 	}
 
 	def cancelOrderAndSave(def orderId) {
 		println "orderid: "+orderId
 		Orders order = getOrderFromOrderId(orderId)
-		order.orderStatus = Constants.ORDER_REJECTED
+		order.orderStatus = Constants.ORDER_CANCELLED
 
 		def status = saveOrder(order)
 		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
@@ -316,10 +343,31 @@ class OrdersService {
 			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(order.orderCollectionId)
 			sendOrderCancelEmail(orderDetailsCommand, orderCollCommand)
 		}
-		
+
 		return status
 	}
-	
+
+	//	def cancelOrderCollection(def orderCollectionId){
+	//		List orderList = getListOfOrdersFromOrderCollectionId(orderCollectionId)
+	//		def status = 0
+	//		orderList.each { order->
+	//			order.orderStatus = Constants.ORDER_REJECTED
+	//			status = saveOrder(order)
+	//		}
+	//
+	//		return status
+	//	}
+
+	def getListOfOrderCollectionIdsFromStoreId(String storeId){
+		List orderList = Orders.findAllByStoreId(storeId)
+		List orderCollIds = new ArrayList<Long>()
+		orderList.each { order->
+			if(!orderCollIds.contains(order.orderCollectionId))
+				orderCollIds.add(order.orderCollectionId)
+		}
+		return orderCollIds
+	}
+
 	def getListOfOrdersFromStoreId(String storeId) {
 		//		println "getListOfOrdersFromStoreId: "+storeId
 		List orderList = Orders.findAllByStoreId(storeId)
@@ -331,7 +379,7 @@ class OrdersService {
 		List orderList = Orders.findAllByStoreIdAndOrderStatus(storeId,orderStatus)
 		return orderList
 	}
-	
+
 	def getListOfOrderDetailsFromOrdersList(List orderList) {
 		List orderDetailsList = new ArrayList<OrderDetailsCommand>()
 		orderList.each { order->
@@ -348,28 +396,39 @@ class OrdersService {
 		emailService.sendOrderMail(emailId, Constants.mailSubject_NewOrder_Admin, orderDetails)
 		emailService.sendTrackingIdToCustomer(Constants.mailSubject_NewOrder_Consumer, orderDetails, store)
 	}
-	
+
 	def sendOrderCancelEmail(OrderDetailsCommand orderDetails, OrderCollectionCommand orderCollCommand) {
 		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
-		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
 //		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
+		//		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
 		//		println "OrderDEtailsCommand: "+orderDetails.properties
 		emailService.sendOrderMail(emailId, Constants.mailSubject_OrderCancel_Admin, orderDetails, orderCollCommand)
+//		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer,orderCollCommand,orderDetailsList, store)
 		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer, orderDetails, orderCollCommand)
 	}
-	
-	def sendOrderStatusChangeEmail(OrderDetailsCommand orderDetails) {
-		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
-		if(orderDetails.orderStatus == Constants.ORDER_ACCEPTED){
-			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
-			emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderAccepted_Consumer, orderDetails, store)
-		}
-		else if(orderDetails.orderStatus == Constants.ORDER_REJECTED){
-			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
-			emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderRejected_Consumer, orderDetails, store)
+
+	def sendOrderStatusChangeEmail(OrderCollectionCommand orderCollCommand, List orderDetailsList) {
+		if(orderDetailsList.size() > 0){
+			Store store = storeService.getStoreDataFromStoreId(orderDetailsList[0].storeId)
+			//			emailService.sendOrderMail(store.emailId, Constants.mailSubject_NewOrder_Admin, orderCollCommand,orderDetailsList)
+			//			emailService.sendTrackingIdToCustomer(Constants.mailSubject_NewOrder_Consumer, orderCollCommand,orderDetailsList, store)
+
+			if(orderDetailsList[0].orderStatus == Constants.ORDER_ACCEPTED){
+				//			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+				emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderAccepted_Consumer, orderCollCommand,orderDetailsList, store)
+			}
+			else if(orderDetailsList[0].orderStatus == Constants.ORDER_REJECTED){
+				//			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+				emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderRejected_Consumer,orderCollCommand,orderDetailsList, store)
+			}
+			else if(orderDetailsList[0].orderStatus == Constants.ORDER_CANCELLED){
+				//			Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
+				emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer,orderCollCommand,orderDetailsList, store)
+			}
 		}
 	}
-	
+
 	def checkOfferCode(String offerCode){
 		offerCode = offerCode?.toUpperCase()
 		if (offerCode) {
