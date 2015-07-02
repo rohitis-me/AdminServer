@@ -11,8 +11,6 @@
                 dataType: "json",
                 data: {
                     term: request.term,
-                    circle: $("#circleSelectBox").val(), 
-                    city: $("#citySelectBox").val(), 
                 },
                 success: function(data) {
                     response(data);
@@ -59,21 +57,21 @@
 	<g:form class='search_form' controller="search" action="search" method="get">
 		<div class="row clearfix">
 			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="circle" class="control-label">Circle :</label>
-					<g:select class="form-control input-lg" required="" name="circle"
-						from="${Constants.circleArray }" id="circleSelectBox"
-						value="${circle}"></g:select>
-				</div>
+<%--				<div class="form-group">--%>
+<%--					<label for="circle" class="control-label">Circle :</label>--%>
+<%--					<g:select class="form-control input-lg" required="" name="circle"--%>
+<%--						from="${Constants.circleArray }" id="circleSelectBox"--%>
+<%--						value="${circle}"></g:select>--%>
+<%--				</div>--%>
 			</div>
 			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="inputEmail3" class="control-label">City :</label> <select
-						class="form-control input-lg" required="required" id="citySelectBox" name="city">
+<%--				<div class="form-group">--%>
+<%--					<label for="inputEmail3" class="control-label">City :</label> <select--%>
+<%--						class="form-control input-lg" required="required" id="citySelectBox" name="city">--%>
 <%--						<option value="Chennai" selected="selected">Chennai</option>--%>
-						<option value="Mumbai" selected="selected">Mumbai</option>
-					</select>
-				</div>
+<%--						<option value="Mumbai" selected="selected">Mumbai</option>--%>
+<%--					</select>--%>
+<%--				</div>--%>
 			</div>
 			<g:hiddenField name="brandId" id="brand_id" value="${brandId}" />
 			<g:hiddenField name="inventoryId" id="inventory_id"
@@ -92,12 +90,10 @@
 			</div>
 			<g:if test="${brandName }">
 				<div align="center">
-
-					<label><g:message code="search.list.guide.query"
+				<label style="margin-top: 10px;"><g:message code="search.list.guide.query"
 							args="[brandName]" /></label>
 				</div>
 			</g:if>
-
 		</div>
 	</g:form>
 </div>

@@ -1,8 +1,14 @@
 <%@ page import="i2i.AdminServer.Constants"%>
 <%@ page import="com.metasieve.shoppingcart.ShoppingCartService" %>
+<%@ page import="com.metasieve.shoppingcart.SessionUtils" %>
 <%
     def shoppingCartService = grailsApplication.classLoader.loadClass('com.metasieve.shoppingcart.ShoppingCartService').newInstance()
 %>
+
+<%--<r:require module="jquery"/>--%>
+<%--<r:require module="jquery-ui"/>--%>
+<%--<r:layoutResources/>--%>
+<%--<g:javascript library="application"/>--%>
 
 <style type="text/css">
 .h-toll-free {
@@ -65,16 +71,24 @@
 				</g:if>
 				<g:if test="${entityName== 'Cart' }">
 					<li class="active"><g:link controller="shoppingCart"
-							action="showCartItems">Checkout (${itemsCount}) </g:link></li>
+							action="showCartItems">Cart (${itemsCount}) </g:link></li>
 				</g:if>
 				<g:else>
-					<li><g:link controller="shoppingCart" action="showCartItems">Checkout (${itemsCount})</g:link></li>
+					<li><g:link controller="shoppingCart" action="showCartItems">Cart (${itemsCount})</g:link></li>
 				</g:else>
 				
 				<sec:ifLoggedIn>
 					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 				</sec:ifLoggedIn>
 				<li><p class="h-toll-free"><i class="glyphicon glyphicon-earphone"></i>${Constants.helpline }</p> </li>
+				
+				<g:set var="circle" value="${"Select circle"}" />
+				<g:set var="session" value="${SessionUtils.getSession()}" />
+				<g:if test="${session && session.circle}">
+					<g:set var="circle" value="${session.circle}" />
+				</g:if>
+					<li class="active"><button id="locationDialog_btn" class="navbar-btn btn" style="border-radius:0px;" value="${circle}">${circle}</button></li>
+<%--					style="padding-bottom: 15px;padding-top: 15px;border-radius:0px;"--%>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -83,8 +97,35 @@
 </nav>
 <!-- Begin page content -->
 
+<div id="dialogPlaceholder"></div>
+
 <script type="text/javascript">
-    mixpanel.track_links("#site-navbar-collapse a", "Clicked nav link", {
-        "referrer": document.referrer
-    });
-</script>
+	$(document).ready(function() {
+	    $("#dialogPlaceholder").dialog({
+	        autoOpen: false,
+	        height: "auto",
+	        width: 300,
+	        modal: true,
+	        closeOnEscape: false,
+	        draggable: false,
+	        resizable: false,
+	        open: function(event, ui) {
+	        	  $(this).closest('.ui-dialog').find('.ui-dialog-titlebar').hide();
+	        	}
+	    });
+	 
+	    $("#locationDialog_btn").bind("click", function() {
+	        $.ajax({
+	            url:'<g:createLink controller="search" action="getContentForLocationDialog" />',
+	            success: function(data){
+	                $("#dialogPlaceholder").html(data);
+	                $("#dialogPlaceholder").dialog("open");
+	            }
+	        });
+	    });
+	});
+	<%--    mixpanel.track_links("#site-navbar-collapse a", "Clicked nav link", {--%>
+	<%--        "referrer": document.referrer--%>
+	<%--    });--%>
+	</script>
+	

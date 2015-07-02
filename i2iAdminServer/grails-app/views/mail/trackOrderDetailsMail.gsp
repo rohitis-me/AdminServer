@@ -36,26 +36,24 @@ Order Tracking Id: ${orderDetails.orderRefId}
 <br/>
 <h2>Delivery Address:</h2>
 <p>
-${orderDetails.name } 
-<br>
+${orderDetails.name }<br>
 ${orderDetails.addressLine1 }<br>
 ${orderDetails.addressLine2 }<br>
 ${orderDetails.circle }<br>
 ${orderDetails.city }<br>
 <br>
-<p>
 
+
+<g:if test="${orderDetailsList[0].orderStatus != Constants.ORDER_CANCELLED}"><p>
 <g:if test="${storeInstance && storeInstance?.phoneNumber}">
 <h2>Seller Details</h2>
 <%--<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">--%>
 Please contact seller at ${storeInstance.phoneNumber }
 </g:if>
+
 <br>
-<%--</g:if>--%>
-</p>
-<%--<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED && orderDetails.orderStatus != Constants.ORDER_DELIVERED}">--%>
 Track your order status <a href="${Constants.envLink+'ordersStatus?trackingId='+orderDetails.orderRefId }">here</a><br>
-<%--</g:if>--%>
+</p></g:if>
 
 <p>
 <i>Regards,</i><br>

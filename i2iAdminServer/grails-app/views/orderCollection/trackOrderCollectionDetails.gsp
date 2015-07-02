@@ -5,7 +5,7 @@
 <head>
 <meta name="layout" content="pillocateLayout">
 <g:set var="entityName"
-	value="${message(code: 'ordercollection.items.list', default: 'Order Collection Status')}" />
+	value="${message(code: 'ordercollection.items.list', default: 'TrackOrder')}" />
 <title><g:message code="title.brand.tag" /> | <g:message message="Track Order" /></title>
 </head>
 <body>

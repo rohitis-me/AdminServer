@@ -12,8 +12,7 @@ class BootStrap {
 
 	def init = { servletContext ->
 		println "in bs: turn on bootstrap code: "+grailsApplication.config.turnOnBootStrapCode
-
-
+		
 		if(grailsApplication.config.turnOnBootStrapCode) {
 			def availabilityCount = Availability.count()
 			def inventoryCount = Inventory.count()

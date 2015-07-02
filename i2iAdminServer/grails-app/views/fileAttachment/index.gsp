@@ -76,7 +76,7 @@
 								<div class="form-group">
 									<%--									<input type="file" id="inputField" name="inputFile" accept="image/*" onchange="loadFile(event)">--%>
 									<div style="width: 80%; margin-left: 10%;">
-										<input type="file"
+										<input type="file" required="required"
 											placeholder="Upload prescription image (max size 1 MB)"
 											class="filestyle" data-buttonName="btn-primary"
 											id="inputField" name="inputFile" accept="image/*"
@@ -92,7 +92,12 @@
 									<img id="output"
 										style="width: 50%; margin-top: 10px; margin-left: 25%;" src="" />
 								</div>
-
+							</div>
+							<div>
+							*The maximum file size for upload is 5 MB. Only image files are allowed.
+<%--							(JPG, GIF, PNG)--%>
+							<br/>
+							<label></label>
 							</div>
 							<div class="panel-footer clearfix">
 									<div class="col-sm-offset-3 col-xs-6 col-sm-3">

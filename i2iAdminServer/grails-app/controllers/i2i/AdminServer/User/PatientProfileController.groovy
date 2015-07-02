@@ -1,15 +1,12 @@
 package i2i.AdminServer.User
 
 import i2i.AdminServer.BrandDatabaseService
-import i2i.AdminServer.Constants
 import i2i.AdminServer.OrderCollectionCommand
 import i2i.AdminServer.OrderDetailsCommand
 import i2i.AdminServer.OrdersService
 import i2i.AdminServer.StoreService
 import i2i.AdminServer.ClientSync.InventoryService
-
-import com.metasieve.shoppingcart.Shoppable
-import com.metasieve.shoppingcart.ShoppingCartService
+import com.metasieve.shoppingcart.SessionUtils
 
 class PatientProfileController {
 
@@ -19,7 +16,7 @@ class PatientProfileController {
 	StoreService storeService
 	OrdersService ordersService
 	InventoryService inventoryService
-	ShoppingCartService shoppingCartService
+//	ShoppingCartService shoppingCartService
 
 	//    def index = {
 	//        redirect(action: "list", params: params)
@@ -78,18 +75,21 @@ class PatientProfileController {
 		//			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
 		//			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
 		//
-		//			//FIXME
-		String circle = Constants.circleArray[0] //FIXME
-		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+		def session = SessionUtils.getSession()
+//		if(!session.circle)
+//			redirect (controller:'search', action:'showLocationPage')
+			
+		String circle = session.circle//Constants.circleArray[0] //FIXME
+//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
 		//
 		//		List cartItemMapList = []
-		cartItems.each{item ->
-			def product = Shoppable.findByShoppingItem(item)
-			def store = storeService.getStoreDataFromStoreId(product.storeId)
-			if(store){
-				circle = store.circle
-			}
-		}
+//		cartItems.each{item ->
+//			def product = Shoppable.findByShoppingItem(item)
+//			def store = storeService.getStoreDataFromStoreId(product.storeId)
+//			if(store){
+//				circle = store.circle
+//			}
+//		}
 
 		OrderCollectionCommand orderDetails = new OrderCollectionCommand()
 		orderDetails.circle = circle// Constants.circleArray[0] //FIXME

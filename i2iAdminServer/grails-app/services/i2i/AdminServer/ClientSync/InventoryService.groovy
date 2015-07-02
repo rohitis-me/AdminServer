@@ -51,6 +51,7 @@ class InventoryService {
 			inventoryList.addAll(Inventory.findAllByStoreIdAndBrandNameIlike(storeId,"% "+brandName+"%"))
 		}
 		List brandDataList = populateBrandDataListFromInventoryList(inventoryList)
+		println "brandDataList: "+ brandDataList.size()
 		return brandDataList
 	}
 	

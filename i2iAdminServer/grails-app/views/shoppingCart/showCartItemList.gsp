@@ -1,6 +1,6 @@
 
 <%@ page import="i2i.AdminServer.Store"%>
-<%@ page import="i2i.AdminServer.Constants"%>
+<%--<%@ page import="i2i.AdminServer.Constants"%>--%>
 
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,7 @@
 <g:set var="entityName"
 	value="${message(code: 'cart.items.list', default: 'Cart')}" />
 <title><g:message code="title.brand.tag" /> | <g:message message="Cart Items" /></title>
-<%--<g:javascript library="jquery"/>--%>
+<g:javascript library="jquery"/>
 </head>
 <body>
 	<g:render template="/template/navigationConsumer" />
@@ -41,19 +41,18 @@
 									<g:each in="${cartItemMapList}" status="i" var="itemInstance">
 										<g:set var="quantity" value="${itemInstance['qty']}" />
 										<g:set var="inventoryId" value="${itemInstance['iId']}" />
+										
 										<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 											<td>
 												${itemInstance['item']}
 											</td>
 											<td>
-<%--											<g:form action="changeCartItemQuantity" id="qtyForm">--%>
-<%--											<g:select class="form-control input-lg" required="" name="quantity"--%>
-<%--											from="${Constants.quantityArray}" id="qtySelectBox"--%>
-<%--											 onchange="qtyChangeFunction()"></g:select>--%>
-<%--											 </g:form>--%>
-											<input class="form-control" placeholder="Quantity"
-											type="number" size="6" name="quantity" min="1" max="99999"
-											value="${quantity}">
+											<g:select class="form-control" style="width:auto;" required="" name="quantity"
+											from="${1..100}" value="${quantity}" onchange="${remoteFunction(action: 'changeCartItemQuantity',
+                       						params: "'quantity=' + this.value + '&&inventoryId=' + '${inventoryId}'")}"></g:select>
+<%--											<input class="form-control" placeholder="Quantity"--%>
+<%--											type="number" size="6" name="quantity" min="1" max="99999"--%>
+<%--											value="${quantity}">--%>
 											</td>
 <%--											<td><span style="color: #B0CF36"><g:message--%>
 <%--														code="search.list.homedelivery"--%>
@@ -64,7 +63,7 @@
 <%--												</td>--%>
 											<td>
 											<g:form action="removeItemFromCart" params='[inventoryId: inventoryId, quantity:quantity]'>
-												<button type="submit" class="btn btn-danger btn-block" >
+												<button type="submit" class="btn btn-danger btn-block" style="width:auto;" >
 												<i class="glyphicon glyphicon-remove"></i></button>
 												</g:form>
 											</td>
@@ -78,9 +77,12 @@
 							<g:form>
 							<div class="bg-default text-center">
 								<div class="form-group">
-									<g:radioGroup name="prescriptionUploadOption" labels="['Show prescription on delivery', 'Upload prescription now']" values="[0,1]" value="0">
-										${it.radio} <g:message code="${it.label}" /> <br/> 
-									</g:radioGroup>
+								<input type="radio" value="0" checked="checked" name="prescriptionUploadOption"> Show prescription on delivery 
+								<br/> 
+								<input type="radio" value="1" name="prescriptionUploadOption"> Upload prescription now &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<%--									<g:radioGroup name="prescriptionUploadOption" labels="['Show prescription on delivery', 'Upload prescription now']" values="[0,1]" value="0">--%>
+<%--										${it.radio} <g:message code="${it.label}" /> <br/> --%>
+<%--									</g:radioGroup>--%>
 								</div>
 							</div>
 							<div class="panel-footer clearfix">
@@ -118,15 +120,15 @@
 		</div>
 	</div>
 	<br />
-	<p id="demo"></p>
+<%--	<p id="demo"></p>--%>
 	
-<%--	<script>--%>
-<%--	function qtyChangeFunction() {--%>
+<%--<g:javascript>--%>
+<%--function qtyChangeFunction() {--%>
 <%--    var x = document.getElementById("qtySelectBox").value;--%>
 <%--    document.getElementById("demo").innerHTML = "You selected: " + x;--%>
-<%--    $("qtyForm").submit();--%>
+<%--    $("#qtyForm").submit()--%>
 <%--}--%>
-<%--</script>--%>
+<%--</g:javascript>--%>
 
 </body>
 </html>

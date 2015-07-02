@@ -35,7 +35,7 @@ class Constants {
 	public static String envLink=''
 	public static String analyticsTrackingId=''
 	public static String[] circleArray = []
-	public static final int[] quantityArray = ['1','2','3','4','5','6','7','8','9','10']
+//	public static def quantityArray = new int[100]
 	
 	public static final String PrescriptionOnDeliveryMessage = 'Show prescription on delivery'
 	public static final String PrescriptionUploadNowMessage = 'Upload prescription now'

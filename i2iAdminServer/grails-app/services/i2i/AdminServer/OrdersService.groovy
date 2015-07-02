@@ -346,6 +346,22 @@ class OrdersService {
 
 		return status
 	}
+	
+	def cancelOrderItemsAndSave(Long orderCollectionId){
+		//getListOfOrdersFromOrderCollectionId
+		def status = 0
+		List orderList = getListOfOrdersFromOrderCollectionId(orderCollectionId)
+		orderList.each {order->
+			order.orderStatus = Constants.ORDER_CANCELLED
+			status = saveOrder(order)
+		}
+		if(status != 0 && grailsApplication.config.env != Constants.env_LOCAL) {
+			List orderDetailsList = getListOfOrderDetailsFromOrdersList(orderList)
+			OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollectionId)
+			sendOrderCancelEmail(orderCollCommand, orderDetailsList)
+		}
+		return status
+	}
 
 	//	def cancelOrderCollection(def orderCollectionId){
 	//		List orderList = getListOfOrdersFromOrderCollectionId(orderCollectionId)
@@ -397,15 +413,16 @@ class OrdersService {
 		emailService.sendTrackingIdToCustomer(Constants.mailSubject_NewOrder_Consumer, orderDetails, store)
 	}
 
-	def sendOrderCancelEmail(OrderDetailsCommand orderDetails, OrderCollectionCommand orderCollCommand) {
-		//		OrderDetailsCommand orderDetails = populateOrderDetailsFromOrder(order)
-//		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
-		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
+	def sendOrderCancelEmail(OrderCollectionCommand orderCollCommand, List orderDetailsList) {
+		if(orderDetailsList.size() > 0){
+			Store store = storeService.getStoreDataFromStoreId(orderDetailsList[0].storeId)
+//		String emailId = storeService.getEmailIdFromStoreId(orderDetails.storeId)
 		//		Store store = storeService.getStoreDataFromStoreId(orderDetails.storeId)
 		//		println "OrderDEtailsCommand: "+orderDetails.properties
-		emailService.sendOrderMail(emailId, Constants.mailSubject_OrderCancel_Admin, orderDetails, orderCollCommand)
+		emailService.sendOrderMail(store.emailId, Constants.mailSubject_OrderCancel_Admin, orderCollCommand,orderDetailsList)
 //		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer,orderCollCommand,orderDetailsList, store)
-		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer, orderDetails, orderCollCommand)
+		emailService.sendTrackingIdToCustomer(Constants.mailSubject_OrderCancel_Consumer, orderCollCommand,orderDetailsList, store)
+		}
 	}
 
 	def sendOrderStatusChangeEmail(OrderCollectionCommand orderCollCommand, List orderDetailsList) {

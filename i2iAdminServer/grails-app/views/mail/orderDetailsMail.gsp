@@ -6,7 +6,7 @@
 <div>
 <h2> Order Details:</h2> 
 <g:each in="${orderDetailsList}" status="i" var="orderInstance">
-<g:if test="${orderInstance.orderStatus == Constants.ORDER_CANCELLED}">
+<g:if test="${orderInstance.orderStatus == Constants.ORDER_CANCELLED && i==0}">
 Following order has been cancelled by Customer. Please stop the dispatch process.
 </g:if>
 <p> ${i+1}.
@@ -38,8 +38,9 @@ You could call ${orderDetails.name } on ${orderDetails.phoneNumber }
 Email: ${orderDetails.emailID }
 </g:if>
 <br>
+<g:if test="${orderDetailsList[0].orderStatus != Constants.ORDER_CANCELLED}">
 PLEASE NOTE: The customer expects you to accept the order soon. To accept the order, click <a href="${Constants.envLink+'ordersList' }">here</a><br>
-<%--</g:if>--%>
+</g:if>
 </p>
 <p>
 <i>Regards,</i><br>

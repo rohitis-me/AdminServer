@@ -1,4 +1,5 @@
 <%@ page import="i2i.AdminServer.Constants"%>
+<%--<%@ page import="com.metasieve.shoppingcart.SessionUtils" %>--%>
 <html>
 <head>
 <title>Pillocate | Home</title>
@@ -21,12 +22,12 @@
 
 			<g:render template="/template/searchBox"></g:render>
 			
-
+<br/>
 			<div class="col-md-8 col-md-offset-2"></div>
 			<div class="info-delivered-widget">
 				<div class="col-md-10 col-md-offset-1">
 					<div class="well well-sm text-center">
-						<p>Select Your Circle</p>
+<%--						<p>Select Your Circle</p>--%>
 						<p>Enter name of Medicine</p>
 						<p>Place order &amp; get medicine delivered in hours!</p>
 						<div class="division">
@@ -53,6 +54,11 @@
 
 	<script>
 		$(document).ready(function() {
+			var circle = document.getElementById("locationDialog_btn").value;
+		    if(circle == "Select circle") {
+		    	$("#locationDialog_btn").click();
+			 }
+		    
 			mixpanel.track("New Session");
 		});
 <%--		$('#reg_submit').click(function() {--%>

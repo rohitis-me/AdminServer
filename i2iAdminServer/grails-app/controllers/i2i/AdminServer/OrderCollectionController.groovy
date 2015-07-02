@@ -119,7 +119,8 @@ class OrderCollectionController {
 			//			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
 			return
 		}
-
+		println "offer: "+orderCollCommand.offerCode
+		
 		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
 		println "orderRefId: "+orderRefId
 		if(!orderRefId) {
@@ -130,7 +131,11 @@ class OrderCollectionController {
 		}
 
 		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-
+		if(cartItems.size() < 1){
+			render (text: "No items in the cart")
+			return
+		}
+		
 		List orderDetailsList = []
 		cartItems.each{item ->
 			println "id: "+ item.id
@@ -186,6 +191,23 @@ class OrderCollectionController {
 		else{
 			redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: params.trackingId])
 		}
+	}
+	
+	def cancelOrderItems(){
+		def trackingId = params.trackingId
+
+		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId?.toUpperCase())
+		if(orderCollection) {
+			def status = ordersService.cancelOrderItemsAndSave(orderCollection.orderCollectionId)
+			if(status == 0)
+				render "Error in proccessing your request. Please try again later!"
+			else{
+				flash.message = "Your Order has been cancelled successfully!"
+				redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: trackingId])
+			}
+		}
+		else
+			render "Error in proccessing your request. Please try again later!"
 	}
 
 	//	def cancelOrder() {

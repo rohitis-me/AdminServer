@@ -5,6 +5,7 @@ package i2i.AdminServer
 //import i2i.AdminServer.OrdersService
 //import i2i.AdminServer.StoreService
 //import i2i.AdminServer.ClientSync.InventoryService
+import com.metasieve.shoppingcart.Quantity
 import com.metasieve.shoppingcart.SessionUtils
 import com.metasieve.shoppingcart.Shoppable
 import com.metasieve.shoppingcart.ShoppingCartService
@@ -42,16 +43,19 @@ class ShoppingCartController {
 			}
 			println "save brandOrdered success"
 		}
-		
+
 		int quantity =  params.quantity.toInteger()
 
 		shoppingCartService.addToShoppingCart(brandOrdered, quantity)
-//		shoppingCartService.getShoppingCart().save()
+		//		shoppingCartService.getShoppingCart().save()
 		//render template:"/search/disableSubmit" //
 		if(params.containsKey('placeOrderNow'))
 			redirect (controller: 'shoppingCart', action: 'showCartItems')
 		else
-			render (view:"/search/searchResult", model: [storeId:params.storeId, brandId:params.brandId, inventoryId:params.inventoryId, brandName: params.brandName, circle: params?.circle, quantity: params.quantity, disableAdd:'1'])
+		{
+			flash.message = "Your Item added to cart!"
+			render (view:"/search/searchResult", model: [storeId:storeId, brandId:params.brandId, inventoryId:inventoryId, brandName: params.brandName, circle: params?.circle, quantity: quantity, disableAdd:'1'])
+		}
 	}
 
 	def removeItemFromCart(){
@@ -60,17 +64,21 @@ class ShoppingCartController {
 		println "iid: "+inventoryId
 		BrandOrdered brandOrdered = BrandOrdered.findByInventoryId(inventoryId)
 		if(brandOrdered && brandOrdered.shoppingItem){
-//			def qty = shoppingCartService.getQuantity(brandOrdered.shoppingItem)
+			//			def qty = shoppingCartService.getQuantity(brandOrdered.shoppingItem)
 			println "qty: "+ qty
 			shoppingCartService.removeFromShoppingCart(brandOrdered, qty)
 		}
-			
+
 		redirect (controller: 'shoppingCart', action: 'showCartItems')
 	}
-	
+
 	def showCartItems(){
 		println "in show cart: session: "+SessionUtils.getSession().id
 		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+		
+//		def session = SessionUtils.getSession()
+//		def circle = session.circle
+//		println "choose circle "+circle
 		
 		List cartItemMapList = []
 		cartItems.each{item ->
@@ -86,7 +94,7 @@ class ShoppingCartController {
 			nameQtyMap.put("qty", qty)
 			cartItemMapList.add(nameQtyMap)
 		}
-		
+
 
 		render(view:'showCartItemList', model:['cartItemMapList':cartItemMapList])
 	}
@@ -108,44 +116,63 @@ class ShoppingCartController {
 			}
 			println "save brandOrdered success"
 		}
-		
+
 		int quantity =  params.quantity.toInteger()
 
 		shoppingCartService.addToShoppingCart(brandOrdered, quantity)
-		
+
 		redirect (controller: 'shoppingCart', action: 'placeOrder')
-//		shoppingCartService.getShoppingCart().save()
+		//		shoppingCartService.getShoppingCart().save()
 		//		println "SHOPPING CART: "
-//		render template:"/search/disableSubmit" //render (view:"/search/searchResult", model: [storeId:params.storeId, brandId:params.brandId, inventoryId:params.inventoryId, brandName: params.brandName, circle: params?.circle, quantity: params.quantity])
+		//		render template:"/search/disableSubmit" //render (view:"/search/searchResult", model: [storeId:params.storeId, brandId:params.brandId, inventoryId:params.inventoryId, brandName: params.brandName, circle: params?.circle, quantity: params.quantity])
 	}
-	
+
 	def placeOrder(){
 		println "params: " + params
-		
-//		String circle = Constants.circleArray[0] //FIXME
-//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-//
-//		cartItems.each{item ->
-//			def product = Shoppable.findByShoppingItem(item)
-//			def store = storeService.getStoreDataFromStoreId(product.storeId)
-//			if(store){
-//				 circle = store.circle
-//			}
-//		}
-		
+
+		//		String circle = Constants.circleArray[0] //FIXME
+		//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+		//
+		//		cartItems.each{item ->
+		//			def product = Shoppable.findByShoppingItem(item)
+		//			def store = storeService.getStoreDataFromStoreId(product.storeId)
+		//			if(store){
+		//				 circle = store.circle
+		//			}
+		//		}
+
 		if(params.prescriptionUploadOption == '0')
 			redirect (controller: 'patientProfile', action: 'showDeliveryDetails')
 		else
 			redirect (controller: 'fileAttachment', action: 'index')
 	}
-	
+
 	def goToHomePage(){
 		println "in go to home"
 		redirect (controller: 'search', action: 'index')
 	}
-	
+
 	def changeCartItemQuantity(){
 		println "change quantity: "+ params
+		int qty =  params.quantity.toInteger()
+		String inventoryId = params.inventoryId
+		def shoppingCart = shoppingCartService.getShoppingCart()
+
+		if(shoppingCart){
+			def cartItems = shoppingCartService.getItems()
+			cartItems.each{item ->
+				def product = Shoppable.findByShoppingItem(item)
+				if(inventoryId == product.inventoryId){
+					def quantity = Quantity.findByShoppingCartAndShoppingItem(shoppingCart, item)
+					if (quantity) {
+						quantity.value = qty
+						quantity.save()
+//						shoppingCart.save()
+					}
+				}
+			}
+		}
+
 		redirect (controller: 'shoppingCart', action: 'showCartItems')
 	}
 
