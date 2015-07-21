@@ -3,6 +3,7 @@ package i2i.AdminServer
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.plugin.awssdk.AmazonWebService
+import groovy.json.JsonSlurper
 import i2i.AdminServer.ClientSync.InventoryService
 import i2i.AdminServer.User.BrandRequestCommand
 import i2i.AdminServer.User.BrandRequestInfoService
@@ -13,15 +14,12 @@ import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile
-
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
 import com.metasieve.shoppingcart.Quantity
 import com.metasieve.shoppingcart.SessionUtils
 import com.metasieve.shoppingcart.Shoppable
 import com.metasieve.shoppingcart.ShoppingCartService
-//import com.google.gson.reflect.TypeToken
 
 class WebserviceController {
 	SearchService searchService
@@ -37,16 +35,14 @@ class WebserviceController {
 	PatientProfileService patientProfileService
 	AmazonWebService amazonWebService
 	FileAttachmentService fileAttachmentService
-	//	//GsonBuilder
-	//	def gsonBuilder
 
 	def index() {
 	}
 
 	//TODO change once data is got from branddatabase
 	def listOfBrandNameStartingWith() {
-		println "AUTO COMPLETE: received params: "+params
-		String searchTerm = params.term			
+		//		println "AUTO COMPLETE: received params: "+params
+		String searchTerm = params.term
 		String circle = params.circle
 		String city = params.city
 
@@ -166,18 +162,73 @@ class WebserviceController {
 
 			if(!brandOrdered.save(flush:true)) {
 				brandOrdered.errors.each { println "error saving brandOrdered: "+it }
+				render (text: "Error")
+				return
 			}
-			println "save brandOrdered success"
+			//			println "save brandOrdered success"
 		}
 
 		int quantity =  params.quantity.toInteger()
-		shoppingCartService.addToShoppingCart(brandOrdered, quantity)
+		if(brandOrdered && brandOrdered.shoppingItem){
+			shoppingCartService.addToShoppingCart(brandOrdered, quantity)
 
-		render (text: "Success")
+			render (text: "Success")
+		}
+		else
+			render (text: "Error")
 		//		if(params.placeOrderNow == '1')
 		//			redirect (controller: 'shoppingCart', action: 'showCartItems')
 		//		else
 		//			render (view:"/search/searchResult", model: [storeId:params.storeId, brandId:params.brandId, inventoryId:params.inventoryId, brandName: params.brandName, circle: params?.circle, quantity: params.quantity, disableAdd:'1'])
+	}
+//	def test(){
+		//		def restResponse = '[{"brandName": "ABANA", "inventoryId":"23386", "brandId":"", "storeId":"4", "quantity": 1},{"brandName": "DOLO 650", "inventoryId":"26376", "brandId":"", "storeId":"4", "quantity": 1}]'
+		//		println "restResponse: "+restResponse
+		//
+		//		redirect (controller: 'webservice', action: 'addItemsToCart', params:[cartItemList: restResponse])
+
+//		String inputFilePath = 'C:/Users/ChandU/Pictures/12 May/IMG_123.jpg'
+//		redirect (controller: 'webservice', action: 'uploadPrescriptionFile', params:[inputFilePath: inputFilePath])
+//	}
+
+	def addItemsToCart(){
+		println "add item: "+ params
+		def restResponse = params.cartItemList
+		// Parse the response
+		def cartItems = new JsonSlurper().parseText( restResponse )
+
+		cartItems.each {
+			println it
+			boolean success = true
+			String inventoryId = it.inventoryId
+			String storeId = it.storeId
+			BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
+			if(!brandOrdered) {
+				brandOrdered = new BrandOrdered()
+
+				brandOrdered.brandName = it.brandName
+				brandOrdered.inventoryId = inventoryId
+				brandOrdered.brandId = it.brandId
+				brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
+
+				if(!brandOrdered.save(flush:true)) {
+					brandOrdered.errors.each { println "error saving brandOrdered: "+it }
+					//					render (text: "Error")
+					success = false
+				}
+			}
+
+			if(success){
+				int quantity =  it.quantity.toInteger()
+				if(brandOrdered && brandOrdered.shoppingItem){
+					shoppingCartService.addToShoppingCart(brandOrdered, quantity)
+					//				render (text: "Success")
+				}
+			}
+			//			else
+			//				render (text: "Error")
+		}
+		render (text: "Success")
 	}
 
 	def removeItemFromCart(){
@@ -187,7 +238,7 @@ class WebserviceController {
 		BrandOrdered brandOrdered = BrandOrdered.findByInventoryId(inventoryId)
 		if(brandOrdered && brandOrdered.shoppingItem){
 			//			def qty = shoppingCartService.getQuantity(brandOrdered.shoppingItem)
-			println "qty: "+ qty
+			//			println "qty: "+ qty
 			shoppingCartService.removeFromShoppingCart(brandOrdered, qty)
 
 			render (text: "Success")
@@ -199,15 +250,15 @@ class WebserviceController {
 	}
 
 	def showCartItems(){
-//		println "in show cart: session: "+SessionUtils.getSession().id
+		//		println "in show cart: session: "+SessionUtils.getSession().id
 		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
 
 		List cartItemMapList = []
 		cartItems.each{item ->
-			println "id: "+ item.id
+			//			println "id: "+ item.id
 			def product = Shoppable.findByShoppingItem(item)
 			def name = product.toString()
-			println "item Name: "+ name
+			//			println "item Name: "+ name
 			def iid = product.inventoryId
 			def qty = shoppingCartService.getQuantity(item)
 			Map nameQtyMap = [:]
@@ -236,7 +287,7 @@ class WebserviceController {
 					if (quantity) {
 						quantity.value = qty
 						quantity.save()
-//						shoppingCart.save()
+						//						shoppingCart.save()
 					}
 				}
 			}
@@ -244,61 +295,90 @@ class WebserviceController {
 
 		render (text: "Success") //redirect (controller: 'shoppingCart', action: 'showCartItems')
 	}
+
+	def clearShoppingCart(){
+		//		def session = SessionUtils.getSession()
+		shoppingCartService.emptyShoppingCart()
+		render (text: "Success")
+	}
 	
+	
+
 	def uploadPrescriptionFile(){
 		println "in upload file" + params
-		CommonsMultipartFile file = request.getFile('inputFile')
-		println "size " + file.getSize()
-		if(file.isEmpty()) {
-			render (text:"File cannot be empty")
+		String inputFilePath = params.inputFilePath
+		if(!inputFilePath){
+			render (text:"Invalid File Path")
 			return
 		}
-		else if(file.getSize() > 10*1000000)
-		{
+		File image = new File(inputFilePath)
+//		OutputStream outStream = new FileOutputStream(image);
+//		outStream.write(buffer);
+//		outStream.close();
+		
+		println "file size: "+image.length()
+		println "file path: "+image.getPath()
+		if (!image.exists() || image.length() == 0) {
+			render (text:"File cannot be empty")
+			return
+		} else if(image.length() > 10*1024*1024) {
 			render (text:"File size cannot exceed 10 MB")
 			return
 		}
-		else {
-			try {
-				ObjectMetadata objectMetadata = new ObjectMetadata();
-				objectMetadata.setContentLength(file.getInputStream().available())
-				objectMetadata.setContentType(file.getContentType())
+		//		CommonsMultipartFile file = request.getFile('inputFile')
+		//		println "size " + file.getSize()
+		//		if(file.isEmpty()) {
+		//			render (text:"File cannot be empty")
+		//			return
+		//		}
+		//		else if(file.getSize() > 10*1000000)
+		//		{
+		//			render (text:"File size cannot exceed 10 MB")
+		//			return
+		//		}
+		//		else {
+		try {
+			//				ObjectMetadata objectMetadata = new ObjectMetadata();
+			//				objectMetadata.setContentLength(file.getInputStream().available())
+			//				objectMetadata.setContentType(file.getContentType())
+			String fileOriginalName = image.getName() // "xxx.jpg" //file.getOriginalFilename()
+			//			println "fileOriginalName: " + fileOriginalName
+			Date uploadDate = Utility.getDateTimeInIST().getTime()
+			String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
+			//				println "file name: "+filePath
+			PutObjectRequest object = new PutObjectRequest(Constants.amazonS3Bucket,filePath,image).withCannedAcl(CannedAccessControlList.PublicRead)
+			Upload upload = amazonWebService.transferManager.upload(object)
 
-				String fileOriginalName = file.getOriginalFilename()
-				Date uploadDate = Utility.getDateTimeInIST().getTime()
-				String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
-				println "file name: "+filePath
-				Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(Constants.amazonS3Bucket,filePath,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
+//			while (!upload.done) {
+//				//				println "Transfer: $upload.description"
+//				//					println "  - State: $upload.state"
+//				//					println "  - Progress: $upload.progress.bytesTransfered"
+//				//					// Do work while we wait for our upload to complete…
+//				//				Thread.sleep(1000)
+//			}
 
-				while (!upload.done) {
-					//					println "Transfer: $upload.description"
-					//					println "  - State: $upload.state"
-					//					println "  - Progress: $upload.progress.bytesTransfered"
-					//					// Do work while we wait for our upload to complete…
-					//					Thread.sleep(1000)
-				}
+			//				println "upload success: "+ upload
+			String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
+//			println "file link: "+fileLocation
+			def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
 
-				println "upload success: "+ upload
-				String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
-				println "file link: "+fileLocation
-				def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
-
-				if(attachmentId == 0){
-					render (text:message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!'))
-					return
-				}
-				else
-//					render (text:message(code: 'fileAttachment.saved.success.message', default: 'Your prescription has been uploaded successfully!'))
-					def fileAttachment = ['attachmentId':attachmentId]
-					render fileAttachment as JSON
-			}
-			catch (Exception exp) {
+			if(attachmentId == 0){
 				render (text:message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!'))
-				println "Exception: "+exp
+				return
+			}
+			else{
+				//					render (text:message(code: 'fileAttachment.saved.success.message', default: 'Your prescription has been uploaded successfully!'))
+				def fileAttachment = ['attachmentId':attachmentId]
+				render fileAttachment as JSON
 			}
 		}
+		catch (Exception exp) {
+			render (text:message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!'))
+			println "Exception: "+exp
+		}
+		//		}
 	}
-	
+
 	//	@Secured(['ROLE_CONSUMER'])
 	def showDeliveryDetails() {
 		def attachmentId = params.attachmentId
@@ -319,7 +399,7 @@ class WebserviceController {
 
 	def saveOrder(OrderCollectionCommand orderCollCommand) {
 		println "ODC: "+orderCollCommand.properties
-		println "params: "+params
+		//		println "params: "+params
 
 		//FIXME: do this in gsp
 		orderCollCommand.offerCode = ordersService.checkOfferCode(orderCollCommand.offerCode)
@@ -331,11 +411,11 @@ class WebserviceController {
 		}
 
 		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
-		println "orderRefId: "+orderRefId
+		//		println "orderRefId: "+orderRefId
 		if(!orderRefId) {
 			render (text: "Enter valid information")
 			return
-//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
+			//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
 		}
 
 		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
@@ -343,30 +423,31 @@ class WebserviceController {
 			render (text: "No items in the cart")
 			return
 		}
-		
+
 		List orderDetailsList = []
 		cartItems.each{item ->
-			println "id: "+ item.id
+			//			println "id: "+ item.id
 			def product = Shoppable.findByShoppingItem(item)
 			def qty = shoppingCartService.getQuantity(item)
 			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
 			orderDetailsList.add(orderDetails)
 		}
-		
+
 		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
-		
-		def checkedOutItems = shoppingCartService.checkOut()
-		println "size: "+checkedOutItems.size()
+
+		shoppingCartService.emptyShoppingCart()
+		//		def checkedOutItems = shoppingCartService.checkOut()
+		//		println "size: "+checkedOutItems.size()
 
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
 		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			println "items count: "+orderList.size()
+			//			println "items count: "+orderList.size()
 			List listOrderDetails = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-			
+
 			def orderStatus = ['orderDetailsList':listOrderDetails, 'patient':patient, 'trackingId': orderRefId, 'offerCode':orderCollCommand.offerCode]
-			
+
 			render orderStatus as JSON
 		}
 		else
@@ -374,7 +455,7 @@ class WebserviceController {
 			render (text: "Error Processing your request.Please try again!")
 		}
 	}
-	
+
 	def showOrderCollectionDetails() {
 		def trackingId = params.trackingId
 		def offerCode = params.offerCode
@@ -384,16 +465,16 @@ class WebserviceController {
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId?.toUpperCase())
 		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			println "items count: "+orderList.size()
+			//			println "items count: "+orderList.size()
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
 			//			orderStatusCommand.trackingId = uId
 			//			orderStatusCommand.offerCode = offerCode
 			//			println "OrderStatusCommand: "+orderStatusCommand.properties
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-			
+
 			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
-			
+
 			render orderStatus as JSON
 		}
 		else
@@ -402,37 +483,37 @@ class WebserviceController {
 		}
 	}
 
-	def cancelOrder() {
-		println "orderId: "+params.orderId
-		def orderId = params.orderId
-		def trackingId = params.trackingId
-		def status = ordersService.cancelOrderAndSave(orderId)
+	//	def cancelOrder() {
+	////		println "orderId: "+params.orderId
+	//		def orderId = params.orderId
+	//		def trackingId = params.trackingId
+	//		def status = ordersService.cancelOrderAndSave(orderId)
+	//
+	//		if(status == 0)
+	//			render (text: "Error in proccessing your request. Please try again later!")
+	//		else{
+	////			redirect(controller: 'webservice', action: 'showOrderCollectionDetails', params:[trackingId: trackingId])
+	//
+	//			OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId?.toUpperCase())
+	//			if(orderCollection) {
+	//				List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
+	////				println "items count: "+orderList.size()
+	//				List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
+	//				PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
+	//
+	//				def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
+	//
+	//				render orderStatus as JSON
+	//			}
+	//			else
+	//			{
+	//				render (text: "Error Processing your request.Please try again!")
+	//			}
+	//
+	//		}
+	//	}
 
-		if(status == 0)
-			render (text: "Error in proccessing your request. Please try again later!")
-		else{
-//			redirect(controller: 'webservice', action: 'showOrderCollectionDetails', params:[trackingId: trackingId])
-			
-			OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId?.toUpperCase())
-			if(orderCollection) {
-				List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-				println "items count: "+orderList.size()
-				List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
-				PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-				
-				def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
-				
-				render orderStatus as JSON
-			}
-			else
-			{
-				render (text: "Error Processing your request.Please try again!")
-			}
-			
-		}
-	}
-	
-	def cancelOrderItems(){
+	def cancelOrder(){
 		def trackingId = params.trackingId
 
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId?.toUpperCase())
@@ -442,7 +523,7 @@ class WebserviceController {
 				render(text: "Error in proccessing your request. Please try again later!")
 			else{
 				render(text: "Success")
-//				redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: trackingId])
+				//				redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: trackingId])
 			}
 		}
 		else
@@ -473,6 +554,7 @@ class WebserviceController {
 	}
 
 	def getCircleArray(){
+		println ""+params.city
 		def circleArray = []
 		if(params.city == 'Chennai')
 			circleArray = ['circleArray':Constants.circleArray_Chennai]
@@ -481,10 +563,9 @@ class WebserviceController {
 
 		render circleArray as JSON
 	}
-	
+
 	def getCityArray(){
-		String[] cityArray = ["Chennai", "Mumbai"]
-		
+		def cityArray = ["Mumbai"]//, "Chennai"]
 		render cityArray as JSON
 	}
 
@@ -497,23 +578,23 @@ class WebserviceController {
 		else
 			render (text: 'Invalid coupon code')
 	}
-	
+
 	def isAppUpToDate(){
 		return 1
 	}
-	
+
 	def setLocation(){
 		def session = SessionUtils.getSession()
-		
+
 		if(params.circle != session?.circle)
 			shoppingCartService.emptyShoppingCart()
-			
+
 		if(params.circle){
 			session.circle = params.circle
 			session.city = params.city
 		}
-		
+
 		render(text: "Success")
 	}
-	
+
 }

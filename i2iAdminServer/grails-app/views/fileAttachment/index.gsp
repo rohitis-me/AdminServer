@@ -94,14 +94,14 @@
 								</div>
 							</div>
 							<div>
-							*The maximum file size for upload is 5 MB. Only image files are allowed.
+							*The maximum file size for upload is 10 MB. Only image files are allowed.
 <%--							(JPG, GIF, PNG)--%>
 							<br/>
 							<label></label>
 							</div>
 							<div class="panel-footer clearfix">
 									<div class="col-sm-offset-3 col-xs-6 col-sm-3">
-										<button type="submit" class="btn btn-primary btn-block">
+										<button id="button-upload" type="submit" class="btn btn-primary btn-block">
 											<i class="glyphicon glyphicon-upload"></i>&nbsp; Upload
 										</button>
 									</div>
@@ -131,6 +131,14 @@
 			reader.readAsDataURL(event.target.files[0]);
 		};
 	</script>
+	
+<script type="text/javascript">
+	$(document).ready(function(){
+	    $('#button-upload').click(function() {
+	        $('#spinner').show();
+	    });
+	});
+</script>
 
 </body>
 </html>

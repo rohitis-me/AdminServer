@@ -3,9 +3,9 @@ package i2i.AdminServer
 
 
 import static org.springframework.http.HttpStatus.*
-import i2i.AdminServer.ClientSync.InventoryService;
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import i2i.AdminServer.ClientSync.InventoryService
 
 @Transactional
 class AvailabilityController {

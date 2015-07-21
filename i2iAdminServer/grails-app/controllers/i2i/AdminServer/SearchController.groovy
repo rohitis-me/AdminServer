@@ -16,15 +16,15 @@ class SearchController {
 	ShoppingCartService shoppingCartService
 
 	def index() {
-		def session = SessionUtils.getSession()
-		println "circle: "+ session.circle
+//		def session = SessionUtils.getSession()
+//		println "circle: "+ session.circle
 		//		if(params.circle){
 		//			session.circle = params.circle
 		//			session.city = params.city
 		//		}
 		//		if(!session.circle)
 		//			redirect (controller:'search', action:'showLocationPage')
-		println "New session "+Utility.getDateTimeInIST().getTime().toString()
+		println "New session: "+Utility.getDateTimeInIST().getTime().toString()
 	}
 
 	def getContentForLocationDialog = {
@@ -35,7 +35,7 @@ class SearchController {
 	}
 
 	def saveLocation(){
-		println "params: "+ params
+//		println "params: "+ params SessionUtils.setSession
 		def session = SessionUtils.getSession()
 		if(params.circle != session?.circle)
 			shoppingCartService.emptyShoppingCart()
@@ -51,10 +51,10 @@ class SearchController {
 		println "SEARCH received params: "+params+ " Brand Name: "+params.brandName;
 
 		String searchTerm = params.brandName
-		String circle = params.circle
+		String circle = session.circle
+		String city = session.city
 		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
 		String brandId = params.brandId
-		String city = params.city
 
 		//TODO: taking inventoryId into consideration for now
 		String inventoryId = params.inventoryId
@@ -70,7 +70,7 @@ class SearchController {
 			else if(brandId)
 				stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
 			if(stores){
-				stores.each {store-> println "STORE:"+store.storeName }
+//				stores.each {store-> println "STORE:"+store.storeName }
 				//FIXME: get delivery time from store
 				availabilityFlag = true
 				String storeId = stores.first().storeId
@@ -101,7 +101,7 @@ class SearchController {
 
 	//TODO change once data is got from branddatabase
 	def listOfBrandNameStartingWith() {
-		println "AUTO COMPLETE: received params: "+params
+//		println "AUTO COMPLETE: received params: "+params
 		String searchTerm = params.term
 		//		def session = SessionUtils.getSession()
 		//		if(!session.circle)

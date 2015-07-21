@@ -32,15 +32,15 @@ class OrderCollectionController {
 			render "error. Not logged in "
 
 		List orderCollIds = ordersService.getListOfOrderCollectionIdsFromStoreId(storeId)
-		orderCollIds.each { println "orderCollId: "+it }
-		println "orderCollIdCount "+ orderCollIds.size()
+//		orderCollIds.each { println "orderCollId: "+it }
+//		println "orderCollIdCount "+ orderCollIds.size()
 
 		List orderDetailsList = orderCollectionService.getOrderCollectionCommandListFromOrderCollectionIdList(orderCollIds)
 		//		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
 		//		println "orderCount "+ ordersList.size()
 		//
 		//		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
-		println "done orderdetailslist"
+//		println "done orderdetailslist"
 		//to show current tab colour
 		byte orderStatus = -2
 
@@ -56,8 +56,8 @@ class OrderCollectionController {
 			render "error. Not logged in "
 
 		List orderCollIds = ordersService.getListOfOrderCollectionIdsFromStoreId(storeId)
-		orderCollIds.each { println "orderCollId: "+it }
-		println "orderCollIdCount "+ orderCollIds.size()
+//		orderCollIds.each { println "orderCollId: "+it }
+//		println "orderCollIdCount "+ orderCollIds.size()
 		byte orderStatus = params.orderStatus.toInteger()
 
 		List orderDetailsList = orderCollectionService.getOrderCollectionCommandListFromOrderCollectionIdListAndOrderStatus(orderCollIds,orderStatus)
@@ -65,7 +65,7 @@ class OrderCollectionController {
 		//		println "orderCount "+ ordersList.size()
 		//
 		//		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
-		println "done orderdetailslist"
+//		println "done orderdetailslist"
 
 		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
 	}
@@ -109,7 +109,7 @@ class OrderCollectionController {
 
 	def saveOrderItems(OrderCollectionCommand orderCollCommand) {
 		println "ODC: "+orderCollCommand.properties
-		println "params: "+params
+//		println "params: "+params
 
 		//FIXME: do this in gsp
 		orderCollCommand.offerCode = ordersService.checkOfferCode(orderCollCommand.offerCode)
@@ -119,26 +119,26 @@ class OrderCollectionController {
 			//			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
 			return
 		}
-		println "offer: "+orderCollCommand.offerCode
+//		println "offer: "+orderCollCommand.offerCode
+		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+		if(cartItems.size() < 1){
+			flash.message = message(code: 'shoppingcart.noitem.label', default: 'No items in your shopping cart!')
+			redirect (controller: 'shoppingCart', action: 'showCartItems')
+			return
+		}
 		
 		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
-		println "orderRefId: "+orderRefId
+//		println "orderRefId: "+orderRefId
 		if(!orderRefId) {
 			flash.message = message(code: 'save.error.label', default: 'Enter valid information')
 			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderCollCommand]
 			return
 			//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
 		}
-
-		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-		if(cartItems.size() < 1){
-			render (text: "No items in the cart")
-			return
-		}
 		
 		List orderDetailsList = []
 		cartItems.each{item ->
-			println "id: "+ item.id
+//			println "id: "+ item.id
 			def product = Shoppable.findByShoppingItem(item)
 			def qty = shoppingCartService.getQuantity(item)
 			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
@@ -147,8 +147,9 @@ class OrderCollectionController {
 
 		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
 
-		def checkedOutItems = shoppingCartService.checkOut()
-		println "size: "+checkedOutItems.size()
+		shoppingCartService.emptyShoppingCart()
+//		def checkedOutItems = shoppingCartService.checkOut()
+//		println "size: "+checkedOutItems.size()
 
 		redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: orderRefId,offerCode:orderCollCommand.offerCode])
 	}
@@ -162,7 +163,7 @@ class OrderCollectionController {
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId)
 		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			println "items count: "+orderList.size()
+//			println "items count: "+orderList.size()
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
 			//			orderStatusCommand.trackingId = uId
@@ -210,31 +211,6 @@ class OrderCollectionController {
 			render "Error in proccessing your request. Please try again later!"
 	}
 
-	//	def cancelOrder() {
-	//		println "orderRefId: "+params.trackingId
-	//		def orderRefId = params.trackingId
-	//
-	//		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
-	//		if(orderCollection) {
-	//			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-	//			println "items count: "+orderList.size()
-	//			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
-	//			//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
-	//			//			orderStatusCommand.trackingId = uId
-	//			//			orderStatusCommand.offerCode = offerCode
-	//			//			println "OrderStatusCommand: "+orderStatusCommand.properties
-	//			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-	//			render(view: "orderCollectionDetails", model: [orderDetailsList:orderDetailsList, patient:patient, trackingId: trackingId, offerCode:offerCode])
-	//		}
-	//
-	//		def status = ordersService.cancelOrderAndSave(orderId)
-	//
-	//		if(status == 0)
-	//			render "Error in proccessing your request. Please try again later!"
-	//		else{
-	//			redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: params.trackingId,offerCode:params.offerCode])
-	//		}
-	//	}
 	def showTrackedOrderDetails(){
 		String trackingId = params?.trackingId
 		String trackId = trackingId?.toUpperCase()
@@ -242,7 +218,7 @@ class OrderCollectionController {
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackId)
 		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			println "items count: "+orderList.size()
+//			println "items count: "+orderList.size()
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
@@ -252,36 +228,24 @@ class OrderCollectionController {
 		{
 			render(view: "trackOrderCollectionDetails",model: [trackingId:trackingId])
 		}
-
-		//		Orders order = ordersService.getOrderFromUId(uId)
-		//		if(order && order.orderStatus != Constants.ORDER_REJECTED) {
-		//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
-		//			orderStatusCommand.trackingId = uId
-		//			println "OrderStatusCommand: "+orderStatusCommand.properties
-		//			render(view: "trackOrderStatus", model: [orderStatusCommand: orderStatusCommand, trackingId:trackingId])
-		//		}
-		//		else
-		//		{
-		//			render(view: "trackOrderStatus",model: [trackingId:trackingId])
-		//		}
 	}
 
 	def trackOrderCollectionDetails(){
 		//		render(view: "trackOrderCollectionDetails")
 	}
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
-		respond OrderCollection.list(params), model:[orderCollectionInstanceCount: OrderCollection.count()]
-	}
-
-	def show(OrderCollection orderCollectionInstance) {
-		respond orderCollectionInstance
-	}
-
-	def create() {
-		respond new OrderCollection(params)
-	}
+//	def index(Integer max) {
+//		params.max = Math.min(max ?: 10, 100)
+//		respond OrderCollection.list(params), model:[orderCollectionInstanceCount: OrderCollection.count()]
+//	}
+//
+//	def show(OrderCollection orderCollectionInstance) {
+//		respond orderCollectionInstance
+//	}
+//
+//	def create() {
+//		respond new OrderCollection(params)
+//	}
 
 	@Transactional
 	def save(OrderCollection orderCollectionInstance) {

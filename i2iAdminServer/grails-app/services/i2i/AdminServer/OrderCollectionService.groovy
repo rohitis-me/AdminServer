@@ -45,7 +45,7 @@ class OrderCollectionService {
 		orderCollCommand.offerCode = order.offerCode
 		orderCollCommand.attachmentId = order.attachmentId
 		orderCollCommand.deliveryComment = order.deliveryComment
-		println "comment: "+ order.deliveryComment
+//		println "comment: "+ order.deliveryComment
 		
 		//FIXME 
 		String storeId = storeService.getLoggedInStoreId()
@@ -70,18 +70,18 @@ class OrderCollectionService {
 			orderCollCommand.state = patientProfile.state
 			orderCollCommand.country = patientProfile.country
 		}
-		println 'orderCollCommand: '+ orderCollCommand.properties
+//		println 'orderCollCommand: '+ orderCollCommand.properties
 		return orderCollCommand
 	}
 
 	def getOrderCollectionCommandFromOrderCollectionId(def orderCollectionId){
-		println "orderCollId "+ orderCollectionId
+//		println "orderCollId "+ orderCollectionId
 		OrderCollection order = OrderCollection.findByOrderCollectionId(orderCollectionId)
 		return populateOrderCollectionCommandFromOrderCollection(order)
 	}
 
 	def getOrderCollectionCommandListFromOrderCollectionIdList(List orderCollectionIds){
-		println "orderCollIdCount "+ orderCollectionIds.size()
+//		println "orderCollIdCount "+ orderCollectionIds.size()
 		List orderCollCommandList = new ArrayList<OrderCollectionCommand>()
 		orderCollectionIds.each {
 			orderCollCommandList.add(getOrderCollectionCommandFromOrderCollectionId(it))
@@ -90,7 +90,7 @@ class OrderCollectionService {
 	}
 
 	def getOrderCollectionCommandListFromOrderCollectionIdListAndOrderStatus(List orderCollectionIds, byte orderStatus){
-		println "orderCollIdCount "+ orderCollectionIds.size()
+//		println "orderCollIdCount "+ orderCollectionIds.size()
 		List orderCollCommandList = new ArrayList<OrderCollectionCommand>()
 		orderCollectionIds.each {
 			OrderCollectionCommand orderCollCommand = getOrderCollectionCommandFromOrderCollectionId(it)
@@ -112,7 +112,7 @@ class OrderCollectionService {
 	}
 
 	def changeCommentAndSave(Long orderCollectionId, String comment){
-		println "delivery comment" + comment
+//		println "delivery comment" + comment
 		OrderCollection orderColl = OrderCollection.findByOrderCollectionId(orderCollectionId)
 		if(orderColl){
 			println "delivery comment" + comment

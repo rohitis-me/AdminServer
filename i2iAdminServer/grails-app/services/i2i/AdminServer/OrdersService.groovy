@@ -1,14 +1,11 @@
 package i2i.AdminServer
 
-import java.util.List;
-
 import grails.transaction.Transactional
 import groovy.time.TimeCategory
 import i2i.AdminServer.User.EmailService
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
-import i2i.AdminServer.Constants
 
 
 @Transactional
@@ -151,13 +148,60 @@ class OrdersService {
 
 	//FIXME
 	def getEstimatedDeliveryTime(byte deliveryHours) {
-		Date est = Utility.getDateTimeInIST().getTime()
-		use( TimeCategory ) {
-			est = est + deliveryHours.toInteger().hours
+//		Date date = Utility.getDateTimeInIST().getTime()
+//		use( TimeCategory ) {
+//			date = date + deliveryHours.toInteger().hours
+//		}
+		
+		Calendar estCal = Utility.getDateTimeInIST() //.getTime()
+		estCal.add(Calendar.HOUR, deliveryHours.toInteger()) //.set(Calendar.DATE, date.getd)
+		Date date = estCal.getTime();
+//		use( TimeCategory ) {
+//			date = date + deliveryHours.toInteger().hours
+//		}
+		println "Time: "+date.toString()
+		//new SimpleDateFormat("HH:mm:ss").parse("22:00:00")
+		Calendar calendar1 = Calendar.getInstance()
+		calendar1.setTime(date)
+		calendar1.set(Calendar.HOUR_OF_DAY,22);
+		calendar1.set(Calendar.MINUTE,0);
+		calendar1.set(Calendar.SECOND,0);
+		Date date10 = calendar1.getTime()
+//		println "Time10: "+date10
+		
+		calendar1.set(Calendar.HOUR_OF_DAY,11);
+		calendar1.set(Calendar.MINUTE,0);
+		calendar1.set(Calendar.SECOND,0);
+		Date date11 = calendar1.getTime()
+//		println "Time11: "+date11
+		
+		calendar1.set(Calendar.HOUR_OF_DAY,23);
+		calendar1.set(Calendar.MINUTE,59);
+		calendar1.set(Calendar.SECOND,59);
+		Date date12 = calendar1.getTime()
+//		println "Time12: "+date12
+//		
+		calendar1.set(Calendar.HOUR_OF_DAY,0);
+		calendar1.set(Calendar.MINUTE,0);
+		calendar1.set(Calendar.SECOND,0);
+		Date date00 = calendar1.getTime()
+//		println "Time00: "+date00
+		
+		if(date.after(date10) && date.before(date12)) {
+			calendar1.add(Calendar.DATE, 1);
+			calendar1.set(Calendar.HOUR_OF_DAY,11);
+			calendar1.set(Calendar.MINUTE,0);
+			calendar1.set(Calendar.SECOND,0);
+			return calendar1.getTime()
 		}
-
-		//		println "Time: "+est
-		return est
+		else if(date.after(date00) && date.before(date11)){
+			calendar1.set(Calendar.HOUR_OF_DAY,11);
+			calendar1.set(Calendar.MINUTE,0);
+			calendar1.set(Calendar.SECOND,0);
+			return calendar1.getTime()
+		}
+		
+		return date
 	}
 
 
@@ -200,9 +244,9 @@ class OrdersService {
 		order.orderCollectionId = orderCollectionId
 
 		order.orderStatus = 1
-		println "store Id: " +order.storeId
+//		println "store Id: " +order.storeId
 		Store store = storeService.getStoreDataFromStoreId(order.storeId)
-		println "store: " +store?.properties
+//		println "store: " +store?.properties
 		byte deliveryHrs = store?.deliveryHoursIfAvailable?store.deliveryHoursIfAvailable:0
 		order.estimatedDeliveryTime = getEstimatedDeliveryTime(deliveryHrs)
 		order.uId = getUniqueRandomString()
@@ -279,7 +323,7 @@ class OrdersService {
 	}
 	
 	def changeOrderStatusAndSave(String storeId, Long orderCollectionId, String orderstatus, Date estDeliveryTime, String deliveryComment) {
-		println "comment OS " + deliveryComment
+//		println "comment OS " + deliveryComment
 		def status = 0
 		List orderList = Orders.findAllByOrderCollectionIdAndStoreId(orderCollectionId, storeId)
 		orderList.each {order->
@@ -391,7 +435,7 @@ class OrdersService {
 	}
 
 	def getListOfOrdersFromStoreIdAndOrderStatus(String storeId, byte orderStatus) {
-		println "getListOfOrdersFromStoreId: "+storeId +" OS: "+orderStatus
+//		println "getListOfOrdersFromStoreId: "+storeId +" OS: "+orderStatus
 		List orderList = Orders.findAllByStoreIdAndOrderStatus(storeId,orderStatus)
 		return orderList
 	}

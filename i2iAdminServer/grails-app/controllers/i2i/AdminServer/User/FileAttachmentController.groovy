@@ -3,20 +3,15 @@ package i2i.AdminServer.User
 
 
 import static org.springframework.http.HttpStatus.*
-
-import java.util.Date;
-
 import grails.plugin.awssdk.AmazonWebService
 import grails.transaction.Transactional
+import i2i.AdminServer.Constants
+import i2i.AdminServer.Util.Utility
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
-
-import i2i.AdminServer.OrderDetailsCommand;
-import i2i.AdminServer.Util.Utility
-import i2i.AdminServer.Constants
 
 //@Transactional(readOnly = true)
 class FileAttachmentController {
@@ -27,20 +22,6 @@ class FileAttachmentController {
 
 	def index(){
 		println "in file attachment: "+params
-		//		String prescriptionUpload = params.prescriptionUploadOption
-		//		println "prescrioption option "+prescriptionUpload
-		//		if(prescriptionUpload == '0') {
-		//			redirect (controller: "orders", action: "saveOrder", params:[brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
-		//				emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
-		//				country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
-		//				estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
-		//		}
-		//		if (!orderDetailsCommand || orderDetailsCommand?.hasErrors()) {
-		//			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
-		////			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
-		//			return
-		//		}
-
 		render(view: "index")
 	}
 
@@ -48,27 +29,17 @@ class FileAttachmentController {
 		println "in upload file" + params
 		//		List buckets
 		CommonsMultipartFile file = request.getFile('inputFile')
-		println "size " + file.getSize()
+//		println "size " + file.getSize()
 		if(file.isEmpty()) {
 			flash.message = "File cannot be empty"
 			render(view: "index")
 			return
-			//			redirect (controller: "fileAttachment", action: "index", params:[orderDetailsCommand:orderDetailsCommand, prescriptionUploadOption: '1'])
-			//			redirect (controller: "fileAttachment", action: "index", params:[ prescriptionUploadOption: '1', brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
-			//				emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
-			//				country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
-			//				estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
 		}
 		else if(file.getSize() > 10*1000000)
 		{
 			flash.message = "File size cannot exceed 10 MB"
 			render(view: "index")
 			return
-			//			redirect (controller: "fileAttachment", action: "index", params:[orderDetailsCommand:orderDetailsCommand,prescriptionUploadOption:'1'])
-			//			redirect (controller: "fileAttachment", action: "index", params:[prescriptionUploadOption:'1', brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
-			//				emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
-			//				country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
-			//				estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
 		}
 		else {
 			try {
@@ -85,7 +56,7 @@ class FileAttachmentController {
 				String fileOriginalName = file.getOriginalFilename()
 				Date uploadDate = Utility.getDateTimeInIST().getTime()
 				String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
-				println "file name: "+filePath
+//				println "file name: "+filePath
 				Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(Constants.amazonS3Bucket,filePath,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
 
 				while (!upload.done) {
@@ -96,9 +67,9 @@ class FileAttachmentController {
 					//					Thread.sleep(1000)
 				}
 
-				println "upload success: "+ upload
+//				println "upload success: "+ upload
 				String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
-				println "file link: "+fileLocation
+//				println "file link: "+fileLocation
 				def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
 
 				if(attachmentId == 0){
@@ -110,10 +81,6 @@ class FileAttachmentController {
 
 				//				orderDetailsCommand?.attachmentId = attachmentId
 				redirect (controller: 'patientProfile', action: 'showDeliveryDetails', params:[attachmentId:attachmentId])
-				//				redirect (controller: "orders", action: "saveOrder", params:[brandName: orderDetailsCommand?.brandName,brandId : orderDetailsCommand?.brandId, inventoryId: orderDetailsCommand?.inventoryId, storeId:orderDetailsCommand?.storeId, name:orderDetailsCommand?.name, phoneNumber:orderDetailsCommand?.phoneNumber,
-				//						emailID:orderDetailsCommand?.emailID, age:orderDetailsCommand?.age, addressLine1:orderDetailsCommand?.addressLine1, addressLine2:orderDetailsCommand?.addressLine2,circle:orderDetailsCommand?.circle,city:orderDetailsCommand?.city,state:orderDetailsCommand?.state,
-				//						country:orderDetailsCommand?.country,trackingId:orderDetailsCommand?.trackingId,orderStatus:orderDetailsCommand?.orderStatus,
-				//						estimatedDeliveryTime:orderDetailsCommand?.estimatedDeliveryTime,quantity:orderDetailsCommand?.quantity,isEmergencyDeliveryNeeded:orderDetailsCommand?.isEmergencyDeliveryNeeded, deliveryHours:orderDetailsCommand?.deliveryHours, offerCode:orderDetailsCommand?.offerCode, attachmentId:orderDetailsCommand?.attachmentId])
 			}
 			catch (Exception exp) {
 				println "Exception: "+exp

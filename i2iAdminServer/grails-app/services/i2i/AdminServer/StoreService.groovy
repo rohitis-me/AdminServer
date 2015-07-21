@@ -6,7 +6,7 @@ import i2i.AdminServer.User.Sec.SecUserService
 @Transactional
 class StoreService {
 	
-	private final String debugStr = "StoreService "
+//	private final String debugStr = "StoreService "
 	SecUserService secUserService
 
     def serviceMethod() {
@@ -29,8 +29,8 @@ class StoreService {
 		String storeName = store.storeName
 		return storeName
 		}
-		else
-		println debugStr+"getStoreNameFromStoreId store not found: "+storeId
+//		else
+//		println debugStr+"getStoreNameFromStoreId store not found: "+storeId
 	}
 	
 	def getStoreListFromStoreIdList(List storeIds) {
@@ -39,8 +39,8 @@ class StoreService {
 			Store store = Store.findByStoreId(storeId)
 			if(store)
 			storeList.add(store)
-			else
-			println debugStr+"getStoreListFromStoreIdList store not found. ID: "+storeId
+//			else
+//			println debugStr+"getStoreListFromStoreIdList store not found. ID: "+storeId
 		}
 		println "storeservice getStoreListFromStoreIdList: "+storeList.count
 		return storeList
@@ -54,11 +54,11 @@ class StoreService {
 			
 			if(store && (store.circle == circle))
 			storeList.add(store)
-			else
-			println debugStr+"getStoreListFromStoreIdListAndCircle store not found. ID: "+storeId
+//			else
+//			println debugStr+"getStoreListFromStoreIdListAndCircle store not found. ID: "+storeId
 			
 		}
-		println "storeservice getStoreListFromStoreIdList: "+storeList.count
+//		println "storeservice getStoreListFromStoreIdList: "+storeList.count
 		return storeList
 //		List tmpList = new ArrayList<Store>()
 //		tmpList.add(Store.first())
@@ -67,14 +67,14 @@ class StoreService {
 	}
 	
 	def getStoresFromCircleList(List circle) {
-		println "circlelist: "+circle
+//		println "circlelist: "+circle
 		List storeList = Store.findAllByCircleInList(circle)
-		println "STORELIST: "+storeList.size()
+//		println "STORELIST: "+storeList.size()
 		return storeList
 	}
 	
 	def populateStoreFromStoreCommand(StoreCommand storeCommand) {
-		println "storeId: "+storeCommand.storeId
+//		println "storeId: "+storeCommand.storeId
 		
 		Store store = Store.findByStoreId(storeCommand.storeId)
 		store.storeName = storeCommand.storeName
@@ -87,7 +87,7 @@ class StoreService {
 		store.state = storeCommand.state
 		store.latitude = storeCommand.latitude
 		store.longitude = storeCommand.longitude
-		println "delivery time: "+storeCommand.deliveryHoursIfAvailable
+//		println "delivery time: "+storeCommand.deliveryHoursIfAvailable
 		store.deliveryHoursIfAvailable = storeCommand.deliveryHoursIfAvailable
 		store.deliveryHoursIfUnavailable = storeCommand.deliveryHoursIfUnavailable
 		store.isEmergencyDeliveryAvailable = storeCommand.isEmergencyDeliveryAvailable

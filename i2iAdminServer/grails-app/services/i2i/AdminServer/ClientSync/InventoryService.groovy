@@ -1,7 +1,7 @@
 package i2i.AdminServer.ClientSync
 
-import i2i.AdminServer.BrandDatabase;
 import grails.transaction.Transactional
+import i2i.AdminServer.BrandDatabase
 
 @Transactional
 class InventoryService {
@@ -12,23 +12,23 @@ class InventoryService {
 	}
 	
 	def getInventoryIdFromBrandName(String brandName) {
-		println "in getInventoryIdFromBrandName"
+//		println "in getInventoryIdFromBrandName"
 		String brandId = Inventory.findByBrandName(brandName)*.brandId
-		println "Bid: "+brandId+" bn: "+brandName
+//		println "Bid: "+brandId+" bn: "+brandName
 		
 		return brandId
 	}
 	
 	def getInventoryDataFromInventoryId(String inventoryId) {
 		Inventory inventory = Inventory.findByInventoryId(inventoryId)
-		println "getInventoryDataFromBrandId: "+inventory?.properties+" count: "+Inventory.count()
+//		println "getInventoryDataFromBrandId: "+inventory?.properties+" count: "+Inventory.count()
 		return inventory
 	}
 	
 	def getBrandNameFromInventoryId(String inventoryId) {
 		Inventory inventory = Inventory.findByInventoryId(inventoryId) //if we call with *.brandName it is giving [brandname] ??
 		String brandName = inventory.brandName
-		println "brandname: "+brandName
+//		println "brandname: "+brandName
 		return brandName
 	}
 	
@@ -46,12 +46,12 @@ class InventoryService {
 	}
 	
 	def getListOfBrandNamesStartingWithAndStoreId(String brandName, String storeId) {
-		List inventoryList = Inventory.findAllByStoreIdAndBrandNameIlike(storeId,brandName+"%") // ignore case
-		if(inventoryList.size()<10) {
-			inventoryList.addAll(Inventory.findAllByStoreIdAndBrandNameIlike(storeId,"% "+brandName+"%"))
+		List inventoryList = Inventory.findAllByStoreIdAndBrandNameIlike(storeId,brandName+"%",[max:10, offset:0]) // ignore case
+		if(inventoryList.size()<5) {
+			inventoryList.addAll(Inventory.findAllByStoreIdAndBrandNameIlike(storeId,"% "+brandName+"%",[max:10, offset:0]))
 		}
 		List brandDataList = populateBrandDataListFromInventoryList(inventoryList)
-		println "brandDataList: "+ brandDataList.size()
+//		println "brandDataList: "+ brandDataList.size()
 		return brandDataList
 	}
 	

@@ -6,6 +6,7 @@ import i2i.AdminServer.OrderDetailsCommand
 import i2i.AdminServer.OrdersService
 import i2i.AdminServer.StoreService
 import i2i.AdminServer.ClientSync.InventoryService
+
 import com.metasieve.shoppingcart.SessionUtils
 
 class PatientProfileController {
@@ -30,7 +31,7 @@ class PatientProfileController {
 		if(orderDetailsCommand.brandId){
 			def brandData = brandDatabaseService.getBrandDataFromBrandId(orderDetailsCommand.brandId)
 			def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
-			println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
+//			println "Branddata: "+brandData.brandId+" storedata: "+storeData.storeId
 			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
 			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours
 
@@ -47,7 +48,7 @@ class PatientProfileController {
 		else if(orderDetailsCommand.inventoryId){
 			def brandData = inventoryService.getBrandDataFromInventoryId(orderDetailsCommand.inventoryId)
 			def storeData = storeService.getStoreDataFromStoreId(orderDetailsCommand.storeId)
-			println "Branddata: "+brandData.brandName+" storedata: "+storeData.storeId
+//			println "Branddata: "+brandData.brandName+" storedata: "+storeData.storeId
 			OrderDetailsCommand orderDetails = ordersService.populateOrderDetailsFromStoreAndBrandData(storeData, brandData)
 			orderDetails.inventoryId = orderDetailsCommand.inventoryId
 			orderDetails.deliveryHours = orderDetailsCommand.deliveryHours

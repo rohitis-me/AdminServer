@@ -1,8 +1,6 @@
 package i2i.AdminServer
 
 import grails.transaction.Transactional
-import i2i.AdminServer.User.PatientProfile
-import java.sql.SQLException
 
 @Transactional
 class AvailabilityService {
@@ -14,7 +12,7 @@ class AvailabilityService {
 	def getStoreIdsFromBrandId(String brandId) {
 
 		def storeIdList = Availability.findAllByBrandIdAndAvailabilityIndexGreaterThan(brandId, 0)*.storeId
-		println "availability service getStoreIdsFromBrandId: "+storeIdList.size()//+"\n* availability: "+availability.properties
+//		println "availability service getStoreIdsFromBrandId: "+storeIdList.size()//+"\n* availability: "+availability.properties
 		for(int i=0;i<storeIdList.size();i++)
 		{
 			for(int j=i+1;j<storeIdList.size();j++)
@@ -32,7 +30,7 @@ class AvailabilityService {
 	def getStoreIdsFromInventoryId(String inventoryId) {
 
 		def storeIdList = Availability.findAllByInventoryIdAndAvailabilityIndexGreaterThan(inventoryId, 0)*.storeId
-		println "availability service getStoreIdsFromInventoryId: "+storeIdList.size()//+"\n* availability: "+availability.properties
+//		println "availability service getStoreIdsFromInventoryId: "+storeIdList.size()//+"\n* availability: "+availability.properties
 		for(int i=0;i<storeIdList.size();i++)
 		{
 			for(int j=i+1;j<storeIdList.size();j++)

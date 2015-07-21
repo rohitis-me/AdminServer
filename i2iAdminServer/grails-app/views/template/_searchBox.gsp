@@ -2,9 +2,10 @@
 <%@ page import="i2i.AdminServer.Constants"%>
 
 <g:javascript>
-            
-                $("#search_textField").autocomplete({
+
+            $("#search_textField").autocomplete({
         source: function(request, response) {
+        	$('#spinnerSearch').show();
             $.ajax({
                 url: '<g:createLink controller="search"
 		action="listOfBrandNameStartingWith" />',
@@ -13,6 +14,7 @@
                     term: request.term,
                 },
                 success: function(data) {
+               	 $('#spinnerSearch').hide();
                     response(data);
                 }
             });
@@ -82,6 +84,12 @@
 						<input name="brandName" required class="form-control input-lg"
 							id="search_textField" placeholder="Enter medicine brand"
 							type="text" value="${brandName}" onkeydown="onTextEnter(event)" />
+							
+							<div id="spinnerSearch" class="main-input-search" style="display:none;right: 20px;">
+<%--<img src="${resource(dir: 'images', file: 'ajax-loader.gif')}" alt="Loading..." />--%>
+<i class="fa fa-refresh fa-spin" style="font-size: 28px;line-height: 1.5; color: #909090;"></i>
+</div>
+
 						<input class="main-input-search" name="searchButton" value=""
 							type="submit" /><i class="fa fa-search"></i>
 					</div>

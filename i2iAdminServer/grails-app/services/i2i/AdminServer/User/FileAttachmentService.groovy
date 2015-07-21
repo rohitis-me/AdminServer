@@ -19,7 +19,7 @@ class FileAttachmentService {
 		
 		println "attachment: "+attachment.properties
 		if(attachment && attachment.save()) {
-			println "attachment save success"
+			println "attachment save success "+attachment.attachmentId
 			return attachment.attachmentId
 		}
 		else {

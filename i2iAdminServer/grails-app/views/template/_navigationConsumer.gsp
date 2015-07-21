@@ -20,6 +20,18 @@
     display: block;
     position:relative;
 }
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
 </style>
 
 <!-- Fixed navbar -->
@@ -71,23 +83,23 @@
 				</g:if>
 				<g:if test="${entityName== 'Cart' }">
 					<li class="active"><g:link controller="shoppingCart"
-							action="showCartItems">Cart (${itemsCount}) </g:link></li>
+							action="showCartItems"><i class="fa fa-shopping-cart fa-lg"></i>&nbsp;Cart (${itemsCount}) </g:link></li>
 				</g:if>
 				<g:else>
-					<li><g:link controller="shoppingCart" action="showCartItems">Cart (${itemsCount})</g:link></li>
+					<li><g:link controller="shoppingCart" action="showCartItems"><i class="fa fa-shopping-cart fa-lg"></i>&nbsp;Cart (${itemsCount})</g:link></li>
 				</g:else>
 				
 				<sec:ifLoggedIn>
 					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 				</sec:ifLoggedIn>
-				<li><p class="h-toll-free"><i class="glyphicon glyphicon-earphone"></i>${Constants.helpline }</p> </li>
+				<li><p class="h-toll-free"><i class="fa fa-phone-square fa-lg"></i> ${Constants.helpline }</p> </li>
 				
 				<g:set var="circle" value="${"Select circle"}" />
 				<g:set var="session" value="${SessionUtils.getSession()}" />
 				<g:if test="${session && session.circle}">
 					<g:set var="circle" value="${session.circle}" />
 				</g:if>
-					<li class="active"><button id="locationDialog_btn" class="navbar-btn btn" style="border-radius:0px;" value="${circle}">${circle}</button></li>
+					<li class="active"><button id="locationDialog_btn" class="navbar-btn btn btn-primary btn-block" style="border-radius:0px;" value="${circle}"><i class="fa fa-map-marker fa-lg"></i> ${circle}</button></li>
 <%--					style="padding-bottom: 15px;padding-top: 15px;border-radius:0px;"--%>
 			</ul>
 		</div>
@@ -98,6 +110,11 @@
 <!-- Begin page content -->
 
 <div id="dialogPlaceholder"></div>
+<div id="spinner" class="spinner" style="display:none;">
+<%--<img src="${resource(dir: 'images', file: 'ajax-loader.gif')}" alt="Loading..." />--%>
+<i class="fa fa-spinner fa-pulse fa-3x"></i>
+<%--   <span class="glyphicon glyphicon-refresh glyphicon-spin"></span>--%>
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -123,7 +140,16 @@
 	            }
 	        });
 	    });
+
+	    $("#spinner").bind("ajaxSend", function() {
+	        $(this).show();
+	    }).bind("ajaxStop", function() {
+	        $(this).hide();
+	    }).bind("ajaxError", function() {
+	        $(this).hide();
+	    });
 	});
+
 	<%--    mixpanel.track_links("#site-navbar-collapse a", "Clicked nav link", {--%>
 	<%--        "referrer": document.referrer--%>
 	<%--    });--%>

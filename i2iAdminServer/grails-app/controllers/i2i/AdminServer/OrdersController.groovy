@@ -33,10 +33,10 @@ class OrdersController {
 
 
 		List ordersList = ordersService.getListOfOrdersFromStoreId(storeId)
-		println "orderCount "+ ordersList.size()
+//		println "orderCount "+ ordersList.size()
 
 		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
-		println "done orderdetailslist"
+//		println "done orderdetailslist"
 		//to show current tab colour
 		byte orderStatus = -1
 
@@ -53,17 +53,17 @@ class OrdersController {
 
 		byte orderStatus = params.orderStatus.toInteger()
 		List ordersList = ordersService.getListOfOrdersFromStoreIdAndOrderStatus(storeId,orderStatus)
-		println "orderCount "+ ordersList.size()
+//		println "orderCount "+ ordersList.size()
 
 		List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(ordersList)
-		println "done orderdetailslist"
+//		println "done orderdetailslist"
 
 		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
 	}
 
 	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showOrderDetails(OrderDetailsCommand orderDetailsCommand) {
-		println "showOrderDetails params: "+params
+//		println "showOrderDetails params: "+params
 		def orderId = orderDetailsCommand.orderId
 		Orders order = ordersService.getOrderFromOrderId(orderId)
 		orderDetailsCommand = ordersService.populateOrderDetailsFromOrder(order)
@@ -84,7 +84,7 @@ class OrdersController {
 			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
 			orderStatusCommand.trackingId = uId
 			orderStatusCommand.offerCode = offerCode 
-			println "OrderStatusCommand: "+orderStatusCommand.properties
+//			println "OrderStatusCommand: "+orderStatusCommand.properties
 			render(view: "orderStatus", model: [orderStatusCommand: orderStatusCommand])
 		}
 		else
@@ -132,75 +132,75 @@ class OrdersController {
 			redirect (controller: 'orders', action: 'showOrderDetailsList')
 	}
 
-	def cancelOrder(OrderDetailsCommand orderDetailsCommand) {
-		println "params: "+params
-		def orderId = orderDetailsCommand.orderId
-		def status = ordersService.cancelOrderAndSave(orderId)
+//	def cancelOrder(OrderDetailsCommand orderDetailsCommand) {
+//		println "params: "+params
+//		def orderId = orderDetailsCommand.orderId
+//		def status = ordersService.cancelOrderAndSave(orderId)
+//
+//		if(status == 0)
+//			render "Error in proccessing your request. Please try again later!"
+//		else{
+//			redirect (controller: 'search', action: 'index')
+//		}
+//	}
+//
+//	def placeNextOrder() {
+//		redirect (controller: 'search', action: 'index')
+//	}
+//
+//	def trackOrderStatus(){
+//		//		render(view: "trackOrderStatus")
+//	}
 
-		if(status == 0)
-			render "Error in proccessing your request. Please try again later!"
-		else{
-			redirect (controller: 'search', action: 'index')
-		}
-	}
-
-	def placeNextOrder() {
-		redirect (controller: 'search', action: 'index')
-	}
-
-	def trackOrderStatus(){
-		//		render(view: "trackOrderStatus")
-	}
-
-	def showTrackedOrderDetails(){
-		String trackingId = params?.trackingId
-		String uId = trackingId?.toUpperCase()
-		println "uId: "+uId
-		
-		Orders order = ordersService.getOrderFromUId(uId)
-		if(order && order.orderStatus != Constants.ORDER_REJECTED) {
-			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
-			orderStatusCommand.trackingId = uId
-			println "OrderStatusCommand: "+orderStatusCommand.properties
-			render(view: "trackOrderStatus", model: [orderStatusCommand: orderStatusCommand, trackingId:trackingId])
-		}
-		else
-		{
-			render(view: "trackOrderStatus",model: [trackingId:trackingId])
-		}
-	}
+//	def showTrackedOrderDetails(){
+//		String trackingId = params?.trackingId
+//		String uId = trackingId?.toUpperCase()
+//		println "uId: "+uId
+//		
+//		Orders order = ordersService.getOrderFromUId(uId)
+//		if(order && order.orderStatus != Constants.ORDER_REJECTED) {
+//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
+//			orderStatusCommand.trackingId = uId
+//			println "OrderStatusCommand: "+orderStatusCommand.properties
+//			render(view: "trackOrderStatus", model: [orderStatusCommand: orderStatusCommand, trackingId:trackingId])
+//		}
+//		else
+//		{
+//			render(view: "trackOrderStatus",model: [trackingId:trackingId])
+//		}
+//	}
 
 	//    def create() {
 	//        respond new Orders(params)
 	//    }
 
-	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
-		println "ODC: "+orderDetailsCommand.properties
-		println "params: "+params
-		
-		//FIXME: do this in gsp
-		orderDetailsCommand.offerCode = ordersService.checkOfferCode(orderDetailsCommand.offerCode)
-		
-//		if (orderDetailsCommand.hasErrors()) {
-//			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
-////			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
-//			return
+//	def saveOrder(OrderDetailsCommand orderDetailsCommand) {
+//		println "ODC: "+orderDetailsCommand.properties
+//		println "params: "+params
+//		
+//		//FIXME: do this in gsp
+//		orderDetailsCommand.offerCode = ordersService.checkOfferCode(orderDetailsCommand.offerCode)
+//		
+////		if (orderDetailsCommand.hasErrors()) {
+////			render view: '/patientProfile/deliveryDetails', model: [orderDetails: orderDetailsCommand]
+//////			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
+////			return
+////		}
+//		
+//		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
+//
+//		println "orderId: "+uId
+//
+//		if(uId) {
+//			//			ordersService.sendEmail(orderDetailsCommand)
+//			redirect(controller: 'orders', action: 'showOrderStatus', params:[trackingId: uId,offerCode:orderDetailsCommand?.offerCode])
 //		}
-		
-		def uId = ordersService.saveOrderFromOrderDetails(orderDetailsCommand)
-
-		println "orderId: "+uId
-
-		if(uId) {
-			//			ordersService.sendEmail(orderDetailsCommand)
-			redirect(controller: 'orders', action: 'showOrderStatus', params:[trackingId: uId,offerCode:orderDetailsCommand?.offerCode])
-		}
-		else {
-
-			flash.message = message(code: 'save.error.label', default: 'Enter valid information')
-			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
-		}
-	}
+//		else {
+//
+//			flash.message = message(code: 'save.error.label', default: 'Enter valid information')
+//			redirect(controller: 'patientProfile', action: 'deliveryDetails', params:params)
+//		}
+//	}
 
 	@Transactional
 	def save(Orders ordersInstance) {

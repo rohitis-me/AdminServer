@@ -25,7 +25,7 @@ class Utility {
 		Calendar cal = Calendar.getInstance(timezone)
 		cal.add(Calendar.HOUR, 5)
 		cal.add(Calendar.MINUTE, 30)
-		println "Calender: "+cal.getTime().toString()
+//		println "Calender: "+cal.getTime().toString()
 		return cal
 	}
 }

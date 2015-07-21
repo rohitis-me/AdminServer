@@ -28,7 +28,7 @@ class SearchService {
 	def getListOfStoresWhereBrandIsAvailable(String brandId) {
 		List storeIdList = availabilityService.getStoreIdsFromBrandId(brandId)
 		List storeList = storeService.getStoreListFromStoreIdList(storeIdList)
-		println "bid: "+brandId+" storelist: "+storeList.size()
+//		println "bid: "+brandId+" storelist: "+storeList.size()
 //		println "turnontestcode: "+grailsApplication.config.turnOnTestCode
 //		if(grailsApplication.config.turnOnTestCode) {
 //			if(brandId== null || brandId == "") {
@@ -39,12 +39,12 @@ class SearchService {
 //				storeList.add(Store.last())
 //			}
 //		}
-		println "storeList: "+storeList.count
+//		println "storeList: "+storeList.count
 		return storeList
 	}
 
 	def getListOfStoresInCircle(String circle) {
-		println "getListOfStoresInCircle: "+circle
+//		println "getListOfStoresInCircle: "+circle
 
 		List circleList = new ArrayList<String>()
 		circleList.add(circle)
@@ -56,7 +56,7 @@ class SearchService {
 			circleList.add('Kottivakkam')
 
 		List storeList = storeService.getStoresFromCircleList(circleList)
-		println "getListOfStoresInCircle: "+storeList
+//		println "getListOfStoresInCircle: "+storeList
 		return storeList
 	}
 
@@ -67,7 +67,7 @@ class SearchService {
 		if(storeList.size() == 0) {
 			storeList = storeService.getStoreListFromStoreIdList(storeIdList)
 		}
-		println "iId: "+inventoryId+" storelist: "+storeList.size()
+//		println "iId: "+inventoryId+" storelist: "+storeList.size()
 		//		println "turnontestcode: "+grailsApplication.config.turnOnTestCode
 		//		if(grailsApplication.config.turnOnTestCode) {
 		//			if(inventoryId== null || inventoryId == "") {
@@ -78,7 +78,7 @@ class SearchService {
 		//				storeList.add(Store.last())
 		//			}
 		//		}
-		println "storeList: "+storeList.count
+//		println "storeList: "+storeList.count
 		return storeList
 	}
 }

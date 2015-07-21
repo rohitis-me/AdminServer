@@ -218,5 +218,13 @@
 			mixpanel.track("Go back from Order details");
 		    });
 	</script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+	    $('#order_submit').click(function() {
+	        $('#spinner').show();
+	    });
+	});
+</script>
 </body>
 </html>

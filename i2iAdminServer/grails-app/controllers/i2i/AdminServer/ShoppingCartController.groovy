@@ -41,7 +41,7 @@ class ShoppingCartController {
 			if(!brandOrdered.save(flush:true)) {
 				brandOrdered.errors.each { println "error saving brandOrdered: "+it }
 			}
-			println "save brandOrdered success"
+//			println "save brandOrdered success"
 		}
 
 		int quantity =  params.quantity.toInteger()
@@ -61,11 +61,11 @@ class ShoppingCartController {
 	def removeItemFromCart(){
 		String inventoryId = params.inventoryId
 		int qty = params.quantity.toInteger()
-		println "iid: "+inventoryId
+//		println "iid: "+inventoryId
 		BrandOrdered brandOrdered = BrandOrdered.findByInventoryId(inventoryId)
 		if(brandOrdered && brandOrdered.shoppingItem){
 			//			def qty = shoppingCartService.getQuantity(brandOrdered.shoppingItem)
-			println "qty: "+ qty
+//			println "qty: "+ qty
 			shoppingCartService.removeFromShoppingCart(brandOrdered, qty)
 		}
 
@@ -82,10 +82,10 @@ class ShoppingCartController {
 		
 		List cartItemMapList = []
 		cartItems.each{item ->
-			println "id: "+ item.id
+//			println "id: "+ item.id
 			def product = Shoppable.findByShoppingItem(item)
 			def name = product.toString()
-			println "item Name: "+ name
+//			println "item Name: "+ name
 			def iid = product.inventoryId
 			def qty = shoppingCartService.getQuantity(item)
 			Map nameQtyMap = [:]
@@ -100,7 +100,7 @@ class ShoppingCartController {
 	}
 
 	def addItemToCartAndPlaceOrder(){
-		println "add item: "+ params
+//		println "add item: "+ params
 		String inventoryId = params.inventoryId
 		BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,params.storeId)
 		if(!brandOrdered) {
@@ -114,7 +114,7 @@ class ShoppingCartController {
 			if(!brandOrdered.save(flush:true)) {
 				brandOrdered.errors.each { println "error saving brandOrdered: "+it }
 			}
-			println "save brandOrdered success"
+//			println "save brandOrdered success"
 		}
 
 		int quantity =  params.quantity.toInteger()
@@ -148,7 +148,7 @@ class ShoppingCartController {
 	}
 
 	def goToHomePage(){
-		println "in go to home"
+//		println "in go to home"
 		redirect (controller: 'search', action: 'index')
 	}
 

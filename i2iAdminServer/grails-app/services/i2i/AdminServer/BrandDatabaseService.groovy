@@ -17,7 +17,7 @@ class BrandDatabaseService {
 	def getBrandIdFromBrandName(String brandName) {
 		println "in getBrandIdFromBrandName"
 		String brandId = BrandDatabase.findByBrandName(brandName)*.brandId
-		println "Bid: "+brandId+" bn: "+brandName
+//		println "Bid: "+brandId+" bn: "+brandName
 
 		//FIXME
 		//brandId = Availability.first().brandId
@@ -26,14 +26,14 @@ class BrandDatabaseService {
 
 	def getBrandDataFromBrandId(String brandId) {
 		BrandDatabase brand = BrandDatabase.findByBrandId(brandId)
-		println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
+//		println "getBrandDataFromBrandId: "+brand?.properties+" count: "+BrandDatabase.count()
 		return brand
 	}
 
 	def getBrandNameFromBrandId(String brandId) {
 		BrandDatabase brand = BrandDatabase.findByBrandId(brandId) //if we call with *.brandName it is giving [brandname] ??
 		String brandName = brand.brandName
-		println "brandname: "+brandName
+//		println "brandname: "+brandName
 		return brandName
 	}
 
@@ -97,7 +97,7 @@ class BrandDatabaseService {
 	//TODO: Changes to be made when brand data fetched from brand database
 	def getBrandDataList(String searchTerm, String circle, String city) {
 		List drugList = new ArrayList<BrandDataCommand>()
-		println "city" + city + "circle" + circle
+		println "city: " + city + "circle: " + circle
 		//FIXME: NOT scalable
 		if(city == 'Chennai') {
 		if(circle == 'Thiruvanmiyur') 
@@ -109,7 +109,7 @@ class BrandDatabaseService {
 		}
 		if(city == 'Mumbai') {
 
-			if(circle == 'Bandra (West)')
+			if(circle == 'Bandra')
 			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '4')//Metro
 			else
 			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '3')//HariOm- Khar and santacruz
