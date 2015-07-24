@@ -121,7 +121,7 @@ class OrderCollectionController {
 		}
 //		println "offer: "+orderCollCommand.offerCode
 		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-		if(cartItems.size() < 1){
+		if(!cartItems || (cartItems && cartItems.size() < 1) ){
 			flash.message = message(code: 'shoppingcart.noitem.label', default: 'No items in your shopping cart!')
 			redirect (controller: 'shoppingCart', action: 'showCartItems')
 			return

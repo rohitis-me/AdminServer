@@ -14,6 +14,8 @@ import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
 import com.metasieve.shoppingcart.Quantity
@@ -181,15 +183,15 @@ class WebserviceController {
 		//		else
 		//			render (view:"/search/searchResult", model: [storeId:params.storeId, brandId:params.brandId, inventoryId:params.inventoryId, brandName: params.brandName, circle: params?.circle, quantity: params.quantity, disableAdd:'1'])
 	}
-//	def test(){
-		//		def restResponse = '[{"brandName": "ABANA", "inventoryId":"23386", "brandId":"", "storeId":"4", "quantity": 1},{"brandName": "DOLO 650", "inventoryId":"26376", "brandId":"", "storeId":"4", "quantity": 1}]'
-		//		println "restResponse: "+restResponse
-		//
-		//		redirect (controller: 'webservice', action: 'addItemsToCart', params:[cartItemList: restResponse])
+	//	def test(){
+	//		def restResponse = '[{"brandName": "ABANA", "inventoryId":"23386", "brandId":"", "storeId":"4", "quantity": 1},{"brandName": "DOLO 650", "inventoryId":"26376", "brandId":"", "storeId":"4", "quantity": 1}]'
+	//		println "restResponse: "+restResponse
+	//
+	//		redirect (controller: 'webservice', action: 'addItemsToCart', params:[cartItemList: restResponse])
 
-//		String inputFilePath = 'C:/Users/ChandU/Pictures/12 May/IMG_123.jpg'
-//		redirect (controller: 'webservice', action: 'uploadPrescriptionFile', params:[inputFilePath: inputFilePath])
-//	}
+	//		String inputFilePath = 'C:/Users/ChandU/Pictures/12 May/IMG_123.jpg'
+	//		redirect (controller: 'webservice', action: 'uploadPrescriptionFile', params:[inputFilePath: inputFilePath])
+	//	}
 
 	def addItemsToCart(){
 		println "add item: "+ params
@@ -301,65 +303,45 @@ class WebserviceController {
 		shoppingCartService.emptyShoppingCart()
 		render (text: "Success")
 	}
-	
-	
+
 
 	def uploadPrescriptionFile(){
 		println "in upload file" + params
-		String inputFilePath = params.inputFilePath
-		if(!inputFilePath){
-			render (text:"Invalid File Path")
-			return
-		}
-		File image = new File(inputFilePath)
-//		OutputStream outStream = new FileOutputStream(image);
-//		outStream.write(buffer);
-//		outStream.close();
-		
-		println "file size: "+image.length()
-		println "file path: "+image.getPath()
-		if (!image.exists() || image.length() == 0) {
+		//		List buckets
+		CommonsMultipartFile file = request.getFile('inputFile')
+		//		println "size " + file.getSize()
+		if(file.isEmpty()) {
 			render (text:"File cannot be empty")
 			return
-		} else if(image.length() > 10*1024*1024) {
+		}
+		else if(file.getSize() > 10*1024*1024)
+		{
 			render (text:"File size cannot exceed 10 MB")
 			return
 		}
-		//		CommonsMultipartFile file = request.getFile('inputFile')
-		//		println "size " + file.getSize()
-		//		if(file.isEmpty()) {
-		//			render (text:"File cannot be empty")
-		//			return
-		//		}
-		//		else if(file.getSize() > 10*1000000)
-		//		{
-		//			render (text:"File size cannot exceed 10 MB")
-		//			return
-		//		}
-		//		else {
+
 		try {
-			//				ObjectMetadata objectMetadata = new ObjectMetadata();
-			//				objectMetadata.setContentLength(file.getInputStream().available())
-			//				objectMetadata.setContentType(file.getContentType())
-			String fileOriginalName = image.getName() // "xxx.jpg" //file.getOriginalFilename()
-			//			println "fileOriginalName: " + fileOriginalName
+			ObjectMetadata objectMetadata = new ObjectMetadata();
+			objectMetadata.setContentLength(file.getInputStream().available())
+			objectMetadata.setContentType(file.getContentType())
+
+			String fileOriginalName = file.getOriginalFilename()
 			Date uploadDate = Utility.getDateTimeInIST().getTime()
 			String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
 			//				println "file name: "+filePath
-			PutObjectRequest object = new PutObjectRequest(Constants.amazonS3Bucket,filePath,image).withCannedAcl(CannedAccessControlList.PublicRead)
-			Upload upload = amazonWebService.transferManager.upload(object)
+			Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(Constants.amazonS3Bucket,filePath,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
 
-//			while (!upload.done) {
-//				//				println "Transfer: $upload.description"
-//				//					println "  - State: $upload.state"
-//				//					println "  - Progress: $upload.progress.bytesTransfered"
-//				//					// Do work while we wait for our upload to complete…
-//				//				Thread.sleep(1000)
-//			}
+			while (!upload.done) {
+				//					println "Transfer: $upload.description"
+				//					println "  - State: $upload.state"
+				//					println "  - Progress: $upload.progress.bytesTransfered"
+				//					// Do work while we wait for our upload to complete…
+				//					Thread.sleep(1000)
+			}
 
 			//				println "upload success: "+ upload
 			String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
-//			println "file link: "+fileLocation
+			//				println "file link: "+fileLocation
 			def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
 
 			if(attachmentId == 0){
@@ -455,6 +437,122 @@ class WebserviceController {
 			render (text: "Error Processing your request.Please try again!")
 		}
 	}
+
+	def addItemsToCartAndPlaceOrder(){
+		println "add item: "+ params
+		def restResponse = params.cartItemList
+		// Parse the response
+		def cartItems = new JsonSlurper().parseText( restResponse )
+
+		if(!cartItems || (cartItems && cartItems.size() < 1) ){
+			render (text: "No items in the cart")
+			return
+		}
+		//		render (text: "Success")
+
+		OrderCollectionCommand orderCollCommand = new OrderCollectionCommand()
+		orderCollCommand.offerCode = params.offerCode
+		orderCollCommand.attachmentId = params.attachmentId
+		orderCollCommand.name = params.name
+		orderCollCommand.phoneNumber = params.phoneNumber
+		orderCollCommand.emailID = params.emailID
+		orderCollCommand.age = params.age
+		orderCollCommand.addressLine1 = params.addressLine1
+		orderCollCommand.addressLine2 = params.addressLine2
+		orderCollCommand.circle = params.circle
+		orderCollCommand.city = params.city
+		orderCollCommand.state = params.state
+		orderCollCommand.country = params.country
+
+		println "ODC: "+orderCollCommand.properties
+		if (orderCollCommand.hasErrors()) {
+			orderCollCommand.errors.each { println it }
+			render (text: "Enter valid information")
+			return
+		}
+
+		//FIXME: do this in gsp
+		orderCollCommand.offerCode = ordersService.checkOfferCode(orderCollCommand.offerCode)
+		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
+		//		println "orderRefId: "+orderRefId
+		if(!orderRefId) {
+			render (text: "Enter valid information")
+			return
+		}
+
+		//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+		//		if(!cartItems || (cartItems && cartItems.size() < 1) ){
+		//			render (text: "No items in the cart")
+		//			return
+		//		}
+		List orderDetailsList = []
+		cartItems.each {
+			println it
+			//			boolean success = true
+			String inventoryId = it.inventoryId
+			String storeId = it.storeId
+			//			BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
+			//			if(!brandOrdered) {
+			BrandOrdered brandOrdered = new BrandOrdered()
+
+			brandOrdered.brandName = it.brandName
+			brandOrdered.inventoryId = inventoryId
+			brandOrdered.brandId = it.brandId
+			brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
+
+			//				if(!brandOrdered.save(flush:true)) {
+			//					brandOrdered.errors.each { println "error saving brandOrdered: "+it }
+			//					//					render (text: "Error")
+			//					success = false
+			//				}
+			//			}
+
+			//			if(success){
+			int quantity =  it.quantity.toInteger()
+			if(brandOrdered){
+				//					shoppingCartService.addToShoppingCart(brandOrdered, quantity)
+				OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(brandOrdered, quantity, orderCollCommand.orderCollectionId)
+				orderDetailsList.add(orderDetails)
+			}
+			//			}
+			//			else
+			//				render (text: "Error")
+		}
+
+		if(!orderDetailsList || (orderDetailsList && orderDetailsList.size() < 1) ){
+			render (text: "Invalid input")
+			return
+		}
+		//		cartItems.each{item ->
+		//			def product = Shoppable.findByShoppingItem(item)
+		//			def qty = shoppingCartService.getQuantity(item)
+		//			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
+		//			orderDetailsList.add(orderDetails)
+		//		}
+
+		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
+
+		//		shoppingCartService.emptyShoppingCart()
+		//		def checkedOutItems = shoppingCartService.checkOut()
+		//		println "size: "+checkedOutItems.size()
+
+		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
+		if(orderCollection) {
+			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
+			//			println "items count: "+orderList.size()
+			List listOrderDetails = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
+			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
+
+			def orderStatus = ['orderDetailsList':listOrderDetails, 'patient':patient, 'trackingId': orderRefId, 'offerCode':orderCollCommand.offerCode]
+
+			render orderStatus as JSON
+		}
+		else
+		{
+			render (text: "Error Processing your request.Please try again!")
+		}
+	}
+
 
 	def showOrderCollectionDetails() {
 		def trackingId = params.trackingId
