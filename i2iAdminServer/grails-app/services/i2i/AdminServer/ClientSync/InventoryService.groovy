@@ -26,8 +26,9 @@ class InventoryService {
 	}
 	
 	def getBrandNameFromInventoryId(String inventoryId) {
+		println "getBrandNameFromInventoryId: "+ inventoryId
 		Inventory inventory = Inventory.findByInventoryId(inventoryId) //if we call with *.brandName it is giving [brandname] ??
-		String brandName = inventory.brandName
+		String brandName = inventory?.brandName
 //		println "brandname: "+brandName
 		return brandName
 	}

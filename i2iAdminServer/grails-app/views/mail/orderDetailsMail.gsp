@@ -25,18 +25,18 @@ Name: ${orderDetails.name }
 Address: 
 <br>
 ${orderDetails.addressLine1 }<br/>
-${orderDetails.addressLine2 }<br/>
+<g:if test="${orderDetails.addressLine2}">${orderDetails.addressLine2}<br/></g:if>
 ${orderDetails.circle }<br/>
 ${orderDetails.city }<br/>
 <br/>
 <%--<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">--%>
-<g:if test="${orderDetails.phoneNumber }">
-You could call ${orderDetails.name } on ${orderDetails.phoneNumber }
-</g:if>
-<br>
-<g:if test="${orderDetails.emailID }">
-Email: ${orderDetails.emailID }
-</g:if>
+<%--<g:if test="${orderDetails.phoneNumber }">--%>
+<%--You could call ${orderDetails.name } on ${orderDetails.phoneNumber }--%>
+<%--</g:if>--%>
+<%--<br>--%>
+<%--<g:if test="${orderDetails.emailID }">--%>
+<%--Email: ${orderDetails.emailID }--%>
+<%--</g:if>--%>
 <br>
 <g:if test="${orderDetailsList[0].orderStatus != Constants.ORDER_CANCELLED}">
 PLEASE NOTE: The customer expects you to accept the order soon. To accept the order, click <a href="${Constants.envLink+'ordersList' }">here</a><br>

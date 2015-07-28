@@ -1,6 +1,9 @@
 package i2i.AdminServer
 
 import static org.springframework.http.HttpStatus.*
+
+import java.awt.GraphicsConfiguration.DefaultBufferCapabilities;
+
 import grails.converters.JSON
 import grails.plugin.awssdk.AmazonWebService
 import groovy.json.JsonSlurper
@@ -96,14 +99,10 @@ class WebserviceController {
 					'quantity': 1]
 
 				render searchResult as JSON
-
-				//				render (view:"searchResult", model: [storeId:storeId, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle, quantity: 1])
-				//render (view:"searchList", model: [storesList:stores, availabilityFlag:availabilityFlag, brandId:brandId, inventoryId:inventoryId, brandName: searchTerm, circle: circle])
 			}
 			else{
 				def brandRequestData = ['brandName':searchTerm, 'circle': circle,'availabilityFlag':availabilityFlag]
 				render brandRequestData as JSON
-				//				redirect (controller:'brandRequestInfo', action:'index', params: [brandName: searchTerm, circle: circle])
 			}
 		}
 		else
@@ -120,7 +119,6 @@ class WebserviceController {
 			else{
 				def brandRequestData = ['brandName':searchTerm, 'circle': circle,'availabilityFlag':availabilityFlag]
 				render brandRequestData as JSON
-				//				redirect (controller:'brandRequestInfo', action:'index', params: [brandName: searchTerm, circle: circle])
 			}
 		}
 	}
@@ -149,40 +147,37 @@ class WebserviceController {
 			render (text: "Thanks for the information. We will inform you as per your contact details provided, as soon as the medicine is available")
 	}
 
-	def addItemToCart(){
-		println "add item: "+ params
-		String inventoryId = params.inventoryId
-		String storeId = params.storeId
-		BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
-		if(!brandOrdered) {
-			brandOrdered = new BrandOrdered()
-
-			brandOrdered.brandName = params.brandName
-			brandOrdered.inventoryId = params.inventoryId
-			brandOrdered.brandId = params.brandId
-			brandOrdered.storeId = params.storeId //FIXME store id is not unique to inventoryId
-
-			if(!brandOrdered.save(flush:true)) {
-				brandOrdered.errors.each { println "error saving brandOrdered: "+it }
-				render (text: "Error")
-				return
-			}
-			//			println "save brandOrdered success"
-		}
-
-		int quantity =  params.quantity.toInteger()
-		if(brandOrdered && brandOrdered.shoppingItem){
-			shoppingCartService.addToShoppingCart(brandOrdered, quantity)
-
-			render (text: "Success")
-		}
-		else
-			render (text: "Error")
-		//		if(params.placeOrderNow == '1')
-		//			redirect (controller: 'shoppingCart', action: 'showCartItems')
-		//		else
-		//			render (view:"/search/searchResult", model: [storeId:params.storeId, brandId:params.brandId, inventoryId:params.inventoryId, brandName: params.brandName, circle: params?.circle, quantity: params.quantity, disableAdd:'1'])
-	}
+//	def addItemToCart(){
+//		println "add item: "+ params
+//		String inventoryId = params.inventoryId
+//		String storeId = params.storeId
+//		BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
+//		if(!brandOrdered) {
+//			brandOrdered = new BrandOrdered()
+//
+//			brandOrdered.brandName = params.brandName
+//			brandOrdered.inventoryId = params.inventoryId
+//			brandOrdered.brandId = params.brandId
+//			brandOrdered.storeId = params.storeId //FIXME store id is not unique to inventoryId
+//
+//			if(!brandOrdered.save(flush:true)) {
+//				brandOrdered.errors.each { println "error saving brandOrdered: "+it }
+//				render (text: "Error")
+//				return
+//			}
+//			//			println "save brandOrdered success"
+//		}
+//
+//		int quantity =  params.quantity.toInteger()
+//		if(brandOrdered && brandOrdered.shoppingItem){
+//			shoppingCartService.addToShoppingCart(brandOrdered, quantity)
+//
+//			render (text: "Success")
+//		}
+//		else
+//			render (text: "Error")
+//	}
+	
 	//	def test(){
 	//		def restResponse = '[{"brandName": "ABANA", "inventoryId":"23386", "brandId":"", "storeId":"4", "quantity": 1},{"brandName": "DOLO 650", "inventoryId":"26376", "brandId":"", "storeId":"4", "quantity": 1}]'
 	//		println "restResponse: "+restResponse
@@ -193,116 +188,116 @@ class WebserviceController {
 	//		redirect (controller: 'webservice', action: 'uploadPrescriptionFile', params:[inputFilePath: inputFilePath])
 	//	}
 
-	def addItemsToCart(){
-		println "add item: "+ params
-		def restResponse = params.cartItemList
-		// Parse the response
-		def cartItems = new JsonSlurper().parseText( restResponse )
-
-		cartItems.each {
-			println it
-			boolean success = true
-			String inventoryId = it.inventoryId
-			String storeId = it.storeId
-			BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
-			if(!brandOrdered) {
-				brandOrdered = new BrandOrdered()
-
-				brandOrdered.brandName = it.brandName
-				brandOrdered.inventoryId = inventoryId
-				brandOrdered.brandId = it.brandId
-				brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
-
-				if(!brandOrdered.save(flush:true)) {
-					brandOrdered.errors.each { println "error saving brandOrdered: "+it }
-					//					render (text: "Error")
-					success = false
-				}
-			}
-
-			if(success){
-				int quantity =  it.quantity.toInteger()
-				if(brandOrdered && brandOrdered.shoppingItem){
-					shoppingCartService.addToShoppingCart(brandOrdered, quantity)
-					//				render (text: "Success")
-				}
-			}
-			//			else
-			//				render (text: "Error")
-		}
-		render (text: "Success")
-	}
-
-	def removeItemFromCart(){
-		String inventoryId = params.inventoryId
-		int qty = params.quantity.toInteger()
-
-		BrandOrdered brandOrdered = BrandOrdered.findByInventoryId(inventoryId)
-		if(brandOrdered && brandOrdered.shoppingItem){
-			//			def qty = shoppingCartService.getQuantity(brandOrdered.shoppingItem)
-			//			println "qty: "+ qty
-			shoppingCartService.removeFromShoppingCart(brandOrdered, qty)
-
-			render (text: "Success")
-		}
-		else
-			render (text: "Error")
-
-		//		redirect (controller: 'shoppingCart', action: 'showCartItems')
-	}
-
-	def showCartItems(){
-		//		println "in show cart: session: "+SessionUtils.getSession().id
-		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-
-		List cartItemMapList = []
-		cartItems.each{item ->
-			//			println "id: "+ item.id
-			def product = Shoppable.findByShoppingItem(item)
-			def name = product.toString()
-			//			println "item Name: "+ name
-			def iid = product.inventoryId
-			def qty = shoppingCartService.getQuantity(item)
-			Map nameQtyMap = [:]
-			nameQtyMap.put("item", name)
-			nameQtyMap.put("iId", iid)
-			nameQtyMap.put("qty", qty)
-			cartItemMapList.add(nameQtyMap)
-		}
-
-		render cartItemMapList as JSON
-		//		render(view:'showCartItemList', model:['cartItemMapList':cartItemMapList])
-	}
-
-	def changeCartItemQuantity(){
-		println "change quantity: "+ params
-		int qty =  params.quantity.toInteger()
-		String inventoryId = params.inventoryId
-		def shoppingCart = shoppingCartService.getShoppingCart()
-
-		if(shoppingCart){
-			def cartItems = shoppingCartService.getItems()
-			cartItems.each{item ->
-				def product = Shoppable.findByShoppingItem(item)
-				if(inventoryId == product.inventoryId){
-					def quantity = Quantity.findByShoppingCartAndShoppingItem(shoppingCart, item)
-					if (quantity) {
-						quantity.value = qty
-						quantity.save()
-						//						shoppingCart.save()
-					}
-				}
-			}
-		}
-
-		render (text: "Success") //redirect (controller: 'shoppingCart', action: 'showCartItems')
-	}
-
-	def clearShoppingCart(){
-		//		def session = SessionUtils.getSession()
-		shoppingCartService.emptyShoppingCart()
-		render (text: "Success")
-	}
+//	def addItemsToCart(){
+//		println "add item: "+ params
+//		def restResponse = params.cartItemList
+//		// Parse the response
+//		def cartItems = new JsonSlurper().parseText( restResponse )
+//
+//		cartItems.each {
+//			println it
+//			boolean success = true
+//			String inventoryId = it.inventoryId
+//			String storeId = it.storeId
+//			BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
+//			if(!brandOrdered) {
+//				brandOrdered = new BrandOrdered()
+//
+//				brandOrdered.brandName = it.brandName
+//				brandOrdered.inventoryId = inventoryId
+//				brandOrdered.brandId = it.brandId
+//				brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
+//
+//				if(!brandOrdered.save(flush:true)) {
+//					brandOrdered.errors.each { println "error saving brandOrdered: "+it }
+//					//					render (text: "Error")
+//					success = false
+//				}
+//			}
+//
+//			if(success){
+//				int quantity =  it.quantity.toInteger()
+//				if(brandOrdered && brandOrdered.shoppingItem){
+//					shoppingCartService.addToShoppingCart(brandOrdered, quantity)
+//					//				render (text: "Success")
+//				}
+//			}
+//			//			else
+//			//				render (text: "Error")
+//		}
+//		render (text: "Success")
+//	}
+//
+//	def removeItemFromCart(){
+//		String inventoryId = params.inventoryId
+//		int qty = params.quantity.toInteger()
+//
+//		BrandOrdered brandOrdered = BrandOrdered.findByInventoryId(inventoryId)
+//		if(brandOrdered && brandOrdered.shoppingItem){
+//			//			def qty = shoppingCartService.getQuantity(brandOrdered.shoppingItem)
+//			//			println "qty: "+ qty
+//			shoppingCartService.removeFromShoppingCart(brandOrdered, qty)
+//
+//			render (text: "Success")
+//		}
+//		else
+//			render (text: "Error")
+//
+//		//		redirect (controller: 'shoppingCart', action: 'showCartItems')
+//	}
+//
+//	def showCartItems(){
+//		//		println "in show cart: session: "+SessionUtils.getSession().id
+//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+//
+//		List cartItemMapList = []
+//		cartItems.each{item ->
+//			//			println "id: "+ item.id
+//			def product = Shoppable.findByShoppingItem(item)
+//			def name = product.toString()
+//			//			println "item Name: "+ name
+//			def iid = product.inventoryId
+//			def qty = shoppingCartService.getQuantity(item)
+//			Map nameQtyMap = [:]
+//			nameQtyMap.put("item", name)
+//			nameQtyMap.put("iId", iid)
+//			nameQtyMap.put("qty", qty)
+//			cartItemMapList.add(nameQtyMap)
+//		}
+//
+//		render cartItemMapList as JSON
+//		//		render(view:'showCartItemList', model:['cartItemMapList':cartItemMapList])
+//	}
+//
+//	def changeCartItemQuantity(){
+//		println "change quantity: "+ params
+//		int qty =  params.quantity.toInteger()
+//		String inventoryId = params.inventoryId
+//		def shoppingCart = shoppingCartService.getShoppingCart()
+//
+//		if(shoppingCart){
+//			def cartItems = shoppingCartService.getItems()
+//			cartItems.each{item ->
+//				def product = Shoppable.findByShoppingItem(item)
+//				if(inventoryId == product.inventoryId){
+//					def quantity = Quantity.findByShoppingCartAndShoppingItem(shoppingCart, item)
+//					if (quantity) {
+//						quantity.value = qty
+//						quantity.save()
+//						//						shoppingCart.save()
+//					}
+//				}
+//			}
+//		}
+//
+//		render (text: "Success") //redirect (controller: 'shoppingCart', action: 'showCartItems')
+//	}
+//
+//	def clearShoppingCart(){
+//		//		def session = SessionUtils.getSession()
+//		shoppingCartService.emptyShoppingCart()
+//		render (text: "Success")
+//	}
 
 
 	def uploadPrescriptionFile(){
@@ -331,17 +326,15 @@ class WebserviceController {
 			//				println "file name: "+filePath
 			Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(Constants.amazonS3Bucket,filePath,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
 
-			while (!upload.done) {
+//			while (!upload.done) {
 				//					println "Transfer: $upload.description"
 				//					println "  - State: $upload.state"
 				//					println "  - Progress: $upload.progress.bytesTransfered"
 				//					// Do work while we wait for our upload to complete…
 				//					Thread.sleep(1000)
-			}
-
-			//				println "upload success: "+ upload
+//			}
+			
 			String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
-			//				println "file link: "+fileLocation
 			def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
 
 			if(attachmentId == 0){
@@ -349,7 +342,6 @@ class WebserviceController {
 				return
 			}
 			else{
-				//					render (text:message(code: 'fileAttachment.saved.success.message', default: 'Your prescription has been uploaded successfully!'))
 				def fileAttachment = ['attachmentId':attachmentId]
 				render fileAttachment as JSON
 			}
@@ -358,85 +350,83 @@ class WebserviceController {
 			render (text:message(code: 'fileAttachment.not.saved.message', default: 'Error in processing your request. Please try again!'))
 			println "Exception: "+exp
 		}
-		//		}
 	}
 
-	//	@Secured(['ROLE_CONSUMER'])
-	def showDeliveryDetails() {
-		def attachmentId = params.attachmentId
-		//		println "ODC properties: "+orderDetailsCommand.properties
-		//println "PARAMS: "+orderDetailsCommand.properties
-		OrderCollectionCommand orderDetails = new OrderCollectionCommand()
-		orderDetails.circle = Constants.circleArray[0] //FIXME
-		orderDetails.city = 'Mumbai'
-		orderDetails.state = 'Maharastra'
-		orderDetails.country = 'India'
-
-		def deliveryDetails = [
-			'orderDetails' : orderDetails,
-			'attachmentId':attachmentId]
-
-		render deliveryDetails as JSON
-	}
-
-	def saveOrder(OrderCollectionCommand orderCollCommand) {
-		println "ODC: "+orderCollCommand.properties
-		//		println "params: "+params
-
-		//FIXME: do this in gsp
-		orderCollCommand.offerCode = ordersService.checkOfferCode(orderCollCommand.offerCode)
-
-		if (orderCollCommand.hasErrors()) {
-			orderCollCommand.errors.each { println it }
-			render (text: "Enter valid information")
-			return
-		}
-
-		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
-		//		println "orderRefId: "+orderRefId
-		if(!orderRefId) {
-			render (text: "Enter valid information")
-			return
-			//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
-		}
-
-		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-		if(cartItems.size() < 1){
-			render (text: "No items in the cart")
-			return
-		}
-
-		List orderDetailsList = []
-		cartItems.each{item ->
-			//			println "id: "+ item.id
-			def product = Shoppable.findByShoppingItem(item)
-			def qty = shoppingCartService.getQuantity(item)
-			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
-			orderDetailsList.add(orderDetails)
-		}
-
-		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
-
-		shoppingCartService.emptyShoppingCart()
-		//		def checkedOutItems = shoppingCartService.checkOut()
-		//		println "size: "+checkedOutItems.size()
-
-		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
-		if(orderCollection) {
-			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			//			println "items count: "+orderList.size()
-			List listOrderDetails = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
-			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-
-			def orderStatus = ['orderDetailsList':listOrderDetails, 'patient':patient, 'trackingId': orderRefId, 'offerCode':orderCollCommand.offerCode]
-
-			render orderStatus as JSON
-		}
-		else
-		{
-			render (text: "Error Processing your request.Please try again!")
-		}
-	}
+//	def showDeliveryDetails() {
+//		def attachmentId = params.attachmentId
+//		//		println "ODC properties: "+orderDetailsCommand.properties
+//		//println "PARAMS: "+orderDetailsCommand.properties
+//		OrderCollectionCommand orderDetails = new OrderCollectionCommand()
+//		orderDetails.circle = Constants.circleArray[0] //FIXME
+//		orderDetails.city = 'Mumbai'
+//		orderDetails.state = 'Maharastra'
+//		orderDetails.country = 'India'
+//
+//		def deliveryDetails = [
+//			'orderDetails' : orderDetails,
+//			'attachmentId':attachmentId]
+//
+//		render deliveryDetails as JSON
+//	}
+//
+//	def saveOrder(OrderCollectionCommand orderCollCommand) {
+//		println "ODC: "+orderCollCommand.properties
+//		//		println "params: "+params
+//
+//		//FIXME: do this in gsp
+//		orderCollCommand.offerCode = ordersService.checkOfferCode(orderCollCommand.offerCode)
+//
+//		if (orderCollCommand.hasErrors()) {
+//			orderCollCommand.errors.each { println it }
+//			render (text: "Enter valid information")
+//			return
+//		}
+//
+//		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
+//		//		println "orderRefId: "+orderRefId
+//		if(!orderRefId) {
+//			render (text: "Enter valid information")
+//			return
+//			//			redirect(controller: 'patientProfile', action: 'showDeliveryDetails', params:params)
+//		}
+//
+//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
+//		if(cartItems.size() < 1){
+//			render (text: "No items in the cart")
+//			return
+//		}
+//
+//		List orderDetailsList = []
+//		cartItems.each{item ->
+//			//			println "id: "+ item.id
+//			def product = Shoppable.findByShoppingItem(item)
+//			def qty = shoppingCartService.getQuantity(item)
+//			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
+//			orderDetailsList.add(orderDetails)
+//		}
+//
+//		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
+//
+//		shoppingCartService.emptyShoppingCart()
+//		//		def checkedOutItems = shoppingCartService.checkOut()
+//		//		println "size: "+checkedOutItems.size()
+//
+//		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
+//		if(orderCollection) {
+//			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
+//			//			println "items count: "+orderList.size()
+//			List listOrderDetails = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
+//			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
+//
+//			def orderStatus = ['orderDetailsList':listOrderDetails, 'patient':patient, 'trackingId': orderRefId, 'offerCode':orderCollCommand.offerCode]
+//
+//			render orderStatus as JSON
+//		}
+//		else
+//		{
+//			render (text: "Error Processing your request.Please try again!")
+//		}
+//	}
 
 	def addItemsToCartAndPlaceOrder(){
 		println "add item: "+ params
@@ -448,7 +438,6 @@ class WebserviceController {
 			render (text: "No items in the cart")
 			return
 		}
-		//		render (text: "Success")
 
 		OrderCollectionCommand orderCollCommand = new OrderCollectionCommand()
 		orderCollCommand.offerCode = params.offerCode
@@ -480,66 +469,35 @@ class WebserviceController {
 			return
 		}
 
-		//		def cartItems = shoppingCartService.getItems()//com.metasieve.shoppingcart.Shoppable.list()
-		//		if(!cartItems || (cartItems && cartItems.size() < 1) ){
-		//			render (text: "No items in the cart")
-		//			return
-		//		}
 		List orderDetailsList = []
 		cartItems.each {
 			println it
-			//			boolean success = true
 			String inventoryId = it.inventoryId
 			String storeId = it.storeId
-			//			BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
-			//			if(!brandOrdered) {
 			BrandOrdered brandOrdered = new BrandOrdered()
 
-			brandOrdered.brandName = it.brandName
+			brandOrdered.brandName = brandDatabaseService.getBrandNameFromId(it.brandId, inventoryId)//it.brandName
 			brandOrdered.inventoryId = inventoryId
 			brandOrdered.brandId = it.brandId
 			brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
 
-			//				if(!brandOrdered.save(flush:true)) {
-			//					brandOrdered.errors.each { println "error saving brandOrdered: "+it }
-			//					//					render (text: "Error")
-			//					success = false
-			//				}
-			//			}
-
-			//			if(success){
 			int quantity =  it.quantity.toInteger()
-			if(brandOrdered){
-				//					shoppingCartService.addToShoppingCart(brandOrdered, quantity)
+			if(brandOrdered && quantity){
 				OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(brandOrdered, quantity, orderCollCommand.orderCollectionId)
 				orderDetailsList.add(orderDetails)
 			}
-			//			}
-			//			else
-			//				render (text: "Error")
 		}
 
 		if(!orderDetailsList || (orderDetailsList && orderDetailsList.size() < 1) ){
 			render (text: "Invalid input")
 			return
 		}
-		//		cartItems.each{item ->
-		//			def product = Shoppable.findByShoppingItem(item)
-		//			def qty = shoppingCartService.getQuantity(item)
-		//			OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(product, qty, orderCollCommand.orderCollectionId)
-		//			orderDetailsList.add(orderDetails)
-		//		}
 
 		orderCollectionService.sendNewOrderEmail(orderCollCommand, orderDetailsList)
-
-		//		shoppingCartService.emptyShoppingCart()
-		//		def checkedOutItems = shoppingCartService.checkOut()
-		//		println "size: "+checkedOutItems.size()
 
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(orderRefId)
 		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			//			println "items count: "+orderList.size()
 			List listOrderDetails = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
 
@@ -557,20 +515,12 @@ class WebserviceController {
 	def showOrderCollectionDetails() {
 		def trackingId = params.trackingId
 		def offerCode = params.offerCode
-		//		def orderStatus = ordersService.getOrderStatusFromOrderId(orderId)
 
-		//Orders order = ordersService.getOrderFromOrderId(uId)
 		OrderCollection orderCollection = orderCollectionService.getOrderFromRefId(trackingId?.toUpperCase())
 		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
-			//			println "items count: "+orderList.size()
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
-			//			OrderStatusCommand orderStatusCommand = ordersService.populateOrderStatusFromOrder(order)
-			//			orderStatusCommand.trackingId = uId
-			//			orderStatusCommand.offerCode = offerCode
-			//			println "OrderStatusCommand: "+orderStatusCommand.properties
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-
 			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
 
 			render orderStatus as JSON
@@ -621,7 +571,6 @@ class WebserviceController {
 				render(text: "Error in proccessing your request. Please try again later!")
 			else{
 				render(text: "Success")
-				//				redirect(controller: 'orderCollection', action: 'showOrderCollectionDetails', params:[trackingId: trackingId])
 			}
 		}
 		else
@@ -643,12 +592,6 @@ class WebserviceController {
 			render (text: "Error in processing your request. Please try again!")
 		else
 			render (text: "Your feedback has been recorded. Thanks!")
-
-		//		request.withFormat {
-		//			form multipartForm {
-		//				render (text: "Your feedback has been recorded. Thanks!")
-		//			}
-		//		}
 	}
 
 	def getCircleArray(){
@@ -678,6 +621,7 @@ class WebserviceController {
 	}
 
 	def isAppUpToDate(){
+		def appVersion = params.appVersion
 		return 1
 	}
 

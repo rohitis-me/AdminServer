@@ -20,7 +20,7 @@ class Constants {
 	public static final String[] circleArray_Mumbai = ["Bandra", "SantaCruz", "Khar"]
 
 	public static final String supportEmail="support@i2itech.co.in"//for feedback
-	public static final String adminEmail="rohits.iitm@gmail.com"//for orders
+	public static final String adminEmail="rohits.iitm@gmail.com"+ ","+ "adhirajalai@gmail.com"+","+ "chandu@i2itech.co.in"//for orders
 	
 	public static final String dateFormat="dd-MM-yyyy, h:mm a"
 	
@@ -63,5 +63,5 @@ class Constants {
 	public static final String bucket_PROD='prodi2i'
 	public static String amazonS3Bucket =''
 	
-	public static final String helpline = '+91-8452941303'
+	public static final String helpline = '+91-9930686044'
 }

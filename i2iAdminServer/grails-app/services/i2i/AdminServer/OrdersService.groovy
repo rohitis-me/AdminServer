@@ -48,11 +48,11 @@ class OrdersService {
 	}
 
 	def populateOrderDetailsFromOrder(Orders order) {
-		//		println "populateOrderDetailsFromOrder ORDER: "+order.properties
+		println "populateOrderDetailsFromOrder ORDER: "+order.properties
 		//		PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
 		//		println "populateOrderDetailsFromOrder PATIENT: "+patient.properties
 		OrderDetailsCommand orderDetails = new OrderDetailsCommand()// populateOrderDetailsFromPatientProfile(patient)
-		//		println "ORDERDETAILS: "+orderDetails.properties
+//		println "ORDERDETAILS: "+orderDetails.properties
 		orderDetails.brandId = order.brandId
 		orderDetails.inventoryId = order.inventoryId
 		orderDetails.storeId = order.storeId
@@ -236,6 +236,7 @@ class OrdersService {
 	}
 
 	def saveOrderFromBrandOrdered(BrandOrdered brandOrdered, int quantity, Long orderCollectionId){
+		println "saveOrderFromBrandOrdered: "+ brandOrdered.properties
 		Orders order = new Orders()
 		order.brandId = brandOrdered.brandId
 		order.inventoryId = brandOrdered.inventoryId

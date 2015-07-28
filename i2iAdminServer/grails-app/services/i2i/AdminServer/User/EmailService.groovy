@@ -51,7 +51,7 @@ class EmailService {
 					to toAdd
 					from "i2i Support  <support@i2itech.co.in>"
 					if(grailsApplication.config.env == Constants.env_PROD)
-					bcc Constants.adminEmail, "adhirajalai@gmail.com", "chandu@i2itech.co.in"
+					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/orderMail",
 					model:[orderCollCommand: orderCollCommand, orderDetails:orderDetails])
@@ -88,7 +88,7 @@ class EmailService {
 					to toAdd
 					from "i2i Support  <support@i2itech.co.in>"
 					if(grailsApplication.config.env == Constants.env_PROD)
-					bcc Constants.adminEmail, "adhirajalai@gmail.com", "chandu@i2itech.co.in"
+					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/orderDetailsMail", model:[orderDetails:orderCollCommand, orderDetailsList:orderDetailsList])
 				}
@@ -124,7 +124,7 @@ class EmailService {
 					to toAdd
 					from "i2i Support  <support@i2itech.co.in>"
 					if(grailsApplication.config.env == Constants.env_PROD)
-					bcc Constants.adminEmail, "adhirajalai@gmail.com", "chandu@i2itech.co.in"
+					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/trackOrderDetailsMail",
 						model:[orderDetails:orderCollCommand,orderDetailsList:orderDetailsList, storeInstance: store])
@@ -167,7 +167,7 @@ class EmailService {
 					to toAdd
 					from "i2i Support  <support@i2itech.co.in>"
 					if(grailsApplication.config.env == Constants.env_PROD)
-					bcc Constants.adminEmail, "adhirajalai@gmail.com", "chandu@i2itech.co.in"
+					bcc Constants.adminEmail
 					subject mailSubject
 					body( view:"/mail/trackOrderMail",
 					model:[orderDetails:orderDetails, orderCollCommand:orderCollCommand])

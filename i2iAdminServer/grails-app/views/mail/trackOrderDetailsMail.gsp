@@ -34,27 +34,32 @@ Expected delivery time: <g:formatDate date="${orderInstance.estimatedDeliveryTim
 </g:each>
 Order Tracking Id: ${orderDetails.orderRefId}
 <br/>
+<g:if test="${orderDetailsList[0].orderStatus == Constants.ORDER_PLACED}">
+<p>
+You will receive a confirmation call from Pillocate within 15 min to confirm the price and discount you will receive.
+</p>
+</g:if>
+<br/>
 <h2>Delivery Address:</h2>
 <p>
 ${orderDetails.name }<br>
 ${orderDetails.addressLine1 }<br>
-${orderDetails.addressLine2 }<br>
+<g:if test="${orderDetails.addressLine2}">${orderDetails.addressLine2 }<br></g:if>
 ${orderDetails.circle }<br>
 ${orderDetails.city }<br>
 <br>
 
 
 <g:if test="${orderDetailsList[0].orderStatus != Constants.ORDER_CANCELLED}"><p>
-<g:if test="${storeInstance && storeInstance?.phoneNumber}">
-<h2>Seller Details</h2>
-<%--<g:if test="${orderDetails.orderStatus != Constants.ORDER_REJECTED}">--%>
-Please contact seller at ${storeInstance.phoneNumber }
-</g:if>
+<%--<g:if test="${storeInstance && storeInstance?.phoneNumber}">--%>
+<%--<h2>Seller Details</h2>--%>
+<%--Please contact seller at ${storeInstance.phoneNumber }--%>
+<%--</g:if>--%>
 
-<br>
+<%--<br>--%>
 Track your order status <a href="${Constants.envLink+'ordersStatus?trackingId='+orderDetails.orderRefId }">here</a><br>
-</p></g:if>
-
+</g:if>
+</p>
 <p>
 <i>Regards,</i><br>
 Team Pillocate
