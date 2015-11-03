@@ -3,6 +3,7 @@ package i2i.AdminServer
 import static org.springframework.http.HttpStatus.*
 
 import java.awt.GraphicsConfiguration.DefaultBufferCapabilities;
+import java.lang.reflect.Type
 
 import grails.converters.JSON
 import grails.plugin.awssdk.AmazonWebService
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
+import com.google.gson.reflect.TypeToken
 import com.metasieve.shoppingcart.Quantity
 import com.metasieve.shoppingcart.SessionUtils
 import com.metasieve.shoppingcart.Shoppable
@@ -40,6 +42,7 @@ class WebserviceController {
 	PatientProfileService patientProfileService
 	AmazonWebService amazonWebService
 	FileAttachmentService fileAttachmentService
+	AvailabilityService availabilityService
 
 	def index() {
 	}
@@ -638,5 +641,23 @@ class WebserviceController {
 
 		render(text: "Success")
 	}
+//PoS webservices
+
+	def updateAvailabilityData() {
+		String availabilityDataJsonList= params.availabilityList
+		String lastUpdatedTimeStamp = params.lastUpdatedTimeStamp
+		
+		List availabilityList = new ArrayList<Availability>()
+		
+		Type availabilityDataType = new TypeToken<List<Availability>>(){}.getType()
+		def gson = gsonBuilder.create()
+		availabilityList = gson.fromJson(availabilityDataJsonList, availabilityDataType)
+		
+		int status = availabilityService.updateAvailabilityData(availabilityList)
+		
+		render(text:status)
+		
+	}
+	
 
 }

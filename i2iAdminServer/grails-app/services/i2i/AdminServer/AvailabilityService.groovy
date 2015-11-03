@@ -153,4 +153,29 @@ class AvailabilityService {
 
 		return inventoryAvailabilityList
 	}
+	
+	def updateAvailabilityData(ArrayList<Availability> availabilityList) {
+		String storeId
+		String brandId
+		String inventoryId
+		Availability availability
+		availabilityList.each {item->
+			storeId = item.storeId
+			brandId = item.brandId
+			inventoryId = item.inventoryId
+			availability = Availability.findByStoreIdAndBrandId(storeId, brandId)
+			if(availability.isNull()) {
+				availability = Availability.findByStoreIdAndInventoryId(storeId, brandId)
+				if(availability.isNull()) {
+					availability = new Availability()
+				}
+			}
+			availability.properties = item
+			if(!availability.save(flush:true)) {
+				availability.errors.each {
+					println "[updateAvailabilityData] error saving availability: "+it					
+				}
+			}
+		}
+	}
 }
