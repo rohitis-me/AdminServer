@@ -4,6 +4,7 @@
 <%@ page import="i2i.AdminServer.OrderCollectionCommand" %>
 
 <div>
+<p>Hi ${orderDetails.name},</p>
 <g:each in="${orderDetailsList}" status="i" var="orderInstance">
 <p>
 <g:if test="${orderInstance.orderStatus == Constants.ORDER_ACCEPTED && i==0}">
@@ -20,18 +21,54 @@ Thanks for ordering at pillocate! Your order has been rejected as stock is not a
 We will Notify As soon as stock is available. Please find your order details below,
 </g:elseif>
 <g:elseif test="${i==0}">
-Thanks for ordering at pillocate! Please find your order details below,
+Thanks for ordering with pillocate! Please find your order details below,
 </g:elseif>
 </p>
-<p> ${i+1}.
-Order Name: ${orderInstance.brandName }<br>
-<%--Tracking Id: ${orderInstance.trackingId }<br>--%>
-Quantity: ${orderInstance.quantity }
-<g:if test="${orderInstance.orderStatus > Constants.ORDER_ACCEPTED}">
-Expected delivery time: <g:formatDate date="${orderInstance.estimatedDeliveryTime}" format="${Constants.dateFormat }" /> 
-</g:if>
-</p>
 </g:each>
+<div class="form-horizontal">
+						<div class="panel panel-default order-panel">
+							<table class="table table-hover table-striped">
+								<thead class="bg-default bg-primary">
+									<tr>
+										<th>S.No.</th>
+										<th>Item Name</th>
+										<th>Quantity</th>
+<%--										<th>Remarks</th>--%>
+										<th>
+										<g:if test="${orderInstance.orderStatus > Constants.ORDER_ACCEPTED}">
+										Expected Delivery Time</g:if>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+<%--									<g:each in="${cartItemMapList}" status="i" var="itemInstance">--%>
+									<g:each in="${orderDetailsList}" status="i" var="orderInstance">
+									
+<%--										<g:set var="quantity" value="${orderInstance['qty']}" />--%>
+<%--										<g:set var="inventoryId" value="${orderInstance['iId']}" />--%>
+										
+<%--										<p><table> ${i+1}.</table>--%>
+										<tr class='even'>
+											<td>
+												i+1
+											</td>
+											<td>
+												${orderInstance.brandName }
+											</td>
+											<td>
+												${orderInstance.quantity }
+											</td>
+											<td>
+<g:if test="${orderInstance.orderStatus > Constants.ORDER_ACCEPTED}">
+<g:formatDate date="${orderInstance.estimatedDeliveryTime}" format="${Constants.dateFormat }" /> 
+</g:if></td>
+										</tr>
+									</g:each>
+								</tbody>
+							</table>
+							<br />
+</div></div>
+
 Order Tracking Id: ${orderDetails.orderRefId}
 <br/>
 <g:if test="${orderDetailsList[0].orderStatus == Constants.ORDER_PLACED}">
