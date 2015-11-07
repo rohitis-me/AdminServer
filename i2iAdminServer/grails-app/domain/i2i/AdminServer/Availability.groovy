@@ -6,6 +6,7 @@ class Availability {
 	String inventoryId
 	Byte availabilityIndex
 	Long availabilityId
+	Long lastUpdatedTimeStamp
 
     static constraints = {
 		storeId nullable:false, blank:false,size:1..100

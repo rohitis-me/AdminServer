@@ -643,9 +643,9 @@ class WebserviceController {
 	}
 //PoS webservices
 
+	// parameter: availabilityList json
 	def updateAvailabilityData() {
 		String availabilityDataJsonList= params.availabilityList
-		String lastUpdatedTimeStamp = params.lastUpdatedTimeStamp
 		
 		List availabilityList = new ArrayList<Availability>()
 		
@@ -657,6 +657,13 @@ class WebserviceController {
 		
 		render(text:status)
 		
+	}
+	
+	//param: storeId
+	def getLastUpdatedAvailabilityTimeStamp() {
+		def storeId = params.storeId
+		def lastUpdatedTimeStamp = availabilityService.getLastUpdatedAvailabilityTimeStamp(storeId)
+		render(text:lastUpdatedTimeStamp)
 	}
 	
 

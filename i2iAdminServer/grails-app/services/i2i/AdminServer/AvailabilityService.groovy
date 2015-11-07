@@ -158,7 +158,7 @@ class AvailabilityService {
 		String storeId
 		String brandId
 		String inventoryId
-		Availability availability
+		Availability availabilityo
 		availabilityList.each {item->
 			storeId = item.storeId
 			brandId = item.brandId
@@ -177,5 +177,14 @@ class AvailabilityService {
 				}
 			}
 		}
+	}
+	
+	def getLastUpdatedAvailabilityTimeStamp(String storeId) {
+		def availabilityList = Availability.findAllByStoreId(storeId,[sort:"lastUpdatedTimeStamp",order:"desc", max:1])
+		if(availabilityList.size()>0) {
+			return availabilityList.get(0).lastUpdatedTimeStamp
+		}
+		else
+		return 0
 	}
 }
