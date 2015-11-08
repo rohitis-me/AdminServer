@@ -158,25 +158,27 @@ class AvailabilityService {
 		String storeId
 		String brandId
 		String inventoryId
-		Availability availabilityo
+		Availability availability
 		availabilityList.each {item->
 			storeId = item.storeId
 			brandId = item.brandId
 			inventoryId = item.inventoryId
-			availability = Availability.findByStoreIdAndBrandId(storeId, brandId)
-			if(availability.isNull()) {
-				availability = Availability.findByStoreIdAndInventoryId(storeId, brandId)
-				if(availability.isNull()) {
+			if(brandId)
+				availability = Availability.findByStoreIdAndBrandId(storeId, brandId)
+			else if(inventoryId)
+				availability = Availability.findByStoreIdAndInventoryId(storeId, inventoryId)
+			if(!availability) {
 					availability = new Availability()
-				}
 			}
 			availability.properties = item
 			if(!availability.save(flush:true)) {
 				availability.errors.each {
 					println "[updateAvailabilityData] error saving availability: "+it					
 				}
+				return 0
 			}
 		}
+		return 1
 	}
 	
 	def getLastUpdatedAvailabilityTimeStamp(String storeId) {

@@ -181,15 +181,18 @@ class WebserviceController {
 //			render (text: "Error")
 //	}
 	
-	//	def test(){
-	//		def restResponse = '[{"brandName": "ABANA", "inventoryId":"23386", "brandId":"", "storeId":"4", "quantity": 1},{"brandName": "DOLO 650", "inventoryId":"26376", "brandId":"", "storeId":"4", "quantity": 1}]'
-	//		println "restResponse: "+restResponse
-	//
-	//		redirect (controller: 'webservice', action: 'addItemsToCart', params:[cartItemList: restResponse])
-
-	//		String inputFilePath = 'C:/Users/ChandU/Pictures/12 May/IMG_123.jpg'
-	//		redirect (controller: 'webservice', action: 'uploadPrescriptionFile', params:[inputFilePath: inputFilePath])
-	//	}
+	def test(){
+//			def restResponse = '[{"brandName": "ABANA", "inventoryId":"23386", "brandId":"", "storeId":"4", "quantity": 1},{"brandName": "DOLO 650", "inventoryId":"26376", "brandId":"", "storeId":"4", "quantity": 1}]'
+//			println "restResponse: "+restResponse
+//	
+//			redirect (controller: 'webservice', action: 'addItemsToCart', params:[cartItemList: restResponse])
+//
+//			String inputFilePath = 'C:/Users/ChandU/Pictures/12 May/IMG_123.jpg'
+//			redirect (controller: 'webservice', action: 'uploadPrescriptionFile', params:[inputFilePath: inputFilePath])
+		
+		String availabilityList = '[{"storeId": "1", "inventoryId":"1", "brandId":"", "availabilityIndex": 2, "availabilityId":1, "lastUpdatedTimeStamp":0},{"storeId": "1", "inventoryId":"2", "brandId":"", "availabilityIndex": 2, "availabilityId":2, "lastUpdatedTimeStamp":0}]'
+		redirect (controller: 'webservice', action: 'updateAvailabilityData', params:[availabilityList: availabilityList])
+		}
 
 //	def addItemsToCart(){
 //		println "add item: "+ params
@@ -647,11 +650,11 @@ class WebserviceController {
 	def updateAvailabilityData() {
 		String availabilityDataJsonList= params.availabilityList
 		
-		List availabilityList = new ArrayList<Availability>()
-		
-		Type availabilityDataType = new TypeToken<List<Availability>>(){}.getType()
-		def gson = gsonBuilder.create()
-		availabilityList = gson.fromJson(availabilityDataJsonList, availabilityDataType)
+		//List availabilityList = new ArrayList<Availability>()
+		def availabilityList = new JsonSlurper().parseText( availabilityDataJsonList )
+		//Type availabilityDataType = new TypeToken<List<Availability>>(){}.getType()
+		//def gson = gsonBuilder.create()
+		//availabilityList = gson.fromJson(availabilityDataJsonList, availabilityDataType)
 		
 		int status = availabilityService.updateAvailabilityData(availabilityList)
 		
