@@ -170,6 +170,8 @@ class AvailabilityService {
 			if(!availability) {
 					availability = new Availability()
 			}
+			//FIXME - Next line 
+			item.availabilityId = availability.availabilityId
 			availability.properties = item
 			if(!availability.save(flush:true)) {
 				availability.errors.each {
