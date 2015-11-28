@@ -1,10 +1,6 @@
 package i2i.AdminServer
 
 import static org.springframework.http.HttpStatus.*
-
-import java.awt.GraphicsConfiguration.DefaultBufferCapabilities;
-import java.lang.reflect.Type
-
 import grails.converters.JSON
 import grails.plugin.awssdk.AmazonWebService
 import groovy.json.JsonSlurper
@@ -22,10 +18,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import com.amazonaws.services.s3.model.*
 import com.amazonaws.services.s3.transfer.*
-import com.google.gson.reflect.TypeToken
-import com.metasieve.shoppingcart.Quantity
 import com.metasieve.shoppingcart.SessionUtils
-import com.metasieve.shoppingcart.Shoppable
 import com.metasieve.shoppingcart.ShoppingCartService
 
 class WebserviceController {
@@ -43,7 +36,8 @@ class WebserviceController {
 	AmazonWebService amazonWebService
 	FileAttachmentService fileAttachmentService
 	AvailabilityService availabilityService
-
+	def springSecurityService
+	
 	def index() {
 	}
 
@@ -81,6 +75,8 @@ class WebserviceController {
 		//FIXME filter stores with circle also||get brandId against inventoryId and search for all stores where it is available
 		if(inventoryId || brandId){
 			//FIXME: not scalable. Else condition does not use circle
+			BrandDatabase brand = brandDatabaseService.getBrandDataFromId(brandId, inventoryId)
+			
 			List stores
 			if(inventoryId)
 				stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(inventoryId, circle)
@@ -97,6 +93,10 @@ class WebserviceController {
 					'brandId':brandId,
 					'inventoryId':inventoryId,
 					'brandName': searchTerm,
+					'strength': brand?.strength,
+					'noOfUnits':brand?.noOfUnits,
+					'form':brand?.form,
+					'mrp':brand?.mrp,
 					'circle': circle,
 					'deliveryHours':deliveryHours,
 					'quantity': 1]
@@ -104,7 +104,14 @@ class WebserviceController {
 				render searchResult as JSON
 			}
 			else{
-				def brandRequestData = ['brandName':searchTerm, 'circle': circle,'availabilityFlag':availabilityFlag]
+				def brandRequestData = [
+					'brandName':searchTerm, 
+					'strength': brand?.strength,
+					'noOfUnits':brand?.noOfUnits,
+					'form':brand?.form,
+					'mrp':brand?.mrp,
+					'circle': circle,
+					'availabilityFlag':availabilityFlag]
 				render brandRequestData as JSON
 			}
 		}
@@ -126,6 +133,32 @@ class WebserviceController {
 		}
 	}
 
+	def getStoresWhereBrandIsAvailable(){
+		String circle = params.circle
+		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
+		String brandId = params.brandId
+		String inventoryId = params.inventoryId
+		
+		List stores
+		if(inventoryId)
+			stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(inventoryId, circle)
+		else if(brandId)
+			stores = searchService.getListOfStoresWhereBrandIsAvailable(brandId)
+		if(stores){
+			List storeMapList = []
+			stores.each {
+					Map storeMap = [:]
+					storeMap.put("storeId", it.storeId)
+					storeMap.put("storeName", it.storeName)
+					storeMapList.add(storeMap)
+			}
+
+			render storeMapList as JSON
+		}
+		else 
+			render (text: "Currently this Brand is not available with any seller")
+	}
+	
 	def requestNewBrand(BrandRequestCommand brandRequestCommand){
 		println "BRC: "+brandRequestCommand.properties
 
@@ -643,6 +676,10 @@ class WebserviceController {
 		}
 
 		render(text: "Success")
+	}
+	
+	def checkUserLogin(){
+		//springSecurityService.
 	}
 //PoS webservices
 

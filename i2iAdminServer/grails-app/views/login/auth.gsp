@@ -35,7 +35,9 @@
 									<p style="color: red;">${flash.message}</p>
 								</div>
 							</g:if>
+<%--							${postUrl}--%>
 							<form action='${postUrl}' method='POST' id='loginForm' name="loginForm">
+								<g:set var="Source" value="WebApp" scope="session" />
 								<div class="form-group">
 									<span class="input-icon"> <input class="form-control"
 										placeholder="E-mail address"

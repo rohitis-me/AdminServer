@@ -25,6 +25,27 @@ class SearchController {
 		//		if(!session.circle)
 		//			redirect (controller:'search', action:'showLocationPage')
 		println "New session: "+Utility.getDateTimeInIST().getTime().toString()
+		
+//		
+//		response.setHeader('Source', 'IONIC')
+		
+//		request.headerNames.each{
+//			println it
+//		}
+//		
+//		def source = request.getHeader("Content-Type")
+//		println "source"+ source
+		
+			
+//		def http = new HTTPBuilder( 'http://localhost:8080/i2iAdminServer/search' )
+//		http.request( POST, JSON ) { req ->
+//			 body = [q:'groovy']
+//			 headers.'User-Agent' = 'Mozilla/5.0 Ubuntu/8.10 Firefox/3.0.4'
+//			 
+//			 response.success = { resp, json ->
+//			 // handle repsonse
+//			 }
+//		}
 	}
 
 	def getContentForLocationDialog = {

@@ -6,14 +6,33 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import i2i.AdminServer.Constants
 
+import com.metasieve.shoppingcart.SessionUtils
+
+
 //@Transactional(readOnly = true)
 class SecUserController {
 
 	def springSecurityService
 	def secUserService
-	
+
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+	def doLogin(){
+		request.headerNames.each{ println "Header: "+ it }
+
+		def source = request.getHeader("Source")
+		println "source: "+ source
+		if(source !=null || source=="IONIC"){
+			def session = SessionUtils.getSession()
+			session.Source = "IONIC"
+			render(text:1)
+			//redirect(controller:'login', action:'auth',  model: [j_username : params.j_username, j_password:params.j_password])
+		}
+		else
+			render(text:-1)
+		//redirect (controller: 'search', action: 'index')
+	}
 
 	def showHomePage(){
 		println "received params: "+params
@@ -25,26 +44,53 @@ class SecUserController {
 		if(role == Constants.ROLE_CHEMIST_ADMIN)
 			redirect (controller: 'orderCollection', action: 'showOrderDetailsList')
 		else
-			redirect (controller: 'search', action: 'index')
+		{
+			//			request.headerNames.each{
+			//				println it
+			//			}
+			def session = SessionUtils.getSession()
+			println "session source: "+session?.Source
+			//			def source = request.getHeader("Source")
+			//			println "source: "+ source
+			//			def content = request.getHeader("Content-Type")
+			//			println "content: "+ content
+			if(session?.Source =="WebApp"){
+				redirect (controller: 'search', action: 'index')
+			}
+			else
+				render(text:1)
+		}
 	}
 
-//	def registerUser(RegisterCommand registerCommand){
-//		println "received params: "+params
-//		println "RC: "+ registerCommand.properties
-//		
-//		if(!registerCommand.validate()) {
-//			registerCommand.errors.each { println it }
-//
-//			redirect (controller: 'login', action: 'auth')
-//		}
-//		else{
-//			secUserService.registerAndSaveNewConsumer(registerCommand.username, registerCommand.password)
-////			redirect (controller: 'login', action: 'auth', model: [j_username : registerCommand.username, j_password:registerCommand.password])
-////			redirect(controller:'login', action:'j_spring_security_check')
-//			springSecurityService.reauthenticate(registerCommand.username);
-//			redirect (controller: 'login', action: 'auth')
-//		}
-//	}
+	def onLoginFail(){
+		//			def source = request.getHeader("Source")
+		//			println "source"+ source
+		//			if(source !=null || source=="IONIC"){
+		def session = SessionUtils.getSession()
+		if(session?.Source =="WebApp"){
+			redirect(uri: "/login/authfail?login_error=1")
+		}
+		else
+			render(text:-1)
+	}
+
+	//	def registerUser(RegisterCommand registerCommand){
+	//		println "received params: "+params
+	//		println "RC: "+ registerCommand.properties
+	//
+	//		if(!registerCommand.validate()) {
+	//			registerCommand.errors.each { println it }
+	//
+	//			redirect (controller: 'login', action: 'auth')
+	//		}
+	//		else{
+	//			secUserService.registerAndSaveNewConsumer(registerCommand.username, registerCommand.password)
+	////			redirect (controller: 'login', action: 'auth', model: [j_username : registerCommand.username, j_password:registerCommand.password])
+	////			redirect(controller:'login', action:'j_spring_security_check')
+	//			springSecurityService.reauthenticate(registerCommand.username);
+	//			redirect (controller: 'login', action: 'auth')
+	//		}
+	//	}
 
 	def index(Integer max) {
 		params.max = Math.min(max ?: 10, 100)

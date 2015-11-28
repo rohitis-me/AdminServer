@@ -177,7 +177,7 @@ class AvailabilityService {
 				availability.errors.each {
 					println "[updateAvailabilityData] error saving availability: "+it					
 				}
-				return 0
+				return -1
 			}
 		}
 		return 1
@@ -189,6 +189,6 @@ class AvailabilityService {
 			return availabilityList.get(0).lastUpdatedTimeStamp
 		}
 		else
-		return 0
+		return -1
 	}
 }

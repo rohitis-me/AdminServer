@@ -88,10 +88,14 @@
 				<g:else>
 					<li><g:link controller="shoppingCart" action="showCartItems"><i class="fa fa-shopping-cart fa-lg"></i>&nbsp;Cart (${itemsCount})</g:link></li>
 				</g:else>
-				
+
 				<sec:ifLoggedIn>
 					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
 				</sec:ifLoggedIn>
+				<sec:ifNotLoggedIn>
+					<li><a href="${createLink(controller: 'login')}"> Login</a></li>
+				</sec:ifNotLoggedIn>
+				
 				<li><p class="h-toll-free"><i class="fa fa-phone-square fa-lg"></i> ${Constants.helpline }</p> </li>
 				
 				<g:set var="circle" value="${"Select circle"}" />

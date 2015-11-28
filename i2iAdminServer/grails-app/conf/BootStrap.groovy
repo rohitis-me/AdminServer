@@ -1,4 +1,5 @@
 import i2i.AdminServer.Availability
+import i2i.AdminServer.BrandDatabase
 import i2i.AdminServer.Store
 import i2i.AdminServer.ClientSync.Inventory
 import i2i.AdminServer.User.UserProfile
@@ -18,22 +19,23 @@ class BootStrap {
 			def inventoryCount = Inventory.count()
 //			if(Availability.count() == 0) {
 //			Availability availability
-//			Inventory inventory
+//			BrandDatabase brand
 //			println "populating availability table"
-//			for (int i=1; i<= 10;i++) {
+//			for (int i=1; i<= 100;i++) {
 //				availability = new Availability()
-//				inventory = Inventory.findByInventoryId(i.toString())
-//				availability.availabilityId = i
-//				availability.storeId = inventory.storeId
+//				brand = BrandDatabase.findByBrandId(i.toString())
+//				availability.availabilityId = i+availabilityCount
+//				availability.storeId = 4
 //				availability.availabilityIndex = 2
-//				availability.inventoryId = inventory.inventoryId
+//				availability.brandId = brand.brandId
+//				availability.lastUpdatedTimeStamp = 25112015
 //				if(!availability.save(flush:true)){
 //					availability.errors.each {
 //						println "ERROR: "+it
 //					}
 //				}
 //				else 
-//				println "availability: "+availability.availabilityId
+//				println "availability: "+availability.brandId
 //			}
 //			}
 			

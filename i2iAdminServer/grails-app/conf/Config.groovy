@@ -169,6 +169,8 @@ log4j = {
 	//
 	//	debug searchtxt: "i2i.AdminServer.SearchController",
 	//		  orderstxt: "i2i.AdminServer.OrdersController"
+	//debug 'org.springframework.security'
+	
 
 	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
 			'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -186,6 +188,7 @@ log4j = {
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/secUser/showHomePage/'
+grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/secUser/onLoginFail/'
 grails.plugin.springsecurity.logout.afterLogoutUrl = '/search/index/'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'i2i.AdminServer.User.Sec.SecUser'
