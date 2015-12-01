@@ -678,8 +678,22 @@ class WebserviceController {
 		render(text: "Success")
 	}
 	
-	def checkUserLogin(){
+	def checkAuthentication(){
+		println "Request params: "+request.properties
+		boolean chk = springSecurityService.isLoggedIn()
+		
+		println "Login: "+ springSecurityService.isLoggedIn()
+		
+//		if(chk) {
+			println "Principal: "+springSecurityService.getPrincipal()
+//		}
 		//springSecurityService.
+			
+		if(chk) {
+			render(text: "authenticated")
+		}
+		else
+		render(text: "not authenticated")
 	}
 //PoS webservices
 
