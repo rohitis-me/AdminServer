@@ -5,6 +5,9 @@ package i2i.AdminServer.User.Sec
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import i2i.AdminServer.Constants
+import i2i.AdminServer.OrderCollectionCommand
+import i2i.AdminServer.OrderCollectionService
+import i2i.AdminServer.OrdersService
 
 import com.metasieve.shoppingcart.SessionUtils
 
@@ -14,27 +17,28 @@ class SecUserController {
 
 	def springSecurityService
 	def secUserService
-
+	OrderCollectionService orderCollectionService
+	OrdersService ordersService
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def doLogin(){
-		request.headerNames.each{ println "Header: "+ it }
+//	def doLogin(){
+//		request.headerNames.each{ println "Header: "+ it }
+//
+//		def source = request.getHeader("Source")
+//		println "source: "+ source
+//		if(source !=null || source=="IONIC"){
+//			def session = SessionUtils.getSession()
+//			session.Source = "IONIC"
+//			render(text:1)
+//			//redirect(controller:'login', action:'auth',  model: [j_username : params.j_username, j_password:params.j_password])
+//		}
+//		else
+//			render(text:-1)
+//		//redirect (controller: 'search', action: 'index')
+//	}
 
-		def source = request.getHeader("Source")
-		println "source: "+ source
-		if(source !=null || source=="IONIC"){
-			def session = SessionUtils.getSession()
-			session.Source = "IONIC"
-			render(text:1)
-			//redirect(controller:'login', action:'auth',  model: [j_username : params.j_username, j_password:params.j_password])
-		}
-		else
-			render(text:-1)
-		//redirect (controller: 'search', action: 'index')
-	}
-
-	def showHomePage(){
+	def onLoginSuccess(){
 		println "received params: "+params
 
 		def authList = springSecurityService.getPrincipal().getAuthorities()
@@ -57,8 +61,10 @@ class SecUserController {
 			if(session?.Source =="WebApp"){
 				redirect (controller: 'search', action: 'index')
 			}
-			else
+			else{
+				//def userId = secUserService.getLoggedInUserId()
 				render(text:1)
+			}
 		}
 	}
 
@@ -73,7 +79,54 @@ class SecUserController {
 		else
 			render(text:-1)
 	}
+	
+	def onLogout(){
+		def session = SessionUtils.getSession()
+		println "session source: "+session?.Source
+//		if(session?.Source =="WebApp"){
+			redirect (controller: 'search', action: 'index')
+//		}
+//		else{
+//			render(text:1)
+//		}
+	}
+	
+//	@Secured(['ROLE_CONSUMER'])
+	def showUserProfile(){
+		def user = springSecurityService.getCurrentUser()
+		println "logged in User: "+ user?.properties
+		render(view:'userProfile', model: [username:user?.username, email:user?.email])
+	}
 
+	def showAllOrders(){
+		List orderDetailsList = secUserService.getLoggedInUserOrderDetailsList()
+		byte orderStatus = -2
+
+		render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
+	}
+	
+	def showOrderDetails() {
+		println "showOrderDetails params: "+params
+		Long orderCollId = params.orderCollectionId?.toLong()
+
+		OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollId)
+		List orderDetailsCommandList = ordersService.getListOfOrderDetailsCommandFromOrderCollectionId(orderCollId)
+
+//		String attachmentLink = ""
+//		if(orderCollCommand?.attachmentId)
+//			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderCollCommand?.attachmentId)
+		render(view:"orderDetails", model: [orderDetailsCommandList: orderDetailsCommandList, orderCollCommand:orderCollCommand])//, attachmentLink:attachmentLink])
+	}
+	
+	def showAllSavedAddresses(){
+		List patientProfileList = secUserService.getLoggedInUserPatientDetailsList()
+		render(view:'savedAddressList', model:['patientProfileList':patientProfileList])
+	}
+	
+	def showUploadedPrescriptions(){
+		List attachmentLinkList = secUserService.getLoggedInUserPrescriptionList()
+		render(view:'uploadedPrescriptionList', model:['attachmentLinkList':attachmentLinkList])
+	}
 	//	def registerUser(RegisterCommand registerCommand){
 	//		println "received params: "+params
 	//		println "RC: "+ registerCommand.properties

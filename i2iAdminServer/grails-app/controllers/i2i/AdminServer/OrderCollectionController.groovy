@@ -127,7 +127,7 @@ class OrderCollectionController {
 			return
 		}
 		
-		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
+		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand,null)
 //		println "orderRefId: "+orderRefId
 		if(!orderRefId) {
 			flash.message = message(code: 'save.error.label', default: 'Enter valid information')

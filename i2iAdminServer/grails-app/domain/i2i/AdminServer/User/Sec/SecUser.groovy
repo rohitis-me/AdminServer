@@ -16,7 +16,8 @@ class SecUser {
 
 	static constraints = {
 		username blank: false, unique: true,size:5..60
-		email blank: false, size:5..60
+		email blank: false, email: true, size:5..60
+		//phoneNumber blank: false, size:5..20
 		password blank: false, size:5..20
 	}
 

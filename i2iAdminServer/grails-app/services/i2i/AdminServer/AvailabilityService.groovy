@@ -26,6 +26,13 @@ class AvailabilityService {
 		}
 		return storeIdList
 	}
+	
+	def getAvailabilityIndexFromBrandIdAndStoreId(String brandId, String storeId){
+		def avialabilityIndex = Availability.findByStoreIdAndBrandId(storeId, brandId)*.availabilityIndex
+		if(avialabilityIndex)
+			return avialabilityIndex
+		return 0
+	}
 
 	def getStoreIdsFromInventoryId(String inventoryId) {
 

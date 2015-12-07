@@ -138,7 +138,7 @@ class SearchController {
 		drugList.each {
 			//			println "druglist: "+it.brandId+"|"+it.inventoryId+"|"
 			Map brandMap = brandDatabaseService.getBrandDataMap(it)
-			suggestion = "${it.brandName}"//+" "+"${it.strength}"+" ${it.form}"
+			suggestion = "${it.brandName}"//+" "+"${it.form}"+" ${it.noOfUnits}"
 			//			brandMap << suggestion
 			brandMapList.add(brandMap)
 		}

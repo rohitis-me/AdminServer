@@ -4,6 +4,7 @@ class PatientProfile {
 
 	Long patientId
 	String name
+	String doctorName
 	String phoneNumber
 	String emailID
 	int age
@@ -16,6 +17,7 @@ class PatientProfile {
 	
     static constraints = {
 		name nullable:false, blank:false,size:1..100
+		doctorName nullable:true, blank:true,size:1..100
 		phoneNumber nullable:false, blank:false,size:3..100
 		emailID nullable:true, blank:true,size:3..100
 		addressLine1 nullable:false, blank:false,size:1..100

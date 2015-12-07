@@ -3,6 +3,7 @@ package i2i.AdminServer
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.plugin.awssdk.AmazonWebService
+import grails.plugin.springsecurity.annotation.Secured
 import groovy.json.JsonSlurper
 import i2i.AdminServer.ClientSync.InventoryService
 import i2i.AdminServer.User.BrandRequestCommand
@@ -479,19 +480,27 @@ class WebserviceController {
 		}
 
 		OrderCollectionCommand orderCollCommand = new OrderCollectionCommand()
+		if(params.patientId){
+			orderCollCommand = orderCollectionService.populateOrderCollectionCommandFromPatientId(params.patientId)
+		}
+		else{
+			orderCollCommand.patientName = params.patientName
+			orderCollCommand.doctorName = params.doctorName
+			orderCollCommand.name = params.name
+			orderCollCommand.phoneNumber = params.phoneNumber
+			orderCollCommand.emailID = params.emailID
+			orderCollCommand.age = params.age
+			orderCollCommand.addressLine1 = params.addressLine1
+			orderCollCommand.addressLine2 = params.addressLine2
+			orderCollCommand.circle = params.circle
+			orderCollCommand.city = params.city
+			orderCollCommand.state = params.state
+			orderCollCommand.country = params.country
+		}
 		orderCollCommand.offerCode = params.offerCode
 		orderCollCommand.attachmentId = params.attachmentId
-		orderCollCommand.name = params.name
-		orderCollCommand.phoneNumber = params.phoneNumber
-		orderCollCommand.emailID = params.emailID
-		orderCollCommand.age = params.age
-		orderCollCommand.addressLine1 = params.addressLine1
-		orderCollCommand.addressLine2 = params.addressLine2
-		orderCollCommand.circle = params.circle
-		orderCollCommand.city = params.city
-		orderCollCommand.state = params.state
-		orderCollCommand.country = params.country
-
+		
+		
 		println "ODC: "+orderCollCommand.properties
 		if (orderCollCommand.hasErrors()) {
 			orderCollCommand.errors.each { println it }
@@ -501,7 +510,7 @@ class WebserviceController {
 
 		//FIXME: do this in gsp
 		orderCollCommand.offerCode = ordersService.checkOfferCode(orderCollCommand.offerCode)
-		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand)
+		def orderRefId = orderCollectionService.saveOrderFromOrderCollection(orderCollCommand, params.patientId)
 		//		println "orderRefId: "+orderRefId
 		if(!orderRefId) {
 			render (text: "Enter valid information")
@@ -695,6 +704,43 @@ class WebserviceController {
 		else
 		render(text: "not authenticated")
 	}
+	///Login related
+	@Secured(['ROLE_CONSUMER'])
+	def getUserDetails(){
+		//def userId = params.userId
+		def user = secUserService.getLoggedInUserProfile()
+		println "logged in User: "+ user.properties
+		def userProfile = ['username':user?.username, 'email':user?.email]
+		render userProfile as JSON
+		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
+	}
+	
+	def getUserOrdersList(){
+		//def userId = params.userId
+		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
+		//byte orderStatus = -2
+		render ordersList as JSON
+		//render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
+	}
+	
+//	def showOrderDetails() {
+//		println "showOrderDetails params: "+params
+//		Long orderCollId = params.orderCollectionId?.toLong()
+//
+//		OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollId)
+//		List orderDetailsCommandList = ordersService.getListOfOrderDetailsCommandFromOrderCollectionId(orderCollId)
+//
+////		String attachmentLink = ""
+////		if(orderCollCommand?.attachmentId)
+////			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderCollCommand?.attachmentId)
+//		render(view:"orderDetails", model: [orderDetailsCommandList: orderDetailsCommandList, orderCollCommand:orderCollCommand])//, attachmentLink:attachmentLink])
+//	}
+	
+	def getUserSavedAddresses(){
+		//def userId = params.userId
+		List patientProfileList = secUserService.getLoggedInUserPatientDetailsList()
+		render patientProfileList as JSON
+		//render(view:'savedAddressList', model:['patientProfileList':patientProfileList])
 //PoS webservices
 
 	// parameter: availabilityList json

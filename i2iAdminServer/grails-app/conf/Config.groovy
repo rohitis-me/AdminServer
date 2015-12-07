@@ -187,9 +187,9 @@ log4j = {
 
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/secUser/showHomePage/'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/secUser/onLoginSuccess/'
 grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/secUser/onLoginFail/'
-grails.plugin.springsecurity.logout.afterLogoutUrl = '/search/index/'
+grails.plugin.springsecurity.logout.afterLogoutUrl = '/secUser/onLogout/'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'i2i.AdminServer.User.Sec.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'i2i.AdminServer.User.Sec.SecUserSecRole'

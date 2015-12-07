@@ -6,6 +6,8 @@ import i2i.AdminServer.OrderCollectionCommand
 @Transactional
 class PatientProfileService {
 
+	def secUserService
+	
     def serviceMethod() {
 
     }
@@ -16,7 +18,8 @@ class PatientProfileService {
 	
 	def populatePatientProfileFromOrderCollCommand(OrderCollectionCommand order) {
 		def patientProfile = new PatientProfile()
-		patientProfile.name = order.name
+		patientProfile.name = order.patientName
+		patientProfile.doctorName = order.doctorName
 		patientProfile.phoneNumber = order.phoneNumber
 		patientProfile.emailID = order.emailID
 		patientProfile.age = order.age
@@ -36,9 +39,11 @@ class PatientProfileService {
 		
 			println "patientProfile: "+patientProfile.properties
 			if(patientProfile.save()) {
-			
 				println "PP save success"
-				return patientProfile.patientId
+				def patientId = patientProfile.patientId
+				def userId = secUserService.getLoggedInUserId()
+				if(userId != 0) new SecUserConsumer(patientId:patientId, userId: userId).save(flush:true)
+				return patientId
 		}
 		else {
 			patientProfile.errors.each {

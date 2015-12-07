@@ -34,10 +34,10 @@ class SearchService {
 //			if(brandId== null || brandId == "") {
 //				return storeList
 //			}
-//			if(storeList.size() == 0) {
-//				storeList.add(Store.first())
-//				storeList.add(Store.last())
-//			}
+			if(storeList.size() == 0) {
+				storeList.add(Store.first())
+				storeList.add(Store.last())
+			}
 //		}
 //		println "storeList: "+storeList.count
 		return storeList

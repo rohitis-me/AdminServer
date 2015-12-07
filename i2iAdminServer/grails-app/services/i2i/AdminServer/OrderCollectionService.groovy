@@ -24,7 +24,8 @@ class OrderCollectionService {
 
 	def populateOrderDetailsFromPatientProfile(PatientProfile patient) {
 		def orderDetailsCommand = new OrderDetailsCommand()
-		orderDetailsCommand.name = patient.name
+		orderDetailsCommand.patientName = patient.name
+		orderDetailsCommand.doctorName = patient.doctorName
 		orderDetailsCommand.phoneNumber = patient.phoneNumber
 		orderDetailsCommand.emailID = patient.emailID
 		orderDetailsCommand.age = patient.age
@@ -37,7 +38,26 @@ class OrderCollectionService {
 		return orderDetailsCommand
 	}
 
-
+	def populateOrderCollectionCommandFromPatientId(def patientId){
+		OrderCollectionCommand orderCollCommand = new OrderCollectionCommand()
+		PatientProfile patientProfile = patientProfileService.getPatientProfileDataFromPatientProfileId(patientId)
+		if(patientProfile){
+			orderCollCommand.patientName = patientProfile.name
+			orderCollCommand.doctorName = patientProfile.doctorName
+			orderCollCommand.phoneNumber = patientProfile.phoneNumber
+			orderCollCommand.emailID = patientProfile.emailID
+			orderCollCommand.age = patientProfile.age
+			orderCollCommand.addressLine1 = patientProfile.addressLine1
+			orderCollCommand.addressLine2 = patientProfile.addressLine2
+			orderCollCommand.circle = patientProfile.circle
+			orderCollCommand.city = patientProfile.city
+			orderCollCommand.state = patientProfile.state
+			orderCollCommand.country = patientProfile.country
+		}
+//		println 'orderCollCommand: '+ orderCollCommand.properties
+		return orderCollCommand
+	}
+	
 	def populateOrderCollectionCommandFromOrderCollection(OrderCollection order) {
 		OrderCollectionCommand orderCollCommand = new OrderCollectionCommand()
 		orderCollCommand.orderRefId = order.orderRefId
@@ -48,18 +68,19 @@ class OrderCollectionService {
 //		println "comment: "+ order.deliveryComment
 		
 		//FIXME 
-		String storeId = storeService.getLoggedInStoreId()
-		if(storeId){
-			orderCollCommand.orderStatus  = ordersService.getOrderStatusFromOrderCollectionIdAndStoreId(order.orderCollectionId, storeId)
-		}
-		else{
+//		String storeId = storeService.getLoggedInStoreId()
+//		if(storeId){
+//			orderCollCommand.orderStatus  = ordersService.getOrderStatusFromOrderCollectionIdAndStoreId(order.orderCollectionId, storeId)
+//		}
+//		else{
 			orderCollCommand.orderStatus  = ordersService.getOrderStatusFromOrderCollectionId(order.orderCollectionId)
 		}
 
 
 		PatientProfile patientProfile = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)
 		if(patientProfile){
-			orderCollCommand.name = patientProfile.name
+			orderCollCommand.patientName = patientProfile.name
+			orderCollCommand.doctorName = patientProfile.doctorName
 			orderCollCommand.phoneNumber = patientProfile.phoneNumber
 			orderCollCommand.emailID = patientProfile.emailID
 			orderCollCommand.age = patientProfile.age
@@ -74,6 +95,16 @@ class OrderCollectionService {
 		return orderCollCommand
 	}
 
+	def getListOfOrderCollectionIdsFromPatientId(String patientId){
+		List orderCollIds = OrderCollection.findAllByPersonId(patientId)*.orderCollectionId
+		return orderCollIds
+	}
+	
+	def getListOfAttachmentIdsFromPatientId(String patientId){
+		List attachmentIds = OrderCollection.findAllByPersonId(patientId)*.attachmentId
+		return attachmentIds
+	}
+	
 	def getOrderCollectionCommandFromOrderCollectionId(def orderCollectionId){
 //		println "orderCollId "+ orderCollectionId
 		OrderCollection order = OrderCollection.findByOrderCollectionId(orderCollectionId)
@@ -122,14 +153,16 @@ class OrderCollectionService {
 	}
 	
 	//FIXME: ETA
-	def saveOrderFromOrderCollection(OrderCollectionCommand orderCollCommand) {
+	def saveOrderFromOrderCollection(OrderCollectionCommand orderCollCommand, def patientId) {
 		if(!orderCollCommand.validate()) {
 			println "VALIDATION ERROR: "+orderCollCommand.properties
 			orderCollCommand.errors.each { println it }
 			return 0
 		}
-		PatientProfile patient = patientProfileService.populatePatientProfileFromOrderCollCommand(orderCollCommand)
-		def patientId = patientProfileService.savePatientProfile(patient)
+		if(!patientId){
+			PatientProfile patient = patientProfileService.populatePatientProfileFromOrderCollCommand(orderCollCommand)
+			patientId = patientProfileService.savePatientProfile(patient)
+		}
 		if(patientId!= 0) {
 			//			orderDetails.estimatedDeliveryTime = Utility.getDateTimeInIST().addHours
 			OrderCollection orderColl = new OrderCollection()

@@ -302,6 +302,12 @@ class OrdersService {
 		List orderList = Orders.findAllByOrderCollectionId(orderCollectionId)
 		return orderList
 	}
+	
+	def getListOfOrderDetailsCommandFromOrderCollectionId(Long orderCollectionId) {
+		//		println "getListOfOrdersFromStoreId: "+storeId
+		List orderList = Orders.findAllByOrderCollectionId(orderCollectionId)
+		return getListOfOrderDetailsFromOrdersList(orderList)
+	}
 
 	def getListOfOrdersFromOrderCollectionIdAndStoreId(Long orderCollectionId, String storeId) {
 		//		println "getListOfOrdersFromStoreId: "+storeId
@@ -317,7 +323,7 @@ class OrdersService {
 	}
 	
 	def getOrderStatusFromOrderCollectionId(Long orderCollectionId) {
-		Orders order = Orders.findByOrderCollectionIdAndStoreId(orderCollectionId)
+		Orders order = Orders.findByOrderCollectionId(orderCollectionId)
 		def orderStatus = Constants.ORDER_PLACED
 		if(order) orderStatus = order.orderStatus
 		return orderStatus
@@ -444,7 +450,9 @@ class OrdersService {
 	def getListOfOrderDetailsFromOrdersList(List orderList) {
 		List orderDetailsList = new ArrayList<OrderDetailsCommand>()
 		orderList.each { order->
+			println "1" + order
 			orderDetailsList.add(populateOrderDetailsFromOrder(order))
+			//println "2"
 		}
 		return orderDetailsList
 	}
