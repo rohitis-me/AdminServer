@@ -13,6 +13,8 @@ import grails.validation.Validateable
 
 @Validateable
 class OrderCollectionCommand {
+	String patientName
+	String doctorName
 	String name
 	String phoneNumber
 	String emailID
@@ -31,6 +33,8 @@ class OrderCollectionCommand {
 	byte orderStatus //FIXME
 	
 	static constraints = {
+		patientName nullable:false, blank:false,size:1..100
+		doctorName nullable:true, blank:true,size:3..100
 		name nullable:false, blank:false,size:1..100
 		phoneNumber nullable:false, blank:false,size:3..100
 		emailID nullable:true, blank:true,size:3..100
