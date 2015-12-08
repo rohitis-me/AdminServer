@@ -741,6 +741,7 @@ class WebserviceController {
 		List patientProfileList = secUserService.getLoggedInUserPatientDetailsList()
 		render patientProfileList as JSON
 		//render(view:'savedAddressList', model:['patientProfileList':patientProfileList])
+		}
 //PoS webservices
 
 	// parameter: availabilityList json

@@ -42,6 +42,44 @@
 							<div class="panel-body">
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-4 control-label"><span
+										class="text-danger">*</span> Patient Name : </label>
+									<div class="col-sm-7">
+										<input class="form-control" name="patientName"
+											placeholder="Patient Name" type="text"
+											title='Minimum 3 characters' pattern=".{3,}"
+											required="required" maxlength="100"
+											onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');"
+											value="${orderDetails?.patientName}">
+										<g:hasErrors bean="${orderDetails}" field="patientName">
+											<g:eachError bean="${orderDetails}" field="patientName">
+												<p style="color: red;">
+													<g:message error="${it}" />
+												</p>
+											</g:eachError>
+										</g:hasErrors>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-4 control-label"><span
+										class="text-danger"></span> Doctor Name : </label>
+									<div class="col-sm-7">
+										<input class="form-control" name="doctorName"
+											placeholder="Doctor Name" type="text"
+											title='Minimum 3 characters' pattern=".{3,}"
+											maxlength="100"
+											onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : '');"
+											value="${orderDetails?.doctorName}">
+										<g:hasErrors bean="${orderDetails}" field="doctorName">
+											<g:eachError bean="${orderDetails}" field="doctorName">
+												<p style="color: red;">
+													<g:message error="${it}" />
+												</p>
+											</g:eachError>
+										</g:hasErrors>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-4 control-label"><span
 										class="text-danger">*</span> Name : </label>
 									<div class="col-sm-7">
 										<input class="form-control" name="name"

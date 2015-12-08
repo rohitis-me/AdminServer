@@ -74,7 +74,7 @@ class OrderCollectionService {
 //		}
 //		else{
 			orderCollCommand.orderStatus  = ordersService.getOrderStatusFromOrderCollectionId(order.orderCollectionId)
-		}
+//		}
 
 
 		PatientProfile patientProfile = patientProfileService.getPatientProfileDataFromPatientProfileId(order.personId)

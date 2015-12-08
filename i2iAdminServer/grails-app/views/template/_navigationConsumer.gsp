@@ -69,13 +69,13 @@
 					<li><g:link controller="orderCollection" action="trackOrderCollectionDetails">Track Order</g:link></li>
 				</g:else>
 
-				<g:if test="${entityName== 'Feedback' }">
-					<li class="active"><g:link controller="feedback"
-							action="feedback">Feedback</g:link></li>
-				</g:if>
-				<g:else>
-					<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>
-				</g:else>
+<%--				<g:if test="${entityName== 'Feedback' }">--%>
+<%--					<li class="active"><g:link controller="feedback"--%>
+<%--							action="feedback">Feedback</g:link></li>--%>
+<%--				</g:if>--%>
+<%--				<g:else>--%>
+<%--					<li><g:link controller="feedback" action="feedback">Feedback</g:link></li>--%>
+<%--				</g:else>--%>
 
 				<g:set var="itemsCount" value="${0}" />
 				<g:if test="${shoppingCartService && shoppingCartService.getItems()}">
@@ -90,7 +90,19 @@
 				</g:else>
 
 				<sec:ifLoggedIn>
-					<li><a href="${createLink(controller: 'logout')}"> Logout</a></li>
+				<g:set var="Source" value="WebApp" scope="session" />
+		        <li class="dropdown">
+		          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account
+		<%--          <sec:username/>--%>
+		          <span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+					<li><g:link controller="secUser" action="showUserProfile">Profile</g:link></li>
+		            <li><g:link controller="secUser" action="showAllOrders">Orders</g:link></li>
+		            <li><g:link controller="secUser" action="showAllSavedAddresses">Address</g:link></li>
+		            <li><g:link controller="secUser" action="showUploadedPrescriptions">Prescriptions</g:link></li>
+		            <li><a href="${createLink(controller: 'logout')}"> Logout</a></li> 
+		          </ul>
+		        </li>
 				</sec:ifLoggedIn>
 				<sec:ifNotLoggedIn>
 					<li><a href="${createLink(controller: 'login')}"> Login</a></li>
