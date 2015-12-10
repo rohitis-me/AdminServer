@@ -66,6 +66,9 @@ grails.project.dependency.resolution = {
 		compile ":jquery-ui:1.10.4"
 		compile ":spring-security-core:2.0-RC4"
 		compile ":spring-security-ui:1.0-RC2"
+		compile ':spring-security-rest:1.5.3', {
+			excludes: 'spring-security-core'
+	}
 		
 		
 		//shopping cart plugin

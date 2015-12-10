@@ -49,20 +49,12 @@ class SecUserController {
 			redirect (controller: 'orderCollection', action: 'showOrderDetailsList')
 		else
 		{
-			//			request.headerNames.each{
-			//				println it
-			//			}
 			def session = SessionUtils.getSession()
 			println "session source: "+session?.Source
-			//			def source = request.getHeader("Source")
-			//			println "source: "+ source
-			//			def content = request.getHeader("Content-Type")
-			//			println "content: "+ content
 			if(session?.Source =="WebApp"){
 				redirect (controller: 'search', action: 'index')
 			}
 			else{
-				//def userId = secUserService.getLoggedInUserId()
 				render(text:1)
 			}
 		}

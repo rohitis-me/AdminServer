@@ -121,31 +121,31 @@ class BrandDatabaseService {
 		List drugList = new ArrayList<BrandDataCommand>()
 		println "city: " + city + "circle: " + circle
 		//FIXME: NOT scalable
-		String storeId = 0
-		if(city == 'Chennai') {
-		if(circle == 'Thiruvanmiyur') 
-			storeId = 1 //drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '1')
+//		String storeId = 0
+//		if(city == 'Chennai') {
+//		if(circle == 'Thiruvanmiyur') 
+//			storeId = 1 //drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '1')
 //		println "drug size: "+drugList.size()
 //		if(drugList.size() == 0) //chose from store id = 2
 //			drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '2')
 //		
-		}
-		if(city == 'Mumbai') {
+//		}
+//		if(city == 'Mumbai') {
+//
+//			if(circle == 'Bandra')
+//			storeId = 4 //drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '4')//Metro
+//			else
+//			storeId = 3 //drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '3')//HariOm- Khar and santacruz
+//		}
 
-			if(circle == 'Bandra')
-			storeId = 4 //drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '4')//Metro
-			else
-			storeId = 3 //drugList = inventoryService.getListOfBrandNamesStartingWithAndStoreId(searchTerm, '3')//HariOm- Khar and santacruz
-		}
-
-		drugList = getListOfBrandNamesStartingWithAndStoreId(searchTerm, storeId)
+//		drugList = getListOfBrandNamesStartingWithAndStoreId(searchTerm, storeId)
 		//drugList = getListOfBrandNamesStartingWith(searchTerm)
 		
-		if(drugList.size() == 0){
+//		if(drugList.size() == 0){
 			List brandDataList = BrandDatabase.findAllByBrandNameIlike(searchTerm+"%", [max:10, offset:0]) // ignore case
 			drugList = populateBrandDataCommandListFromBrandDataList(brandDataList)
 //			drugList = getListOfBrandNamesStartingWith(searchTerm)
-		}
+//		}
 		
 		return drugList
 	}

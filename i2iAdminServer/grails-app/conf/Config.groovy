@@ -1,18 +1,6 @@
 import net.sf.ehcache.config.DiskStoreConfiguration.Env;
 import i2i.AdminServer.Constants
 
-// locations to search for config files that get merged into the main config;
-// config files can be ConfigSlurper scripts, Java properties files, or classes
-// in the classpath in ConfigSlurper format
-
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
-
-// if (System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-// }
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
@@ -58,7 +46,7 @@ turnOnTestCode = 0
 turnOnBootStrapCode = 0
 
 //enableProdConfig = 0
-env=Constants.env_LOCAL
+env=Constants.env_DEMO
 Constants.circleArray = Constants.circleArray_Mumbai
 
 if(env == Constants.env_DEMO) {
@@ -162,14 +150,6 @@ log4j = {
 	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 	//}
 
-	//	appenders {
-	//		file name: "searchtxt", file: "/var/log/search.logs"
-	//		file name: "orderstxt", file: "/var/log/orders.logs"
-	//	 }
-	//
-	//	debug searchtxt: "i2i.AdminServer.SearchController",
-	//		  orderstxt: "i2i.AdminServer.OrdersController"
-	//debug 'org.springframework.security'
 	
 
 	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
@@ -208,32 +188,23 @@ grails.plugin.springsecurity.ui.register.defaultRoleNames = [
 grails.plugin.springsecurity.ui.password.validationRegex = '^.*(?=.*\\d)(?=.*[a-zA-Z]).*$'
 grails.plugin.springsecurity.ui.password.minLength = 5
 grails.plugin.springsecurity.ui.password.maxLength = 20
-//grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-//	'/**':                              ['permitAll'],
-//	'/index':                         ['permitAll'],
-//	'/index.gsp':                     ['permitAll'],
-//	'/assets/**':                     ['permitAll'],
-//	'/**/js/**':                      ['permitAll'],
-//	'/**/css/**':                     ['permitAll'],
-//	'/**/images/**':                  ['permitAll'],
-//	'/**/favicon.ico':                ['permitAll']
+
+// Grails rest api
+//grails.plugin.springsecurity.filterChain.chainMap = [
+//	'/api/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+//	'/webservice/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+//	'/**': 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                                                          // Traditional chain
 //]
 
-//grails {
-//	mail {
-//		host = "smtp.gmail.com"
-//		port = 465
-//		if(env == Constants.env_PROD)
-//			username = "i2itechnologypvtltd@gmail.com"
-//		else
-//			username = "noreply.pillocate@gmail.com"
-//		password = "support@i2i"
-//		props = ["mail.smtp.auth":"true",
-//			"mail.smtp.socketFactory.port":"465",
-//			"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-//			"mail.smtp.socketFactory.fallback":"false"]
-//	}
-//}
+grails.plugin.springsecurity.rest.login.active = true
+grails.plugin.springsecurity.rest.token.storage.useMemcached = true
+grails.plugin.springsecurity.rest.login.usernamePropertyName = 'w_username'
+grails.plugin.springsecurity.rest.login.passwordPropertyName = 'w_password'
+grails.plugin.springsecurity.rest.login.useJsonCredentials = true
+grails.plugin.springsecurity.rest.login.endpointUrl = '/api/login'
+grails.plugin.springsecurity.rest.logout.endpointUrl = '/api/logout'
+grails.plugin.springsecurity.rest.token.validation.headerName = 'X-Auth-Token'
+//grails.plugin.springsecurity.rest.login.useRequestParamsCredentials = false
 
 grails {
 	mail {
