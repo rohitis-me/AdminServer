@@ -25,22 +25,33 @@ class SearchService {
 //		return storeList
 //	}
 	
+	def getListOfStoresWhereBrandIsAvailable(List brandIdList) {
+		List storeIdList = new ArrayList<String>()
+		List tempList = new ArrayList<String>()
+		boolean isFirstEntry = true
+		brandIdList.each { brandId->
+			tempList = getListOfStoreIdsWhereBrandIsAvailable(brandId)
+			if(isFirstEntry) {
+				storeIdList = tempList
+			}
+			else
+			storeIdList = tempList.intersect(storeIdList)   //get list of storeIDs where current and previous brandIds are available
+			
+			isFirstEntry = false
+		}
+		List storeList = storeService.getStoreListFromStoreIdList(storeIdList)
+		return storeList
+	}
+	
 	def getListOfStoresWhereBrandIsAvailable(String brandId) {
 		List storeIdList = availabilityService.getStoreIdsFromBrandId(brandId)
 		List storeList = storeService.getStoreListFromStoreIdList(storeIdList)
-//		println "bid: "+brandId+" storelist: "+storeList.size()
-//		println "turnontestcode: "+grailsApplication.config.turnOnTestCode
-//		if(grailsApplication.config.turnOnTestCode) {
-//			if(brandId== null || brandId == "") {
-//				return storeList
-//			}
-			if(storeList.size() == 0) {
-				storeList.add(Store.first())
-				storeList.add(Store.last())
-			}
-//		}
-//		println "storeList: "+storeList.count
 		return storeList
+	}
+	
+	def getListOfStoreIdsWhereBrandIsAvailable(String brandId) {
+		List storeIdList = availabilityService.getStoreIdsFromBrandId(brandId)
+		return storeIdList
 	}
 
 	def getListOfStoresInCircle(String circle) {

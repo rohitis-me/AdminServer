@@ -38,6 +38,7 @@ class WebserviceController extends RestfulController {
 	AmazonWebService amazonWebService
 	FileAttachmentService fileAttachmentService
 	AvailabilityService availabilityService
+	StoreRatingService storeRatingService
 	def springSecurityService
 	
 	def index() {
@@ -460,24 +461,24 @@ class WebserviceController extends RestfulController {
 		render text:"Principal: "+springSecurityService?.principal
 	}
 	
-	///Login related
-	@Secured(['ROLE_CONSUMER'])
-	def getUserDetails(){
-		//def userId = params.userId
-		def user = secUserService.getLoggedInUserProfile()
-		println "logged in User: "+ user.properties
-		def userProfile = ['username':user?.username, 'email':user?.email]
-		render userProfile as JSON
-		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
-	}
-	
-	def getUserOrdersList(){
-		//def userId = params.userId
-		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
-		//byte orderStatus = -2
-		render ordersList as JSON
-		//render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
-	}
+//	///Login related
+//	@Secured(['ROLE_CONSUMER'])
+//	def   (){
+//		//def userId = params.userId
+//		def user = secUserService.getLoggedInUserProfile()
+//		println "logged in User: "+ user.properties
+//		def userProfile = ['username':user?.username, 'email':user?.email]
+//		render userProfile as JSON
+//		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
+//	}
+//	
+//	def getUserOrdersList(){
+//		//def userId = params.userId
+//		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
+//		//byte orderStatus = -2
+//		render ordersList as JSON
+//		//render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
+//	}
 	
 //	def showOrderDetails() {
 //		println "showOrderDetails params: "+params
@@ -491,6 +492,61 @@ class WebserviceController extends RestfulController {
 ////			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderCollCommand?.attachmentId)
 //		render(view:"orderDetails", model: [orderDetailsCommandList: orderDetailsCommandList, orderCollCommand:orderCollCommand])//, attachmentLink:attachmentLink])
 //	}
+	
+	def getListOfStoresWhereBrandsAreAvailable() {
+		
+		String brandIds = params.brandIds
+		String circle = params.circle
+		String favoriteIdList = params.favoriteIdList
+		
+		List brandIdList = brandIds.split('|')
+		println "brandList size: "+brandIdList.size()
+		List storeList = favoriteIdList.split('|')
+		println "storeList size: "+storeList.size()
+		
+		//TODO: DOES NOT use favorite currently
+		List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandIdList)
+		
+		if(stores){
+			List storeMapList = []
+			int rating = 0
+			stores.each {
+					Map storeMap = [:]
+					rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
+					storeMap.put("storeId", it.storeId)
+					storeMap.put("storeName", it.storeName)
+					storeMap.put("rating", rating)
+					storeMapList.add(storeMap)
+			}
+
+			render storeMapList as JSON
+		}
+		else 
+			render (text: "Not Available")
+		
+//		return storeId
+	}
+	
+	def rateSeller() {
+		def storeId = params.storeId
+		def orderId = params.orderId
+		Integer rating = params.int('rating')
+		
+		if(storeRatingService.saveRating(storeId, rating.intValue()))
+			render (text:"Success")
+		else
+			render (text:"Error")
+			
+	}
+	
+	def setFavorite() {
+		def storeId = params.storeId
+		def orderId = params.orderId
+		
+		//TODO: Method Stub
+		
+		render (text:"Success")
+	}
 	
 	def getUserSavedAddresses(){
 		//def userId = params.userId
