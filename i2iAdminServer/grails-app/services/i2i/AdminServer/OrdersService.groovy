@@ -511,4 +511,30 @@ class OrdersService {
 		else
 			return ""
 	}
+	
+	def getAllOrdersForStoreId(String storeId) {
+		//TODO
+		return Orders.findAllByStoreId(storeId)
+	}
+	
+	def getAllConfirmedOrdersForStoreId(String storeId) {
+		//TODO
+		return Orders.findAllByStoreIdAndOrderStatus(storeId,Contants.ORDER_ACCEPTED)
+	}
+	
+	def getOrderStatus(String storeId, String orderCollectionId, List brandIdList) {
+		//TODO
+		return Constants.ORDER_awaitingconfirmation
+	}
+	
+	def updateOrderStatus(byte status, String orderCollectionId, List brandIdList) {
+		//TODO: method stub
+		return 1
+	}
+	
+	def getOrderHistory(String storeId, List orderCollectionIdList) {
+		//TODO
+		return new ArrayList<OrderHistoryStatusCommand>()
+	}
+	
 }

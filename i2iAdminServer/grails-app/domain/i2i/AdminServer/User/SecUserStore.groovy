@@ -4,6 +4,7 @@ class SecUserStore {
 
 	String storeId
 	Long userId
+	String registrationId
 	
     static constraints = {
     }

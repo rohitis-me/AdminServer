@@ -153,6 +153,7 @@ class WebserviceController extends RestfulController {
 					Map storeMap = [:]
 					storeMap.put("storeId", it.storeId)
 					storeMap.put("storeName", it.storeName)
+					storeMap.put("storeRating", storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId))
 					storeMapList.add(storeMap)
 			}
 
@@ -216,6 +217,8 @@ class WebserviceController extends RestfulController {
 			objectMetadata.setContentType(file.getContentType())
 
 			String fileOriginalName = file.getOriginalFilename()
+//			String description = file?.description
+//			println "FILE description: "+description
 			Date uploadDate = Utility.getDateTimeInIST().getTime()
 			String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
 			//				println "file name: "+filePath
@@ -579,5 +582,79 @@ class WebserviceController extends RestfulController {
 		render(text:lastUpdatedTimeStamp)
 	}
 	
+	//Pharmacy app webservices
+	def getNewOrdersList() {
+//		String circle = params.circle
+		String storeId = params.storeId
+		
+		//TODO: method stub
+		List ordersList = ordersService.getAllOrdersForStoreId(storeId)
+		
+		List ordersMapList = []
+		
+		ordersList.each { order->
+			String brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
+			Map orderMap = [:]
+			orderMap.put("brandName", brandName)
+			orderMap.put("orderStatus", order.orderStatus)
+			ordersMapList.add(orderMap)			
+		}
+		println "ordersMapList: "+ordersMapList
+		render ordersMapList as JSON
+	}
+	
+	def getConfirmedOrdersList() {
+		String storeId = params.storeId
+		
+		//TODO: method stub
+		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
+		
+		List ordersMapList = []
+		
+		ordersList.each { order->
+			def brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
+			Map orderMap = [:]
+			orderMap.put("brandName", brandName)
+			orderMap.put("orderStatus", order.orderStatus)
+			ordersMapList.add(orderMap)
+		}
+		
+		render ordersMapList as JSON
+	}
+	
+	def confirmOrder() {
+		String storeId = params.storeId
+		String orderCollectionId = params.orderCollectionId
+		String brandIds = params.brandIds
+		
+		List brandIdList = brandIds.split(',')
+		
+		String orderStatus = ordersService.getOrderStatus(storeId, orderCollectionId, brandIdList)
+		
+		render (text: orderStatus)
+	}
+	
+	def updateOrderStatus() {
+		String orderCollectionId = params.orderCollectionId
+		String brandIds = params.brandIds
+		byte orderStatus = params.byte('orderStatus')
+		
+		List brandIdList = brandIds.split(',')
+		
+		int status = ordersService.updateOrderStatus(orderStatus, orderCollectionId, brandIdList)
+		
+		render (text:status)
+	}
+	
+	def getOrderHistory() {
+		String storeId = params.storeId
+		String orderCollectionIds = params.orderCollectionIds
+		List orderCollectionIdList = orderCollectionIds.split(',')
+		
+		//TODO: method stub
+		List orderHistoryStatusList = ordersService.getOrderHistory(storeId, orderCollectionIdList)
+		
+		render orderHistoryStatusList as JSON
+	}
 
 }

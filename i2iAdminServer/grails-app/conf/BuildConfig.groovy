@@ -44,6 +44,7 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+		mavenRepo "https://github.com/slorber/gcm-server-repository/raw/master/releases/"
     }
 
     dependencies {
@@ -73,6 +74,9 @@ grails.project.dependency.resolution = {
 		
 		//shopping cart plugin
 		compile ":shopping-cart:0.8.2"
+		
+		//GCM Plugin
+		compile ":android-gcm:0.2"
 		
 		//plugin for mail support
 		compile ":mail:1.0.7"

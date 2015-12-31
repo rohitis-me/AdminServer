@@ -26,7 +26,7 @@ class StoreRatingService {
 	def getAverageRatingForStoreFromStoreId(String storeId) {
 		List storeRatingList = StoreRating.findByStoreId(storeId)
 		int avgRating = 0
-		storeRating.each { rating->
+		storeRatingList.each { rating->
 			if(avgRating == 0)
 			avgRating = rating
 			else

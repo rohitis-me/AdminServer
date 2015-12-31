@@ -64,4 +64,6 @@ class Constants {
 	public static String amazonS3Bucket =''
 	
 	public static final String helpline = '+91-9930686044'
+	
+	public static final String ORDER_awaitingconfirmation = 'Awaiting Confirmation'
 }
