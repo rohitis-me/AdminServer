@@ -215,6 +215,12 @@ class OrderCollectionService {
 		OrderCollection order = OrderCollection.findByOrderRefId(orderRefId)
 		return order
 	}
+	
+	def getOrderCollectionFromOrderCollectionId(def orderCollId)
+	{
+		OrderCollection order = OrderCollection.findByOrderCollectionId(orderCollId)
+		return order
+	}
 
 	def getOrderStatusFromOrderId(def orderId) {
 		//		return 2

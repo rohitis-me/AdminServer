@@ -361,6 +361,26 @@ class WebserviceController extends RestfulController {
 			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
 		}
 	}
+	
+	def getDeliveryDetails() {
+		Integer orderCollectionId = params.int(orderCollectionId)
+		//def offerCode = params.offerCode
+		
+
+		OrderCollection orderCollection = orderCollectionService.getOrderCollectionFromOrderCollectionId(orderCollectionId)
+		if(orderCollection) {
+			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
+			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
+			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
+			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
+
+			render orderStatus as JSON
+		}
+		else
+		{
+			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
+		}
+	}
 
 
 	def cancelOrder(){
