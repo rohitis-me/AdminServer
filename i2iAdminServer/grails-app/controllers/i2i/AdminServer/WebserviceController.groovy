@@ -593,11 +593,14 @@ class WebserviceController extends RestfulController {
 		List ordersMapList = []
 		
 		ordersList.each { order->
+		if(order.brandId){
 			String brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
+			println "brandName in WController: "+brandName
 			Map orderMap = [:]
 			orderMap.put("brandName", brandName)
 			orderMap.put("orderStatus", order.orderStatus)
 			ordersMapList.add(orderMap)			
+			}
 		}
 		println "ordersMapList: "+ordersMapList
 		render ordersMapList as JSON
