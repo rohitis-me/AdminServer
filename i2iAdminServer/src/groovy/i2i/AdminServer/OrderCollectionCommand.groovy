@@ -31,6 +31,7 @@ class OrderCollectionCommand {
 	String attachmentId
 	String deliveryComment
 	byte orderStatus //FIXME
+	Integer deliveryType
 	
 	static constraints = {
 		patientName nullable:false, blank:false,size:1..100

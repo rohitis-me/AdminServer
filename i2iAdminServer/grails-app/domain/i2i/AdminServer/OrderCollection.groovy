@@ -10,6 +10,7 @@ class OrderCollection {
 	String offerCode
 	String attachmentId //multiple attachments are added with id|id1...
 	String deliveryComment//remove later //FIXME
+	Integer deliveryType = 0
 	
     static constraints = {
 		personId nullable:false, blank:false,size:1..100

@@ -108,7 +108,7 @@ class WebserviceController extends RestfulController {
 			}
 			else{
 				def brandRequestData = [
-					'brandName':searchTerm, 
+					'brandName':searchTerm,
 					'strength': brand?.strength,
 					'noOfUnits':brand?.noOfUnits,
 					'form':brand?.form,
@@ -159,7 +159,7 @@ class WebserviceController extends RestfulController {
 
 			render storeMapList as JSON
 		}
-		else 
+		else
 			render (text: "Currently this Brand is not available with any seller")
 	}
 	
@@ -361,6 +361,26 @@ class WebserviceController extends RestfulController {
 			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
 		}
 	}
+	
+	def getDeliveryDetails() {
+		Integer orderCollectionId = params.int('orderCollectionId')
+		//def offerCode = params.offerCode
+		
+
+		OrderCollection orderCollection = orderCollectionService.getOrderCollectionFromOrderCollectionId(orderCollectionId)
+		if(orderCollection) {
+			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
+			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
+			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
+			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
+
+			render orderStatus as JSON
+		}
+		else
+		{
+			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
+		}
+	}
 
 
 	def cancelOrder(){
@@ -474,7 +494,7 @@ class WebserviceController extends RestfulController {
 //		render userProfile as JSON
 //		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
 //	}
-//	
+//
 //	def getUserOrdersList(){
 //		//def userId = params.userId
 //		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
@@ -524,7 +544,7 @@ class WebserviceController extends RestfulController {
 
 			render storeMapList as JSON
 		}
-		else 
+		else
 			render (text: "Not Available")
 		
 //		return storeId
@@ -599,7 +619,8 @@ class WebserviceController extends RestfulController {
 			Map orderMap = [:]
 			orderMap.put("brandName", brandName)
 			orderMap.put("orderStatus", order.orderStatus)
-			ordersMapList.add(orderMap)			
+			orderMap.put("orderCollectionId", order.orderCollectionId)
+			ordersMapList.add(orderMap)
 			}
 		}
 		println "ordersMapList: "+ordersMapList

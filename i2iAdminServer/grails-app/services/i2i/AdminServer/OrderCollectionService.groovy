@@ -67,7 +67,7 @@ class OrderCollectionService {
 		orderCollCommand.deliveryComment = order.deliveryComment
 //		println "comment: "+ order.deliveryComment
 		
-		//FIXME 
+		//FIXME
 //		String storeId = storeService.getLoggedInStoreId()
 //		if(storeId){
 //			orderCollCommand.orderStatus  = ordersService.getOrderStatusFromOrderCollectionIdAndStoreId(order.orderCollectionId, storeId)
@@ -213,6 +213,12 @@ class OrderCollectionService {
 	def getOrderFromRefId(def orderRefId)
 	{
 		OrderCollection order = OrderCollection.findByOrderRefId(orderRefId)
+		return order
+	}
+	
+	def getOrderCollectionFromOrderCollectionId(def orderCollId)
+	{
+		OrderCollection order = OrderCollection.findByOrderCollectionId(orderCollId)
 		return order
 	}
 
