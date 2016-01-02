@@ -372,7 +372,8 @@ class WebserviceController extends RestfulController {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
+			//def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
+			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
 
 			render orderStatus as JSON
 		}
