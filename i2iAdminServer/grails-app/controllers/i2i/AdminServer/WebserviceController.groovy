@@ -617,20 +617,9 @@ class WebserviceController extends RestfulController {
 		
 		List ordersMapList = []
 		
-		ordersList.each { order->
-		if(order.brandId){
-			String brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
-			println "brandName in WController: "+brandName
-			Map orderMap = [:]
-			orderMap.put("brandName", brandName)
-			orderMap.put("orderStatus", order.orderStatus)
-			orderMap.put("orderCollectionId", order.orderCollectionId)
-
-			ordersMapList.add(orderMap)			
-
-			}
-		}
-		println "ordersMapList: "+ordersMapList
+		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)	
+		
+		println "orderDetailList: "+(orderDetailList as JSON)
 		render ordersMapList as JSON
 	}
 	
@@ -642,14 +631,9 @@ class WebserviceController extends RestfulController {
 		
 		List ordersMapList = []
 		
-		ordersList.each { order->
-			def brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
-			Map orderMap = [:]
-			orderMap.put("brandName", brandName)
-			orderMap.put("orderStatus", order.orderStatus)
-			ordersMapList.add(orderMap)
-		}
+		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
 		
+		println "orderDetailList: "+(orderDetailList as JSON)
 		render ordersMapList as JSON
 	}
 	

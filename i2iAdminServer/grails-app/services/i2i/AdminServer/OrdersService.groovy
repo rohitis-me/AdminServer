@@ -1,11 +1,12 @@
 package i2i.AdminServer
 
 import grails.transaction.Transactional
-import groovy.time.TimeCategory
 import i2i.AdminServer.User.EmailService
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
+import i2i.AdminServer.webservice.OrderDetail
+import i2i.AdminServer.webservice.OrderItemInfo
 
 
 @Transactional
@@ -535,6 +536,47 @@ class OrdersService {
 	def getOrderHistory(String storeId, List orderCollectionIdList) {
 		//TODO
 		return new ArrayList<OrderHistoryStatusCommand>()
+	}
+	
+	def getOrderDetailListFromOrderList(List ordersList) {
+		List orderDetailsList = new ArrayList<OrderDetail>()
+		OrderDetail orderDetail = null
+		OrderItemInfo orderItemInfo = new OrderItemInfo()
+//		orderDetail = new OrderDetail()
+		
+		def tmpOrderCollId = 0
+		
+		ordersList.each { order->
+			
+			if(order.orderCollectionId == tmpOrderCollId) {
+				orderItemInfo = populateOrderItemInfoFromOrder(order)
+				orderDetail.orderItemInfo.add(orderItemInfo)
+			}
+			else {
+				if(orderDetail) {
+					orderDetailsList.add(orderDetail)
+				}
+				orderDetail = new OrderDetail()
+				orderItemInfo = populateOrderItemInfoFromOrder(order)
+				orderDetail.orderItemInfo.add(orderItemInfo)
+				orderDetail.orderStatus = order.orderStatus
+				orderDetail.orderCollectionId = order.orderCollectionId
+				
+			}
+			tmpOrderCollId = order.orderCollectionId
+		}
+		if(orderDetail) {
+			orderDetailsList.add(orderDetail)
+		}
+		return orderDetailsList
+		 
+	}
+	
+	private OrderItemInfo populateOrderItemInfoFromOrder(Orders order) {
+		OrderItemInfo orderItemInfo = new OrderItemInfo()
+		orderItemInfo.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
+		orderItemInfo.quantity = order.quantity
+		return orderItemInfo
 	}
 	
 }
