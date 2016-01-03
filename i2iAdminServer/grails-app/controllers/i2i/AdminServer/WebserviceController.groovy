@@ -619,6 +619,7 @@ class WebserviceController extends RestfulController {
 			Map orderMap = [:]
 			orderMap.put("brandName", brandName)
 			orderMap.put("orderStatus", order.orderStatus)
+			orderMap.put("orderCollectionId", order.orderCollectionId)
 			ordersMapList.add(orderMap)			
 			}
 		}
