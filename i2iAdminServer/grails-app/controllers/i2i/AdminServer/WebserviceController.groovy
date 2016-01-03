@@ -620,7 +620,7 @@ class WebserviceController extends RestfulController {
 		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)	
 		
 		println "orderDetailList: "+(orderDetailList as JSON)
-		render ordersMapList as JSON
+		render orderDetailList as JSON
 	}
 	
 	def getConfirmedOrdersList() {
@@ -634,7 +634,7 @@ class WebserviceController extends RestfulController {
 		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
 		
 		println "orderDetailList: "+(orderDetailList as JSON)
-		render ordersMapList as JSON
+		render orderDetailList as JSON
 	}
 	
 	def confirmOrder() {
