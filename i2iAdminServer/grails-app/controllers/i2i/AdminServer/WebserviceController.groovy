@@ -108,7 +108,7 @@ class WebserviceController extends RestfulController {
 			}
 			else{
 				def brandRequestData = [
-					'brandName':searchTerm, 
+					'brandName':searchTerm,
 					'strength': brand?.strength,
 					'noOfUnits':brand?.noOfUnits,
 					'form':brand?.form,
@@ -159,7 +159,7 @@ class WebserviceController extends RestfulController {
 
 			render storeMapList as JSON
 		}
-		else 
+		else
 			render (text: "Currently this Brand is not available with any seller")
 	}
 	
@@ -363,7 +363,9 @@ class WebserviceController extends RestfulController {
 	}
 	
 	def getDeliveryDetails() {
+
 		Integer orderCollectionId = params.int(orderCollectionId)
+
 		//def offerCode = params.offerCode
 		
 
@@ -372,7 +374,10 @@ class WebserviceController extends RestfulController {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
-			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient, 'trackingId': trackingId, 'offerCode':offerCode]
+
+
+			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
+
 
 			render orderStatus as JSON
 		}
@@ -494,7 +499,7 @@ class WebserviceController extends RestfulController {
 //		render userProfile as JSON
 //		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
 //	}
-//	
+//
 //	def getUserOrdersList(){
 //		//def userId = params.userId
 //		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
@@ -544,7 +549,7 @@ class WebserviceController extends RestfulController {
 
 			render storeMapList as JSON
 		}
-		else 
+		else
 			render (text: "Not Available")
 		
 //		return storeId
@@ -620,7 +625,9 @@ class WebserviceController extends RestfulController {
 			orderMap.put("brandName", brandName)
 			orderMap.put("orderStatus", order.orderStatus)
 			orderMap.put("orderCollectionId", order.orderCollectionId)
+
 			ordersMapList.add(orderMap)			
+
 			}
 		}
 		println "ordersMapList: "+ordersMapList

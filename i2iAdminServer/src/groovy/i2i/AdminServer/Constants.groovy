@@ -66,4 +66,7 @@ class Constants {
 	public static final String helpline = '+91-9930686044'
 	
 	public static final String ORDER_awaitingconfirmation = 'Awaiting Confirmation'
+	
+	public static final byte DeliveryType_HomeDelivery = 1
+	public static final byte DeliveryType_StorePickup = 0
 }

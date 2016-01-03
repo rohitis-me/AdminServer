@@ -67,7 +67,7 @@ class OrderCollectionService {
 		orderCollCommand.deliveryComment = order.deliveryComment
 //		println "comment: "+ order.deliveryComment
 		
-		//FIXME 
+		//FIXME
 //		String storeId = storeService.getLoggedInStoreId()
 //		if(storeId){
 //			orderCollCommand.orderStatus  = ordersService.getOrderStatusFromOrderCollectionIdAndStoreId(order.orderCollectionId, storeId)
