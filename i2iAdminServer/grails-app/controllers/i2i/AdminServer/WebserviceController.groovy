@@ -40,7 +40,7 @@ class WebserviceController extends RestfulController {
 	AvailabilityService availabilityService
 	StoreRatingService storeRatingService
 	def springSecurityService
-	
+
 	def index() {
 	}
 
@@ -79,7 +79,7 @@ class WebserviceController extends RestfulController {
 		if(inventoryId || brandId){
 			//FIXME: not scalable. Else condition does not use circle
 			BrandDatabase brand = brandDatabaseService.getBrandDataFromId(brandId, inventoryId)
-			
+
 			List stores
 			if(inventoryId)
 				stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(inventoryId, circle)
@@ -141,7 +141,7 @@ class WebserviceController extends RestfulController {
 		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
 		String brandId = params.brandId
 		String inventoryId = params.inventoryId
-		
+
 		List stores
 		if(inventoryId)
 			stores = searchService.getListOfStoresWhereBrandIsAvailableUsingInventoryIdAndCircle(inventoryId, circle)
@@ -150,11 +150,11 @@ class WebserviceController extends RestfulController {
 		if(stores){
 			List storeMapList = []
 			stores.each {
-					Map storeMap = [:]
-					storeMap.put("storeId", it.storeId)
-					storeMap.put("storeName", it.storeName)
-					storeMap.put("storeRating", storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId))
-					storeMapList.add(storeMap)
+				Map storeMap = [:]
+				storeMap.put("storeId", it.storeId)
+				storeMap.put("storeName", it.storeName)
+				storeMap.put("storeRating", storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId))
+				storeMapList.add(storeMap)
 			}
 
 			render storeMapList as JSON
@@ -162,7 +162,7 @@ class WebserviceController extends RestfulController {
 		else
 			render (text: "Currently this Brand is not available with any seller")
 	}
-	
+
 	def requestNewBrand(BrandRequestCommand brandRequestCommand){
 		println "BRC: "+brandRequestCommand.properties
 
@@ -187,12 +187,12 @@ class WebserviceController extends RestfulController {
 			render (text: "Thanks for the information. We will inform you as per your contact details provided, as soon as the medicine is available")
 	}
 
-	
+
 	def test(){
-		
+
 		String availabilityList = '[{"storeId": "1", "inventoryId":"1", "brandId":"", "availabilityIndex": 2, "availabilityId":1, "lastUpdatedTimeStamp":0},{"storeId": "1", "inventoryId":"2", "brandId":"", "availabilityIndex": 2, "availabilityId":2, "lastUpdatedTimeStamp":0}]'
 		redirect (controller: 'webservice', action: 'updateAvailabilityData', params:[availabilityList: availabilityList])
-		}
+	}
 
 
 
@@ -217,21 +217,21 @@ class WebserviceController extends RestfulController {
 			objectMetadata.setContentType(file.getContentType())
 
 			String fileOriginalName = file.getOriginalFilename()
-//			String description = file?.description
-//			println "FILE description: "+description
+			//			String description = file?.description
+			//			println "FILE description: "+description
 			Date uploadDate = Utility.getDateTimeInIST().getTime()
 			String filePath = 'order_prescription/'+uploadDate.getTime()+'-'+fileOriginalName
 			//				println "file name: "+filePath
 			Upload upload = amazonWebService.transferManager.upload(new PutObjectRequest(Constants.amazonS3Bucket,filePath,file.getInputStream(),objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead))
 
-//			while (!upload.done) {
-				//					println "Transfer: $upload.description"
-				//					println "  - State: $upload.state"
-				//					println "  - Progress: $upload.progress.bytesTransfered"
-				//					// Do work while we wait for our upload to complete…
-				//					Thread.sleep(1000)
-//			}
-			
+			//			while (!upload.done) {
+			//					println "Transfer: $upload.description"
+			//					println "  - State: $upload.state"
+			//					println "  - Progress: $upload.progress.bytesTransfered"
+			//					// Do work while we wait for our upload to complete…
+			//					Thread.sleep(1000)
+			//			}
+
 			String fileLocation = Constants.amazonS3Link+Constants.amazonS3Bucket+'/'+filePath
 			def attachmentId = fileAttachmentService.saveFileAttachment(fileOriginalName, filePath, uploadDate)
 
@@ -282,8 +282,8 @@ class WebserviceController extends RestfulController {
 		}
 		orderCollCommand.offerCode = params.offerCode
 		orderCollCommand.attachmentId = params.attachmentId
-		
-		
+
+
 		println "ODC: "+orderCollCommand.properties
 		if (orderCollCommand.hasErrors()) {
 			orderCollCommand.errors.each { println it }
@@ -303,15 +303,26 @@ class WebserviceController extends RestfulController {
 		List orderDetailsList = []
 		cartItems.each {
 			println it
+			String brandId = it.brandId
 			String inventoryId = it.inventoryId
 			String storeId = it.storeId
-			BrandOrdered brandOrdered = new BrandOrdered()
+			BrandOrdered brandOrdered
 
-			brandOrdered.brandName = brandDatabaseService.getBrandNameFromId(it.brandId, inventoryId)//it.brandName
-			brandOrdered.inventoryId = inventoryId
-			brandOrdered.brandId = it.brandId
-			brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
+			if(brandId)
+				brandOrdered = BrandOrdered.findByBrandIdAndStoreId(brandId, storeId)
 
+			else if(inventoryId)
+				brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId, storeId)
+
+			if(!brandOrdered) {
+
+				brandOrdered = new BrandOrdered()
+				brandOrdered.brandName = brandDatabaseService.getBrandNameFromId(brandId, inventoryId)//it.brandName
+				brandOrdered.inventoryId = inventoryId
+				brandOrdered.brandId = brandId
+				brandOrdered.storeId = storeId //FIXME store id is not unique to inventoryId
+
+			}
 			int quantity =  it.quantity.toInteger()
 			if(brandOrdered && quantity){
 				OrderDetailsCommand orderDetails = ordersService.saveOrderFromBrandOrdered(brandOrdered, quantity, orderCollCommand.orderCollectionId)
@@ -361,13 +372,13 @@ class WebserviceController extends RestfulController {
 			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
 		}
 	}
-	
+
 	def getDeliveryDetails() {
 
 		Integer orderCollectionId = params.int(orderCollectionId)
 
 		//def offerCode = params.offerCode
-		
+
 
 		OrderCollection orderCollection = orderCollectionService.getOrderCollectionFromOrderCollectionId(orderCollectionId)
 		if(orderCollection) {
@@ -465,210 +476,210 @@ class WebserviceController extends RestfulController {
 
 		render(text: "Success")
 	}
-	
-	
+
+
 	def checkAuthentication(){
 		println "Request params: "+request.properties
 		boolean chk = springSecurityService.isLoggedIn()
-		
+
 		println "Login: "+ springSecurityService.isLoggedIn()
-		
-			println "Principal: "+springSecurityService?.principal
-			
+
+		println "Principal: "+springSecurityService?.principal
+
 		if(chk) {
 			render (text: "authenticated "+springSecurityService?.principal)
 		}
 		else
-		render(text: "not authenticated")
+			render(text: "not authenticated")
 	}
-	
+
 	@Secured
 	def checkAuthentication2(){
 		println "Request params: "+request.properties
 		println "Authenticated: "+springSecurityService?.principal
 		render text:"Principal: "+springSecurityService?.principal
 	}
-	
-//	///Login related
-//	@Secured(['ROLE_CONSUMER'])
-//	def   (){
-//		//def userId = params.userId
-//		def user = secUserService.getLoggedInUserProfile()
-//		println "logged in User: "+ user.properties
-//		def userProfile = ['username':user?.username, 'email':user?.email]
-//		render userProfile as JSON
-//		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
-//	}
-//
-//	def getUserOrdersList(){
-//		//def userId = params.userId
-//		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
-//		//byte orderStatus = -2
-//		render ordersList as JSON
-//		//render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
-//	}
-	
-//	def showOrderDetails() {
-//		println "showOrderDetails params: "+params
-//		Long orderCollId = params.orderCollectionId?.toLong()
-//
-//		OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollId)
-//		List orderDetailsCommandList = ordersService.getListOfOrderDetailsCommandFromOrderCollectionId(orderCollId)
-//
-////		String attachmentLink = ""
-////		if(orderCollCommand?.attachmentId)
-////			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderCollCommand?.attachmentId)
-//		render(view:"orderDetails", model: [orderDetailsCommandList: orderDetailsCommandList, orderCollCommand:orderCollCommand])//, attachmentLink:attachmentLink])
-//	}
-	
+
+	//	///Login related
+	//	@Secured(['ROLE_CONSUMER'])
+	//	def   (){
+	//		//def userId = params.userId
+	//		def user = secUserService.getLoggedInUserProfile()
+	//		println "logged in User: "+ user.properties
+	//		def userProfile = ['username':user?.username, 'email':user?.email]
+	//		render userProfile as JSON
+	//		//render(view:'userProfile', model: [username:user?.username, email:user?.email]
+	//	}
+	//
+	//	def getUserOrdersList(){
+	//		//def userId = params.userId
+	//		List ordersList = secUserService.getLoggedInUserOrderDetailsList()
+	//		//byte orderStatus = -2
+	//		render ordersList as JSON
+	//		//render(view:"orderDetailsList", model: [orderDetailsList: orderDetailsList, orderStatus:orderStatus])
+	//	}
+
+	//	def showOrderDetails() {
+	//		println "showOrderDetails params: "+params
+	//		Long orderCollId = params.orderCollectionId?.toLong()
+	//
+	//		OrderCollectionCommand orderCollCommand = orderCollectionService.getOrderCollectionCommandFromOrderCollectionId(orderCollId)
+	//		List orderDetailsCommandList = ordersService.getListOfOrderDetailsCommandFromOrderCollectionId(orderCollId)
+	//
+	////		String attachmentLink = ""
+	////		if(orderCollCommand?.attachmentId)
+	////			attachmentLink = fileAttachmentService.getAttachmentLinkFromAttachmentId(orderCollCommand?.attachmentId)
+	//		render(view:"orderDetails", model: [orderDetailsCommandList: orderDetailsCommandList, orderCollCommand:orderCollCommand])//, attachmentLink:attachmentLink])
+	//	}
+
 	def getListOfStoresWhereBrandsAreAvailable() {
-		
+
 		String brandIds = params.brandIds
 		String circle = params.circle
 		String favoriteIdList = params.favoriteIdList
-		
+
 		List brandIdList = brandIds.split('|')
 		println "brandList size: "+brandIdList.size()
 		List storeList = favoriteIdList.split('|')
 		println "storeList size: "+storeList.size()
-		
+
 		//TODO: DOES NOT use favorite currently
 		List stores = searchService.getListOfStoresWhereBrandIsAvailable(brandIdList)
-		
+
 		if(stores){
 			List storeMapList = []
 			int rating = 0
 			stores.each {
-					Map storeMap = [:]
-					rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
-					storeMap.put("storeId", it.storeId)
-					storeMap.put("storeName", it.storeName)
-					storeMap.put("rating", rating)
-					storeMapList.add(storeMap)
+				Map storeMap = [:]
+				rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
+				storeMap.put("storeId", it.storeId)
+				storeMap.put("storeName", it.storeName)
+				storeMap.put("rating", rating)
+				storeMapList.add(storeMap)
 			}
 
 			render storeMapList as JSON
 		}
 		else
 			render (text: "Not Available")
-		
-//		return storeId
+
+		//		return storeId
 	}
-	
+
 	def rateSeller() {
 		def storeId = params.storeId
 		def orderId = params.orderId
 		Integer rating = params.int('rating')
-		
+
 		if(storeRatingService.saveRating(storeId, rating.intValue()))
 			render (text:"Success")
 		else
 			render (text:"Error")
-			
+
 	}
-	
+
 	def setFavorite() {
 		def storeId = params.storeId
 		def orderId = params.orderId
-		
+
 		//TODO: Method Stub
-		
+
 		render (text:"Success")
 	}
-	
+
 	def getUserSavedAddresses(){
 		//def userId = params.userId
 		List patientProfileList = secUserService.getLoggedInUserPatientDetailsList()
 		render patientProfileList as JSON
 		//render(view:'savedAddressList', model:['patientProfileList':patientProfileList])
-		}
-//PoS webservices
+	}
+	//PoS webservices
 
 	// parameter: availabilityList json
 	def updateAvailabilityData() {
 		String availabilityDataJsonList= params.availabilityList
-		
+
 		//List availabilityList = new ArrayList<Availability>()
 		def availabilityList = new JsonSlurper().parseText( availabilityDataJsonList )
 		//Type availabilityDataType = new TypeToken<List<Availability>>(){}.getType()
 		//def gson = gsonBuilder.create()
 		//availabilityList = gson.fromJson(availabilityDataJsonList, availabilityDataType)
-		
+
 		int status = availabilityService.updateAvailabilityData(availabilityList)
-		
+
 		render(text:status)
-		
+
 	}
-	
+
 	//param: storeId
 	def getLastUpdatedAvailabilityTimeStamp() {
 		def storeId = params.storeId
 		def lastUpdatedTimeStamp = availabilityService.getLastUpdatedAvailabilityTimeStamp(storeId)
 		render(text:lastUpdatedTimeStamp)
 	}
-	
+
 	//Pharmacy app webservices
 	def getNewOrdersList() {
-//		String circle = params.circle
+		//		String circle = params.circle
 		String storeId = params.storeId
-		
+
 		//TODO: method stub
 		List ordersList = ordersService.getAllOrdersForStoreId(storeId)
-		
+
 		List ordersMapList = []
-		
-		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)	
-		
+
+		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
+
 		println "orderDetailList: "+(orderDetailList as JSON)
 		render orderDetailList as JSON
 	}
-	
+
 	def getConfirmedOrdersList() {
 		String storeId = params.storeId
-		
+
 		//TODO: method stub
 		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
-		
+
 		List ordersMapList = []
-		
+
 		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
-		
+
 		println "orderDetailList: "+(orderDetailList as JSON)
 		render orderDetailList as JSON
 	}
-	
+
 	def confirmOrder() {
 		String storeId = params.storeId
 		String orderCollectionId = params.orderCollectionId
 		String brandIds = params.brandIds
-		
+
 		List brandIdList = brandIds.split(',')
-		
+
 		String orderStatus = ordersService.getOrderStatus(storeId, orderCollectionId, brandIdList)
-		
+
 		render (text: orderStatus)
 	}
-	
+
 	def updateOrderStatus() {
 		String orderCollectionId = params.orderCollectionId
 		String brandIds = params.brandIds
 		byte orderStatus = params.byte('orderStatus')
-		
+
 		List brandIdList = brandIds.split(',')
-		
+
 		int status = ordersService.updateOrderStatus(orderStatus, orderCollectionId, brandIdList)
-		
+
 		render (text:status)
 	}
-	
+
 	def getOrderHistory() {
 		String storeId = params.storeId
 		String orderCollectionIds = params.orderCollectionIds
 		List orderCollectionIdList = orderCollectionIds.split(',')
-		
+
 		//TODO: method stub
 		List orderHistoryStatusList = ordersService.getOrderHistory(storeId, orderCollectionIdList)
-		
+
 		render orderHistoryStatusList as JSON
 	}
 
