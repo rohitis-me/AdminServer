@@ -27,9 +27,15 @@ class ShoppingCartController {
 	//    }
 	def addItemToCart(){
 		println "add item: "+ params
+		String brandId = params.brandId
 		String inventoryId = params.inventoryId
 		String storeId = params.storeId
-		BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
+//		BrandOrdered brandOrdered = BrandOrdered.findByInventoryIdAndStoreId(inventoryId,storeId)
+		BrandOrdered brandOrdered
+		
+		if(brandId)
+		brandOrdered = BrandOrdered.findByBrandIdAndStoreId(brandId,storeId)
+		
 		if(!brandOrdered) {
 			brandOrdered = new BrandOrdered()
 
