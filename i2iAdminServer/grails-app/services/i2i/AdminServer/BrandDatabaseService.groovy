@@ -33,7 +33,7 @@ class BrandDatabaseService {
 
 	def getBrandNameFromBrandId(String brandId) {
 		BrandDatabase brand = BrandDatabase.findByBrandId(brandId) //if we call with *.brandName it is giving [brandname] ??
-		String brandName = brand?.brandName
+		String brandName = brand?.brandName+" "+brand?.strength+" "+brand?.form
 		println "brandname: "+brandName
 		return brandName
 	}
