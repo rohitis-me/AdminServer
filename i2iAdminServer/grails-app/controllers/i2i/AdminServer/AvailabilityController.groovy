@@ -24,7 +24,7 @@ class AvailabilityController {
 //    def show(Availability availabilityInstance) {
 //        respond availabilityInstance
 //    }
-	
+//  Comments
 	
 	@Secured(['ROLE_CHEMIST_ADMIN'])
 	def showInventoryDetails(InventoryAvailabilityCommand inventoryAvailabilityCommand) {
