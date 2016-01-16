@@ -3,7 +3,7 @@ dataSource {
 	driverClassName = "com.mysql.jdbc.Driver"
 //	driverClassName = "org.h2.Driver"
 //	username = "root"
-//	password = ""
+//	password = "test"
 //	url = "jdbc:mysql://localhost:3306/i2idb"
 	username = "i2idbadminuser"
 	password = "i2idbadminpass"
