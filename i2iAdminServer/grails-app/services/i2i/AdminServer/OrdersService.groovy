@@ -528,9 +528,21 @@ class OrdersService {
 		return Constants.ORDER_awaitingconfirmation
 	}
 	
-	def updateOrderStatus(byte status, String orderCollectionId, List brandIdList) {
+	def updateOrderStatus(String storeId, String status, Long orderCollectionId) {
 		//TODO: method stub
-		return 1
+        //get list of orders with orderCollectionId
+        //orderList.each.update status
+        //def changeOrderStatusAndSave(String storeId, Long orderCollectionId, String orderstatus, Date estDeliveryTime, String deliveryComment)
+        
+        //FIXME dummyDate is not used in the function
+        def dummyDate = new Date()
+        //SimpleDateFormat sd = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
+        //sd.setTimeZone(TimeZone.getTimeZone("IST"))
+        //sd.format(dummyDate)
+        
+        def result = changeOrderStatusAndSave(storeId, orderCollectionId, status, dummyDate, "test")
+		
+        return result
 	}
 	
 	def getOrderHistory(String storeId, List orderCollectionIdList) {
@@ -574,7 +586,8 @@ class OrdersService {
 	
 	private OrderItemInfo populateOrderItemInfoFromOrder(Orders order) {
 		OrderItemInfo orderItemInfo = new OrderItemInfo()
-		orderItemInfo.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
+		orderItemInfo.brandId = order.brandId
+        orderItemInfo.brandName = brandDatabaseService.getBrandNameFromBrandId(order.brandId)
 		orderItemInfo.quantity = order.quantity
 		return orderItemInfo
 	}

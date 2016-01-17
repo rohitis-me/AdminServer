@@ -677,14 +677,15 @@ class WebserviceController extends RestfulController {
 	}
 
 	def updateOrderStatus() {
-		String orderCollectionId = params.orderCollectionId
-		String brandIds = params.brandIds
-		byte orderStatus = params.byte('orderStatus')
+		Long orderCollectionId = params.orderCollectionId.toLong()
+		//String brandIds = params.brandIds
+		//byte orderStatus = params.byte('orderStatus')
+        String orderStatus = params.orderStatus
+        String storeId = params.storeId
+		//List brandIdList = brandIds.split(',')
 
-		List brandIdList = brandIds.split(',')
-
-		int status = ordersService.updateOrderStatus(orderStatus, orderCollectionId, brandIdList)
-
+		//int status = ordersService.updateOrderStatus(orderStatus, orderCollectionId, brandIdList)
+        int status = ordersService.updateOrderStatus(storeId, orderStatus, orderCollectionId)
 		render (text:status)
 	}
 
