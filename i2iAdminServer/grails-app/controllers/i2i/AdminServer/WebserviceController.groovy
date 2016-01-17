@@ -625,7 +625,7 @@ class WebserviceController extends RestfulController {
 
 		//TODO: method stub
 		List ordersList = ordersService.getAllOrdersForStoreId(storeId)
-
+        println "ordersList" + ordersList
 		List ordersMapList = []
         def temp = []
 		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
@@ -647,19 +647,21 @@ class WebserviceController extends RestfulController {
 
 		//TODO: method stub
 		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
-
+        println "ordersList" + ordersList
 		List ordersMapList = []
-        //List temp = []
+        def temp = []
 		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
-        //orderDetailList.each{
-        //    if (${it}[orderItemInfo][brandName] != "Null Null Null"){
-        //        temp.put(it)
-        //    }
-        //}
-		println "orderDetailList: "+(orderDetailList as JSON)
-		render orderDetailList as JSON
-        //println "orderDetailList: "+(temp as JSON)
-		//render temp as JSON
+        orderDetailList.each {
+            //println it['orderItemInfo']['brandName']
+            if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
+                //println "Yes"
+                temp << it
+            }
+        }
+        println "orderDetailListTruncated: "+(temp as JSON)
+		render temp as JSON
+		//println "orderDetailList: "+(orderDetailList as JSON)
+		//render orderDetailList as JSON
 	}
 
 	def confirmOrder() {

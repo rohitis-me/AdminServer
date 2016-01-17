@@ -9,7 +9,8 @@ package i2i.AdminServer.webservice
  */
 class OrderItemInfo {
 
-	String brandName
+	String brandId
+    String brandName
 	int quantity
 	
 }
