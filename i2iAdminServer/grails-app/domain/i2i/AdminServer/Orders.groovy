@@ -16,7 +16,7 @@ class Orders {
 //	Long attachmentId//TODO: remove
 	Long orderCollectionId
     //def storeList = [] //List of non-partner stores who accept. After customer chooses 1, populate storeId
-    //int deliveryType = 0 //delivery Type = 0 (home delivery, default) = 1 for store pickup
+    
 	
     static constraints = {
 //		personId nullable:true, blank:true,size:1..100
