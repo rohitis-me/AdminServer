@@ -375,13 +375,14 @@ class WebserviceController extends RestfulController {
 
 	def getDeliveryDetails() {
 
-		Integer orderCollectionId = params.int(orderCollectionId)
+		Long orderCollectionId = params.orderCollectionId.toLong()
 
 		//def offerCode = params.offerCode
 
-
+        
 		OrderCollection orderCollection = orderCollectionService.getOrderCollectionFromOrderCollectionId(orderCollectionId)
-		if(orderCollection) {
+		
+        if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
@@ -389,7 +390,7 @@ class WebserviceController extends RestfulController {
 
 			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
 
-
+            println orderStatus
 			render orderStatus as JSON
 		}
 		else
