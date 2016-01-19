@@ -69,6 +69,8 @@ class NonPartnerOrderService {
 				nonPartnerOrder = new NonPartnerOrder()
 				nonPartnerOrder.availabilityIndex = Constants.AVAILABILITY_PENDING
 				nonPartnerOrder.storeId = storeId
+				nonPartnerOrder.brandId = brandId
+				nonPartnerOrder.quantity = 1 //FIXME
 
 				if(!nonPartnerOrder.save(flush:true)) {
 					nonPartnerOrder.errors.each {
