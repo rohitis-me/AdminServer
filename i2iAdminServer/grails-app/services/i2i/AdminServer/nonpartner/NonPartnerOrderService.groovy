@@ -1,9 +1,8 @@
 package i2i.AdminServer.nonpartner
 
-import java.util.List;
-
 import grails.transaction.Transactional
 import i2i.AdminServer.BrandDatabaseService
+import i2i.AdminServer.Constants
 import i2i.AdminServer.webservice.OrderDetail
 import i2i.AdminServer.webservice.OrderItemInfo
 

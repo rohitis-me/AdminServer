@@ -584,10 +584,10 @@ class WebserviceController extends RestfulController {
 				String brandIds = params.brandIds
 				String circle = params.circle
 		
-				List brandIdList = brandIds.split('|')
+				List brandIdList = brandIds.split(',')
 				println "brandList size: "+brandIdList.size()
-				List storeList = favoriteIdList.split('|')
-				println "storeList size: "+storeList.size()
+//				List storeList = favoriteIdList.split(',')
+//				println "storeList size: "+storeList.size()
 		
 				//TODO: DOES NOT use favorite currently
 				List stores = searchService.searchNonPartnerStoresForBrandIds(brandIdList)
