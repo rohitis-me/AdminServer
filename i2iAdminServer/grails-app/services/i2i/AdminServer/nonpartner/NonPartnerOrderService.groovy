@@ -24,7 +24,7 @@ class NonPartnerOrderService {
 		
 		ordersList.each { order->
 			
-			if(order.orderCollectionId == tmpOrderCollId) {
+			if(order.collectionId == tmpOrderCollId) {
 				orderItemInfo = populateOrderItemInfo(order)
 				orderDetail.orderItemInfo.add(orderItemInfo)
 			}
@@ -36,10 +36,10 @@ class NonPartnerOrderService {
 				orderItemInfo = populateOrderItemInfoFromOrder(order)
 				orderDetail.orderItemInfo.add(orderItemInfo)
 				orderDetail.availabilityIndex = order.availabilityIndex
-				orderDetail.orderCollectionId = order.orderCollectionId
+				orderDetail.orderCollectionId = order.collectionId
 				
 			}
-			tmpOrderCollId = order.orderCollectionId
+			tmpOrderCollId = order.collectionId
 		}
 		if(orderDetail) {
 			orderDetailsList.add(orderDetail)
