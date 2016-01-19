@@ -4,7 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.plugin.awssdk.AmazonWebService
 import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.RestfulController;
+import grails.rest.RestfulController
 import groovy.json.JsonSlurper
 import i2i.AdminServer.ClientSync.InventoryService
 import i2i.AdminServer.User.BrandRequestCommand
@@ -15,6 +15,7 @@ import i2i.AdminServer.User.FileAttachmentService
 import i2i.AdminServer.User.PatientProfile
 import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
+import i2i.AdminServer.nonpartner.NonPartnerOrderService
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -40,6 +41,7 @@ class WebserviceController extends RestfulController {
 	AvailabilityService availabilityService
 	StoreRatingService storeRatingService
 	def springSecurityService
+	NonPartnerOrderService nonPartnerOrderService
 
 	def index() {
 	}
@@ -66,7 +68,6 @@ class WebserviceController extends RestfulController {
 
 		String searchTerm = params.brandName
 		String circle = params.circle
-		//String brandId = brandDatabaseService.getBrandIdFromBrandName(searchTerm)
 		String brandId = params.brandId
 		String city = params.city
 
@@ -576,6 +577,41 @@ class WebserviceController extends RestfulController {
 
 		//		return storeId
 	}
+	
+	//NON PARTNERS
+	def getListOfNonPartnerStoresWhereBrandsAreAvailable() {
+		
+				String brandIds = params.brandIds
+				String circle = params.circle
+		
+				List brandIdList = brandIds.split('|')
+				println "brandList size: "+brandIdList.size()
+				List storeList = favoriteIdList.split('|')
+				println "storeList size: "+storeList.size()
+		
+				//TODO: DOES NOT use favorite currently
+				List stores = searchService.searchNonPartnerStoresForBrandIds(brandIdList)
+		
+				render (text : "Searching...")
+//				if(stores){
+//					List storeMapList = []
+//					int rating = 0
+//					stores.each {
+//						Map storeMap = [:]
+//						rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
+//						storeMap.put("storeId", it.storeId)
+//						storeMap.put("storeName", it.storeName)
+//						storeMap.put("rating", rating)
+//						storeMapList.add(storeMap)
+//					}
+//		
+//					render storeMapList as JSON
+//				}
+//				else
+//					render (text: "Not Available")
+		
+				//		return storeId
+			}
 
 	def rateSeller() {
 		def storeId = params.storeId
@@ -629,28 +665,26 @@ class WebserviceController extends RestfulController {
 		render(text:lastUpdatedTimeStamp)
 	}
 
-	//Pharmacy app webservices
+	//NON PARTNER: Pharmacy app webservices
 	def getNewOrdersList() {
 		//		String circle = params.circle
 		String storeId = params.storeId
 
 		//TODO: method stub
-		List ordersList = ordersService.getAllOrdersForStoreId(storeId)
+		List ordersList = nonPartnerOrderService.getAllOrdersForStoreId(storeId)
+
         println "ordersList" + ordersList
 		List ordersMapList = []
         def temp = []
-		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
+		List orderDetailList = nonPartnerOrderService.getOrderDetailListFromOrderList(ordersList)
         orderDetailList.each {
-            //println it['orderItemInfo']['brandName']
             if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
-                //println "Yes"
                 temp << it
             }
         }
         println "orderDetailListTruncated: "+(temp as JSON)
 		render temp as JSON
-		//println "orderDetailList: "+(orderDetailList as JSON)
-		//render orderDetailList as JSON
+
 	}
 
 	def getConfirmedOrdersList() {

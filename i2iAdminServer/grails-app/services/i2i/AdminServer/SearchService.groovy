@@ -1,6 +1,8 @@
 package i2i.AdminServer
 
 import grails.transaction.Transactional
+import i2i.AdminServer.nonpartner.NonPartnerOrder
+import i2i.AdminServer.nonpartner.NonPartnerOrderService
 
 @Transactional
 class SearchService {
@@ -8,22 +10,25 @@ class SearchService {
 	def availabilityService
 	def storeService
 	def grailsApplication
+	NonPartnerOrderService nonPartnerOrderService
 
 	def serviceMethod() {
 	}
+	
+	def searchNonPartnerStoresForBrandIds(List brandIdList, List storeIdList = []) {
+		NonPartnerOrder nonPartnerOrder = new NonPartnerOrder()
+		//populate non partner order rows
+		if(storeIdList.empty) {
+			def storeList = Store.list()
+			storeList.each {store->
+				storeIdList.add(store.storeId)
+			}
+		}
+		nonPartnerOrderService.insertNonPartnerOrders(brandIdList, storeIdList)
+		//notify non partners of the order
+	}
 
-//	def getListOfStoresWhereBrandIsAvailableInCircle(String brandId, String circle) {
-////		List storeIdList = availabilityService.getStoreIdsFromBrandId(brandId)
-//		
-//		List storeList = new ArrayList<Store>()
-//		
-//		if(circle!= 'Thiruvanmiyur')
-//		storeList = Store.findAllByCircle(circle)
-//		
-//		println "bid: "+brandId+" storelist: "+storeList.size()
-//		println "storeList: "+storeList.count
-//		return storeList
-//	}
+	
 	
 	def getListOfStoresWhereBrandIsAvailable(List brandIdList) {
 		List storeIdList = new ArrayList<String>()
