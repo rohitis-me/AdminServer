@@ -24,13 +24,13 @@ class StoreRatingService {
 	}
 	
 	def getAverageRatingForStoreFromStoreId(String storeId) {
-		List storeRatingList = StoreRating.findByStoreId(storeId)
+		List storeRatingList = StoreRating.findAllByStoreId(storeId)
 		int avgRating = 0
 		storeRatingList.each { rating->
 			if(avgRating == 0)
-			avgRating = rating
+			avgRating = rating.rating
 			else
-			avgRating = (rating+avgRating)/2
+			avgRating = (rating.rating+avgRating)/2
 		}
 		return avgRating
 	}
