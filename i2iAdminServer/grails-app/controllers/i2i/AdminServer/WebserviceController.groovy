@@ -388,21 +388,20 @@ class WebserviceController extends RestfulController {
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
 
 
-			//def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
-            //def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
+			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
             //println orderStatus
-			//  render orderStatus as JSON
+			render orderStatus as JSON
             
-            def orderStatus = new LinkedHashMap()
-            orderStatus << ['orderCollectionId': orderCollectionId]
-            def orderItemInfoList = []
-            orderDetailsList.each{
-                orderItemInfoList << ['brandId':it.brandId, 'brandName':it.brandName, 'quantity':it.quantity]
-            }
-            orderStatus << ['orderItemInfo': orderItemInfoList]
-            orderStatus << ['orderStatus': orderDetailsList[0].orderStatus]
+            //def orderStatus = new LinkedHashMap()
+            //orderStatus << ['orderCollectionId': orderCollectionId]
+            //def orderItemInfoList = []
+            //orderDetailsList.each{
+            //    orderItemInfoList << ['brandId':it.brandId, 'brandName':it.brandName, 'quantity':it.quantity]
+            //}
+            //orderStatus << ['orderItemInfo': orderItemInfoList]
+            //orderStatus << ['orderStatus': orderDetailsList[0].orderStatus]
             
-            render orderStatus as JSON
+            //render orderStatus as JSON
         }
 		else
 		{
