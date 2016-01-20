@@ -12,6 +12,7 @@ class OrderDetail {
 	List orderItemInfo = new ArrayList<OrderItemInfo>()
 	byte orderStatus
 	long orderCollectionId
+	long collectionId = 0
 	byte availabilityIndex
 //	String storeId
 }

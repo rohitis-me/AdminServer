@@ -33,10 +33,10 @@ class NonPartnerOrderService {
 					orderDetailsList.add(orderDetail)
 				}
 				orderDetail = new OrderDetail()
-				orderItemInfo = populateOrderItemInfoFromOrder(order)
+				orderItemInfo = populateOrderItemInfo(order)
 				orderDetail.orderItemInfo.add(orderItemInfo)
 				orderDetail.availabilityIndex = order.availabilityIndex
-				orderDetail.orderCollectionId = order.collectionId
+				orderDetail.collectionId = order.collectionId
 				
 			}
 			tmpOrderCollId = order.collectionId
