@@ -61,8 +61,20 @@ class NonPartnerOrderService {
 		return NonPartnerOrder.findAllByStoreIdAndAvailabilityIndex(storeId, Constants.AVAILABILITY_PENDING)
 	}
 	
+	public Long getMaxCollectionId() {
+		long maxId = NonPartnerOrder.createCriteria().get {
+			projections {
+				max "collectionId"
+			}
+		} as Long
+
+		return maxId
+	}
+	
 	public void insertNonPartnerOrders(List brandIdList , List storeIdList) {
 		NonPartnerOrder nonPartnerOrder
+		
+		long collId = getMaxCollectionId()+1
 		
 		storeIdList.each { storeId->
 			brandIdList.each { brandId->
@@ -70,6 +82,7 @@ class NonPartnerOrderService {
 				nonPartnerOrder.availabilityIndex = Constants.AVAILABILITY_PENDING
 				nonPartnerOrder.storeId = storeId
 				nonPartnerOrder.brandId = brandId
+				nonPartnerOrder.collectionId = collId
 				nonPartnerOrder.quantity = 1 //FIXME
 
 				if(!nonPartnerOrder.save(flush:true)) {

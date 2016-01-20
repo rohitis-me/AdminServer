@@ -7,12 +7,13 @@ class NonPartnerOrder {
 	String storeId
 	Integer quantity
 	Long collectionId
+	Long nonpartnerOrderId
 	
     static constraints = {
     }
 	
 	static mapping = {
 		table 'non_partner_order_tbl'
-		id name: 'collectionId', column: 'collection_id'
+		id name: 'nonpartnerOrderId', column: 'nonpartner_order_id'
 	}
 }
