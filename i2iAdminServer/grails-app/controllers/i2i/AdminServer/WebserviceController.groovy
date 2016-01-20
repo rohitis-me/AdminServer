@@ -380,30 +380,30 @@ class WebserviceController extends RestfulController {
 
 		//def offerCode = params.offerCode
 
-        
+
 		OrderCollection orderCollection = orderCollectionService.getOrderCollectionFromOrderCollectionId(orderCollectionId)
-		
-        if(orderCollection) {
+
+		if(orderCollection) {
 			List orderList = ordersService.getListOfOrdersFromOrderCollectionId(orderCollection.orderCollectionId)
 			List orderDetailsList = ordersService.getListOfOrderDetailsFromOrdersList(orderList)
 			PatientProfile patient = patientProfileService.getPatientProfileDataFromPatientProfileId(orderCollection.personId)
 
 
 			def orderStatus = ['orderDetailsList':orderDetailsList, 'patient':patient]
-            //println orderStatus
+			//println orderStatus
 			render orderStatus as JSON
-            
-            //def orderStatus = new LinkedHashMap()
-            //orderStatus << ['orderCollectionId': orderCollectionId]
-            //def orderItemInfoList = []
-            //orderDetailsList.each{
-            //    orderItemInfoList << ['brandId':it.brandId, 'brandName':it.brandName, 'quantity':it.quantity]
-            //}
-            //orderStatus << ['orderItemInfo': orderItemInfoList]
-            //orderStatus << ['orderStatus': orderDetailsList[0].orderStatus]
-            
-            //render orderStatus as JSON
-        }
+
+			//def orderStatus = new LinkedHashMap()
+			//orderStatus << ['orderCollectionId': orderCollectionId]
+			//def orderItemInfoList = []
+			//orderDetailsList.each{
+			//    orderItemInfoList << ['brandId':it.brandId, 'brandName':it.brandName, 'quantity':it.quantity]
+			//}
+			//orderStatus << ['orderItemInfo': orderItemInfoList]
+			//orderStatus << ['orderStatus': orderDetailsList[0].orderStatus]
+
+			//render orderStatus as JSON
+		}
 		else
 		{
 			render (text: Constants.WEBSERVICE_ERROR_TRACKINGID)
@@ -577,41 +577,41 @@ class WebserviceController extends RestfulController {
 
 		//		return storeId
 	}
-	
+
 	//NON PARTNERS
 	def getListOfNonPartnerStoresWhereBrandsAreAvailable() {
-		
-				String brandIds = params.brandIds
-				String circle = params.circle
-		
-				List brandIdList = brandIds.split(',')
-				println "brandList size: "+brandIdList.size()
-//				List storeList = favoriteIdList.split(',')
-//				println "storeList size: "+storeList.size()
-		
-				//TODO: DOES NOT use favorite currently
-				List stores = searchService.searchNonPartnerStoresForBrandIds(brandIdList)
-		
-				render (text : "Searching...")
-//				if(stores){
-//					List storeMapList = []
-//					int rating = 0
-//					stores.each {
-//						Map storeMap = [:]
-//						rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
-//						storeMap.put("storeId", it.storeId)
-//						storeMap.put("storeName", it.storeName)
-//						storeMap.put("rating", rating)
-//						storeMapList.add(storeMap)
-//					}
-//		
-//					render storeMapList as JSON
-//				}
-//				else
-//					render (text: "Not Available")
-		
-				//		return storeId
-			}
+
+		String brandIds = params.brandIds
+		String circle = params.circle
+
+		List brandIdList = brandIds.split(',')
+		println "brandList size: "+brandIdList.size()
+		//				List storeList = favoriteIdList.split(',')
+		//				println "storeList size: "+storeList.size()
+
+		//TODO: DOES NOT use favorite currently
+		List stores = searchService.searchNonPartnerStoresForBrandIds(brandIdList)
+
+		render (text : "Searching...")
+		//				if(stores){
+		//					List storeMapList = []
+		//					int rating = 0
+		//					stores.each {
+		//						Map storeMap = [:]
+		//						rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
+		//						storeMap.put("storeId", it.storeId)
+		//						storeMap.put("storeName", it.storeName)
+		//						storeMap.put("rating", rating)
+		//						storeMapList.add(storeMap)
+		//					}
+		//
+		//					render storeMapList as JSON
+		//				}
+		//				else
+		//					render (text: "Not Available")
+
+		//		return storeId
+	}
 
 	def rateSeller() {
 		def storeId = params.storeId
@@ -673,18 +673,36 @@ class WebserviceController extends RestfulController {
 		//TODO: method stub
 		List ordersList = nonPartnerOrderService.getAllOrdersForStoreId(storeId)
 
-        println "ordersList" + ordersList
+		println "ordersList" + ordersList
 		List ordersMapList = []
-        def temp = []
+		def temp = []
 		List orderDetailList = nonPartnerOrderService.getOrderDetailListFromOrderList(ordersList)
-        orderDetailList.each {
-            if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
-                temp << it
-            }
-        }
-        println "orderDetailListTruncated: "+(temp as JSON)
+		orderDetailList.each {
+			if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
+				temp << it
+			}
+		}
+		println "orderDetailListTruncated: "+(temp as JSON)
 		render temp as JSON
 
+	}
+
+	def updateAvailabilityFromNonPartners() {
+		def storeId = params.storeId
+		def orderItemsJson = params.orderItems
+		def deliveryType = params.deliveryType
+		def collId = params.collId
+
+		Map orderItems = new JsonSlurper().parseText( orderItemsJson )
+
+		int status
+		try {
+			status = nonPartnerOrderService.updateNonPartnerAvailability(collId, storeId, orderItems, deliveryType)
+		}
+		catch (Exception e){
+			status = 0
+		}
+		render (text: status)
 	}
 
 	def getConfirmedOrdersList() {
@@ -692,18 +710,18 @@ class WebserviceController extends RestfulController {
 
 		//TODO: method stub
 		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
-        println "ordersList" + ordersList
+		println "ordersList" + ordersList
 		List ordersMapList = []
-        def temp = []
+		def temp = []
 		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
-        orderDetailList.each {
-            //println it['orderItemInfo']['brandName']
-            if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
-                //println "Yes"
-                temp << it
-            }
-        }
-        println "orderDetailListTruncated: "+(temp as JSON)
+		orderDetailList.each {
+			//println it['orderItemInfo']['brandName']
+			if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
+				//println "Yes"
+				temp << it
+			}
+		}
+		println "orderDetailListTruncated: "+(temp as JSON)
 		render temp as JSON
 		//println "orderDetailList: "+(orderDetailList as JSON)
 		//render orderDetailList as JSON
@@ -725,12 +743,12 @@ class WebserviceController extends RestfulController {
 		Long orderCollectionId = params.orderCollectionId.toLong()
 		//String brandIds = params.brandIds
 		//byte orderStatus = params.byte('orderStatus')
-        String orderStatus = params.orderStatus
-        String storeId = params.storeId
+		String orderStatus = params.orderStatus
+		String storeId = params.storeId
 		//List brandIdList = brandIds.split(',')
 
 		//int status = ordersService.updateOrderStatus(orderStatus, orderCollectionId, brandIdList)
-        int status = ordersService.updateOrderStatus(storeId, orderStatus, orderCollectionId)
+		int status = ordersService.updateOrderStatus(storeId, orderStatus, orderCollectionId)
 		render (text:status)
 	}
 

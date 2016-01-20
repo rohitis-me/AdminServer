@@ -94,4 +94,21 @@ class NonPartnerOrderService {
 		}
 	}
 	
+	def updateNonPartnerAvailability(def collId, def storeId, def orderItems, def deliveryType) {
+		List nonPartnerOrderList = NonPartnerOrder.findAllBycollIdAndStoreId(collId, storeId)
+		
+		nonPartnerOrderList.each { nonPartnerOrder->
+			def brandId = nonPartnerOrder.brandId
+			nonPartnerOrder.availabilityIndex = orderItems[brandId]
+			if(!nonPartnerOrder.save(flush:true)) {
+				nonPartnerOrder.errors.each {
+					println "error in nonpartnerorderservice updateNonPartnerAvailability: "+it
+				}
+			}
+		}
+		return 1
+
+		
+	}
+	
 }
