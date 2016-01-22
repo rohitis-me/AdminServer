@@ -76,7 +76,7 @@ class NonPartnerOrderService {
 		return maxId
 	}
 	
-	public void insertNonPartnerOrders(List brandIdList , List storeIdList) {
+	public long insertNonPartnerOrders(List brandIdList , List storeIdList) {
 		NonPartnerOrder nonPartnerOrder
 		
 		long collId = getMaxCollectionId()+1
@@ -97,6 +97,7 @@ class NonPartnerOrderService {
 				}
 			}
 		}
+		return collId
 	}
 	
 	def updateNonPartnerAvailability(def collId, def storeId, def orderItems, def deliveryType) {
@@ -114,6 +115,11 @@ class NonPartnerOrderService {
 		return 1
 
 		
+	}
+	
+	def getAllConfirmedOrdersForCollectionId(def collId) {
+		List nonPartnerConfirmedList = NonPartnerOrder.findAllByCollectionIdAndAvailabilityIndex(collId, Constants.AVAILABILITY_AVAILABLE)
+		return nonPartnerConfirmedList
 	}
 	
 }

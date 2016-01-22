@@ -586,31 +586,12 @@ class WebserviceController extends RestfulController {
 
 		List brandIdList = brandIds.split(',')
 		println "brandList size: "+brandIdList.size()
-		//				List storeList = favoriteIdList.split(',')
-		//				println "storeList size: "+storeList.size()
 
 		//TODO: DOES NOT use favorite currently
-		List stores = searchService.searchNonPartnerStoresForBrandIds(brandIdList)
+		def collectionId = searchService.searchNonPartnerStoresForBrandIds(brandIdList)
 
-		render (text : "Searching...")
-		//				if(stores){
-		//					List storeMapList = []
-		//					int rating = 0
-		//					stores.each {
-		//						Map storeMap = [:]
-		//						rating = storeRatingService.getAverageRatingForStoreFromStoreId(it.storeId)
-		//						storeMap.put("storeId", it.storeId)
-		//						storeMap.put("storeName", it.storeName)
-		//						storeMap.put("rating", rating)
-		//						storeMapList.add(storeMap)
-		//					}
-		//
-		//					render storeMapList as JSON
-		//				}
-		//				else
-		//					render (text: "Not Available")
+		render (text : collectionId)
 
-		//		return storeId
 	}
 
 	def rateSeller() {
@@ -706,25 +687,23 @@ class WebserviceController extends RestfulController {
 	}
 
 	def getConfirmedOrdersList() {
-		String storeId = params.storeId
+		String collId = params.collectionId
 
 		//TODO: method stub
-		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
+//		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
+		List ordersList = nonPartnerOrderService.getAllConfirmedOrdersForCollectionId(collId)
+		
 		println "ordersList" + ordersList
 		List ordersMapList = []
 		def temp = []
-		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
+		List orderDetailList = nonPartnerOrderService.getOrderDetailListFromOrderList(ordersList)
 		orderDetailList.each {
-			//println it['orderItemInfo']['brandName']
 			if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
-				//println "Yes"
 				temp << it
 			}
 		}
 		println "orderDetailListTruncated: "+(temp as JSON)
 		render temp as JSON
-		//println "orderDetailList: "+(orderDetailList as JSON)
-		//render orderDetailList as JSON
 	}
 
 	def confirmOrder() {
@@ -741,13 +720,10 @@ class WebserviceController extends RestfulController {
 
 	def updateOrderStatus() {
 		Long orderCollectionId = params.orderCollectionId.toLong()
-		//String brandIds = params.brandIds
-		//byte orderStatus = params.byte('orderStatus')
 		String orderStatus = params.orderStatus
 		String storeId = params.storeId
 		//List brandIdList = brandIds.split(',')
 
-		//int status = ordersService.updateOrderStatus(orderStatus, orderCollectionId, brandIdList)
 		int status = ordersService.updateOrderStatus(storeId, orderStatus, orderCollectionId)
 		render (text:status)
 	}

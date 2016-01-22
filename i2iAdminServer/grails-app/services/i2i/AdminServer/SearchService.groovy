@@ -24,8 +24,11 @@ class SearchService {
 				storeIdList.add(store.storeId)
 			}
 		}
-		nonPartnerOrderService.insertNonPartnerOrders(brandIdList, storeIdList)
-		//notify non partners of the order
+		long collId = nonPartnerOrderService.insertNonPartnerOrders(brandIdList, storeIdList)
+		
+		//TODO: notify non partners of the order
+		
+		return collId
 	}
 
 	
