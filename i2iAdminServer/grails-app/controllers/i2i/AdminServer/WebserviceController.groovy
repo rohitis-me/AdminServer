@@ -696,12 +696,12 @@ class WebserviceController extends RestfulController {
 		Map orderItems = new JsonSlurper().parseText( orderItemsJson )
 
 		int status
-		try {
+		//try {
 			status = nonPartnerOrderService.updateNonPartnerAvailability(collId, storeId, orderItems, deliveryType)
-		}
-		catch (Exception e){
-			status = 0
-		}
+		//}
+		//catch (Exception e){
+		//	status = 0
+	//	}
 		render (text: status)
 	}
 

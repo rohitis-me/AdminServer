@@ -62,11 +62,16 @@ class NonPartnerOrderService {
 	}
 	
 	public Long getMaxCollectionId() {
-		long maxId = NonPartnerOrder.createCriteria().get {
+		Long maxId = NonPartnerOrder.createCriteria().get {
 			projections {
 				max "collectionId"
 			}
 		} as Long
+
+		if(maxId == null)
+		{
+		  maxId=0
+		}
 
 		return maxId
 	}
@@ -95,7 +100,7 @@ class NonPartnerOrderService {
 	}
 	
 	def updateNonPartnerAvailability(def collId, def storeId, def orderItems, def deliveryType) {
-		List nonPartnerOrderList = NonPartnerOrder.findAllBycollIdAndStoreId(collId, storeId)
+		List nonPartnerOrderList = NonPartnerOrder.findAllByCollectionIdAndStoreId(collId, storeId)
 		
 		nonPartnerOrderList.each { nonPartnerOrder->
 			def brandId = nonPartnerOrder.brandId
