@@ -686,17 +686,18 @@ class WebserviceController extends RestfulController {
 		render (text: status)
 	}
 
-	def getConfirmedOrdersList() {
-		String collId = params.collectionId
+	//Store's confirmed orders
+	def getOrdersListConfirmedForStore() {
+		String storeId = params.storeId
 
 		//TODO: method stub
-//		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
-		List ordersList = nonPartnerOrderService.getAllConfirmedOrdersForCollectionId(collId)
+
+		List ordersList = ordersService.getAllConfirmedOrdersForStoreId(storeId)
 		
 		println "ordersList" + ordersList
 		List ordersMapList = []
 		def temp = []
-		List orderDetailList = nonPartnerOrderService.getOrderDetailListFromOrderList(ordersList)
+		List orderDetailList = ordersService.getOrderDetailListFromOrderList(ordersList)
 		orderDetailList.each {
 			if (it['orderItemInfo']['brandName'][0] == 'null null null'){} else {
 				temp << it
@@ -704,6 +705,21 @@ class WebserviceController extends RestfulController {
 		}
 		println "orderDetailListTruncated: "+(temp as JSON)
 		render temp as JSON
+	}
+	
+	//Confirmed store list for consumer query
+	def getStoresListConfirmingTheOrder() {
+		String collId = params.collectionId
+
+		//TODO: method stub
+		List ordersList = nonPartnerOrderService.getAllConfirmedOrdersForCollectionId(collId)
+		
+		List storeList = nonPartnerOrderService.getStoresListFromOrdersList(ordersList)
+		
+		List uniqueStores = storeList.unique()
+		//def temp = []
+		
+		render uniqueStores as JSON
 	}
 
 	def confirmOrder() {

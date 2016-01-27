@@ -415,16 +415,6 @@ class OrdersService {
 		return status
 	}
 
-	//	def cancelOrderCollection(def orderCollectionId){
-	//		List orderList = getListOfOrdersFromOrderCollectionId(orderCollectionId)
-	//		def status = 0
-	//		orderList.each { order->
-	//			order.orderStatus = Constants.ORDER_REJECTED
-	//			status = saveOrder(order)
-	//		}
-	//
-	//		return status
-	//	}
 
 	def getListOfOrderCollectionIdsFromStoreId(String storeId){
 		List orderList = Orders.findAllByStoreId(storeId)
@@ -591,5 +581,11 @@ class OrdersService {
 		orderItemInfo.quantity = order.quantity
 		return orderItemInfo
 	}
+	
+	def getAllConfirmedOrdersForStoreId(def storeId) {
+		List orderList = Orders.findAllByStoreIdAndOrderStatus(storeId, Constants.ORDER_PLACED)
+		return orderList
+	}
+	
 	
 }

@@ -122,4 +122,12 @@ class NonPartnerOrderService {
 		return nonPartnerConfirmedList
 	}
 	
+	def getStoresListFromOrdersList(def ordersList) {
+		List storeList = []
+		ordersList.each { order->
+			storeList.add(order.storeId)
+		}
+		return storeList
+	}
+	
 }
