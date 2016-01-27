@@ -7,7 +7,6 @@ import i2i.AdminServer.User.PatientProfileService
 import i2i.AdminServer.Util.Utility
 import i2i.AdminServer.webservice.OrderDetail
 import i2i.AdminServer.webservice.OrderItemInfo
-import i2i.AdminServer.Constants
 
 @Transactional
 class OrdersService {
